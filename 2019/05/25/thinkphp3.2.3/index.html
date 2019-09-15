@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>thinkphp框架学习 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="tp3.2.3目录结构www  WEB部署目录（或者子目录） ├─index.php       入口文件 ├─README.md       README文件 ├─Application     应用目录 ├─Public          资源文件目录 └─ThinkPHP        框架目录首先通过解析通过入口文件—index.php，入口文件非常简短。 &amp;lt;?php // +---">
+<meta name="keywords" content="杂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thinkphp框架学习">
+<meta property="og:url" content="http://yoursite.com/2019/05/25/thinkphp3.2.3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="tp3.2.3目录结构www  WEB部署目录（或者子目录） ├─index.php       入口文件 ├─README.md       README文件 ├─Application     应用目录 ├─Public          资源文件目录 └─ThinkPHP        框架目录首先通过解析通过入口文件—index.php，入口文件非常简短。 &amp;lt;?php // +---">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-28T10:31:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="thinkphp框架学习">
+<meta name="twitter:description" content="tp3.2.3目录结构www  WEB部署目录（或者子目录） ├─index.php       入口文件 ├─README.md       README文件 ├─Application     应用目录 ├─Public          资源文件目录 └─ThinkPHP        框架目录首先通过解析通过入口文件—index.php，入口文件非常简短。 &amp;lt;?php // +---">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-thinkphp3.2.3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/25/thinkphp3.2.3/" class="article-date">
+  <time datetime="2019-05-24T16:00:00.000Z" itemprop="datePublished">2019-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      thinkphp框架学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="tp3-2-3"><a href="#tp3-2-3" class="headerlink" title="tp3.2.3"></a>tp3.2.3</h1><h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><pre><code>www  WEB部署目录（或者子目录）
+├─index.php       入口文件
+├─README.md       README文件
+├─Application     应用目录
+├─Public          资源文件目录
+└─ThinkPHP        框架目录</code></pre><p>首先通过解析通过入口文件—index.php，入口文件非常简短。</p>
+<pre><code>&lt;?php
+// +----------------------------------------------------------------------
+// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: liu21st &lt;liu21st@gmail.com&gt;
+// +----------------------------------------------------------------------
+
+// 应用入口文件
+
+// 检测PHP环境
+if(version_compare(PHP_VERSION,&apos;5.3.0&apos;,&apos;&lt;&apos;))  die(&apos;require PHP &gt; 5.3.0 !&apos;);
+
+// 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
+define(&apos;APP_DEBUG&apos;,True);
+
+// 定义应用目录
+define(&apos;APP_PATH&apos;,&apos;./Application/&apos;);
+
+// 引入ThinkPHP入口文件
+require &apos;./ThinkPHP/ThinkPHP.php&apos;;
+
+// 亲^_^ 后面不需要任何代码了 就是如此简单</code></pre><p>先检测PHP环境，然后默认开启调试模式，定义APP_PATH,然后包含ThinkPHP/ThinkPHP.php文件，重点配置在Thinkphp.php文件里</p>
+<p>Thinkphp.php框架入口文件。</p>
+<pre><code>├─ThinkPHP 框架系统目录（可以部署在非web目录下面）
+│  ├─Common       核心公共函数目录
+│  ├─Conf         核心配置目录 
+│  ├─Lang         核心语言包目录
+│  ├─Library      框架类库目录
+│  │  ├─Think     核心Think类库包目录
+│  │  ├─Behavior  行为类库目录
+│  │  ├─Org       Org类库包目录
+│  │  ├─Vendor    第三方类库目录
+│  │  ├─ ...      更多类库目录
+│  ├─Mode         框架应用模式目录
+│  ├─Tpl          系统模板目录
+│  ├─LICENSE.txt  框架授权协议文件
+│  ├─logo.png     框架LOGO文件
+│  ├─README.txt   框架README文件
+│  └─ThinkPHP.php    框架入口文件
+
+defined(&apos;THINK_PATH&apos;)   or define(&apos;THINK_PATH&apos;,     __DIR__.&apos;/&apos;);
+defined(&apos;APP_PATH&apos;)     or define(&apos;APP_PATH&apos;,       dirname($_SERVER[&apos;SCRIPT_FILENAME&apos;]).&apos;/&apos;);
+defined(&apos;APP_STATUS&apos;)   or define(&apos;APP_STATUS&apos;,     &apos;&apos;); // 应用状态 加载对应的配置文件
+defined(&apos;APP_DEBUG&apos;)    or define(&apos;APP_DEBUG&apos;,      false); // 是否调试模式</code></pre><p>检查是否定义了这些变量，如果没定义则定义。</p>
+<p>最后代码加载核心类。</p>
+<pre><code>// 加载核心Think类
+require CORE_PATH.&apos;Think&apos;.EXT;
+// 应用初始化 
+Think\Think::start();
+
+LIB_PATH为 当前目录加library,
+
+defined(&apos;LIB_PATH&apos;)     or define(&apos;LIB_PATH&apos;,       realpath(THINK_PATH.&apos;Library&apos;).&apos;/&apos;); // 系统核心类库目录
+
+CORE_PATH为
+
+defined(&apos;CORE_PATH&apos;)    or define(&apos;CORE_PATH&apos;,      LIB_PATH.&apos;Think/&apos;); // Think类库目录</code></pre><p>学不会，cnm，真难，卒！</p>
+<p>参考：官方手册</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/25/thinkphp3.2.3/" data-id="ck0l0oh9m0019py2iv9bt6ru7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/25/csp内容安全策略/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          csp内容安全策略
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/17/url跳转实战/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">渗透之url跳转</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Flask从零到无 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="零基础学起学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。   环境：python 3.6+基础：0-日期：2018.12.14  flask入门简单测试pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。 自动导入的也是">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask从零到无">
+<meta property="og:url" content="http://yoursite.com/2018/12/14/flask从0到无/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="零基础学起学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。   环境：python 3.6+基础：0-日期：2018.12.14  flask入门简单测试pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。 自动导入的也是">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/VgalqNv.png">
+<meta property="og:image" content="https://i.imgur.com/9C4jrbP.png">
+<meta property="og:image" content="https://i.imgur.com/P2XIEeU.png">
+<meta property="og:image" content="https://i.imgur.com/vWxXdEc.png">
+<meta property="og:image" content="https://i.imgur.com/RyvwVaU.png">
+<meta property="og:updated_time" content="2018-12-17T10:08:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flask从零到无">
+<meta name="twitter:description" content="零基础学起学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。   环境：python 3.6+基础：0-日期：2018.12.14  flask入门简单测试pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。 自动导入的也是">
+<meta name="twitter:image" content="https://i.imgur.com/VgalqNv.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-flask从0到无" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/14/flask从0到无/" class="article-date">
+  <time datetime="2018-12-13T16:00:00.000Z" itemprop="datePublished">2018-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flask从零到无
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="零基础学起"><a href="#零基础学起" class="headerlink" title="零基础学起"></a>零基础学起</h1><p>学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。  </p>
+<p>环境：python 3.6+<br>基础：0-<br>日期：2018.12.14 </p>
+<h1 id="flask入门"><a href="#flask入门" class="headerlink" title="flask入门"></a>flask入门</h1><h2 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h2><p>pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。</p>
+<p>自动导入的也是python 3.6。<br><img src="https://i.imgur.com/VgalqNv.png" alt></p>
+<p>运行这边会出小错，因为此时我们还没有安装flask包，</p>
+<p><img src="https://i.imgur.com/9C4jrbP.png" alt></p>
+<p>这样就可以正常运行了，运行成功便会返回 </p>
+<pre><code> * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [14/Dec/2018 20:32:20] &quot;GET / HTTP/1.1&quot; 200 -
+127.0.0.1 - - [14/Dec/2018 20:32:20] &quot;GET /favicon.ico HTTP/1.1&quot; 404 -</code></pre><p>此时可以在web上运行hello world了，访问<a href="http://127.0.0.1:5000。可以看到打印出Hello" target="_blank" rel="noopener">http://127.0.0.1:5000。可以看到打印出Hello</a> World</p>
+<h2 id="route装饰器路由"><a href="#route装饰器路由" class="headerlink" title="route装饰器路由"></a>route装饰器路由</h2><pre><code>@app.route(&apos;/&apos;)</code></pre><p>使用 route() 装饰器告诉 Flask 什么样的URL 能触发我们的函数。 route() 装饰器把一个函数绑定到对应的 URL 上，这句话相当于路由，一个路由跟随一个函数，如</p>
+<pre><code>@app.route(&apos;/&apos;)
+def test()&quot;
+   return 123</code></pre><p>访问127.0.0.1:5000/ 则会输出123，我们修改一下规则</p>
+<pre><code>@app.route(&apos;/test&apos;)
+def test()&quot;
+   return 123</code></pre><p>这个时候访问127.0.0.1:5000/test 会输出123。<br>此外还可以设置动态url，</p>
+<pre><code>@app.route(&quot;/hello/&lt;username&gt;&quot;)
+def hello_user(username):
+  return &quot;user:%s&quot;%username</code></pre><p>根据url里的输入，动态辨别身份，此时便可以看到如下页面：</p>
+<p><img src="https://i.imgur.com/P2XIEeU.png" alt></p>
+<p>或者可以使用int型，转换器有下面几种：</p>
+<pre><code>int    接受整数
+float    同 int ，但是接受浮点数
+path    和默认的相似，但也接受斜线
+
+@app.route(&apos;/post/&lt;int:post_id&gt;&apos;)
+def show_post(post_id):
+    # show the post with the given id, the id is an integer
+    return &apos;Post %d&apos; % post_id</code></pre><h2 id="main入口"><a href="#main入口" class="headerlink" title="main入口"></a>main入口</h2><p>当.py文件被直接运行时，if <strong>name</strong> == ‘<strong>main</strong>‘之下的代码块将被运行；当.py文件以模块形式被导入时，if <strong>name</strong> == ‘<strong>main</strong>‘之下的代码块不被运行。如果你经常以cmd方式运行自己写的python小脚本，那么不需要这个东西，但是如果需要做一个稍微大一点的python开发，写 if <strong>name ==’</strong>main__’ 是一个良好的习惯，大一点的python脚本要分开几个文件来写，一个文件要使用另一个文件，也就是模块，此时这个if就会起到作用不会运行而是类似于文件包含来使用。    </p>
+<pre><code>if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><p>测试的时候，我们可以使用debug，方便调试，增加一句</p>
+<pre><code>app.debug = True
+或者（效果是一样的）
+app.run(debug=True)</code></pre><p>这样我们修改代码的时候直接保存，网页刷新就可以了，如果不加debug，那么每次修改代码都要运行一次程序，并且把前一个程序关闭。否则会被前一个程序覆盖。</p>
+<pre><code>app.run(host=&apos;0.0.0.0&apos;)</code></pre><p>这会让操作系统监听所有公网 IP,此时便可以在公网上看到自己的web。</p>
+<h2 id="http请求方法"><a href="#http请求方法" class="headerlink" title="http请求方法"></a>http请求方法</h2><p>页面需要get请求或者post请求也可以由路由来解决，通过 route() 装饰器传递 methods 参数。如我们要在登录页面使用get或者post登录输入。</p>
+<pre><code>@app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])
+def login():
+    if request.method == &apos;POST&apos;:
+        do_the_login()
+    else:
+        show_the_login_form()</code></pre><h2 id="模版渲染"><a href="#模版渲染" class="headerlink" title="模版渲染"></a>模版渲染</h2><p>何为模版渲染  点击连接—&gt;&gt;&gt;  <a href="https://shuaizhupeiqi.github.io/2018/11/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" target="_blank" rel="noopener">https://shuaizhupeiqi.github.io/2018/11/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/</a></p>
+<p>你可以使用 render_template() 方法来渲染模板。你需要做的一切就是将模板名和你想作为关键字的参数传入模板的变量。这里有一个展示如何渲染模板的简例:</p>
+<p>简单的模版渲染示例</p>
+<pre><code>from flask import render_template
+
+@app.route(&apos;/hello/&apos;)
+@app.route(&apos;/hello/&lt;name&gt;&apos;)
+def hello(name=None):
+        return render_template(&apos;hello.html&apos;, name=name)</code></pre><h1 id="flask简单实例"><a href="#flask简单实例" class="headerlink" title="flask简单实例"></a>flask简单实例</h1><p>我们从模板渲染开始实例，因为我们毕竟不是做开发的，flask以模板注入闻名，所以我们先从flask模版渲染入手深入剖析。</p>
+<p>首先要搞清楚，模板渲染体系，render_template函数渲染的是templates中的模板，所谓模板是我们自己写的html，里面的参数需要我们根据每个用户需求传入动态变量。</p>
+<pre><code>├── app.py  
+├── static  
+│   └── style.css  
+└── templates  
+    └── index.html  </code></pre><p><img src="https://i.imgur.com/vWxXdEc.png" alt></p>
+<p>我们写一个index.html文件写templates文件夹中。</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;{{title}} - 小猪佩奇&lt;/title&gt;
+  &lt;/head&gt;
+ &lt;body&gt;
+      &lt;h1&gt;Hello, {{user.name}}!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>里面有两个参数需要我们渲染，user.name，以及title</p>
+<p>我们在app.py文件里进行渲染。</p>
+<pre><code>@app.route(&apos;/&apos;)
+@app.route(&apos;/index&apos;)#我们访问/或者/index都会跳转
+def index():
+   user = {&apos;name&apos;: &apos;小猪佩奇&apos;}#传入一个字典数组
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=user)</code></pre><p><img src="https://i.imgur.com/RyvwVaU.png" alt></p>
+<p>这次渲染我们没有使用用户可控，所以是安全的，如果我们交给用户可控并且不过滤参数就有可能造成SSTI模板注入漏洞。<br>jinja2模板同样支持控制语句，在｛% %｝中输入我们的代码。如</p>
+<pre><code>{% if title %}
+    <title>{{title}} - xzpq</title>
+    {% else %}
+    <title>Welcome to xzpq</title>
+    {% endif %}</code></pre><p>如果传入title参数那么执行</p>
+<pre><code>&lt;title&gt;{{title}} - xzpq&lt;/title&gt; </code></pre><p>否则执行</p>
+<pre><code>&lt;title&gt;Welcome to xzpq&lt;/title&gt; </code></pre><p>最后执行下面未写出。</p>
+<p>本文暂且到这里，主要是为了配合ssti模板注入而了解flask注入。看继续参考博文SSTI模板注入。</p>
+<p>测试的代码贴上</p>
+<pre><code>from flask import Flask
+from flask import render_template
+from flask import request
+from flask import render_template_string
+app = Flask(__name__)
+
+@app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])
+def login():
+    if request.method == &apos;POST&apos;:
+        do_the_login()
+    else:
+        show_the_login_form()
+
+@app.route(&apos;/&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+@app.route(&apos;/index&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])#我们访问/或者/index都会跳转
+def index():
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=request.args.get(&quot;key&quot;))
+
+
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+    template = &apos;&apos;&apos;
+        &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+    return render_template_string(template)
+
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><hr>
+<p>参考：<a href="http://www.pythondoc.com/flask-mega-tutorial/" target="_blank" rel="noopener">http://www.pythondoc.com/flask-mega-tutorial/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/14/flask从0到无/" data-id="ck0l0oh9d000opy2i4zoia8yv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/21/第九届swpuctf/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          swpu第九届线上ctf
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/06/南邮CTF-2018/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">南邮CTF-2018</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

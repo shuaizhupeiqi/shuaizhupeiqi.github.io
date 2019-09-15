@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>端口映射-模拟VPN制作 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="端口映射简介百度百科：端口映射是NAT的一种，功能是把在公网的地址转翻译成私有地址， 采用路由方式的ADSL宽带路由器拥有一个动态或固定的公网IP，ADSL直接接在HUB或交换机上，所有的电脑共享上网。 端口映射转发区别转发与映射，按理解意思，是用不同的方法实现同样的目标。 端口转发：你给我了，我打开看看，发现这上面标志显示是要给张三，那么我就给张三去。如果标志是给李四，那我就再给李四去。 端口映">
+<meta name="keywords" content="杂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="端口映射-模拟VPN制作">
+<meta property="og:url" content="http://yoursite.com/2018/11/20/端口映射/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="端口映射简介百度百科：端口映射是NAT的一种，功能是把在公网的地址转翻译成私有地址， 采用路由方式的ADSL宽带路由器拥有一个动态或固定的公网IP，ADSL直接接在HUB或交换机上，所有的电脑共享上网。 端口映射转发区别转发与映射，按理解意思，是用不同的方法实现同样的目标。 端口转发：你给我了，我打开看看，发现这上面标志显示是要给张三，那么我就给张三去。如果标志是给李四，那我就再给李四去。 端口映">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/AeFotL9.png">
+<meta property="og:image" content="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/a7CmzXwK.VzLn.PLqbiCxupZX2A9JP1ZTImErjpYzVo!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=*AEVAgAAAAADF9g!&tl=1&vuin=275640346&tm=1542718800&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/GQUFxRM.png">
+<meta property="og:image" content="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/WdG3p4i1GW11StpHM5bXD2iBwfvG.vKyQ*LKv1yfKdI!/b/dDEBAAAAAAAA&ek=1&kp=1&pt=0&bo=kAJEAQAAAAADJ9U!&tl=1&vuin=275640346&tm=1542718800&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/GTh0remJT0I9c8pOWtfKZd9h*i8O9Rh*Ga3fx**WDmw!/b/dDYBAAAAAAAA&bo=ZAROAQAAAAADBw0!&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/LdlCmCJ.png">
+<meta property="og:image" content="https://i.imgur.com/KDkfcmW.png">
+<meta property="og:image" content="https://i.imgur.com/8iBLnWK.png">
+<meta property="og:image" content="https://i.imgur.com/rO0dudJ.png">
+<meta property="og:image" content="https://i.imgur.com/aOF4pLm.png">
+<meta property="og:image" content="https://i.imgur.com/EOJ4wuA.png">
+<meta property="og:image" content="https://i.imgur.com/LwrLisM.png">
+<meta property="og:image" content="https://i.imgur.com/7F4R3mg.png">
+<meta property="og:image" content="https://i.imgur.com/BbcqoB2.png">
+<meta property="og:image" content="https://i.imgur.com/qEMogZh.png">
+<meta property="og:image" content="https://i.imgur.com/xYT2eMJ.png">
+<meta property="og:updated_time" content="2018-11-25T11:03:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="端口映射-模拟VPN制作">
+<meta name="twitter:description" content="端口映射简介百度百科：端口映射是NAT的一种，功能是把在公网的地址转翻译成私有地址， 采用路由方式的ADSL宽带路由器拥有一个动态或固定的公网IP，ADSL直接接在HUB或交换机上，所有的电脑共享上网。 端口映射转发区别转发与映射，按理解意思，是用不同的方法实现同样的目标。 端口转发：你给我了，我打开看看，发现这上面标志显示是要给张三，那么我就给张三去。如果标志是给李四，那我就再给李四去。 端口映">
+<meta name="twitter:image" content="https://i.imgur.com/AeFotL9.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-端口映射" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/20/端口映射/" class="article-date">
+  <time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished">2018-11-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      端口映射-模拟VPN制作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="端口映射简介"><a href="#端口映射简介" class="headerlink" title="端口映射简介"></a>端口映射简介</h1><p>百度百科：端口映射是NAT的一种，功能是把在公网的地址转翻译成私有地址， 采用路由方式的ADSL宽带路由器拥有一个动态或固定的公网IP，ADSL直接接在HUB或交换机上，所有的电脑共享上网。</p>
+<h1 id="端口映射转发区别"><a href="#端口映射转发区别" class="headerlink" title="端口映射转发区别"></a>端口映射转发区别</h1><p>转发与映射，按理解意思，是用不同的方法实现同样的目标。</p>
+<p>端口转发：你给我了，我打开看看，发现这上面标志显示是要给张三，那么我就给张三去。如果标志是给李四，那我就再给李四去。</p>
+<p>端口映射：你放到我左手，我就直接给张三；你放到我右手，我就直接给李四。这中间我不管你放我手上的是什么东西。</p>
+<p>转发的重点在“转”上面。送快递的过来，把所有快递都交给门口保安，保安再根据每件快递上的收件人来分发。映射，就是在大门口给每个人装个柜子，送快递的直接按收件人名字，把快递放到对应的柜子里面。</p>
+<p>区别不大，实例中在慢慢理解吧!</p>
+<h1 id="端口映射的形象理解"><a href="#端口映射的形象理解" class="headerlink" title="端口映射的形象理解"></a>端口映射的形象理解</h1><p>端口映射就类似一个中转站，三个人，第一个人要找第三个人传递信息必须告诉第二个人，然后第二个人转告第三个人。就字面意思–端口转发。有些时候还有一些妙用，比如网站藏匿端口，访问公网ip:8888端口，映射为内网端口的8080。</p>
+<p>想实现访问公司局域网服务器，IP地址是172.16.1.215，如果我们出差在外，使用的电脑IP地址是192.168.10.215，怎么样去访问局域网服务器的地址172.16.1.215呢;</p>
+<p>此时，我们可以登录局域网服务器所在的路由器，可以通过ipconfig获取网关地址，知道网关后登录到路由器后台，设置端口映射，将内部端口、外部端口设置为3737，内部IP设置为172.16.1.215，个人使用的电脑运行mstsc命令，在窗口中输入公司申请的公网IP+3737，就可以直接访问局域网服务器；</p>
+<h1 id="端口映射与VPN"><a href="#端口映射与VPN" class="headerlink" title="端口映射与VPN"></a>端口映射与VPN</h1><p>端口映射与VPN 目标都是为了从外网访问局域网内网，端口映射和VPN都可以实现远程控制访问</p>
+<p>相同点：端口映射和VPN都可以实现通过外网访问内网。<br>不同点：端口映射将端口暴露在公网中，使用nmap等端口扫描器可扫描，且端口映射数据没有进行加密处理，容易被截取并分析，对系统服务器以及网络安全造成威胁。<br>而VPN 只有通过VPN创建用户，服务器那边的授权，客户端才能进行正常访问，安全性相对较高。</p>
+<p>端口映射相对简单，VPN安全性更高</p>
+<h1 id="VM端口映射"><a href="#VM端口映射" class="headerlink" title="VM端口映射"></a>VM端口映射</h1><p>实例走一下 ，内外网的互通吧。</p>
+<p>前言，要保证VM是nat连接。</p>
+<p>1.打开VM左上角编辑，打开虚拟网络设置。</p>
+<p><img src="https://i.imgur.com/AeFotL9.png" alt></p>
+<p>2.NAT设置如图</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/a7CmzXwK.VzLn.PLqbiCxupZX2A9JP1ZTImErjpYzVo!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=*AEVAgAAAAADF9g!&tl=1&vuin=275640346&tm=1542718800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>3.windows设置出站入站规则</p>
+<p><img src="https://i.imgur.com/GQUFxRM.png" alt></p>
+<p>入站规则，是别人访问自己的端口规则，设置80端口开放，别人就可以访问自己的IP的80端口，而出站规则是自己访问其他网站的端口，测试发现出站规则没看到80端口却可以访问80端口，dl说访问别人端口可能是用类似50000端口去访问别人的80端口，所以我们要访问别人10000端口的时候未必要设置出战规则端口10000。dl说看下tcp三次握手了解下。</p>
+<p>4.测试结果</p>
+<p>使用虚拟机 nc -lvvp 8888</p>
+<p>访问物理机的6666端口即可转发到虚拟机的8888端口，记得设置入站规则6666端口，保证端口开放！先扫描下物理机6666端口。</p>
+<p><img src="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/WdG3p4i1GW11StpHM5bXD2iBwfvG.vKyQ*LKv1yfKdI!/b/dDEBAAAAAAAA&ek=1&kp=1&pt=0&bo=kAJEAQAAAAADJ9U!&tl=1&vuin=275640346&tm=1542718800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>可以看到 监听的6666端口在访问物理机的8888端口的时候成功捕捉到。<br>由物理机6666端口映射到虚拟机的8888端口！<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/GTh0remJT0I9c8pOWtfKZd9h*i8O9Rh*Ga3fx**WDmw!/b/dDYBAAAAAAAA&bo=ZAROAQAAAAADBw0!&rf=viewer_4" alt></p>
+<p>一篇VM 很详细的参考文章：<a href="https://blog.csdn.net/BokeyGeGe/article/details/78631328" target="_blank" rel="noopener">https://blog.csdn.net/BokeyGeGe/article/details/78631328</a></p>
+<h1 id="ssh隧道-重点"><a href="#ssh隧道-重点" class="headerlink" title="ssh隧道(重点)"></a>ssh隧道(重点)</h1><p>SSH会自动加密和解密所有SSH客户端与服务端之间的网络数据。但是，SSH还能够将其他TCP端口的网络数据通SSH链接来转发，并且自动提供了相应的加密及解密服务。这一过程也被叫做”隧道”（tunneling）。</p>
+<p>这是因为SSH为其他TCP链接提供了一个安全的通道来进行传输而得名。例如，Telnet ，SMTP ，LDAP这些TCP应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输。而与此同时，如果工作环境许中的防火墙限制了一些网络端口的使用，但是允许SSH的连接，也能够将通过将TCP用端口转发来使用SSH进行通讯。</p>
+<p>下面的VPN制作就用到了ssh隧道技术。</p>
+<h1 id="VM虚拟机模拟VPN翻墙—正向代理"><a href="#VM虚拟机模拟VPN翻墙—正向代理" class="headerlink" title="VM虚拟机模拟VPN翻墙—正向代理"></a>VM虚拟机模拟VPN翻墙—正向代理</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>有三个机器，我们在第一台机器连接第二台机器ssh从而转发端口访问第三台机器。<br>在第一台连接第二台的ssh</p>
+<h2 id="第一次失败实验"><a href="#第一次失败实验" class="headerlink" title="第一次失败实验"></a>第一次失败实验</h2><p>前言：想测试下 三个内网IP 模拟谷歌翻墙，结果发现了点问题记录下!</p>
+<pre><code>win10 target 1   192.168.100.219
+linux target 2   192.168.189.129
+linux target 3   192.168.189.131</code></pre><p>打算模拟谷歌翻墙，首先打开两台linux 80 服务，</p>
+<p><img src="https://i.imgur.com/LdlCmCJ.png" alt></p>
+<p><img src="https://i.imgur.com/KDkfcmW.png" alt></p>
+<p>谷歌翻墙模拟，win10是一台国内被墙拦截的主机，</p>
+<p>linux 2 是一台墙外的一台服务器，可以访问谷歌。</p>
+<p>linux 3 是要访问的服务器。在此代表谷歌。</p>
+<p>第一步：先将win10 IP封禁。</p>
+<p>这里遇到第一个问题，可以看到三个IP 不是全部在同一个IP段，如果 2号 和 3 号互相访问，他们在同一个IP段会直接访问，这里，3号禁止2号IP，可以禁止2号访问，但是3号和1号不在同一个IP段，且物理机与虚拟机之间网路通信貌似还要端口转发之类的或者是直接走物理网卡，反正就是禁了也会被绕过，保证三台服务器在同一个IP段下。全部换成桥接模式，接下来从新测试。</p>
+<h2 id="第二次模拟VPN制作"><a href="#第二次模拟VPN制作" class="headerlink" title="第二次模拟VPN制作"></a>第二次模拟VPN制作</h2><p>从新开始！</p>
+<p>这里虚拟机换成桥接模式。</p>
+<p>重启网络服务  service network restart //更换网络模式要重启网络！</p>
+<pre><code>linux target 1   192.168.100.194
+linux target 2   192.168.100.110
+linux target 3   192.168.100.176</code></pre><p>#第一步 </p>
+<p>服务器3号封禁 linux 1 IP </p>
+<p>iptables -I INPUT -s 192.168.100.160 -j DROP //将linux1的包请求全部丢弃，访问停留几十秒最后无法访问。</p>
+<p>iptables -A INPUT -s 192.168.100.194 -j REJECT   //封禁IP</p>
+<p>iptables -I INPUT -s 192.168.100.219 -p tcp –dport 80 -j ACCEPT 解除限制</p>
+<p>清空封掉的IP地址，可以输入：iptables –flush</p>
+<p>而 2号服务器是可以正常访问 3号模拟谷歌服务器</p>
+<p>这里我们已经禁了一号服务器，一号服务器来访问下三号服务器。</p>
+<p><img src="https://i.imgur.com/8iBLnWK.png" alt></p>
+<p>可以看到一号服务器已无法访问 三号谷歌服务器。</p>
+<p>#第二步<br>端口转发</p>
+<p>首先查看自己开启的端口</p>
+<p><img src="https://i.imgur.com/rO0dudJ.png" alt></p>
+<p>我们选择一个端口1080端口建立动态转发的隧道，</p>
+<p>第一台服务器下的命令：ssh -D 1080 -fN 192.168.100.110//这里我们ssh连接第二台服务器，本地1080端口转发。相当于第二台服务器是一个跳板。</p>
+<p>命令注释：</p>
+<pre><code>选项：-f 后台启用
+-N 不打开远程shell，处于等待状态（不加-N则直接登录进去）
+-g 启用网关功能</code></pre><p>输入密码后登陆成功，在后台运行只是加入了一个进程。</p>
+<p>此时访问 服务器3依然是不成功的。</p>
+<p>设置代理服务器1访问服务器3，命令如下（在服务器1上输入）：</p>
+<pre><code>curl --socks5 127.0.0.1:1080 http://192.168.100.176</code></pre><p><img src="https://i.imgur.com/aOF4pLm.png" alt></p>
+<p>可以看到已经访问到第三台模拟谷歌浏览器</p>
+<p>#第三步</p>
+<p>浏览器设置代理1080端口就可以浏览器便捷的进行访问</p>
+<p><img src="https://i.imgur.com/EOJ4wuA.png" alt><br>代理前</p>
+<p><img src="https://i.imgur.com/LwrLisM.png" alt></p>
+<p>代理后，成功访问</p>
+<p><img src="https://i.imgur.com/7F4R3mg.png" alt></p>
+<p>如果有大陆以外的服务器，那么便可以自己制作VPN翻墙。简单使用！</p>
+<h1 id="利用跳板转发端口"><a href="#利用跳板转发端口" class="headerlink" title="利用跳板转发端口"></a>利用跳板转发端口</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>有三个机器，我们在第二台跳板机器执行命令，从而使得一号和三号机器可以互相访问。</p>
+<p>连接模式：桥接</p>
+<pre><code>linux target 1   192.168.100.110
+linux target 2   192.168.100.194
+linux target 3   192.168.100.176</code></pre><p>首先，我们先模拟环境，用三号服务器封禁一号服务器的IP，</p>
+<p>root@kali:~# iptables -A INPUT -s 192.168.100.110 -j REJECT//禁止IP访问任意端口</p>
+<p><img src="https://i.imgur.com/BbcqoB2.png" alt></p>
+<p>可以看到禁止192.168.100.110IP访问本机的任意端口</p>
+<p>我们使用三号服务器nc监听23端口。一号已经连接不到三号的23端口。二号服务器可以连接三号服务器23端口。环境搭建完毕。</p>
+<p>root@kali:~# nc -lvvp 23</p>
+<p>未完待续！</p>
+<p>然后在第二台主机输入命令 </p>
+<p>ssh -R 9527:192.168.100.176:23 -fN 192.168.100.110</p>
+<p>然后我们在 第一台服务器上执行 telnet 127.0.0.1 9527即可访问。</p>
+<p>可以看到nc监听的第三台机器 </p>
+<p><img src="https://i.imgur.com/qEMogZh.png" alt></p>
+<p>可以看到数据是从192.168.100.194（第三台主机）转发过来的</p>
+<p>设置VPN   </p>
+<p>在第二台主机输入命令 </p>
+<p>ssh -R 1080:192.168.100.176:80 -fN 192.168.100.110</p>
+<p>然后我们在 第一台服务器上执行 telnet 127.0.0.1 1080即可访问。</p>
+<p><img src="https://i.imgur.com/xYT2eMJ.png" alt></p>
+<p>可以正常访问网页了。<br>浏览器设置代理。</p>
+<hr>
+<p>参考：<a href="https://www.cnblogs.com/phpdragon/p/5314650.html" target="_blank" rel="noopener">https://www.cnblogs.com/phpdragon/p/5314650.html</a><br>参考：<a href="https://www.cnblogs.com/keerya/p/7612715.html" target="_blank" rel="noopener">https://www.cnblogs.com/keerya/p/7612715.html</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/20/端口映射/" data-id="ck0l0oh9z0024py2ikcp0e651" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/25/正反向代理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          正反向代理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/18/phpmyadmin拿shell/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">phpmyadmin两种拿shell</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

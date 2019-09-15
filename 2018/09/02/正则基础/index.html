@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>正则表达式基础 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="正则正则表达式，又称规则表达式。（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。   正则表达式的大致匹配过程是：    依次拿出表达式和文本中">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式基础">
+<meta property="og:url" content="http://yoursite.com/2018/09/02/正则基础/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="正则正则表达式，又称规则表达式。（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。   正则表达式的大致匹配过程是：    依次拿出表达式和文本中">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://qiniu.cuiqingcai.com/wp-content/uploads/2015/02/20130515113723855.png">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/7iEcas39lXgLm48HssNux2sR0.jlx13exqaOpAbMkV0!/b/dH4BAAAAAAAA&bo=CAMDAwAAAAADFzk!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/6aVpDH2IQgnOGURdVzBIiEOk51Ghzvjf7u98ZFlbCas!/b/dDwBAAAAAAAA&bo=rwJnAwAAAAADF*s!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/DiY*jYsg*SYbraZKPKlrMkU559SPADAyRaa9Tdk*EYw!/b/dNwAAAAAAAAA&bo=0gJAAwAAAAADF6E!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/JZIBVgqjU5UDskpGYul.HaUNCBMm2JjDiNpVWPse1.s!/b/dOAAAAAAAAAA&bo=1wLMAgAAAAADFyk!&rf=viewer_4">
+<meta property="og:updated_time" content="2018-09-04T03:32:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式基础">
+<meta name="twitter:description" content="正则正则表达式，又称规则表达式。（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。   正则表达式的大致匹配过程是：    依次拿出表达式和文本中">
+<meta name="twitter:image" content="http://qiniu.cuiqingcai.com/wp-content/uploads/2015/02/20130515113723855.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-正则基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/02/正则基础/" class="article-date">
+  <time datetime="2018-09-01T16:00:00.000Z" itemprop="datePublished">2018-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      正则表达式基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h1><p>正则表达式，又称规则表达式。（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。  </p>
+<p>正则表达式的大致匹配过程是：  </p>
+<ol>
+<li>依次拿出表达式和文本中的字符比较，  </li>
+<li>如果每一个字符都能匹配，则匹配成功；一旦有匹配不成功的字符则匹配失败。  </li>
+<li>如果表达式中有量词或边界，这个过程会稍微有一些不同。  </li>
+</ol>
+<h1 id="正则表达式python的语法规则"><a href="#正则表达式python的语法规则" class="headerlink" title="正则表达式python的语法规则"></a>正则表达式python的语法规则</h1><pre><code>元字符    说明
+.     代表任意字符
+\      
+[ ]     匹配内部的任一字符或子表达式
+[^]     对字符集和取非
+-     定义一个区间
+\     对下一字符取非（通常是普通变特殊，特殊变普通）
+*     匹配前面的字符或者子表达式0次或多次
+*?     惰性匹配上一个
++     匹配前一个字符或子表达式一次或多次
++?     惰性匹配上一个
+?     匹配前一个字符或子表达式0次或1次重复
+{n}     匹配前一个字符或子表达式
+{m,n}     匹配前一个字符或子表达式至少m次至多n次
+{n,}     匹配前一个字符或者子表达式至少n次
+{n,}?     前一个的惰性匹配
+^     匹配字符串的开头
+\A     匹配字符串开头
+$     匹配字符串结束
+[\b]     退格字符
+\c     匹配一个控制字符
+\d     匹配任意数字
+\D     匹配数字以外的字符
+ \t     匹配制表符
+\w     匹配任意数字字母下划线
+\W     不匹配数字字母下划线</code></pre><p>一、校验数字的表达式</p>
+<pre><code>数字：^[0-9]*$
+
+n位的数字：^\d{n}$
+
+至少n位的数字：^\d{n,}$
+
+m-n位的数字：^\d{m,n}$
+
+零和非零开头的数字：^(0|[1-9][0-9]*)$
+
+非零开头的最多带两位小数的数字：^([1-9][0-9]*)+(.[0-9]{1,2})?$
+
+带1-2位小数的正数或负数：^(\-)?\d+(\.\d{1,2})?$
+
+正数、负数、和小数：^(\-|\+)?\d+(\.\d+)?$
+
+有两位小数的正实数：^[0-9]+(.[0-9]{2})?$
+
+有1~3位小数的正实数：^[0-9]+(.[0-9]{1,3})?$
+
+非零的正整数：^[1-9]\d*$ 或 ^([1-9][0-9]*){1,3}$ 或 ^\+?[1-9][0-9]*$
+
+非零的负整数：^\-[1-9][]0-9″*$ 或 ^-[1-9]\d*$
+
+非负整数：^\d+$ 或 ^[1-9]\d*|0$
+
+非正整数：^-[1-9]\d*|0$ 或 ^((-\d+)|(0+))$
+
+非负浮点数：^\d+(\.\d+)?$ 或 ^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$
+
+非正浮点数：^((-\d+(\.\d+)?)|(0+(\.0+)?))$ 或 ^(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0$
+
+正浮点数：^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$ 或 ^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$
+
+负浮点数：^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$ 或 ^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$
+
+浮点数：^(-?\d+)(\.\d+)?$ 或 ^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$</code></pre><p>二、校验字符的表达式</p>
+<pre><code>汉字：^[\u4e00-\u9fa5]{0,}$
+
+英文和数字：^[A-Za-z0-9]+$ 或 ^[A-Za-z0-9]{4,40}$
+
+长度为3-20的所有字符：^.{3,20}$
+
+由26个英文字母组成的字符串：^[A-Za-z]+$
+
+由26个大写英文字母组成的字符串：^[A-Z]+$
+
+由26个小写英文字母组成的字符串：^[a-z]+$
+
+由数字和26个英文字母组成的字符串：^[A-Za-z0-9]+$
+
+由数字、26个英文字母或者下划线组成的字符串：^\w+$ 或 ^\w{3,20}$
+
+中文、英文、数字包括下划线：^[\u4E00-\u9FA5A-Za-z0-9_]+$
+
+中文、英文、数字但不包括下划线等符号：^[\u4E00-\u9FA5A-Za-z0-9]+$ 或 ^[\u4E00-\u9FA5A-Za-z0-9]{2,20}$
+
+可以输入含有^%&amp;’,;=?$\”等字符：[^%&amp;&apos;,;=?$\x22]+
+
+禁止输入含有~的字符：[^~\x22]+</code></pre><p>三、特殊需求表达式</p>
+<pre><code>Email地址：^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$
+
+域名：[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.?
+
+InternetURL：[a-zA-z]+://[^\s]* 或 ^http://([\w-]+\.)+[\w-]+(/[\w-./?%&amp;=]*)?$
+
+手机号码：^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$
+
+电话号码(“XXX-XXXXXXX”、”XXXX-XXXXXXXX”、”XXX-XXXXXXX”、”XXX-XXXXXXXX”、”XXXXXXX”和”XXXXXXXX)：^($$\d{3,4}-)|\d{3.4}-)?\d{7,8}$
+
+国内电话号码(0511-4405222、021-87888822)：\d{3}-\d{8}|\d{4}-\d{7}
+
+身份证号(15位、18位数字)：^\d{15}|\d{18}$
+
+短身份证号码(数字、字母x结尾)：^([0-9]){7,18}(x|X)?$ 或 ^\d{8,18}|[0-9x]{8,18}|[0-9X]{8,18}?$
+
+帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$
+
+密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)：^[a-zA-Z]\w{5,17}$
+
+强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间)：^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$
+
+日期格式：^\d{4}-\d{1,2}-\d{1,2}
+
+一年的12个月(01～09和1～12)：^(0?[1-9]|1[0-2])$
+
+一个月的31天(01～09和1～31)：^((0?[1-9])|((1|2)[0-9])|30|31)$
+
+钱的输入格式：
+
+    有四种钱的表示形式我们可以接受:”10000.00″ 和 “10,000.00″, 和没有 “分” 的 “10000″ 和 “10,000″：^[1-9][0-9]*$
+
+    这表示任意一个不以0开头的数字，但是，这也意味着一个字符”0″不通过，所以我们采用下面的形式：^(0|[1-9][0-9]*)$
+
+    一个0或者一个不以0开头的数字.我们还可以允许开头有一个负号：^(0|-?[1-9][0-9]*)$
+
+    这表示一个0或者一个可能为负的开头不为0的数字.让用户以0开头好了.把负号的也去掉，因为钱总不能是负的吧.下面我们要加的是说明可能的小数部分：^[0-9]+(.[0-9]+)?$
+
+    必须说明的是，小数点后面至少应该有1位数，所以”10.”是不通过的，但是 “10″ 和 “10.2″ 是通过的：^[0-9]+(.[0-9]{2})?$
+
+    这样我们规定小数点后面必须有两位，如果你认为太苛刻了，可以这样：^[0-9]+(.[0-9]{1,2})?$
+
+    这样就允许用户只写一位小数。下面我们该考虑数字中的逗号了，我们可以这样：^[0-9]{1,3}(,[0-9]{3})*(.[0-9]{1,2})?$
+
+    1到3个数字，后面跟着任意个 逗号+3个数字，逗号成为可选，而不是必须：^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(.[0-9]{1,2})?$
+
+    备注：这就是最终结果了，别忘了”+”可以用”*”替代。如果你觉得空字符串也可以接受的话(奇怪，为什么?)最后，别忘了在用函数时去掉去掉那个反斜杠，一般的错误都在这里
+
+xml文件：^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$
+
+中文字符的正则表达式：[\u4e00-\u9fa5]
+
+双字节字符：[^\x00-\xff] (包括汉字在内，可以用来计算字符串的长度(一个双字节字符长度计2，ASCII字符计1))
+
+空白行的正则表达式：\n\s*\r (可以用来删除空白行)
+
+HTML标记的正则表达式：&lt;(\S*?)[^&gt;]*&gt;.*?&lt;/\1&gt;|&lt;.*? /&gt; (网上流传的版本太糟糕，上面这个也仅仅能部分，对于复杂的嵌套标记依旧无能为力)
+
+首尾空白字符的正则表达式：^\s*|\s*$或(^\s*)|(\s*$) (可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式)
+
+腾讯QQ号：[1-9][0-9]{4,} (腾讯QQ号从10000开始)
+
+中国邮政编码：[1-9]\d{5}(?!\d) (中国邮政编码为6位数字)
+
+IP地址：\d+\.\d+\.\d+\.\d+ (提取IP地址时有用)
+
+IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)) (由@飞龙三少 提供，感谢共享)</code></pre><p><img src="http://qiniu.cuiqingcai.com/wp-content/uploads/2015/02/20130515113723855.png" alt="附图"></p>
+<h1 id="语法规则附带实例"><a href="#语法规则附带实例" class="headerlink" title="语法规则附带实例"></a>语法规则附带实例</h1><p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/7iEcas39lXgLm48HssNux2sR0.jlx13exqaOpAbMkV0!/b/dH4BAAAAAAAA&bo=CAMDAwAAAAADFzk!&rf=viewer_4" alt="附图">  </p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/6aVpDH2IQgnOGURdVzBIiEOk51Ghzvjf7u98ZFlbCas!/b/dDwBAAAAAAAA&bo=rwJnAwAAAAADF*s!&rf=viewer_4" alt="附图">  </p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/DiY*jYsg*SYbraZKPKlrMkU559SPADAyRaa9Tdk*EYw!/b/dNwAAAAAAAAA&bo=0gJAAwAAAAADF6E!&rf=viewer_4" alt="附图">  </p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/JZIBVgqjU5UDskpGYul.HaUNCBMm2JjDiNpVWPse1.s!/b/dOAAAAAAAAAA&bo=1wLMAgAAAAADFyk!&rf=viewer_4" alt="附图"></p>
+<h1 id="反斜杠问题"><a href="#反斜杠问题" class="headerlink" title="反斜杠问题"></a>反斜杠问题</h1><p>与大多数编程语言相同，正则表达式里使用”\”作为转义字符，这就可能造成反斜杠困扰。假如你需要匹配文本中的字符”\”，那么使用编程语言表示的正则表达式里将需要4个反斜杠”\\”：前两个和后两个分别用于在编程语言里转义成反斜杠，转换成两个反斜杠后再在正则表达式里转义成一个反斜杠。</p>
+<p>Python里的原生字符串很好地解决了这个问题，这个例子中的正则表达式可以使用r”\”表示。同样，匹配一个数字的”\d”可以写成r”\d”。有了原生字符串，妈妈也不用担心是不是漏写了反斜杠，写出来的表达式也更直观勒</p>
+<h1 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h1><p>Python 自带了re模块，它提供了对正则表达式的支持。主要用到的方法列举如下:  </p>
+<pre><code>#返回pattern对象
+re.compile(string[,flag])  
+#以下为匹配所用函数
+re.match(pattern, string[, flags])
+re.search(pattern, string[, flags])
+re.split(pattern, string[, maxsplit])
+re.findall(pattern, string[, flags])
+re.finditer(pattern, string[, flags])
+re.sub(pattern, repl, string[, count])
+re.subn(pattern, repl, string[, count])</code></pre><p>Python通过re模块提供对正则表达式的支持。使用re的一般步骤是先将正则表达式的字符串形式编译为Pattern实例，然后使用Pattern实例处理文本并获得匹配结果（一个Match实例），最后使用Match实例获得信息，进行其他的操作。  </p>
+<p>pattern可以理解为一个匹配模式，那么我们怎么获得这个匹配模式呢？很简单，我们需要利用re.compile方法就可以。例如:pattern = re.compile(r’hello’)</p>
+<p>在参数中我们传入了原生字符串对象，通过compile方法编译生成一个pattern对象，然后我们利用这个对象来进行进一步的匹配。<br>另外大家可能注意到了另一个参数 flags，在这里解释一下这个参数的含义：</p>
+<p>参数flag是匹配模式，取值可以使用按位或运算符’|’表示同时生效，比如re.I | re.M。  </p>
+<p>可选值有:</p>
+<pre><code>• re.I(全拼：IGNORECASE): 忽略大小写（括号内是完整写法，下同）
+• re.M(全拼：MULTILINE): 多行模式，改变&apos;^&apos;和&apos;$&apos;的行为（参见上图）
+• re.S(全拼：DOTALL): 点任意匹配模式，改变&apos;.&apos;的行为
+• re.L(全拼：LOCALE): 使预定字符类 \w \W \b \B \s \S 取决于当前区域设定
+• re.U(全拼：UNICODE): 使预定字符类 \w \W \b \B \s \S \d \D 取决于unicode定义的字符属性
+• re.X(全拼：VERBOSE): 详细模式。这个模式下正则表达式可以是多行，忽略空白字符，并可以加入注释。</code></pre><h1 id="简单匹配"><a href="#简单匹配" class="headerlink" title="简单匹配"></a>简单匹配</h1><pre><code># _*_ coding: UTF-8 _*_
+import re
+
+pattern=re.compile(r&apos;hello&apos;,re.IGNORECASE) # 将正则表达式编译成Pattern对象,不区分大小写re.IGNORECASE
+result1=re.match(pattern,&apos;hello1&apos;)
+#或result1 = pattern.match(&apos;hello world!&apos;)
+if result1:
+    print(result1.group())
+else:
+    print(&apos;匹配失败&apos;）</code></pre><h1 id="re-match和re-search的区别"><a href="#re-match和re-search的区别" class="headerlink" title="re.match和re.search的区别"></a>re.match和re.search的区别</h1><p>re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。</p>
+<pre><code>import re
+line = &quot;Cats are smarter than dogs&quot;;
+matchObj = re.match( r&apos;dogs&apos;, line, re.M|re.I)
+if matchObj:
+   print &quot;match --&gt; matchObj.group() : &quot;, matchObj.group()
+else:
+   print &quot;No match!!&quot;
+matchObj = re.search( r&apos;dogs&apos;, line, re.M|re.I)
+if matchObj:
+   print &quot;search --&gt; matchObj.group() : &quot;, matchObj.group()
+else:
+   print &quot;No match!!&quot;</code></pre><p>参考：<a href="https://www.cnblogs.com/cp-miao/p/5567115.html" target="_blank" rel="noopener">文章</a></p>
+<p>参考：<a href="https://cuiqingcai.com/977.html" target="_blank" rel="noopener">文章</a></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/02/正则基础/" data-id="ck0l0oh9x0020py2itbl2jkdu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/CTF-python/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CTF-python练习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/31/markdownpad基本使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">markdownpad基本使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

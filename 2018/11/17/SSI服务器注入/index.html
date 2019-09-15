@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>SSI服务器注入 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是SSI全程：server side includes injection 服务器端包含注入 SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有强大的功能，只要使用一条简单的SSI 命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚">
+<meta name="keywords" content="渗透攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSI服务器注入">
+<meta property="og:url" content="http://yoursite.com/2018/11/17/SSI服务器注入/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是SSI全程：server side includes injection 服务器端包含注入 SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有强大的功能，只要使用一条简单的SSI 命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/UMLJ6ul.png">
+<meta property="og:updated_time" content="2018-11-17T07:34:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSI服务器注入">
+<meta name="twitter:description" content="什么是SSI全程：server side includes injection 服务器端包含注入 SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有强大的功能，只要使用一条简单的SSI 命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚">
+<meta name="twitter:image" content="https://i.imgur.com/UMLJ6ul.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SSI服务器注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/17/SSI服务器注入/" class="article-date">
+  <time datetime="2018-11-16T16:00:00.000Z" itemprop="datePublished">2018-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SSI服务器注入
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="什么是SSI"><a href="#什么是SSI" class="headerlink" title="什么是SSI"></a>什么是SSI</h1><p>全程：server side includes injection 服务器端包含注入</p>
+<p>SSI是英文Server Side Includes的缩写，翻译成中文就是服务器端包含的意思。从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。SSI具有强大的功能，只要使用一条简单的SSI 命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。它与CGI类似，不同之处在于SSI用于在加载当前页面之前或在页面可视化时执行某些操作。 为此，Web服务器在将页面提供给用户之前分析SSI  </p>
+<p>从技术角度上来说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针，即允许通过在HTML页面注入脚本或远程执行任意代码。</p>
+<p>在很多场景中，用户输入的内容可以显示在页面中，比如一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞</p>
+<p>一种对于这类漏洞的挖掘方式即是查看.stm，.shtm和.shtml的页面是否存在，但是缺少这些类型的页面并不意味着不存在SSI攻击。</p>
+<h1 id="SSI漏洞产生的条件"><a href="#SSI漏洞产生的条件" class="headerlink" title="SSI漏洞产生的条件"></a>SSI漏洞产生的条件</h1><p>用户存在可控输入，并且未过滤，并且还能回显嵌入到html中，如其中一条 </p>
+<pre><code>&lt;!--#exec cmd=&quot;&quot;...&quot;&quot;--&gt;（会执行给定的 shell 命令）</code></pre><p>如果没有过滤吧&lt;!#–等敏感字符，就会造成系统命令执行，<br>通常存在XSS的地方如果开启了SSI服务，那么就会造成服务器注入</p>
+<pre><code>&lt;!--#include file=&quot;&quot;...&quot;&quot;--&gt;（会显示给定的文件）</code></pre><h1 id="SSI命令语法解析"><a href="#SSI命令语法解析" class="headerlink" title="SSI命令语法解析"></a>SSI命令语法解析</h1><p><img src="https://i.imgur.com/UMLJ6ul.png" alt></p>
+<p>①显示服务器端环境变量&lt;#echo&gt;</p>
+<pre><code>本文档名称：
+&lt;!--#echo var=&quot;DOCUMENT_NAME&quot;--&gt;
+现在时间：
+&lt;!--#echo var=&quot;DATE_LOCAL&quot;--&gt;
+显示IP地址：
+&lt;!--#echo var=&quot;REMOTE_ADDR&quot;--&gt;</code></pre><p>②将文本内容直接插入到文档中&lt;#include&gt;</p>
+<pre><code>&lt;!--#include file=&quot;文件名称&quot;--&gt;
+&lt;!--#include virtual=&quot;index.html&quot; --&gt;
+&lt;!--#include virtual=&quot;文件名称&quot;--&gt;
+&lt;!--#include virtual=&quot;/www/footer.html&quot; --&gt;</code></pre><p>注：file包含文件可以在同一级目录或其子目录中，但不能在上一级目录中，virtual包含文件可以是Web站点上的虚拟目录的完整路径</p>
+<p>③显示WEB文档相关信息&lt;#flastmod&gt;&lt;#fsize&gt;(如文件制作日期/大小等)</p>
+<pre><code>文件最近更新日期：
+&lt;!--#flastmod file=&quot;文件名称&quot;--&gt;
+文件的长度：
+&lt;!--#fsize file=&quot;文件名称&quot;--&gt;</code></pre><p>④直接执行服务器上的各种程序&lt;#exec&gt;(如CGI或其他可执行程序)</p>
+<pre><code>&lt;!--#exec cmd=&quot;文件名称&quot;--&gt;
+&lt;!--#exec cmd=&quot;cat /etc/passwd&quot;--&gt;
+&lt;!--#exec cgi=&quot;文件名称&quot;--&gt;
+&lt;!--#exec cgi=&quot;/cgi-bin/access_log.cgi&quot;--&gt;</code></pre><p>⑤一次CTF中用到的指令 </p>
+<pre><code>&lt;!--%23include virtual=&quot;flag&quot; --&gt;</code></pre><p>1、显示服务器端环境变量&lt;#echo&gt;<br>2、将文本内容直接插入到文档中&lt;#include&gt;<br>3、显示WEB文档相关信息&lt;#flastmod #fsize&gt; (如文件制作日期/大小等)<br>4、直接执行服务器上的各种程序&lt;#exec&gt;(如CGI或其他可执行程序)<br>5、设置SSI信息显示格式&lt;#config&gt;(如文件制作日期/大小显示方式)<br>   高级SSI<xssi>可设置变量使用if条件语句。<br>   SSI指令基本格式：&lt;!-– 指令名称=”指令参数”&gt;  </xssi></p>
+<p>注意：<br>1．&lt;!–与#号间无空格，只有SSI指令与参数间存在空格。<br>2．上面的标点=””，一个也不能少。<br>3．SSI指令是大小写敏感的，因此参数必须是小写才会起作用。<br>有的时候可使用`来绕过对”的过滤//有时候 有时候，</p>
+<p>SSI命令：<br><a href="https://www.owasp.org/index.php/Server-Side_Includes_%28SSI%29_Injection" target="_blank" rel="noopener">https://www.owasp.org/index.php/Server-Side_Includes_%28SSI%29_Injection</a><br><a href="https://www.cnblogs.com/wqhwe/p/5442612.html" target="_blank" rel="noopener">https://www.cnblogs.com/wqhwe/p/5442612.html</a> </p>
+<h1 id="CTF实战SSI"><a href="#CTF实战SSI" class="headerlink" title="CTF实战SSI"></a>CTF实战SSI</h1><p><a href="https://shuaizhupeiqi.github.io/2018/11/16/2018%20%E9%AB%98%E6%A0%A1%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E8%BF%90%E7%BB%B4%E6%8C%91%E6%88%98%E8%B5%9B/" target="_blank" rel="noopener">EIS-2018ctf挑战赛</a></p>
+<h1 id="SSI漏洞挖掘"><a href="#SSI漏洞挖掘" class="headerlink" title="SSI漏洞挖掘"></a>SSI漏洞挖掘</h1><p>SSI漏洞，一般存在xss的地方都值得一试。  </p>
+<p>并非所有文件中的SSI指令都会被解析，必须告诉Apache应该解析哪些文件。有两种方法使Apache解析带有特定后缀名的文件，比如：.shtml ，配置如下：</p>
+<pre><code>AddType text/html .shtml
+AddOutputFilter INCLUDES .shtml</code></pre><p>.stm，.shtm和.shtml的页面是否存在文件后缀名是用来表明网页文件是否包含SSI指令的，因此如果该网站使用了.shtml文件，那说明该网站支持SSI指令。然而.shtml后缀名并非是强制规定的，因此如果没有发现任何.shtml文件，并不意味着目标网站没有受到SSI注入攻击的可能。</p>
+<h1 id="SSI防护"><a href="#SSI防护" class="headerlink" title="SSI防护"></a>SSI防护</h1><p>默认apache不开启ssi，ssi这种技术已经比较少用了。如果应用没有使用到ssi，关闭服务器对ssi的支持即可。</p>
+<hr>
+<p>参考：<a href="https://www.cnblogs.com/jokermoon/p/6708691.html" target="_blank" rel="noopener">https://www.cnblogs.com/jokermoon/p/6708691.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/17/SSI服务器注入/" data-id="ck0l0oh920005py2ibayve00d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/18/网址收藏/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          个人网址收藏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">EIS-CTF2018</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

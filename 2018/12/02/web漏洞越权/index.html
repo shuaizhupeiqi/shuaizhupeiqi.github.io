@@ -5,15 +5,23 @@
   
 
   
-  <title>Archives: 2019 | Hexo</title>
+  <title>web漏洞之越权 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="水平越权实战在一次渗透测试中遇到几个经典的水平越权漏洞，以及几个权限绕过。 增加任意用户的购物车 点击加入购物车然后抓包，  一般越权漏洞都会将信息放在cookie中，严密的都会加token，此次遇到的一个水平越权，验证的信息全部放在cookie里，并且以 userinfo参数验证，耐心测试，后台验证的为ID，也就是说只要你修改对应ID，那么就会加入到对应用户的购物车了，一般这种接口都是网站，所以">
+<meta name="keywords" content="web漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web漏洞之越权">
+<meta property="og:url" content="http://yoursite.com/2018/12/02/web漏洞越权/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="水平越权实战在一次渗透测试中遇到几个经典的水平越权漏洞，以及几个权限绕过。 增加任意用户的购物车 点击加入购物车然后抓包，  一般越权漏洞都会将信息放在cookie中，严密的都会加token，此次遇到的一个水平越权，验证的信息全部放在cookie里，并且以 userinfo参数验证，耐心测试，后台验证的为ID，也就是说只要你修改对应ID，那么就会加入到对应用户的购物车了，一般这种接口都是网站，所以">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/0yHYGCZ.png">
+<meta property="og:image" content="https://i.imgur.com/sJKt4C2.png">
+<meta property="og:updated_time" content="2018-12-02T07:45:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="web漏洞之越权">
+<meta name="twitter:description" content="水平越权实战在一次渗透测试中遇到几个经典的水平越权漏洞，以及几个权限绕过。 增加任意用户的购物车 点击加入购物车然后抓包，  一般越权漏洞都会将信息放在cookie中，严密的都会加token，此次遇到的一个水平越权，验证的信息全部放在cookie里，并且以 userinfo参数验证，耐心测试，后台验证的为ID，也就是说只要你修改对应ID，那么就会加入到对应用户的购物车了，一般这种接口都是网站，所以">
+<meta name="twitter:image" content="https://i.imgur.com/0yHYGCZ.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,216 +68,68 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/06/25/csp内容安全策略/" class="archive-article-date">
-  <time datetime="2019-06-24T16:00:00.000Z" itemprop="datePublished">Jun 25</time>
+        <section id="main"><article id="post-web漏洞越权" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/02/web漏洞越权/" class="article-date">
+  <time datetime="2018-12-01T16:00:00.000Z" itemprop="datePublished">2018-12-02</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+    <h1 class="article-title" itemprop="name">
+      web漏洞之越权
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/25/thinkphp3.2.3/" class="archive-article-date">
-  <time datetime="2019-05-24T16:00:00.000Z" itemprop="datePublished">May 25</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
-    </h1>
-  
+        <h1 id="水平越权实战"><a href="#水平越权实战" class="headerlink" title="水平越权实战"></a>水平越权实战</h1><p>在一次渗透测试中遇到几个经典的水平越权漏洞，以及几个权限绕过。</p>
+<h2 id="增加任意用户的购物车"><a href="#增加任意用户的购物车" class="headerlink" title="增加任意用户的购物车"></a>增加任意用户的购物车</h2><p><img src="https://i.imgur.com/0yHYGCZ.png" alt></p>
+<p>点击加入购物车然后抓包，</p>
+<p><img src="https://i.imgur.com/sJKt4C2.png" alt></p>
+<p>一般越权漏洞都会将信息放在cookie中，严密的都会加token，此次遇到的一个水平越权，验证的信息全部放在cookie里，并且以 userinfo参数验证，耐心测试，后台验证的为ID，也就是说只要你修改对应ID，那么就会加入到对应用户的购物车了，一般这种接口都是网站，所以网站也可能全部都是验证ID。同样存在清空购物车，删除地址漏洞，水平越权。</p>
+<p>此次渗透测试总结一个小经验，在测试后台到底验证什么参数的时候可一个一个抓包，删除其他参数，剩下自己所要尝试的，如果失败更换参数继续测试，也有很多时候他是callback多层认证用户信息，所以可能在后面一个包里，总之耐心点测试，此次测试也发现一个callbackjsonp,为返回用户信息认证，存在用户敏感信息。情况允许的时候可以一套组合拳带走！</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/17/url跳转实战/" class="archive-article-date">
-  <time datetime="2019-05-16T16:00:00.000Z" itemprop="datePublished">May 17</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/20/反序列化学习/" class="archive-article-date">
-  <time datetime="2019-04-19T16:00:00.000Z" itemprop="datePublished">Apr 20</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/02/web漏洞越权/" data-id="ck0l0oh9p001gpy2imk947e7o" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/14/2019DDCTF/" class="archive-article-date">
-  <time datetime="2019-04-13T16:00:00.000Z" itemprop="datePublished">Apr 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/03/sql注入/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          sql注入
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/25/正反向代理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">正反向代理</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/13/西湖挑战赛/" class="archive-article-date">
-  <time datetime="2019-04-12T16:00:00.000Z" itemprop="datePublished">Apr 13</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/13/西湖挑战赛/">西湖挑战赛web</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/08/掘安杯/" class="archive-article-date">
-  <time datetime="2019-04-07T16:00:00.000Z" itemprop="datePublished">Apr 8</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/08/掘安杯/">掘安杯网络安全技能挑战赛</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/23/一些脚本poc/" class="archive-article-date">
-  <time datetime="2019-03-22T16:00:00.000Z" itemprop="datePublished">Mar 23</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/23/一些脚本poc/">poc脚本整理</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/phpcms常见漏洞/" class="archive-article-date">
-  <time datetime="2019-03-17T16:00:00.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/phpcms常见漏洞/">phpcms常见漏洞</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/13/钟馗之眼/" class="archive-article-date">
-  <time datetime="2019-03-12T16:00:00.000Z" itemprop="datePublished">Mar 13</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/13/钟馗之眼/">钟馗之眼简单使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

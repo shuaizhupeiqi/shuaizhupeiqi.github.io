@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>sql注入之参数污染绕waf | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="hpp参数污染了解HPP是HTTP Parameter Pollution的缩写。这个漏洞由S. di Paola 与L. Caret Toni在2009年的OWASP上首次公布。这也是一种注入型的漏洞，攻击者通过在HTTP请求中插入特定的参数来发起攻击。如果Web应用中存在这样的漏洞，可以被攻击者利用来进行客户端或者服务器端的攻击。通过hpp参数污染可以达到绕过sqlwaf，上传waf来进行攻击">
+<meta name="keywords" content="渗透攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入之参数污染绕waf">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/sql注入之参数污染绕waf/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="hpp参数污染了解HPP是HTTP Parameter Pollution的缩写。这个漏洞由S. di Paola 与L. Caret Toni在2009年的OWASP上首次公布。这也是一种注入型的漏洞，攻击者通过在HTTP请求中插入特定的参数来发起攻击。如果Web应用中存在这样的漏洞，可以被攻击者利用来进行客户端或者服务器端的攻击。通过hpp参数污染可以达到绕过sqlwaf，上传waf来进行攻击">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/11/ACHIeJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/11/ACbPYt.png">
+<meta property="og:image" content="http://www.secpulse.com/wp-content/uploads/2017/03/waf4.png">
+<meta property="og:image" content="http://www.secpulse.com/wp-content/uploads/2017/03/waf5.png">
+<meta property="og:image" content="http://www.secpulse.com/wp-content/uploads/2017/03/waf6-1024x398.png">
+<meta property="og:updated_time" content="2019-03-11T12:35:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sql注入之参数污染绕waf">
+<meta name="twitter:description" content="hpp参数污染了解HPP是HTTP Parameter Pollution的缩写。这个漏洞由S. di Paola 与L. Caret Toni在2009年的OWASP上首次公布。这也是一种注入型的漏洞，攻击者通过在HTTP请求中插入特定的参数来发起攻击。如果Web应用中存在这样的漏洞，可以被攻击者利用来进行客户端或者服务器端的攻击。通过hpp参数污染可以达到绕过sqlwaf，上传waf来进行攻击">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/03/11/ACHIeJ.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sql注入之参数污染绕waf" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/10/sql注入之参数污染绕waf/" class="article-date">
+  <time datetime="2018-10-09T16:00:00.000Z" itemprop="datePublished">2018-10-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sql注入之参数污染绕waf
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="hpp参数污染了解"><a href="#hpp参数污染了解" class="headerlink" title="hpp参数污染了解"></a>hpp参数污染了解</h1><p>HPP是HTTP Parameter Pollution的缩写。<br>这个漏洞由S. di Paola 与L. Caret Toni在2009年的OWASP上首次公布。这也是一种注入型的漏洞，攻击者通过在HTTP请求中插入特定的参数来发起攻击。如果Web应用中存在这样的漏洞，可以被攻击者利用来进行客户端或者服务器端的攻击。<br>通过hpp参数污染可以达到绕过sqlwaf，上传waf来进行攻击。</p>
+<h1 id="hpp参数污染原理"><a href="#hpp参数污染原理" class="headerlink" title="hpp参数污染原理"></a>hpp参数污染原理</h1><p>在跟服务器交互的过程中，http允许 get 或者post多次传同一参数值，造成覆盖达到一些绕过waf的效果。</p>
+<pre><code>GET /foo?par1=val1&amp;par2=val2 HTTP/1.1
+User-Agent: Mozilla/5.0
+Host: Host
+Accept: */*</code></pre><p>如上面的http请求，一般同一参数名字只能传参一次，但是http协议中允许同样名称的参数出现多次。</p>
+<p>但是不同的服务器处理方式会不一样，比如：<br>必应</p>
+<p><img src="https://s2.ax1x.com/2019/03/11/ACHIeJ.png" alt></p>
+<p>我们输入了两次q参数，第一次为aa第二次为bb被覆盖了，</p>
+<p>谷歌 </p>
+<p><img src="https://s2.ax1x.com/2019/03/11/ACbPYt.png" alt></p>
+<p>输入两个q参数可以看到都被加载到了浏览器搜索中。没有覆盖</p>
+<p>如果同时提供2个搜索的关键字参数给Google，那么Google会对2个参数都进行查询；但是必应则不一样，它只会处理后面一个参数。下面这个表简单列举了一些常见的Web服务器对同样名称的参数出现多次的处理方式：</p>
+<pre><code>Web服务器               参数获取函数                       获取到的参数
+
+PHP/Apache           $_GET(“par”)                       Last
+JSP/Tomcat           Request.getParameter(“par”)       First
+Perl(CGI)/Apache       Param(“par”)                       First
+Python/Apache       getvalue(“par”)                   All (List)
+ASP/IIS               Request.QueryString(“par”)       All (comma-delimited string)</code></pre><h1 id="参数污染实例"><a href="#参数污染实例" class="headerlink" title="参数污染实例"></a>参数污染实例</h1><h2 id="waf绕过"><a href="#waf绕过" class="headerlink" title="waf绕过"></a>waf绕过</h2><p>这种服务器的解析方式本身没有什么缺陷，但是如果配合一些waf规则以及其他规则，则有可能造成一些危害，根据waf解析的先后规则则有可能绕过waf设置的原意。</p>
+<pre><code>$sql = &quot;select * from admin where id=1&quot;;
+$sql=$sql.&quot;&quot;.$_POST[&apos;bbs&apos;];
+
+echo $sql;
+
+$pattern=&apos;/^.*union.*$/&apos;;
+
+if(preg_match($pattern, $sql))
+{echo &quot;注入测试   &quot;;}</code></pre><p>在特定情况下 bbs=u&amp;bbs=n&amp;bbs=i&amp;bbs=o&amp;bbs=n&amp;bbs=select 1,user(),3<br>可以绕过一些waf，在CTF中也有出现。<br>将参数分离写入，waf在输入之后就开始拦截，在后端又拼接成完整的union，根据一些特定服务器就可以绕过waf进行注入。</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>先看一个上传数据包。</p>
+<pre><code>POST /upload.php HTTP/1.1
+
+Host: 192.168.1.100
+
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0
+
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+
+Accept-Encoding: gzip, deflate
+
+Referer: http://192.168.1.100/
+
+Cookie:yunsuo_session_verify=1a9c7117538a7a9bce39a4695ff3f0cc; safedog-flow-item=
+
+X-Forwarded-For: 1.1.1.1
+
+CLIENT_IP: 2.2.2.2
+
+Connection: keep-alive
+
+Upgrade-Insecure-Requests: 1
+
+Content-Type:multipart/form-data; boundary=---------------------------440470572354
+
+Content-Length: 1089
+
+-----------------------------440470572354
+
+Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;n.php&quot;
+
+Content-Type: application/octet-stream
+
+&lt;?php
+
+Phpinfo();
+
+?&gt;
+
+-----------------------------440470572354
+
+Content-Disposition: form-data; name=&quot;submit&quot;
+
+Submit
+-----------------------------440470572354--</code></pre><p>Content-Type:multipart/form-data; 指代的是这个数据是来自表单提交的</p>
+<p>某些WAF是通过Content-Type识别是否是文件上传数据包。假设我们将Content-Type更改，数据包也是正常提交过去的。这个就完成了一次bypass。</p>
+<p>还有的时候就是Content-Disposition: form-data;，也有某些WAF是根据Content-Disposition匹配filename的，用于验证黑名单。我们经过混淆大小写也是可以bypass的。(<a href="http://www.secpulse.com/archives/56523.html" target="_blank" rel="noopener">http://www.secpulse.com/archives/56523.html</a>)</p>
+<p>拦截：</p>
+<p><img src="http://www.secpulse.com/wp-content/uploads/2017/03/waf4.png" alt><br><img src="http://www.secpulse.com/wp-content/uploads/2017/03/waf5.png" alt></p>
+<p>在HPP中最典型的的例子就是“双文件上传”。</p>
+<p>就是在协议中，提交两个相同的值，达到欺骗WAF一次匹配的目的。在这里提点一下http协议中参数名与参数值的结构。</p>
+<p><img src="http://www.secpulse.com/wp-content/uploads/2017/03/waf6-1024x398.png" alt></p>
+<p>可以看到filename参数写了两次，可能绕过一些上传限制。</p>
+<h2 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h2><p>当然这种特性有时候也可以测试xss漏洞，原理一样。暂不测试。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/10/sql注入之参数污染绕waf/" data-id="ck0l0oh9l0017py2im948ci4m" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/12/docker基础/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          docker学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/10/xml注入基础/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">XML注入，xxe，xpath</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

